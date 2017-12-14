@@ -19,7 +19,7 @@ public class Activity_Model implements MVP_Activity.ProvidedModelOps {
 
     public Activity_Model
             (MVP_Activity.RequiredPresenterOps presenter, Context _conContext) {
-        this.mPresenter = presenter;
+        mPresenter = presenter;
         context=_conContext;
         dbAdapter=new DBAdapter(context);
         AList = new ArrayList<>();

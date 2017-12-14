@@ -15,12 +15,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 public class Post_User extends BaseSetingApi {
-
+    MVP_Login.ProvidedPresenterOps login_presenter;
+    String choose;
     Context _context;
     Activity _activity;
     String Result = "";
@@ -29,7 +31,9 @@ public class Post_User extends BaseSetingApi {
     String _password;
     int language_id;
 
-    public Post_User(Context context, Activity activity, String username, String email, String password, int lid) {
+    public Post_User(MVP_Login.ProvidedPresenterOps ppo, Context context, Activity activity, String username, String email, String password, int lid) {
+        login_presenter = ppo;
+        choose = "login";
         _context = context;
         _activity = activity;
         user_name = username;
@@ -51,7 +55,9 @@ public class Post_User extends BaseSetingApi {
             public void onResponse(String response) {
 
                 if(response.equals("200")) {
-                    Result =response;
+                    Result = response;
+                    String Q = "insert into aspnet_Users (UserName,Password,Email,Id_Language) values ('" + user_name + "','" + _password + "','" + _email + "','" + language_id + "')" ;
+                    login_presenter.Insert_User(Q);
                 }
                 else {
                     Toast.makeText(_context,"خطا در ارسال اطلاعات به سرور",Toast.LENGTH_LONG).show();

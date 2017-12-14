@@ -3,14 +3,11 @@ package com.tiptap.tda_user.tiptap.main.activity.view.splash;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
-import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Activity;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Splash;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -26,6 +23,7 @@ public class Splash
         implements MVP_Splash.RequiredViewOps {
 
     TextView text;
+    boolean status;
     private static final String TAG = Splash.class.getSimpleName();
 
     @Inject
@@ -40,22 +38,21 @@ public class Splash
         setupViews();
         setupMVP();
 
+        final int count = mPresenter.getCount_User();
+
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                //new Get_Activity(haveNetworkConnection(), mPresenter, getAppContext(), Splash.this);
-
-                if (mPresenter.getCount_User() == 0){
+                if (count == 0){
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this, Login.class));
 
-                }else if (mPresenter.getCount_User() == 1){
+                }else if (count == 1){
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this, Function.class));
-                }
 
+                }
             }
         }, 3000);
     }
@@ -110,21 +107,5 @@ public class Splash
     @Override
     public Context getActivityContext() {
         return this;
-    }
-
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
     }
 }

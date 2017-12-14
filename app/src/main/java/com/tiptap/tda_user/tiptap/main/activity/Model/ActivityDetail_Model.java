@@ -19,7 +19,7 @@ public class ActivityDetail_Model implements MVP_ActivityDetail.ProvidedModelOps
 
     public ActivityDetail_Model
             (MVP_ActivityDetail.RequiredPresenterOps presenter, Context _conContext) {
-        this.mPresenter = presenter;
+        mPresenter = presenter;
         context=_conContext;
         dbAdapter=new DBAdapter(context);
         ADList = new ArrayList<>();

@@ -2,8 +2,9 @@ package com.tiptap.tda_user.tiptap.main.activity.Presenter;
 
 import android.content.Context;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
+import com.tiptap.tda_user.tiptap.main.activity.ViewModel.aspnet_Users;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLanguage;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbUser;
+
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -52,16 +53,6 @@ public class Login_Presenter
     @Override
     public void Insert_User(String Q) {
         mModel.Insert_User(Q);
-    }
-
-    @Override
-    public int getCount_User() {
-        return mModel.getCount_User();
-    }
-
-    @Override
-    public TbUser getUser() {
-        return mModel.getUser();
     }
 
     @Override

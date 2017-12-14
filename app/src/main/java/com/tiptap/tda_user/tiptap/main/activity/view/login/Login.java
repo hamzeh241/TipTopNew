@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -23,7 +24,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Login_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLanguage;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
-import org.json.JSONException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -31,10 +32,12 @@ public class Login
         extends AppCompatActivity
         implements MVP_Login.RequiredViewOps {
 
-    EditText username, email, password;
-    int Id_Language;
-    Button b;
     List<TbLanguage> lans;
+    List<String> title_lans;
+    int Id_Language = 0;
+    EditText username, email, password;
+    Spinner s;
+    Button b;
     private static final String TAG = Login.class.getSimpleName();
 
     @Inject
@@ -49,6 +52,25 @@ public class Login
         setupViews();
         setupMVP();
 
+        lans = mPresenter.getLanguages();
+        title_lans = new ArrayList<String>();
+
+        for(int i=0 ; i<lans.size() ; i++){
+            title_lans.add(lans.get(i).getLanguage());
+        }
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, title_lans);
+        s.setAdapter(adapter);
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TbLanguage language = lans.get(position);
+                Id_Language = language.get_id();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,21 +79,27 @@ public class Login
                 String Email = email.getText().toString();
                 String Password = password.getText().toString();
 
-                if(Username!="" && Email!="" && Password!="" && Id_Language+""!=""){
-                    try {
-                        String Q = "insert into TbUser (UserName,Password,Email,Id_Language) values ('" + Username + "','" + password + "','" + Email + "','" + Id_Language + "')" ;
-                        mPresenter.Insert_User(Q);
-                        new Post_User(getAppContext(), Login.this, Username, Email, Password, Id_Language).post();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                if(validate()){
+
+                    if(haveNetworkConnection()){
+
+                        try{
+
+                            new Post_User(mPresenter, getAppContext(), Login.this, Username, Email, Password, Id_Language).post();
+
+                            new Get_Glossary(haveNetworkConnection(), mPresenter, getAppContext(), Login.this, Id_Language);
+
+                            Login.this.finish();
+                            startActivity(new Intent(Login.this, Function.class));
+
+                        }catch (Exception e){}
+
+                    }else {
+                        Toast.makeText(getApplicationContext(), "خطا در اتصال به اینترنت" , Toast.LENGTH_LONG).show();
                     }
 
-                    if (mPresenter.getCount_User() == 1){
-                        //new Get_Glossary(haveNetworkConnection(), mPresenter, getAppContext(), Login.this, Id_Language);
-
-                        Login.this.finish();
-                        startActivity(new Intent(Login.this, Function.class));
-                    }
+                }else {
+                    Toast.makeText(getApplicationContext(), "تمام اطلاعات را به درستی وارد کنید" , Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -84,26 +112,11 @@ public class Login
     }
 
     private void setupViews(){
-
         username = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-
         b = (Button)findViewById(R.id.login);
-
-        lans = mPresenter.getLanguages();
-        Spinner s = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, lans);
-        s.setAdapter(adapter);
-        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TbLanguage language = lans.get(position);
-                Id_Language = language.get_id();
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+        s = (Spinner) findViewById(R.id.spinner);
     }
 
     private void setupMVP(){
@@ -146,7 +159,6 @@ public class Login
         return this;
     }
 
-
     private boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -161,5 +173,40 @@ public class Login
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+        String Username = username.getText().toString();
+        String Email = email.getText().toString();
+        String Password = password.getText().toString();
+
+        if (Username.equals("")) {
+            username.setError("enter a valid username");
+            valid = false;
+        } else {
+            username.setError(null);
+        }
+
+        if (Email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
+            email.setError("enter a valid email address");
+            valid = false;
+        } else {
+            email.setError(null);
+        }
+
+        if (Password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            password.setError("between 4 and 10 alphanumeric characters");
+            valid = false;
+        } else {
+            password.setError(null);
+        }
+
+        if(Id_Language == 0){
+            valid = false;
+        }
+
+        return valid;
     }
 }

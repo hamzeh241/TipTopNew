@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.tiptap.tda_user.tiptap.R;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Splash;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.Act_1;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
 
 public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
+    MVP_Lesson.ProvidedPresenterOps lesson_presenter;
     private List<CardView> mViews;
     private List<CardItem> mData;
     private float mBaseElevation;
@@ -26,7 +29,8 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
         mViews = new ArrayList<>();
     }
 
-    public void addCardItem(CardItem item) {
+    public void addCardItem(CardItem item,   MVP_Lesson.ProvidedPresenterOps ppo) {
+        lesson_presenter = ppo;
         mViews.add(null);
         mData.add(item);
     }
@@ -80,7 +84,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Lesson.id_function =  item.getId();
+               //lesson_presenter.getA
                 view.getContext().startActivity(new Intent(view.getContext(), Act_1.class));
             }
         });

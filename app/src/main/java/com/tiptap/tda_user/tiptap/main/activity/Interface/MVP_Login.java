@@ -2,8 +2,6 @@ package com.tiptap.tda_user.tiptap.main.activity.Interface;
 
 import android.content.Context;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLanguage;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbUser;
-
 import java.util.List;
 
 public interface MVP_Login {
@@ -22,8 +20,6 @@ public interface MVP_Login {
 
         // user
         void Insert_User(String Q);
-        int getCount_User();
-        TbUser getUser();
 
         // Glossary
         String getMaxRowV_Glossary();
@@ -45,8 +41,6 @@ public interface MVP_Login {
 
         // user
         void Insert_User(String Q);
-        int getCount_User();
-        TbUser getUser();
 
         // Glossary
         String getMaxRowV_Glossary();

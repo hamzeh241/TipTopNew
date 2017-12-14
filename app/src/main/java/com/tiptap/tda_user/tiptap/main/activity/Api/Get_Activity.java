@@ -12,6 +12,7 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Splash;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,14 +21,14 @@ import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Activity extends BaseSetingApi {
 
-    MVP_Splash.ProvidedPresenterOps splash_presenter;
+    MVP_Lesson.ProvidedPresenterOps lesson_presenter;
     Context _context;
     Activity mactivity;
     boolean mnet;
     ProgressDialog progressDialog;
 
-    public Get_Activity(boolean net, MVP_Splash.ProvidedPresenterOps ppo, Context context, Activity activity) {
-        splash_presenter = ppo;
+    public Get_Activity(boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity) {
+        lesson_presenter = ppo;
         mactivity = activity;
         _context = context;
         mnet = net;
@@ -40,13 +41,13 @@ public class Get_Activity extends BaseSetingApi {
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Activity?rowVersion=", null, new Response.Listener<JSONArray>() {
+                    url+ "Activity?id="/*+_id+"rowVersion="+m*/, null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
                     try {
-                        int maxId = splash_presenter.getMaxId_Activity();
+                        //int maxId = lesson_presenter.getMaxId_Activity();
 
                         String Q1 = "insert into TbActivity (_id, Id_Lesson, ActivityNumber, Id_ActivityType, Title1, Title2, Path1, Path2, IsNote, RowVersion) values ";
                         for (int i=0; i<response.length(); i++) {
@@ -64,20 +65,20 @@ public class Get_Activity extends BaseSetingApi {
                             int Id = Integer.parseInt(id);
 
                             // insert
-                            if(Id>maxId) {
+                          //  if(Id>maxId) {
                                 insert = true;
                                 Q1 = Q1.concat("('" + id + "','" + idlesson + "','" + activitynumber + "','" + idactivitytype + "','" + title1 + "','" + title2 + "','" + path1 + "','" + path2 + "','" + isnote + "','" + rowversion + "')," );
-                            }
+                           // }
 
                             // update
-                            else {
+                           //else {
                                 String Q2="update TbActivity set Id_Lesson='"+idlesson+"',ActivityNumber='"+activitynumber+"',Id_ActivityType='"+idactivitytype+"',Title1='"+title1+"',Title2='"+title2+"',Path1='"+path1+"',Path1='"+path2+"',IsNote='"+isnote+"',RowVersion='"+rowversion+"' where _id="+Id;
-                                splash_presenter.Insert_Activity(Q2);
-                            }
+                               // splash_presenter.Insert_Activity(Q2);
+                           // }
                         }
                         if(insert) {
                             Q1 = Q1.substring(0, Q1.trim().length() - 1).concat(";");
-                            splash_presenter.Insert_Activity(Q1);
+                           // splash_presenter.Insert_Activity(Q1);
                         }
                         progressDialog.dismiss();
 

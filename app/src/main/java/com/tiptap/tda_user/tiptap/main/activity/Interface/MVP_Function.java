@@ -14,6 +14,8 @@ public interface MVP_Function {
     interface ProvidedPresenterOps {
         void onDestroy(boolean isChangingConfiguration);
         void setView(RequiredViewOps view);
+
+        // function
         String getMaxRowV_Function();
         int getMaxId_Function();
         int getCount_Function();
@@ -28,6 +30,8 @@ public interface MVP_Function {
 
     interface ProvidedModelOps {
         void onDestroy(boolean isChangingConfiguration);
+
+        // function
         String getMaxRowV_Function();
         int getMaxId_Function();
         int getCount_Function();

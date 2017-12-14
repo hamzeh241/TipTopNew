@@ -27,7 +27,7 @@ public class Splash_Module {
     @ActivityScope
     MVP_Splash.ProvidedPresenterOps providedPresenterOps() {
         Splash_Presenter presenter = new Splash_Presenter( activity );
-        Splash_Model model = new Splash_Model( presenter );
+        Splash_Model model = new Splash_Model( presenter, activity );
         presenter.setModel( model );
         return presenter;
     }

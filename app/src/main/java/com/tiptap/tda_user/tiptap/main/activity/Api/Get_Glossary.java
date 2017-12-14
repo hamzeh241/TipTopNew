@@ -42,31 +42,39 @@ public class Get_Glossary extends BaseSetingApi {
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Glossary?i="+_id+"&rowVersion=0x0", null, new Response.Listener<JSONArray>() {
+                    url+ "Glossary?id="+_id+"&rowVersion="+login_presenter.getMaxRowV_Glossary(), null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
+
                     try {
                         int maxId = login_presenter.getMaxId_Glossary();
                         String Q1 = "insert into TbGlossary (_id,Id_Language,TableName,ColumeName,RowNumber,NewTitle,RowVersion) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
                             String id = jsonObject.getString("C_id");
-                            String title = jsonObject.getString("Title");
-                            String row = "1";
+                            String id_language = jsonObject.getString("ColumeName");
+                            String table_name = jsonObject.getString("Id_Language");
+                            String colume_name = jsonObject.getString("NewTitle");
+                            String row_number = jsonObject.getString("RowNumber");
+                            String new_title = jsonObject.getString("RowVersion");
+                            String row_version = jsonObject.getString("TableName");
                             int Id = Integer.parseInt(id);
+
                             // insert
                             if(Id>maxId) {
                                 insert = true;
-                                Q1 = Q1.concat("('" + id + "','" + title + "','" + row + "')," );
+                                Q1 = Q1.concat("('" + id + "','" + id_language + "','" + table_name + "','" + colume_name + "','" + row_number + "','" + new_title + "','" + row_version + "')," );
                             }
+
                             // update
                             else {
-                                String Q2="update TbGlossary set Id_Language='"+title+"',TableName='"+title+"',ColumeName='"+title+"',RowNumber='"+title+"',NewTitle='"+title+"',RowVersion='"+title+"' where _id="+Id;
+                                String Q2="update TbGlossary set Id_Language='"+id_language+"',TableName='"+table_name+"',ColumeName='"+colume_name+"',RowNumber='"+row_number+"',NewTitle='"+new_title+"',RowVersion='"+row_version+"' where _id="+Id;
                                 login_presenter.Insert_Glossary(Q2);
                             }
                         }
+
                         if(insert) {
                             Q1 = Q1.substring(0, Q1.trim().length() - 1).concat(";");
                             login_presenter.Insert_Glossary(Q1);
@@ -90,9 +98,11 @@ public class Get_Glossary extends BaseSetingApi {
                     }
                 }
             });
+
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{}
+
         return null;
     }
 }

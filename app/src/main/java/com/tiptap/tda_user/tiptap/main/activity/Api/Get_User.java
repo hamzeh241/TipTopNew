@@ -46,8 +46,8 @@ public class Get_User extends BaseSetingApi {
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
                     try {
-                        int maxId = splash_presenter.getMaxId_Activity();
-                        String Q1 = "insert into TbUser (ApplicationId,UserId,UserName,LoweredUserName,MobileAlias,IsAnonymous,LastActivityDate,Id_Lesson,Id_Language) values ";
+                        //int maxId = splash_presenter.getMaxId_Activity();
+                        String Q1 = "insert into aspnet_Users (ApplicationId,UserId,UserName,LoweredUserName,MobileAlias,IsAnonymous,LastActivityDate,Id_Lesson,Id_Language) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
                             String appid = jsonObject.getString("XXX");
@@ -73,7 +73,7 @@ public class Get_User extends BaseSetingApi {
                         }
                         if(insert) {
                             Q1 = Q1.substring(0, Q1.trim().length() - 1).concat(";");
-                            splash_presenter.Insert_Activity(Q1);
+                          //  splash_presenter.Insert_Activity(Q1);
                         }
                         progressDialog.dismiss();
 
