@@ -20,7 +20,8 @@ import javax.inject.Inject;
 public class Function
     extends AppCompatActivity implements View.OnClickListener, MVP_Function.RequiredViewOps {
 
-    public static String lan;
+    public static int id_lesson;
+    public static int id_function;
     private static final String TAG = Function.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), Function.class.getName());
 
@@ -40,7 +41,7 @@ public class Function
         setupMVP();
 
         new Get_Function
-                (haveNetworkConnection(), mPresenter, getAppContext(), Function.this, mViewPager, mCardAdapter, mCardShadowTransformer);
+                (id_function, haveNetworkConnection(), mPresenter, getAppContext(), Function.this, mViewPager, mCardAdapter, mCardShadowTransformer);
     }
 
     private void setupViews(){

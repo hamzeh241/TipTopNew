@@ -1,22 +1,21 @@
 package com.tiptap.tda_user.tiptap.main.activity.Cls;
 
-import android.content.Context;
 import android.support.v4.view.ViewPager;
-
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.CardItem;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.CardPagerAdapter_F;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.ShadowTransformer;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
-import com.tiptap.tda_user.tiptap.main.activity.Model.Function_Model;
 
 public class Set_Function extends BaseSetingApi {
     MVP_Function.ProvidedPresenterOps function_presenter;
+    int _id_function;
     ViewPager mViewPager;
     CardPagerAdapter_F mCardAdapter;
     ShadowTransformer mCardShadowTransformer;
 
-    public Set_Function(MVP_Function.ProvidedPresenterOps ppo, ViewPager viewPager, CardPagerAdapter_F cardAdapter, ShadowTransformer shadowTransformer) {
+    public Set_Function(int id_function, MVP_Function.ProvidedPresenterOps ppo, ViewPager viewPager, CardPagerAdapter_F cardAdapter, ShadowTransformer shadowTransformer) {
+        _id_function = id_function;
         function_presenter = ppo;
         mViewPager = viewPager;
         mCardAdapter = cardAdapter;
@@ -25,7 +24,7 @@ public class Set_Function extends BaseSetingApi {
 
     public void load() {
         for (int i = 0; i < function_presenter.getCount_Function(); i++) {
-            mCardAdapter.addCardItem(new CardItem(function_presenter.getListFunction().get(i).get_id(), function_presenter.getListFunction().get(i).getTitle()));
+            mCardAdapter.addCardItem(_id_function, new CardItem(function_presenter.getListFunction().get(i).get_id(), function_presenter.getListFunction().get(i).getTitle()));
         }
         mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
         mCardShadowTransformer.enableScaling(true);

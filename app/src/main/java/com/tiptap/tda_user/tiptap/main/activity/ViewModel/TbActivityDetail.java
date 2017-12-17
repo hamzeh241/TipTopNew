@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.ViewModel;
 public class TbActivityDetail {
 
     private int _id;
+    private int Id_Lesson;
     private String Path1;
     private String Path2;
     private int Id_Activity;
@@ -21,6 +22,14 @@ public class TbActivityDetail {
 
     public void set_id(int _id) {
         this._id = _id;
+    }
+
+    public int getId_Lesson() {
+        return Id_Lesson;
+    }
+
+    public void setId_Lesson(int id_Lesson) {
+        Id_Lesson = id_Lesson;
     }
 
     public String getPath1() {

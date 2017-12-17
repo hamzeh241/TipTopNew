@@ -1,11 +1,10 @@
 package com.tiptap.tda_user.tiptap.main.activity.Presenter;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
+import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLesson;
-
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -69,6 +68,66 @@ public class Lesson_Presenter
     @Override
     public List<TbLesson> getListLesson(int fid) {
         return mModel.getListLesson(fid);
+    }
+
+    @Override
+    public int lesson_number(int lid) {
+        return mModel.lesson_number(lid);
+    }
+
+    @Override
+    public String getMaxRowV_Activity() {
+        return mModel.getMaxRowV_Activity();
+    }
+
+    @Override
+    public int getMaxId_Activity() {
+        return mModel.getMaxId_Activity();
+    }
+
+    @Override
+    public int getCount_Activity(int lid) {
+        return mModel.getCount_Activity(lid);
+    }
+
+    @Override
+    public void Insert_Activity(String Q) {
+        mModel.Insert_Activity(Q);
+    }
+
+    @Override
+    public List<TbActivity> getListActivity(int lid) {
+        return mModel.getListActivity(lid);
+    }
+
+    @Override
+    public int activity_Type(int lid) {
+        return mModel.activity_Type(lid);
+    }
+
+    @Override
+    public String getMaxRowV_ActivityDetail() {
+        return mModel.getMaxRowV_ActivityDetail();
+    }
+
+    @Override
+    public int getMaxId_ActivityDetail() {
+        return mModel.getMaxId_ActivityDetail();
+    }
+
+    @Override
+    public int getCount_ActivityDetail(int lid) {
+        return mModel.getCount_ActivityDetail(lid);
+    }
+
+    @Override
+    public void Insert_ActivityDetail(String Q) {
+        mModel.Insert_ActivityDetail(Q);
+    }
+
+    @Override
+    public List<TbActivityDetail> getListActivityDetail(int lid) {
+        return mModel.getListActivityDetail(lid);
     }
 
      /*  ------ RequiredPresenterOps ------  */

@@ -23,17 +23,20 @@ public interface MVP_Lesson {
         int getCount_Lesson(int fid);
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
+        int lesson_number(int lid);
 
         // activity
         String getMaxRowV_Activity();
         int getMaxId_Activity();
+        int getCount_Activity(int lid);
         void Insert_Activity(String Q);
         List<TbActivity> getListActivity(int lid);
+        int activity_Type(int lid);
 
         // activity_detail
         String getMaxRowV_ActivityDetail();
         int getMaxId_ActivityDetail();
-        int getCount_ActivityDetail(int fid);
+        int getCount_ActivityDetail(int lid);
         void Insert_ActivityDetail(String Q);
         List<TbActivityDetail> getListActivityDetail(int lid);
     }
@@ -52,12 +55,15 @@ public interface MVP_Lesson {
         int getCount_Lesson(int fid);
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
+        int lesson_number(int lid);
 
         // activity
         String getMaxRowV_Activity();
         int getMaxId_Activity();
+        int getCount_Activity(int lid);
         void Insert_Activity(String Q);
         List<TbActivity> getListActivity(int lid);
+        int activity_Type(int lid);
 
         // activity_detail
         String getMaxRowV_ActivityDetail();

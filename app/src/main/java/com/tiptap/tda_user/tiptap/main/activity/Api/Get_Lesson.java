@@ -10,7 +10,6 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.CardPagerAdapter_L;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.ShadowTransformer;
@@ -18,7 +17,6 @@ import com.tiptap.tda_user.tiptap.main.activity.Cls.Set_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
-import com.tiptap.tda_user.tiptap.main.activity.Model.Lesson_Model;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,18 +25,21 @@ import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 public class Get_Lesson extends BaseSetingApi {
 
     MVP_Lesson.ProvidedPresenterOps lesson_presenter;
-    Context context;
+    Context _context;
     Activity mactivity;
     int _id;
+    int id_lesson;
     ViewPager mViewPager;
     CardPagerAdapter_L mCardAdapter;
     ShadowTransformer mCardShadowTransformer;
     boolean mnet;
     ProgressDialog progressDialog;
 
-    public Get_Lesson(int id, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Activity activity, ViewPager viewPager, CardPagerAdapter_L cardAdapter, ShadowTransformer shadowTransformer) {
-        _id = id;
+    public Get_Lesson(int fid, int lid, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, ViewPager viewPager, CardPagerAdapter_L cardAdapter, ShadowTransformer shadowTransformer) {
+        _id = fid;
+        id_lesson = lid;
         lesson_presenter = ppo;
+        _context = context;
         mactivity = activity;
         mViewPager = viewPager;
         mCardAdapter = cardAdapter;
@@ -83,14 +84,14 @@ public class Get_Lesson extends BaseSetingApi {
                             Q1 = Q1.substring(0, Q1.trim().length() - 1).concat(";");
                             lesson_presenter.Insert_Lesson(Q1);
                         }
-                        Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_id,mViewPager,mCardAdapter,mCardShadowTransformer);
+                        Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,_id,id_lesson,mViewPager,mCardAdapter,mCardShadowTransformer);
                         set_lesson.load();
                         progressDialog.dismiss();
 
                     } catch (JSONException e) {
                         progressDialog.dismiss();
                         e.printStackTrace();
-                        new PostError(context,e.getMessage(), getMethodName()).postError();
+                        new PostError(_context,e.getMessage(), getMethodName()).postError();
                     }
 
                 }
@@ -98,10 +99,10 @@ public class Get_Lesson extends BaseSetingApi {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     progressDialog.dismiss();
-                    new ErrorVolley(context).Error(volleyError,"get");
+                    new ErrorVolley(_context).Error(volleyError,"get");
                     if (volleyError.networkResponse == null) {
                         if (volleyError.getClass().equals(TimeoutError.class)) {
-                            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_id,mViewPager,mCardAdapter,mCardShadowTransformer);
+                            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,_id,id_lesson,mViewPager,mCardAdapter,mCardShadowTransformer);
                             set_lesson.load();
                         }
                     }
@@ -110,7 +111,7 @@ public class Get_Lesson extends BaseSetingApi {
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{
-            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_id,mViewPager,mCardAdapter,mCardShadowTransformer);
+            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,_id,id_lesson,mViewPager,mCardAdapter,mCardShadowTransformer);
             set_lesson.load();
         }
         return null;

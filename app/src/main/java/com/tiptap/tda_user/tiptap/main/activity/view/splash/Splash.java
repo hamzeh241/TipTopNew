@@ -15,7 +15,9 @@ import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
+import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
+import java.util.List;
 import javax.inject.Inject;
 
 public class Splash
@@ -23,7 +25,6 @@ public class Splash
         implements MVP_Splash.RequiredViewOps {
 
     TextView text;
-    boolean status;
     private static final String TAG = Splash.class.getSimpleName();
 
     @Inject
@@ -49,6 +50,14 @@ public class Splash
                     startActivity(new Intent(Splash.this, Login.class));
 
                 }else if (count == 1){
+                    int lid = mPresenter.Id_Lesson();
+                    int fid = 0;
+                    if(lid != 0){
+                        fid = mPresenter.Id_Function(lid);
+                    }
+                    Function.id_function = fid;
+                    Lesson.id_lesson = lid;
+
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this, Function.class));
 

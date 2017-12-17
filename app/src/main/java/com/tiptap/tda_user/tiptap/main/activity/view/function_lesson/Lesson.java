@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.R;
@@ -16,16 +17,18 @@ import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Lesson_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Lesson_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Lesson;
+import java.util.List;
 import javax.inject.Inject;
 
 public class Lesson
         extends AppCompatActivity implements View.OnClickListener, MVP_Lesson.RequiredViewOps{
 
+    public static int id_lesson;
+    public static int id_function;
     private ViewPager mViewPager;
     private CardPagerAdapter_L mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
     private boolean mShowingFragments = false;
-    public static int id_function;
 
     @Inject
     public MVP_Lesson.ProvidedPresenterOps mPresenter;
@@ -40,7 +43,7 @@ public class Lesson
         setupViews();
         setupMVP();
 
-        new Get_Lesson(id_function, haveNetworkConnection(), mPresenter,
+        new Get_Lesson(id_function, id_lesson, haveNetworkConnection(), mPresenter, getAppContext(),
                 Lesson.this, mViewPager, mCardAdapter, mCardShadowTransformer);
     }
 

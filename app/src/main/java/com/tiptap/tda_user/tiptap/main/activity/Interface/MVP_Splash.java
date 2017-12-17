@@ -2,11 +2,6 @@ package com.tiptap.tda_user.tiptap.main.activity.Interface;
 
 import android.content.Context;
 
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.aspnet_Users;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLanguage;
-
-import java.util.List;
-
 public interface MVP_Splash {
 
     interface RequiredViewOps {
@@ -20,6 +15,8 @@ public interface MVP_Splash {
 
         // user
         int getCount_User();
+        int Id_Lesson();
+        int Id_Function(int lid);
     }
 
     interface RequiredPresenterOps {
@@ -32,5 +29,7 @@ public interface MVP_Splash {
 
         // user
         int getCount_User();
+        int Id_Lesson();
+        int Id_Function(int lid);
     }
 }

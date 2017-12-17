@@ -25,6 +25,7 @@ import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 public class Get_Function extends BaseSetingApi {
 
     MVP_Function.ProvidedPresenterOps function_presenter;
+    int _id_function;
     Context _context;
     Activity mactivity;
     ViewPager mViewPager;
@@ -33,7 +34,8 @@ public class Get_Function extends BaseSetingApi {
     boolean mnet;
     ProgressDialog progressDialog;
 
-    public Get_Function(boolean net, MVP_Function.ProvidedPresenterOps ppo, Context context, Activity activity, ViewPager viewPager, CardPagerAdapter_F cardAdapter, ShadowTransformer shadowTransformer) {
+    public Get_Function(int id_function, boolean net, MVP_Function.ProvidedPresenterOps ppo, Context context, Activity activity, ViewPager viewPager, CardPagerAdapter_F cardAdapter, ShadowTransformer shadowTransformer) {
+        _id_function = id_function;
         function_presenter = ppo;
         mactivity = activity;
         _context = context;
@@ -79,7 +81,7 @@ public class Get_Function extends BaseSetingApi {
                             Q1 = Q1.substring(0, Q1.trim().length() - 1).concat(";");
                             function_presenter.Insert_Function(Q1);
                         }
-                        Set_Function set_function = new Set_Function(function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
+                        Set_Function set_function = new Set_Function(_id_function,function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
                         set_function.load();
                         progressDialog.dismiss();
 
@@ -97,7 +99,7 @@ public class Get_Function extends BaseSetingApi {
                     new ErrorVolley(_context).Error(volleyError,"get");
                     if (volleyError.networkResponse == null) {
                         if (volleyError.getClass().equals(TimeoutError.class)) {
-                            Set_Function set_function = new Set_Function(function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
+                            Set_Function set_function = new Set_Function(_id_function,function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
                             set_function.load();
                         }
                     }
@@ -106,7 +108,7 @@ public class Get_Function extends BaseSetingApi {
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{
-            Set_Function set_function = new Set_Function(function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
+            Set_Function set_function = new Set_Function(_id_function,function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
             set_function.load();
         }
         return null;

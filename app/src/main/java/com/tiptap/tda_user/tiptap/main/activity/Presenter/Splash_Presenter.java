@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.Presenter;
 import android.content.Context;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Splash;
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class Splash_Presenter
         implements MVP_Splash.ProvidedPresenterOps, MVP_Splash.RequiredPresenterOps{
@@ -44,6 +45,16 @@ public class Splash_Presenter
     @Override
     public int getCount_User() {
         return mModel.getCount_User();
+    }
+
+    @Override
+    public int Id_Lesson() {
+        return mModel.Id_Lesson();
+    }
+
+    @Override
+    public int Id_Function(int lid) {
+        return mModel.Id_Function(lid);
     }
 
     /*  ------ RequiredPresenterOps ------  */
