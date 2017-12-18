@@ -18,7 +18,7 @@ public class Act_11 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_11);
+        setContentView(R.layout.a4);
 
         txt1 = (TextView)findViewById(R.id.txt1);
         txt2 = (TextView)findViewById(R.id.txt2);

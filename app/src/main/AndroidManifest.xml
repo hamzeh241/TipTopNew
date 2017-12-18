@@ -98,5 +98,9 @@
             android:name=".main.activity.view.activity.Act_32"/>
         <activity
             android:name=".main.activity.view.activity.Act_33"/>
+        <activity
+            android:name=".main.activity.view.activity.Act_34"/>
+        <activity
+            android:name=".main.activity.view.activity.Act_35"/>
     </application>
 </manifest>

@@ -18,8 +18,7 @@ import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
 
 import javax.inject.Inject;
 
-public class Language{
-        //extends AppCompatActivity implements MVP_Language
+public class Language extends AppCompatActivity {//implements MVP_Language
        // .RequiredViewOps {
 
   /*  private CircleMenu circleMenu;
@@ -30,12 +29,13 @@ public class Language{
 
     private static final String TAG = Language.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), Language.class.getName());
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.language);
-
+    }
+/*
         setupViews();
         setupMVP();
 

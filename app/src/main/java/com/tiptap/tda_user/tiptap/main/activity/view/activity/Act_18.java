@@ -24,7 +24,7 @@ public class Act_18 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_18);
+        setContentView(R.layout.a26);
 
         initRecView();
 

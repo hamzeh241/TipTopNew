@@ -15,7 +15,7 @@ public class Act_19 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_19);
+        setContentView(R.layout.a15);
 
         next = (Button)findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {

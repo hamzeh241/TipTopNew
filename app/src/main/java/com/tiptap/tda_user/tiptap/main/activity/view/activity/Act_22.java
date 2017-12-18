@@ -15,7 +15,7 @@ public class Act_22 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_22);
+        setContentView(R.layout.a32);
 
 
         next = (Button)findViewById(R.id.next);

@@ -12,19 +12,6 @@
         android:layout_weight="0.5"
         android:gravity="center">
 
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="false"
-            android:cropToPadding="false"
-            android:scaleType="fitCenter"
-            android:src="@drawable/a3" />
-
     </TableRow>
 
     <TableRow
@@ -43,27 +30,12 @@
             android:layout_marginRight="10dp"
             android:weightSum="1">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_margin="6dp">
-
-                <ImageButton
-                    android:id="@+id/play"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/listen"
-                    android:layout_marginBottom="10dp" />
-
-                <Button
-                    android:id="@+id/voice"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/mic" />
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/voice"
+                android:layout_width="70dp"
+                android:layout_height="65dp"
+                android:background="@drawable/listen"
+                android:layout_weight="0.1" />
 
             <TextView
                 android:id="@+id/txt"

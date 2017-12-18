@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.tiptap.tda_user.tiptap.R;
 
 public class Act_4 extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class Act_4 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_4);
+        setContentView(R.layout.a19);
 
         next = (Button)findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {

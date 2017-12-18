@@ -1,5 +1,6 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,7 +22,7 @@ public class Act_33 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Act_33.this.finish();
-                //startActivity(new Intent(Act_33.this, Act_34.class));
+                startActivity(new Intent(Act_33.this, Act_34.class));
             }
         });
     }
