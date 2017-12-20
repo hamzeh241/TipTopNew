@@ -42,7 +42,7 @@ public class Get_ActivityDetail extends BaseSetingApi {
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "ActivityDetail?id="+_id+"rowVersion=0x0", null, new Response.Listener<JSONArray>() {
+                    url+ "ActivityDetail?id="+_id+"&rowVersion=0x0", null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {

@@ -35,72 +35,72 @@
         <activity
             android:name=".main.activity.view.activity.Act_1"/>
         <activity
-            android:name=".main.activity.view.activity.Act_2"/>
+            android:name=".main.activity.view.activity.A34"/>
         <activity
-            android:name=".main.activity.view.activity.Act_3"/>
+            android:name=".main.activity.view.activity.A27"/>
         <activity
-            android:name=".main.activity.view.activity.Act_4"/>
+            android:name=".main.activity.view.activity.A19"/>
         <activity
-            android:name=".main.activity.view.activity.Act_5"/>
+            android:name=".main.activity.view.activity.End"/>
         <activity
-            android:name=".main.activity.view.activity.Act_6"/>
+            android:name=".main.activity.view.activity.A7"/>
         <activity
-            android:name=".main.activity.view.activity.Act_7"/>
+            android:name=".main.activity.view.activity.A37"/>
         <activity
-            android:name=".main.activity.view.activity.Act_8"/>
+            android:name=".main.activity.view.activity.A8"/>
         <activity
-            android:name=".main.activity.view.activity.Act_9"/>
+            android:name=".main.activity.view.activity.A39"/>
         <activity
-            android:name=".main.activity.view.activity.Act_10"/>
+            android:name=".main.activity.view.activity.A28"/>
         <activity
-            android:name=".main.activity.view.activity.Act_11"/>
+            android:name=".main.activity.view.activity.A4"/>
         <activity
-            android:name=".main.activity.view.activity.Act_12"/>
+            android:name=".main.activity.view.activity.A6"/>
         <activity
-            android:name=".main.activity.view.activity.Act_13"/>
+            android:name=".main.activity.view.activity.A30"/>
         <activity
-            android:name=".main.activity.view.activity.Act_14"/>
+            android:name=".main.activity.view.activity.A29"/>
         <activity
-            android:name=".main.activity.view.activity.Act_15"/>
+            android:name=".main.activity.view.activity.A20"/>
         <activity
-            android:name=".main.activity.view.activity.Act_16"/>
+            android:name=".main.activity.view.activity.A24"/>
         <activity
-            android:name=".main.activity.view.activity.Act_17"/>
+            android:name=".main.activity.view.activity.A18"/>
         <activity
-            android:name=".main.activity.view.activity.Act_18"/>
+            android:name=".main.activity.view.activity.A26"/>
         <activity
-            android:name=".main.activity.view.activity.Act_19"/>
+            android:name=".main.activity.view.activity.A15"/>
         <activity
-            android:name=".main.activity.view.activity.Act_20"/>
+            android:name=".main.activity.view.activity.A35"/>
         <activity
-            android:name=".main.activity.view.activity.Act_21"/>
+            android:name=".main.activity.view.activity.A31"/>
         <activity
-            android:name=".main.activity.view.activity.Act_22"/>
+            android:name=".main.activity.view.activity.A32"/>
         <activity
-            android:name=".main.activity.view.activity.Act_23"/>
+            android:name=".main.activity.view.activity.A22"/>
         <activity
-            android:name=".main.activity.view.activity.Act_24"/>
+            android:name=".main.activity.view.activity.A41"/>
         <activity
-            android:name=".main.activity.view.activity.Act_25"/>
+            android:name=".main.activity.view.activity.A25"/>
         <activity
-            android:name=".main.activity.view.activity.Act_26"/>
+            android:name=".main.activity.view.activity.A40"/>
         <activity
-            android:name=".main.activity.view.activity.Act_27"/>
+            android:name=".main.activity.view.activity.A33"/>
         <activity
-            android:name=".main.activity.view.activity.Act_28"/>
+            android:name=".main.activity.view.activity.A5"/>
         <activity
-            android:name=".main.activity.view.activity.Act_29"/>
+            android:name=".main.activity.view.activity.A38"/>
         <activity
-            android:name=".main.activity.view.activity.Act_30"/>
+            android:name=".main.activity.view.activity.A42"/>
         <activity
-            android:name=".main.activity.view.activity.Act_31"/>
+            android:name=".main.activity.view.activity.A43"/>
         <activity
             android:name=".main.activity.view.activity.Act_32"/>
         <activity
-            android:name=".main.activity.view.activity.Act_33"/>
+            android:name=".main.activity.view.activity.A44"/>
         <activity
-            android:name=".main.activity.view.activity.Act_34"/>
+            android:name=".main.activity.view.activity.A3"/>
         <activity
-            android:name=".main.activity.view.activity.Act_35"/>
+            android:name=".main.activity.view.activity.A9"/>
     </application>
 </manifest>

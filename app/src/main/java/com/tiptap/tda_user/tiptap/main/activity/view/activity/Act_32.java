@@ -21,7 +21,7 @@ public class Act_32 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Act_32.this.finish();
-                startActivity(new Intent(Act_32.this, Act_33.class));
+                startActivity(new Intent(Act_32.this, A44.class));
             }
         });
     }

@@ -19,8 +19,38 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Activity;
 import com.tiptap.tda_user.tiptap.main.activity.Api.Get_ActivityDetail;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.Act_1;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.Act_8;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A18;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A19;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A20;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A22;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A24;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A25;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A27;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A28;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A29;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A3;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A30;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A31;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A32;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A33;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A34;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A35;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A37;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A38;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A39;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A4;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A40;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A41;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A42;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A43;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A44;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A5;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A6;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A8;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A9;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,13 +157,13 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                 int number_id = lesson_presenter.lesson_number(_id);
                 if(number_lesson <= number_id || number_lesson == 1){
 
-                    int id_activity_type = lesson_presenter.activity_Type(id_lesson);
-
                     new Get_Activity(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
                     Toast.makeText(_context, lesson_presenter.getCount_Activity(id_lesson) + " : activity", Toast.LENGTH_LONG).show();
 
                     new Get_ActivityDetail(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
-                    Toast.makeText(_context, lesson_presenter.getCount_Activity(id_lesson) + " : activity_DETAIL", Toast.LENGTH_LONG).show();
+                    Toast.makeText(_context, lesson_presenter.getCount_ActivityDetail(id_lesson) + " : activity_DETAIL", Toast.LENGTH_LONG).show();
+
+                    int id_activity_type = lesson_presenter.activity_Type(id_lesson);
 
                     go_activity(view, id_activity_type);
                 }
@@ -159,7 +189,153 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
     }
 
     public void go_activity(View view, int id_at){
-        //String act = "A"+ id_at;
-        //view.getContext().startActivity(new Intent(view.getContext(), act.class));
+        switch (id_at){
+
+            case 1: break;
+            case 2: break;
+
+            case 3:
+                view.getContext().startActivity(new Intent(view.getContext(), A3.class));
+                break;
+
+            case 4:
+                view.getContext().startActivity(new Intent(view.getContext(), A4.class));
+                break;
+
+            case 5:
+                view.getContext().startActivity(new Intent(view.getContext(), A5.class));
+                break;
+
+            case 6:
+                view.getContext().startActivity(new Intent(view.getContext(), A6.class));
+                break;
+
+            case 7:
+                view.getContext().startActivity(new Intent(view.getContext(), A7.class));
+                break;
+
+            case 8:
+                view.getContext().startActivity(new Intent(view.getContext(), A8.class));
+                break;
+
+            case 9:
+                view.getContext().startActivity(new Intent(view.getContext(), A9.class));
+                break;
+
+            case 10: break;
+            case 11: break;
+            case 12: break;
+            case 13: break;
+            case 14: break;
+
+            case 15:
+                view.getContext().startActivity(new Intent(view.getContext(), A15.class));
+                break;
+
+            case 16: break;
+            case 17: break;
+
+            case 18:
+                view.getContext().startActivity(new Intent(view.getContext(), A18.class));
+                break;
+
+            case 19:
+                view.getContext().startActivity(new Intent(view.getContext(), A19.class));
+                break;
+
+            case 20:
+                view.getContext().startActivity(new Intent(view.getContext(), A20.class));
+                break;
+
+            case 21: break;
+
+            case 22:
+                view.getContext().startActivity(new Intent(view.getContext(), A22.class));
+                break;
+
+            case 23: break;
+
+            case 24:
+                view.getContext().startActivity(new Intent(view.getContext(), A24.class));
+                break;
+
+            case 25:
+                view.getContext().startActivity(new Intent(view.getContext(), A25.class));
+                break;
+
+            case 26:
+                view.getContext().startActivity(new Intent(view.getContext(), A26.class));
+                break;
+
+            case 27:
+                view.getContext().startActivity(new Intent(view.getContext(), A27.class));
+                break;
+
+            case 28:
+                view.getContext().startActivity(new Intent(view.getContext(), A28.class));
+                break;
+
+            case 29:
+                view.getContext().startActivity(new Intent(view.getContext(), A29.class));
+                break;
+
+            case 30:
+                view.getContext().startActivity(new Intent(view.getContext(), A30.class));
+                break;
+
+            case 31:
+                view.getContext().startActivity(new Intent(view.getContext(), A31.class));
+                break;
+
+            case 32:
+                view.getContext().startActivity(new Intent(view.getContext(), A32.class));
+                break;
+
+            case 33:
+                view.getContext().startActivity(new Intent(view.getContext(), A33.class));
+                break;
+
+            case 34:
+                view.getContext().startActivity(new Intent(view.getContext(), A34.class));
+                break;
+
+            case 35:
+                view.getContext().startActivity(new Intent(view.getContext(), A35.class));
+                break;
+
+            case 36: break;
+
+            case 37:
+                view.getContext().startActivity(new Intent(view.getContext(), A37.class));
+                break;
+
+            case 38:
+                view.getContext().startActivity(new Intent(view.getContext(), A38.class));
+                break;
+
+            case 39:
+                view.getContext().startActivity(new Intent(view.getContext(), A39.class));
+                break;
+
+            case 40:
+                view.getContext().startActivity(new Intent(view.getContext(), A40.class));
+                break;
+
+            case 41:
+                view.getContext().startActivity(new Intent(view.getContext(), A41.class));
+                break;
+
+            case 42:
+                view.getContext().startActivity(new Intent(view.getContext(), A42.class));
+                break;
+
+            case 43:
+                view.getContext().startActivity(new Intent(view.getContext(), A43.class));
+                break;
+
+            case 44:
+                view.getContext().startActivity(new Intent(view.getContext(), A44.class));
+                break;
+        }
     }
 }

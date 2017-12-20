@@ -44,7 +44,7 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
                 TbLanguage app = new TbLanguage();
                 app.set_id(Integer.parseInt(cursor.getString(0)));
                 app.setLanguage(cursor.getString(1));
-                app.setRowVersion(cursor.getString(2));
+                //app.setRowVersion(cursor.getString(2));
                 LList.add(app);
                 cursor.moveToNext();
             }

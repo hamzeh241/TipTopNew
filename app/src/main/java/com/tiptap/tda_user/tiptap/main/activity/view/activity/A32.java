@@ -8,21 +8,22 @@ import android.widget.Button;
 
 import com.tiptap.tda_user.tiptap.R;
 
-public class Act_1 extends AppCompatActivity {
+public class A32 extends AppCompatActivity {
 
     Button next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout._1_);
+        setContentView(R.layout.a32);
+
 
         next = (Button)findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Act_1.this.finish();
-                startActivity(new Intent(Act_1.this, A34.class));
+                A32.this.finish();
+                startActivity(new Intent(A32.this, A22.class));
             }
         });
     }
