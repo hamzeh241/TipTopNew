@@ -16,10 +16,20 @@ public class A3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3);
 
+        // have activity & activity detail
+        // get data
+        // set to view
+
+
         next = (Button) findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // answer is crrect or false
+                // show message
+                // who is the next
+                // go next
                 A3.this.finish();
                 startActivity(new Intent(A3.this, A9.class));
             }

@@ -56,7 +56,6 @@ public class Splash
                         fid = mPresenter.Id_Function(lid);
                     }
                     Function.id_function = fid;
-                    Lesson.id_lesson = lid;
 
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this, Function.class));

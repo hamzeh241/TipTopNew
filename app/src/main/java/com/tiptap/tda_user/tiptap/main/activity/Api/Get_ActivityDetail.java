@@ -3,6 +3,8 @@ package com.tiptap.tda_user.tiptap.main.activity.Api;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -50,18 +52,17 @@ public class Get_ActivityDetail extends BaseSetingApi {
                     try {
                         int maxId = lesson_presenter.getMaxId_Activity();
 
-                        String Q1 = "insert into TbActivityDetail (_id, Id_Lesson, Path1, Path2, Id_Activity, Title1, Title2, IsAnswer, OrferAnswer, OrderPreview, RowVersion) values ";
+                        String Q1 = "insert into TbActivityDetail (_id, Path1, Path2, Id_Activity, Title1, Title2, IsAnswer, OrferAnswer, OrderPreview, RowVersion) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
                             String id = jsonObject.getString("C_id");
-                            String idlesson = _id+"";
-                            String orderperview = jsonObject.getString("OrderPreview");
-                            String idactivity = jsonObject.getString("Id_Activity");
-                            String orferanswer = jsonObject.getString("OrferAnswer");
-                            String title1 = jsonObject.getString("");
-                            String title2 = jsonObject.getString("");
-                            String path1 = jsonObject.getString("");
-                            String path2 = jsonObject.getString("");
+                            String orderperview = jsonObject.getString ("OrderPreview");
+                            String idactivity = jsonObject.getString ("Id_Activity");
+                            String orferanswer = jsonObject.getString ("OrferAnswer");
+                            String title1 = jsonObject.getString("Title1");
+                            String title2 = jsonObject.getString("Title2");
+                            String path1 = jsonObject.getString("Path1");
+                            String path2 = jsonObject.getString("Path2");
                             String isanswer = jsonObject.getString("IsAnswer");
                             String rowversion = "1";
                             int Id = Integer.parseInt(id);
@@ -69,12 +70,12 @@ public class Get_ActivityDetail extends BaseSetingApi {
                             // insert
                             if(Id>maxId) {
                                 insert = true;
-                                Q1 = Q1.concat("('" + id + "','" + idlesson + "','" + path1 + "','" + path2 + "','" + idactivity + "','" + title1 + "','" + title2 + "','" + isanswer + "','" + orferanswer + "','" + orderperview + "','" + rowversion + "')," );
+                                Q1 = Q1.concat("('" + id + "','" + path1 + "','" + path2 + "','" + idactivity + "','" + title1 + "','" + title2 + "','" + isanswer + "','" + orferanswer + "','" + orderperview + "','" + rowversion + "')," );
                             }
 
                             // update
                             else {
-                                String Q2="update TbActivityDetail set Id_Lesson='"+idlesson+"',Path1='"+path1+"',Path2='"+path2+"',Id_Activity='"+idactivity+"',Title1='"+title1+"',Title2='"+title2+"',IsAnswer='"+isanswer+"',OrferAnswer='"+orferanswer+"',OrderPreview='"+orderperview+"',RowVersion='"+rowversion+"' where _id="+Id;
+                                String Q2="update TbActivityDetail set Path1='"+path1+"',Path2='"+path2+"',Id_Activity='"+idactivity+"',Title1='"+title1+"',Title2='"+title2+"',IsAnswer='"+isanswer+"',OrferAnswer='"+orferanswer+"',OrderPreview='"+orderperview+"',RowVersion='"+rowversion+"' where _id="+Id;
                                 lesson_presenter.Insert_Activity(Q2);
                             }
                         }
@@ -85,6 +86,7 @@ public class Get_ActivityDetail extends BaseSetingApi {
                         progressDialog.dismiss();
 
                     } catch (JSONException e) {
+                        Toast.makeText(_context, "JSONException : "+ e.getCause()+e.getMessage() , Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                         e.printStackTrace();
                         new PostError(_context,e.getMessage(), getMethodName()).postError();

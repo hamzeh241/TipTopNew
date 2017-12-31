@@ -18,7 +18,7 @@
             android:id="@+id/play"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/listen"
+            android:src="@drawable/play"
             android:gravity="center" />
 
     </TableRow>

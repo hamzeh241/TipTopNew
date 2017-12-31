@@ -12,12 +12,26 @@
         android:gravity="center"
         android:weightSum="1">
 
-        <ImageView
-            android:id="@+id/play"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/listen"
-            android:gravity="center" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1" >
+
+            <Button
+                android:id="@+id/play"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/play"
+                android:layout_margin="5dp"
+                android:layout_gravity="center" />
+
+            <SeekBar
+                android:id="@+id/seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
     </TableRow>
 
@@ -53,8 +67,9 @@
             android:id="@+id/next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="countinue"
-            android:background="@drawable/btn"
+            android:text="check"
+            android:textColor="#919396"
+            android:background="@drawable/btn_def"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="8dp"

@@ -24,6 +24,7 @@ public interface MVP_Lesson {
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
         int lesson_number(int lid);
+        int Id_Lesson();
 
         // activity
         String getMaxRowV_Activity();
@@ -36,9 +37,9 @@ public interface MVP_Lesson {
         // activity_detail
         String getMaxRowV_ActivityDetail();
         int getMaxId_ActivityDetail();
-        int getCount_ActivityDetail(int lid);
+        int getCount_ActivityDetail();
         void Insert_ActivityDetail(String Q);
-        List<TbActivityDetail> getListActivityDetail(int lid);
+        List<TbActivityDetail> getListActivityDetail(int aid);
     }
 
     interface RequiredPresenterOps {
@@ -56,20 +57,21 @@ public interface MVP_Lesson {
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
         int lesson_number(int lid);
+        int Id_Lesson();
 
         // activity
         String getMaxRowV_Activity();
         int getMaxId_Activity();
         int getCount_Activity(int lid);
         void Insert_Activity(String Q);
-        List<TbActivity> getListActivity(int lid);
+        List<TbActivity> getListActivity(int aid);
         int activity_Type(int lid);
 
         // activity_detail
         String getMaxRowV_ActivityDetail();
         int getMaxId_ActivityDetail();
-        int getCount_ActivityDetail(int fid);
+        int getCount_ActivityDetail();
         void Insert_ActivityDetail(String Q);
-        List<TbActivityDetail> getListActivityDetail(int lid);
+        List<TbActivityDetail> getListActivityDetail(int aid);
     }
 }

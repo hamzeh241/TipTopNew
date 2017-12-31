@@ -76,6 +76,11 @@ public class Lesson_Presenter
     }
 
     @Override
+    public int Id_Lesson() {
+        return mModel.Id_Lesson();
+    }
+
+    @Override
     public String getMaxRowV_Activity() {
         return mModel.getMaxRowV_Activity();
     }
@@ -116,8 +121,8 @@ public class Lesson_Presenter
     }
 
     @Override
-    public int getCount_ActivityDetail(int lid) {
-        return mModel.getCount_ActivityDetail(lid);
+    public int getCount_ActivityDetail() {
+        return mModel.getCount_ActivityDetail();
     }
 
     @Override
@@ -126,8 +131,8 @@ public class Lesson_Presenter
     }
 
     @Override
-    public List<TbActivityDetail> getListActivityDetail(int lid) {
-        return mModel.getListActivityDetail(lid);
+    public List<TbActivityDetail> getListActivityDetail(int aid) {
+        return mModel.getListActivityDetail(aid);
     }
 
      /*  ------ RequiredPresenterOps ------  */

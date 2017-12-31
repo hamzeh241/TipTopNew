@@ -158,14 +158,11 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                 if(number_lesson <= number_id || number_lesson == 1){
 
                     new Get_Activity(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
-                    Toast.makeText(_context, lesson_presenter.getCount_Activity(id_lesson) + " : activity", Toast.LENGTH_LONG).show();
 
                     new Get_ActivityDetail(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
-                    Toast.makeText(_context, lesson_presenter.getCount_ActivityDetail(id_lesson) + " : activity_DETAIL", Toast.LENGTH_LONG).show();
 
                     int id_activity_type = lesson_presenter.activity_Type(id_lesson);
-
-                    go_activity(view, id_activity_type);
+                    go_activity(view, id_activity_type, id_lesson);
                 }
 
             }
@@ -188,37 +185,51 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
-    public void go_activity(View view, int id_at){
+    public void go_activity(View view, int id_at, int id_l){
         switch (id_at){
 
             case 1: break;
             case 2: break;
 
             case 3:
+                //A3.idlesson = id_l;
+                //A3.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A3.class));
                 break;
 
             case 4:
+                //A4.idlesson = id_l;
+                //A4.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A4.class));
                 break;
 
             case 5:
+                //A5.idlesson = id_l;
+                //A5.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A5.class));
                 break;
 
             case 6:
+                //A6.idlesson = id_l;
+                //A6.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A6.class));
                 break;
 
             case 7:
+                A7.idlesson = id_l;
+                A7.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A7.class));
                 break;
 
             case 8:
+                A8.idlesson = id_l;
+                A8.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A8.class));
                 break;
 
             case 9:
+                //A9.idlesson = id_l;
+                //A9.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A9.class));
                 break;
 
@@ -229,6 +240,8 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             case 14: break;
 
             case 15:
+                //A15.idlesson = id_l;
+                //A15.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A15.class));
                 break;
 
@@ -236,104 +249,152 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             case 17: break;
 
             case 18:
+                //A18.idlesson = id_l;
+                //A18.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A18.class));
                 break;
 
             case 19:
+                //A19.idlesson = id_l;
+                //A19.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A19.class));
                 break;
 
             case 20:
+                //A20.idlesson = id_l;
+                //A20.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A20.class));
                 break;
 
             case 21: break;
 
             case 22:
+                //A22.idlesson = id_l;
+                //A22.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A22.class));
                 break;
 
             case 23: break;
 
             case 24:
+                //A24.idlesson = id_l;
+                //A24.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A24.class));
                 break;
 
             case 25:
+                //A25.idlesson = id_l;
+                //A25.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A25.class));
                 break;
 
             case 26:
+                //A26.idlesson = id_l;
+                //A26.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A26.class));
                 break;
 
             case 27:
+                //A27.idlesson = id_l;
+                //A27.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A27.class));
                 break;
 
             case 28:
+                A28.idlesson = id_l;
+                A28.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A28.class));
                 break;
 
             case 29:
+                //A29.idlesson = id_l;
+                //A29.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A29.class));
                 break;
 
             case 30:
+                //A30.idlesson = id_l;
+                //A30.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A30.class));
                 break;
 
             case 31:
+                //A31.idlesson = id_l;
+                //A31.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A31.class));
                 break;
 
             case 32:
+                //A32.idlesson = id_l;
+                //A32.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A32.class));
                 break;
 
             case 33:
+                //A33.idlesson = id_l;
+                //A33.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A33.class));
                 break;
 
             case 34:
+                //A34.idlesson = id_l;
+                //A34.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A34.class));
                 break;
 
             case 35:
+                //A35.idlesson = id_l;
+                //A35.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A35.class));
                 break;
 
             case 36: break;
 
             case 37:
+                //A37.idlesson = id_l;
+                //A37.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A37.class));
                 break;
 
             case 38:
+                //A38.idlesson = id_l;
+                //A38.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A38.class));
                 break;
 
             case 39:
+                //A39.idlesson = id_l;
+                //A39.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A39.class));
                 break;
 
             case 40:
+                //A40.idlesson = id_l;
+                //A40.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A40.class));
                 break;
 
             case 41:
+                //A41.idlesson = id_l;
+                //A41.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A41.class));
                 break;
 
             case 42:
+                //A42.idlesson = id_l;
+                //A42.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A42.class));
                 break;
 
             case 43:
+                //A43.idlesson = id_l;
+                //A43.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A43.class));
                 break;
 
             case 44:
+                //A44.idlesson = id_l;
+                //A44.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A44.class));
                 break;
         }

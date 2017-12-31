@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public class Lesson
         extends AppCompatActivity implements View.OnClickListener, MVP_Lesson.RequiredViewOps{
 
-    public static int id_lesson;
+    int id_lesson;
     public static int id_function;
     private ViewPager mViewPager;
     private CardPagerAdapter_L mCardAdapter;
@@ -42,6 +42,8 @@ public class Lesson
 
         setupViews();
         setupMVP();
+
+        id_lesson = mPresenter.Id_Lesson();
 
         new Get_Lesson(id_function, id_lesson, haveNetworkConnection(), mPresenter, getAppContext(),
                 Lesson.this, mViewPager, mCardAdapter, mCardShadowTransformer);

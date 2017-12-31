@@ -216,7 +216,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
 
     @Override
     public String getMaxRowV_ActivityDetail() {
-        String q="SELECT MAX(RowVersion) as RowVersion FROM TbActivityDetail";
+        String q="SELECT MAX(RowVersion) as RowVersion FROM [TbActivityDetail]";
         Cursor cursor=dbAdapter.ExecuteQ(q);
         int count=cursor.getCount();
         cursor.moveToFirst();
@@ -231,7 +231,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
 
     @Override
     public int getMaxId_ActivityDetail() {
-        String q="SELECT [_id] FROM TbActivityDetail ORDER BY _id DESC LIMIT 1";
+        String q="SELECT [_id] FROM [TbActivityDetail] ORDER BY [_id] DESC LIMIT 1";
         Cursor cursor=dbAdapter.ExecuteQ(q);
         int count=cursor.getCount();
         cursor.moveToFirst();
@@ -243,8 +243,8 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
     }
 
     @Override
-    public int getCount_ActivityDetail(int aid) {
-        String q="SELECT Count([_id]) as x FROM TbActivityDetail where Id_Activity = "+ aid;
+    public int getCount_ActivityDetail() {
+        String q="SELECT Count([_id]) as x FROM TbActivityDetail";
         Cursor cursor=dbAdapter.ExecuteQ(q);
         int count=cursor.getCount();
         cursor.moveToFirst();
@@ -281,12 +281,25 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 app.setRowVersion(cursor.getString(9));
                 ADList.add(app);
                 cursor.moveToNext();
-            }}
-        catch (Exception ex)
-        {
+            }
+        } catch (Exception ex) {
             new PostError(context,ex.getMessage(),getMethodName()).postError();
-
         }
         return ADList;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public int Id_Lesson() {
+        String q = "SELECT [Id_Lesson] FROM [aspnet_Users]";
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
+        int id = 0;
+        for (int i = 0; i < count; i++) {
+            id = cursor.getInt(0);
+        }
+        return id;
     }
 }
