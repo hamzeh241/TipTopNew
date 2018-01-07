@@ -19,6 +19,11 @@ public interface MVP_A28 {
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
         int max_Activitynumber(int id_lesson);
+        List<Integer> lesson();
+        void update_idlesson(int id_lesson);
+
+        // user
+        int now_IdLesson();
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);
@@ -35,6 +40,11 @@ public interface MVP_A28 {
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
         int max_Activitynumber(int id_lesson);
+        List<Integer> lesson();
+        void update_idlesson(int id_lesson);
+
+        // user
+        int now_IdLesson();
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);

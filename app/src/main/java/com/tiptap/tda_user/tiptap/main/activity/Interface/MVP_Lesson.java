@@ -24,7 +24,9 @@ public interface MVP_Lesson {
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
         int lesson_number(int lid);
+        int lesson_id(int fid , int lid);
         int Id_Lesson();
+        void update_idlesson(int id_lesson);
 
         // activity
         String getMaxRowV_Activity();
@@ -57,7 +59,9 @@ public interface MVP_Lesson {
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
         int lesson_number(int lid);
+        int lesson_id(int fid , int lid);
         int Id_Lesson();
+        void update_idlesson(int id_lesson);
 
         // activity
         String getMaxRowV_Activity();

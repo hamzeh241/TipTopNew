@@ -33,7 +33,7 @@ public class Set_Lesson extends BaseSetingApi {
     public void load() {
         if(lesson_presenter.getCount_Lesson(_id) != 0){
             for (int i = 0; i < lesson_presenter.getCount_Lesson(_id); i++) {
-                mCardAdapter.addCardItem(lesson_presenter, _lid , _context, _activity, new CardItem(lesson_presenter.getListLesson(_id).get(i).get_id(),lesson_presenter.getListLesson(_id).get(i).getLessonNumber()+""));
+                mCardAdapter.addCardItem(lesson_presenter, _id, _lid , _context, _activity, new CardItem(lesson_presenter.getListLesson(_id).get(i).get_id(),lesson_presenter.getListLesson(_id).get(i).getLessonNumber()+""));
             }
             mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
             mCardShadowTransformer.enableScaling(true);

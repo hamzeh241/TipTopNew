@@ -56,6 +56,21 @@ public class A7_Presenter
     }
 
     @Override
+    public List<Integer> lesson() {
+        return mModel.lesson();
+    }
+
+    @Override
+    public void update_idlesson(int id_lesson) {
+        mModel.update_idlesson(id_lesson);
+    }
+
+    @Override
+    public int now_IdLesson() {
+        return mModel.now_IdLesson();
+    }
+
+    @Override
     public List<TbActivityDetail> getListActivityDetail(int id_activity) {
         return mModel.getListActivityDetail(id_activity);
     }

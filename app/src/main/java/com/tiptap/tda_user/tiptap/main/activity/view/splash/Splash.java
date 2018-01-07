@@ -14,6 +14,7 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A39;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
@@ -45,6 +46,7 @@ public class Splash
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 if (count == 0){
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this, Login.class));

@@ -26,10 +26,9 @@ public class A19_Module {
     @Provides
     @ActivityScope
     MVP_A19.ProvidedPresenterOps providedPresenterOps() {
-       // A19_Presenter presenter = new A19_Presenter( activity );
-        //A19_Model model = new A19_Model( presenter , activity );
-       // presenter.setModel( model );
-        //return presenter;
-        return null;
+        A19_Presenter presenter = new A19_Presenter( activity );
+        A19_Model model = new A19_Model( presenter , activity );
+        presenter.setModel( model );
+        return presenter;
     }
 }

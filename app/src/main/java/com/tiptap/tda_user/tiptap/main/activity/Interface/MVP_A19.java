@@ -19,9 +19,15 @@ public interface MVP_A19 {
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
         int max_Activitynumber(int id_lesson);
+        List<Integer> lesson();
+        void update_idlesson(int id_lesson);
+
+        // user
+        int now_IdLesson();
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);
+        int count_ActivityDetail(int id_activity);
     }
 
     interface RequiredPresenterOps {
@@ -35,8 +41,14 @@ public interface MVP_A19 {
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
         int max_Activitynumber(int id_lesson);
+        List<Integer> lesson();
+        void update_idlesson(int id_lesson);
+
+        // user
+        int now_IdLesson();
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);
+        int count_ActivityDetail(int id_activity);
     }
 }

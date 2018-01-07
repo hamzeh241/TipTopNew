@@ -123,6 +123,19 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
         return num;
     }
 
+    @Override
+    public int lesson_id(int fid , int lid) {
+        String q="SELECT _id FROM TbLesson where Id_Function = "+ fid + " and LessonNumber = " + lid;
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        int num = 0;
+        for (int i = 0; i < count; i++) {
+            num=cursor.getInt(0);
+        }
+        return num;
+    }
+
     /////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -301,5 +314,13 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
             id = cursor.getInt(0);
         }
         return id;
+    }
+
+    @Override
+    public void update_idlesson(int id_lesson) {
+        String q = "update [aspnet_Users] set [Id_Lesson] = "+id_lesson;
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
     }
 }

@@ -68,6 +68,11 @@ public class A34_Presenter
     }
 
     @Override
+    public int now_IdLesson() {
+        return mModel.now_IdLesson();
+    }
+
+    @Override
     public List<TbActivityDetail> getListActivityDetail(int id_activity) {
         return mModel.getListActivityDetail(id_activity);
     }

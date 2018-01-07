@@ -132,4 +132,17 @@ public class A34_Model implements MVP_A34.ProvidedModelOps {
         int count = cursor.getCount();
         cursor.moveToFirst();
     }
+
+    @Override
+    public int now_IdLesson() {
+        String q="SELECT [Id_Lesson] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        int id=0;
+        for (int i = 0; i < count; i++) {
+            id=cursor.getInt(0);
+        }
+        return id;
+    }
 }

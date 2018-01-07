@@ -4,23 +4,24 @@ import android.content.Context;
 import android.database.Cursor;
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A39;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A4;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.ArrayList;
 import java.util.List;
+
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
-public class A39_Model implements MVP_A39.ProvidedModelOps {
+public class A4_Model implements MVP_A4.ProvidedModelOps {
 
-    private MVP_A39.RequiredPresenterOps mPresenter;
+    private MVP_A4.RequiredPresenterOps mPresenter;
     DBAdapter dbAdapter;
     Context context;
     private TbActivity act;
     private List<TbActivityDetail> ad_List;
     List<Integer> less;
 
-    public A39_Model(MVP_A39.RequiredPresenterOps presenter, Context _conContext) {
+    public A4_Model(MVP_A4.RequiredPresenterOps presenter, Context _conContext) {
         mPresenter = presenter;
         context = _conContext;
         dbAdapter = new DBAdapter(context);
@@ -142,5 +143,18 @@ public class A39_Model implements MVP_A39.ProvidedModelOps {
             new PostError(context, ex.getMessage(), getMethodName()).postError();
         }
         return ad_List;
+    }
+
+    @Override
+    public int count_ActivityDetail(int id_activity) {
+        String q="SELECT Count([_id]) as x FROM TbActivityDetail where Id_Activity = " + id_activity;
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        int id=0;
+        for (int i = 0; i < count; i++) {
+            id=cursor.getInt(0);
+        }
+        return id;
     }
 }

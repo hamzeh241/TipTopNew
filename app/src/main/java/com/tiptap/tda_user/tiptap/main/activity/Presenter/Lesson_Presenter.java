@@ -76,8 +76,18 @@ public class Lesson_Presenter
     }
 
     @Override
+    public int lesson_id(int fid , int lid) {
+        return mModel.lesson_id(fid ,lid);
+    }
+
+    @Override
     public int Id_Lesson() {
         return mModel.Id_Lesson();
+    }
+
+    @Override
+    public void update_idlesson(int id_lesson) {
+        mModel.update_idlesson(id_lesson);
     }
 
     @Override

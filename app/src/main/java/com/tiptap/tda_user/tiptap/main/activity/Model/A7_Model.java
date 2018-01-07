@@ -18,12 +18,14 @@ public class A7_Model implements MVP_A7.ProvidedModelOps {
     Context context;
     private TbActivity act;
     private List<TbActivityDetail> ad_List;
+    List<Integer> less;
 
     public A7_Model(MVP_A7.RequiredPresenterOps presenter, Context _conContext) {
         mPresenter = presenter;
         context = _conContext;
         dbAdapter = new DBAdapter(context);
         ad_List = new ArrayList<>();
+        less = new ArrayList<>();
     }
 
     @Override
@@ -66,6 +68,44 @@ public class A7_Model implements MVP_A7.ProvidedModelOps {
     @Override
     public int max_Activitynumber(int id_lesson) {
         String q="SELECT MAX(ActivityNumber) as ActivityNumber FROM TbActivity where Id_Lesson = "+ id_lesson;
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        int id=0;
+        for (int i = 0; i < count; i++) {
+            id=cursor.getInt(0);
+        }
+        return id;
+    }
+
+    @Override
+    public List<Integer> lesson() {
+        try {
+            String q = "SELECT [_id] FROM [TbLesson] ORDER BY [LessonNumber] ASC";
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count = cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                less.add(cursor.getInt(0));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context, ex.getMessage(), getMethodName()).postError();
+        }
+        return less;
+    }
+
+    @Override
+    public void update_idlesson(int id_lesson) {
+        String q = "update [aspnet_Users] set [Id_Lesson] = "+id_lesson;
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
+    }
+
+    @Override
+    public int now_IdLesson() {
+        String q="SELECT [Id_Lesson] FROM [aspnet_Users]";
         Cursor cursor=dbAdapter.ExecuteQ(q);
         int count=cursor.getCount();
         cursor.moveToFirst();

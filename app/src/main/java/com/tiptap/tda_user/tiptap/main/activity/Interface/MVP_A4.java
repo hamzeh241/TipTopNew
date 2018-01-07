@@ -5,7 +5,7 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.List;
 
-public interface MVP_A34 {
+public interface MVP_A4 {
 
     interface RequiredViewOps {
         Context getAppContext();
@@ -14,7 +14,7 @@ public interface MVP_A34 {
 
     interface ProvidedPresenterOps {
         void onDestroy(boolean isChangingConfiguration);
-        void setView(MVP_A34.RequiredViewOps view);
+        void setView(MVP_A4.RequiredViewOps view);
 
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
@@ -27,6 +27,7 @@ public interface MVP_A34 {
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);
+        int count_ActivityDetail(int id_activity);
     }
 
     interface RequiredPresenterOps {
@@ -48,5 +49,7 @@ public interface MVP_A34 {
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);
+        int count_ActivityDetail(int id_activity);
     }
+
 }
