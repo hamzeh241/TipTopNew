@@ -23,9 +23,8 @@ public interface MVP_Login {
 
         // Glossary
         String getMaxRowV_Glossary();
-        int getMaxId_Glossary();
         void Insert_Glossary(String Q);
-
+        List<Integer> ListGlossary();
     }
 
     interface RequiredPresenterOps {
@@ -44,7 +43,7 @@ public interface MVP_Login {
 
         // Glossary
         String getMaxRowV_Glossary();
-        int getMaxId_Glossary();
         void Insert_Glossary(String Q);
+        List<Integer> ListGlossary();
     }
 }

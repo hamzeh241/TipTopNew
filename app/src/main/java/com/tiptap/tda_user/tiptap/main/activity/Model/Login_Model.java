@@ -15,6 +15,7 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
     DBAdapter dbAdapter;
     Context context;
     private List<TbLanguage> LList;
+    private List<Integer> idglossary;
     private MVP_Login.RequiredPresenterOps mPresenter;
 
     public Login_Model
@@ -23,6 +24,7 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
         context=_conContext;
         dbAdapter=new DBAdapter(context);
         LList = new ArrayList<>();
+        idglossary = new ArrayList<>();
     }
 
     @Override
@@ -80,20 +82,24 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
     }
 
     @Override
-    public int getMaxId_Glossary() {
-        String q="SELECT [_id] FROM TbGlossary ORDER BY _id DESC LIMIT 1";
-        Cursor cursor=dbAdapter.ExecuteQ(q);
-        int count=cursor.getCount();
-        cursor.moveToFirst();
-        int id=0;
-        for (int i = 0; i < count; i++) {
-            id=cursor.getInt(0);
-        }
-        return id;
+    public void Insert_Glossary(String Q) {
+        dbAdapter.ExecuteQ(Q);
     }
 
     @Override
-    public void Insert_Glossary(String Q) {
-        dbAdapter.ExecuteQ(Q);
+    public List<Integer> ListGlossary() {
+        try{
+            String q = "SELECT [_id] FROM [TbGlossary]";
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count=cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                idglossary.add(Integer.parseInt(cursor.getString(0)));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context,ex.getMessage(),getMethodName()).postError();
+        }
+        return idglossary;
     }
 }

@@ -24,7 +24,7 @@ public class Set_Function extends BaseSetingApi {
 
     public void load() {
         for (int i = 0; i < function_presenter.getCount_Function(); i++) {
-            mCardAdapter.addCardItem(_id_function, new CardItem(function_presenter.getListFunction().get(i).get_id(), function_presenter.getListFunction().get(i).getTitle()));
+            mCardAdapter.addCardItem(function_presenter, _id_function, new CardItem(function_presenter.getListFunction().get(i).get_id(), function_presenter.getListFunction().get(i).getTitle()));
         }
         mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
         mCardShadowTransformer.enableScaling(true);

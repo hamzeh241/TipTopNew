@@ -19,11 +19,13 @@ public interface MVP_A34 {
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
         int max_Activitynumber(int id_lesson);
-        List<Integer> lesson();
+        List<Integer> lesson(int fid);
+        List<Integer> function();
         void update_idlesson(int id_lesson);
-
+        void update_idfunction(int id_function);
         // user
         int now_IdLesson();
+        String userName();
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);
@@ -40,11 +42,14 @@ public interface MVP_A34 {
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
         int max_Activitynumber(int id_lesson);
-        List<Integer> lesson();
+        List<Integer> lesson(int fid);
+        List<Integer> function();
         void update_idlesson(int id_lesson);
+        void update_idfunction(int id_function);
 
         // user
         int now_IdLesson();
+        String userName();
 
         // ActivityDetail
         List<TbActivityDetail> getListActivityDetail(int id_activity);

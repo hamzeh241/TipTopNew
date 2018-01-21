@@ -13,14 +13,19 @@ public interface MVP_Function {
 
     interface ProvidedPresenterOps {
         void onDestroy(boolean isChangingConfiguration);
-        void setView(RequiredViewOps view);
+        void setView(MVP_Function.RequiredViewOps view);
 
         // function
         String getMaxRowV_Function();
-        int getMaxId_Function();
         int getCount_Function();
         void Insert_Function(String Q);
         List<TbFunction> getListFunction();
+        List<Integer> ListFunction();
+
+        // user
+        int Id_Function();
+        int first();
+        void update_idfunction(int id);
     }
 
     interface RequiredPresenterOps {
@@ -33,9 +38,14 @@ public interface MVP_Function {
 
         // function
         String getMaxRowV_Function();
-        int getMaxId_Function();
         int getCount_Function();
         void Insert_Function(String Q);
         List<TbFunction> getListFunction();
+        List<Integer> ListFunction();
+
+        // user
+        int Id_Function();
+        int first();
+        void update_idfunction(int id);
     }
 }

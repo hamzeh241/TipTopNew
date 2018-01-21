@@ -19,18 +19,20 @@ public interface MVP_Lesson {
 
         // lesson
         String getMaxRowV_Lesson();
-        int getMaxId_Lesson();
         int getCount_Lesson(int fid);
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
+        List<Integer> ListLesson();
+        List<Integer> ListActivity();
+        List<Integer> ListActivityDetail();
         int lesson_number(int lid);
         int lesson_id(int fid , int lid);
         int Id_Lesson();
         void update_idlesson(int id_lesson);
+        int findFunction(int lid);
 
         // activity
         String getMaxRowV_Activity();
-        int getMaxId_Activity();
         int getCount_Activity(int lid);
         void Insert_Activity(String Q);
         List<TbActivity> getListActivity(int lid);
@@ -38,10 +40,14 @@ public interface MVP_Lesson {
 
         // activity_detail
         String getMaxRowV_ActivityDetail();
-        int getMaxId_ActivityDetail();
         int getCount_ActivityDetail();
         void Insert_ActivityDetail(String Q);
         List<TbActivityDetail> getListActivityDetail(int aid);
+
+        // user
+        int Id_Function();
+        int first();
+        void update_idfunction(int id);
     }
 
     interface RequiredPresenterOps {
@@ -54,18 +60,20 @@ public interface MVP_Lesson {
 
         // lesson
         String getMaxRowV_Lesson();
-        int getMaxId_Lesson();
         int getCount_Lesson(int fid);
         void Insert_Lesson(String Q);
         List<TbLesson> getListLesson(int fid);
+        List<Integer> ListLesson();
+        List<Integer> ListActivity();
+        List<Integer> ListActivityDetail();
         int lesson_number(int lid);
         int lesson_id(int fid , int lid);
         int Id_Lesson();
         void update_idlesson(int id_lesson);
+        int findFunction(int lid);
 
         // activity
         String getMaxRowV_Activity();
-        int getMaxId_Activity();
         int getCount_Activity(int lid);
         void Insert_Activity(String Q);
         List<TbActivity> getListActivity(int aid);
@@ -73,9 +81,13 @@ public interface MVP_Lesson {
 
         // activity_detail
         String getMaxRowV_ActivityDetail();
-        int getMaxId_ActivityDetail();
         int getCount_ActivityDetail();
         void Insert_ActivityDetail(String Q);
         List<TbActivityDetail> getListActivityDetail(int aid);
+
+        // user
+        int Id_Function();
+        int first();
+        void update_idfunction(int id);
     }
 }

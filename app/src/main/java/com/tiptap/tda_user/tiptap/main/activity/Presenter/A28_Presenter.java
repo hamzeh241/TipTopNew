@@ -55,13 +55,23 @@ public class A28_Presenter
     }
 
     @Override
-    public List<Integer> lesson() {
-        return mModel.lesson();
+    public List<Integer> lesson(int fid) {
+        return mModel.lesson(fid);
+    }
+
+    @Override
+    public List<Integer> function() {
+        return mModel.function();
     }
 
     @Override
     public void update_idlesson(int id_lesson) {
         mModel.update_idlesson(id_lesson);
+    }
+
+    @Override
+    public void update_idfunction(int id_function) {
+        mModel.update_idfunction(id_function);
     }
 
     @Override

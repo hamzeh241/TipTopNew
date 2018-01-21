@@ -6,6 +6,7 @@ public class aspnet_Users {
     private String Password;
     private String Email;
     private int Id_Lesson;
+    private int Id_Function;
     private int Id_Language;
 
     public aspnet_Users() {}
@@ -40,6 +41,14 @@ public class aspnet_Users {
 
     public void setId_Lesson(int id_Lesson) {
         Id_Lesson = id_Lesson;
+    }
+
+    public int getId_Function() {
+        return Id_Function;
+    }
+
+    public void setId_Function(int id_Function) {
+        Id_Function = id_Function;
     }
 
     public int getId_Language() {

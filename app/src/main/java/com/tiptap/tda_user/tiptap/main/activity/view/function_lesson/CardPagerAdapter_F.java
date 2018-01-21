@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.tiptap.tda_user.tiptap.R;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardPagerAdapter_F extends PagerAdapter implements CardAdapter {
 
+    MVP_Function.ProvidedPresenterOps function_presenter;
     int _id;
     private List<CardView> mViews;
     private List<CardItem> mData;
@@ -28,7 +28,8 @@ public class CardPagerAdapter_F extends PagerAdapter implements CardAdapter {
         mViews = new ArrayList<>();
     }
 
-    public void addCardItem(int id_function, CardItem item) {
+    public void addCardItem(MVP_Function.ProvidedPresenterOps ppo, int id_function, CardItem item) {
+        function_presenter = ppo;
         _id = id_function;
         mViews.add(null);
         mData.add(item);
@@ -84,12 +85,15 @@ public class CardPagerAdapter_F extends PagerAdapter implements CardAdapter {
         final Button btn = (Button) view.findViewById(R.id.next);
 
         final int id_function = item.getId();
+        int first = function_presenter.first();
+
         if(_id == 0){
-            if(id_function == 1){
+            if(id_function == first){
+                function_presenter.update_idfunction(first);
                 btn.setBackgroundColor(Color.parseColor("#3CB371"));
                 btn.setText("Start");
             }
-        } else if(_id != 0){
+        } else {
             if(id_function < _id){
                 btn.setBackgroundColor(Color.parseColor("#CCCC00"));
                 btn.setText("Redo");
@@ -105,8 +109,7 @@ public class CardPagerAdapter_F extends PagerAdapter implements CardAdapter {
                 public void onClick(View view) {
 
                     if(id_function <= _id || id_function == 1){
-                        Lesson.id_function =  id_function;
-
+                        Lesson.now_id_function =  id_function;
                         view.getContext().startActivity(new Intent(view.getContext(), Lesson.class));
                     }
             }

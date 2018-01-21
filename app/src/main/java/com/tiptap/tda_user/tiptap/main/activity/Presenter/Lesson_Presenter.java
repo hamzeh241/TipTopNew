@@ -51,11 +51,6 @@ public class Lesson_Presenter
     }
 
     @Override
-    public int getMaxId_Lesson() {
-        return mModel.getMaxId_Lesson();
-    }
-
-    @Override
     public int getCount_Lesson(int fid) {
         return mModel.getCount_Lesson(fid);
     }
@@ -68,6 +63,21 @@ public class Lesson_Presenter
     @Override
     public List<TbLesson> getListLesson(int fid) {
         return mModel.getListLesson(fid);
+    }
+
+    @Override
+    public List<Integer> ListLesson() {
+        return mModel.ListLesson();
+    }
+
+    @Override
+    public List<Integer> ListActivity() {
+        return mModel.ListActivity();
+    }
+
+    @Override
+    public List<Integer> ListActivityDetail() {
+        return mModel.ListActivityDetail();
     }
 
     @Override
@@ -91,13 +101,13 @@ public class Lesson_Presenter
     }
 
     @Override
-    public String getMaxRowV_Activity() {
-        return mModel.getMaxRowV_Activity();
+    public int findFunction(int lid) {
+        return mModel.findFunction(lid);
     }
 
     @Override
-    public int getMaxId_Activity() {
-        return mModel.getMaxId_Activity();
+    public String getMaxRowV_Activity() {
+        return mModel.getMaxRowV_Activity();
     }
 
     @Override
@@ -126,11 +136,6 @@ public class Lesson_Presenter
     }
 
     @Override
-    public int getMaxId_ActivityDetail() {
-        return mModel.getMaxId_ActivityDetail();
-    }
-
-    @Override
     public int getCount_ActivityDetail() {
         return mModel.getCount_ActivityDetail();
     }
@@ -143,6 +148,21 @@ public class Lesson_Presenter
     @Override
     public List<TbActivityDetail> getListActivityDetail(int aid) {
         return mModel.getListActivityDetail(aid);
+    }
+
+    @Override
+    public int Id_Function() {
+        return mModel.Id_Function();
+    }
+
+    @Override
+    public int first() {
+        return mModel.first();
+    }
+
+    @Override
+    public void update_idfunction(int id) {
+        mModel.update_idlesson(id);
     }
 
      /*  ------ RequiredPresenterOps ------  */

@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Lesson;
+import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
+
 
 public class End extends AppCompatActivity {
 
     Button next;
+    public static int gofunction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,12 @@ public class End extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 End.this.finish();
-                startActivity(new Intent(End.this, Lesson.class));
+                if(gofunction == 0){
+                    startActivity(new Intent(End.this, Lesson.class));
+                }
+                if(gofunction == 1){
+                    startActivity(new Intent(End.this, Function.class));
+                }
             }
         });
     }

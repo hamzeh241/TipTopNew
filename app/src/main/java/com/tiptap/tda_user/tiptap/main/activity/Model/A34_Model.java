@@ -2,6 +2,8 @@ package com.tiptap.tda_user.tiptap.main.activity.Model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.widget.Toast;
+
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A34;
@@ -19,6 +21,7 @@ public class A34_Model implements MVP_A34.ProvidedModelOps {
     private TbActivity act;
     private List<TbActivityDetail> ad_List;
     List<Integer> less;
+    List<Integer> func;
 
     public A34_Model(MVP_A34.RequiredPresenterOps presenter, Context _conContext) {
         mPresenter = presenter;
@@ -26,6 +29,7 @@ public class A34_Model implements MVP_A34.ProvidedModelOps {
         dbAdapter = new DBAdapter(context);
         ad_List = new ArrayList<>();
         less = new ArrayList<>();
+        func = new ArrayList<>();
     }
 
     @Override
@@ -109,9 +113,9 @@ public class A34_Model implements MVP_A34.ProvidedModelOps {
     /////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public List<Integer> lesson() {
+    public List<Integer> lesson(int fid) {
         try {
-            String q = "SELECT [_id] FROM [TbLesson] ORDER BY [LessonNumber] ASC";
+            String q = "SELECT [_id] FROM [TbLesson] where [Id_Function]= "+ fid +" ORDER BY [LessonNumber] ASC";
             Cursor cursor = dbAdapter.ExecuteQ(q);
             int count = cursor.getCount();
             cursor.moveToFirst();
@@ -127,6 +131,7 @@ public class A34_Model implements MVP_A34.ProvidedModelOps {
 
     @Override
     public void update_idlesson(int id_lesson) {
+        Toast.makeText(context, "update lesson"+id_lesson, Toast.LENGTH_LONG).show();
         String q = "update [aspnet_Users] set [Id_Lesson] = "+id_lesson;
         Cursor cursor = dbAdapter.ExecuteQ(q);
         int count = cursor.getCount();
@@ -144,5 +149,44 @@ public class A34_Model implements MVP_A34.ProvidedModelOps {
             id=cursor.getInt(0);
         }
         return id;
+    }
+
+    @Override
+    public String userName() {
+        String q="SELECT [UserName] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        String user="";
+        for (int i = 0; i < count; i++) {
+            user=cursor.getString(0);
+        }
+        return user;
+    }
+
+    @Override
+    public List<Integer> function() {
+        try {
+            String q = "SELECT [_id] FROM [TbFunction]";
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count = cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                func.add(cursor.getInt(0));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context, ex.getMessage(), getMethodName()).postError();
+        }
+        return func;
+    }
+
+    @Override
+    public void update_idfunction(int id_function) {
+        Toast.makeText(context, "update function"+id_function, Toast.LENGTH_LONG).show();
+        String q = "update [aspnet_Users] set [Id_Function] = "+id_function;
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
     }
 }

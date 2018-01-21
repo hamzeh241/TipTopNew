@@ -40,9 +40,10 @@ public class A4 extends AppCompatActivity
     public MVP_A4.ProvidedPresenterOps mPresenter;
 
     public static int idlesson;
+    public static int idfunction;
     public static int activitynumber;
     TbActivity tbActivity;
-    int max,now;
+    int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
     int count;
     String w1[],w2[];
@@ -173,23 +174,41 @@ public class A4 extends AppCompatActivity
                     showCustomAlert();
 
                     if(activitynumber == max){
+                        now_less = mPresenter.now_IdLesson();
 
-                        A4.this.finish();
-                        startActivity(new Intent(A4.this, End.class));
+                        // post
 
-                        now = mPresenter.now_IdLesson();
-                        if (now == idlesson) {
-                            // post
+                        // update
+                        List<Integer> id_less = mPresenter.lesson(idfunction);
+                        List<Integer> id_func =  mPresenter.function();
 
-                            // update
-                            List<Integer> id_less = mPresenter.lesson();
-                            for(int i=0 ; i< id_less.size() ; i++){
-                                if(id_less.get(i) == idlesson){
-                                    int next = i+1;
-                                    mPresenter.update_idlesson(id_less.get(next));
+                        for(int i=0 ; i< id_less.size() ; i++){
+                            if(id_less.get(i) == idlesson){
+                                if(i == id_less.size()-1){
+                                    End.gofunction = 1;
+                                    for(int j=0 ; j< id_func.size() ; j++) {
+                                        if (id_func.get(j) == idfunction) {
+                                            if (now_less == idlesson){
+                                                int next_func = j+1;
+                                                mPresenter.update_idfunction(id_func.get(next_func));
+                                                mPresenter.update_idlesson(0);
+                                            }
+                                            break;
+                                        }
+                                    }
                                 }
+                                else{
+                                    End.gofunction = 0;
+                                    if (now_less == idlesson){
+                                        int next_less = i+1;
+                                        mPresenter.update_idlesson(id_less.get(next_less));
+                                    }
+                                }
+                                break;
                             }
                         }
+                        A4.this.finish();
+                        startActivity(new Intent(A4.this, End.class ));
 
                     } else {
 
@@ -203,6 +222,7 @@ public class A4 extends AppCompatActivity
 
                             case 3:
                                 //A3.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A3.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A3.class));
@@ -210,42 +230,48 @@ public class A4 extends AppCompatActivity
 
                             case 4:
                                 A4.idlesson = idlesson ;
+                                A4.idfunction = idfunction ;
                                 A4.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A4.class));
                                 break;
 
                             case 5:
-                                //A5.idlesson = idlesson ;
-                                //A5.activitynumber = activitynumber;
+                                A5.idlesson = idlesson ;
+                                A5.idfunction = idfunction ;
+                                A5.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A5.class));
                                 break;
 
                             case 6:
                                 A6.idlesson = idlesson ;
+                                A6.idfunction = idfunction ;
                                 A6.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A6.class));
                                 break;
 
                             case 7:
-                                //A7.idlesson = idlesson ;
-                                //A7.activitynumber = activitynumber;
+                                A7.idlesson = idlesson ;
+                                A7.idfunction = idfunction ;
+                                A7.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A7.class));
                                 break;
 
                             case 8:
-                                //A8.idlesson = idlesson ;
-                                //A8.activitynumber = activitynumber;
+                                A8.idlesson = idlesson ;
+                                A8.idfunction = idfunction ;
+                                A8.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A8.class));
                                 break;
 
                             case 9:
-                                //A9.idlesson = idlesson ;
-                                //A9.activitynumber = activitynumber;
+                                A9.idlesson = idlesson ;
+                                A9.idfunction = idfunction ;
+                                A9.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A9.class));
                                 break;
@@ -258,6 +284,7 @@ public class A4 extends AppCompatActivity
 
                             case 15:
                                 //A15.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A15.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A15.class));
@@ -267,21 +294,24 @@ public class A4 extends AppCompatActivity
                             case 17: break;
 
                             case 18:
-                                //A18.idlesson = idlesson ;
-                                //A18.activitynumber = activitynumber;
+                                A18.idlesson = idlesson ;
+                                A18.idfunction = idfunction ;
+                                A18.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A18.class));
                                 break;
 
                             case 19:
-                                //A19.idlesson = idlesson ;
-                                //A19.activitynumber = activitynumber;
+                                A19.idlesson = idlesson ;
+                                A19.idfunction = idfunction ;
+                                A19.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A19.class));
                                 break;
 
                             case 20:
                                 //A20.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A20.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A20.class));
@@ -290,8 +320,9 @@ public class A4 extends AppCompatActivity
                             case 21: break;
 
                             case 22:
-                                //A22.idlesson = idlesson ;
-                                //A22.activitynumber = activitynumber;
+                                A22.idlesson = idlesson ;
+                                A22.idfunction = idfunction ;
+                                A22.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A22.class));
                                 break;
@@ -299,56 +330,64 @@ public class A4 extends AppCompatActivity
                             case 23: break;
 
                             case 24:
-                                //A24.idlesson = idlesson ;
-                                //A24.activitynumber = activitynumber;
+                                A24.idlesson = idlesson ;
+                                A24.idfunction = idfunction ;
+                                A24.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A24.class));
                                 break;
 
                             case 25:
                                 //A25.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A25.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A25.class));
                                 break;
 
                             case 26:
-                                //A26.idlesson = idlesson ;
-                                //A26.activitynumber = activitynumber;
+                                A26.idlesson = idlesson ;
+                                A26.idfunction = idfunction ;
+                                A26.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A26.class));
                                 break;
 
                             case 27:
                                 //A27.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A27.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A27.class));
                                 break;
 
                             case 28:
-                                //A28.idlesson = idlesson ;
-                                //A28.activitynumber = activitynumber;
+                                A28.idlesson = idlesson ;
+                                A28.idfunction = idfunction ;
+                                A28.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A28.class));
                                 break;
 
                             case 29:
-                                //A29.idlesson = idlesson ;
-                                //A29.activitynumber = activitynumber;
+                                A29.idlesson = idlesson ;
+                                A29.idfunction = idfunction ;
+                                A29.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A29.class));
                                 break;
 
                             case 30:
-                                //A30.idlesson = idlesson ;
-                                //A30.activitynumber = activitynumber;
+                                A30.idlesson = idlesson ;
+                                A30.idfunction = idfunction ;
+                                A30.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A30.class));
                                 break;
 
                             case 31:
                                 //A31.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A31.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A31.class));
@@ -356,28 +395,32 @@ public class A4 extends AppCompatActivity
 
                             case 32:
                                 //A32.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A32.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A32.class));
                                 break;
 
                             case 33:
-                                //A33.idlesson = idlesson ;
-                                //A33.activitynumber = activitynumber;
+                                A33.idlesson = idlesson ;
+                                A33.idfunction = idfunction ;
+                                A33.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A33.class));
                                 break;
 
                             case 34:
-                                //A34.idlesson = idlesson ;
-                                //A34.activitynumber = activitynumber;
+                                A34.idlesson = idlesson ;
+                                A34.idfunction = idfunction ;
+                                A34.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A34.class));
                                 break;
 
                             case 35:
-                                //A35.idlesson = idlesson ;
-                                //A35.activitynumber = activitynumber;
+                                A35.idlesson = idlesson ;
+                                A35.idfunction = idfunction ;
+                                A35.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A35.class));
                                 break;
@@ -386,6 +429,7 @@ public class A4 extends AppCompatActivity
 
                             case 37:
                                 //A37.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A37.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A37.class));
@@ -393,6 +437,7 @@ public class A4 extends AppCompatActivity
 
                             case 38:
                                 //A38.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A38.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A38.class));
@@ -400,6 +445,7 @@ public class A4 extends AppCompatActivity
 
                             case 39:
                                 A39.idlesson = idlesson ;
+                                A39.idfunction = idfunction ;
                                 A39.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A39.class));
@@ -408,6 +454,7 @@ public class A4 extends AppCompatActivity
 
                             case 40:
                                 //A40.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A40.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A40.class));
@@ -415,6 +462,7 @@ public class A4 extends AppCompatActivity
 
                             case 41:
                                 //A41.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A41.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A41.class));
@@ -422,6 +470,7 @@ public class A4 extends AppCompatActivity
 
                             case 42:
                                 //A42.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A42.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A42.class));
@@ -429,6 +478,7 @@ public class A4 extends AppCompatActivity
 
                             case 43:
                                 //A43.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A43.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A43.class));
@@ -436,6 +486,7 @@ public class A4 extends AppCompatActivity
 
                             case 44:
                                 //A44.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A44.activitynumber = activitynumber;
                                 A4.this.finish();
                                 startActivity(new Intent(A4.this,  A44.class));

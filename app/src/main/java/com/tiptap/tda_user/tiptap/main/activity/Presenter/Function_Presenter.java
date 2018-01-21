@@ -49,11 +49,6 @@ public class Function_Presenter
     }
 
     @Override
-    public int getMaxId_Function() {
-        return mModel.getMaxId_Function();
-    }
-
-    @Override
     public int getCount_Function() {
         return mModel.getCount_Function();
     }
@@ -66,6 +61,26 @@ public class Function_Presenter
     @Override
     public List<TbFunction> getListFunction() {
         return mModel.getListFunction();
+    }
+
+    @Override
+    public List<Integer> ListFunction() {
+        return mModel.ListFunction();
+    }
+
+    @Override
+    public int Id_Function() {
+        return mModel.Id_Function();
+    }
+
+    @Override
+    public int first() {
+        return mModel.first();
+    }
+
+    @Override
+    public void update_idfunction(int id) {
+        mModel.update_idfunction(id);
     }
 
     /*  ------ RequiredPresenterOps ------  */

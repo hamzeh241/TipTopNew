@@ -58,10 +58,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
                 android:text="hello , I am mark and go to the school with my bycycle"
                 android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp"
-                android:layout_marginRight="15dp"/>
+                android:textSize="16sp" />
 
         </LinearLayout>
 

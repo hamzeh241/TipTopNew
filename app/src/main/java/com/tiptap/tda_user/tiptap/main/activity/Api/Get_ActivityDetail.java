@@ -18,6 +18,9 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
+
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_ActivityDetail extends BaseSetingApi {
@@ -44,14 +47,13 @@ public class Get_ActivityDetail extends BaseSetingApi {
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "ActivityDetail?id="+_id+"&rowVersion=0x0", null, new Response.Listener<JSONArray>() {
+                    url+ "ActivityDetail?id="+_id+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson(), null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
+                    List<Integer> listActivityDetail = lesson_presenter.ListActivityDetail();
                     try {
-                        int maxId = lesson_presenter.getMaxId_Activity();
-
                         String Q1 = "insert into TbActivityDetail (_id, Path1, Path2, Id_Activity, Title1, Title2, IsAnswer, OrferAnswer, OrderPreview, RowVersion) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
@@ -65,16 +67,17 @@ public class Get_ActivityDetail extends BaseSetingApi {
                             String path2 = jsonObject.getString("Path2");
                             String isanswer = jsonObject.getString("IsAnswer");
                             String rowversion = "1";
+
                             int Id = Integer.parseInt(id);
 
+                            int type = whatdo(listActivityDetail, Id);
                             // insert
-                            if(Id>maxId) {
+                            if(type == 1){
                                 insert = true;
                                 Q1 = Q1.concat("('" + id + "','" + path1 + "','" + path2 + "','" + idactivity + "','" + title1 + "','" + title2 + "','" + isanswer + "','" + orferanswer + "','" + orderperview + "','" + rowversion + "')," );
                             }
-
                             // update
-                            else {
+                            if(type == 2){
                                 String Q2="update TbActivityDetail set Path1='"+path1+"',Path2='"+path2+"',Id_Activity='"+idactivity+"',Title1='"+title1+"',Title2='"+title2+"',IsAnswer='"+isanswer+"',OrferAnswer='"+orferanswer+"',OrderPreview='"+orderperview+"',RowVersion='"+rowversion+"' where _id="+Id;
                                 lesson_presenter.Insert_Activity(Q2);
                             }
@@ -108,5 +111,15 @@ public class Get_ActivityDetail extends BaseSetingApi {
         }else{}
 
         return null;
+    }
+
+    public int whatdo(List<Integer> listActivityDetail, int id){
+        int result = 1;
+        for(int j=0 ; j < listActivityDetail.size() ; j++) {
+            if(listActivityDetail.get(j) == id){
+                result = 2;
+            }
+        }
+        return result;
     }
 }

@@ -19,6 +19,9 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
     private List<TbLesson> LList;
     private List<TbActivity> AList;
     private List<TbActivityDetail> ADList;
+    private List<Integer> idlesson;
+    private List<Integer> idactivity;
+    private List<Integer> idactivitydetail;
     private MVP_Lesson.RequiredPresenterOps mPresenter;
 
     public Lesson_Model
@@ -29,6 +32,9 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
         LList = new ArrayList<>();
         AList = new ArrayList<>();
         ADList = new ArrayList<>();
+        idlesson = new ArrayList<>();
+        idactivity = new ArrayList<>();
+        idactivitydetail = new ArrayList<>();
     }
 
     @Override
@@ -52,19 +58,6 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
         }
         if(null==id)
             id="0x0";
-        return id;
-    }
-
-    @Override
-    public int getMaxId_Lesson() {
-        String q="SELECT [_id] FROM TbLesson ORDER BY _id DESC LIMIT 1";
-        Cursor cursor=dbAdapter.ExecuteQ(q);
-        int count=cursor.getCount();
-        cursor.moveToFirst();
-        int id=0;
-        for (int i = 0; i < count; i++) {
-            id=cursor.getInt(0);
-        }
         return id;
     }
 
@@ -101,13 +94,63 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 app.setRowVersion(cursor.getString(3));
                 LList.add(app);
                 cursor.moveToNext();
-            }}
-        catch (Exception ex)
-        {
+            }
+        } catch (Exception ex) {
             new PostError(context,ex.getMessage(),getMethodName()).postError();
 
         }
         return LList;
+    }
+
+    @Override
+    public List<Integer> ListLesson() {
+        try{
+            String q = "SELECT [_id] FROM [TbLesson]";
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count=cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                idlesson.add(Integer.parseInt(cursor.getString(0)));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context,ex.getMessage(),getMethodName()).postError();
+        }
+        return idlesson;
+    }
+
+    @Override
+    public List<Integer> ListActivity() {
+        try{
+            String q = "SELECT [_id] FROM [TbActivity]";
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count=cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                idactivity.add(Integer.parseInt(cursor.getString(0)));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context,ex.getMessage(),getMethodName()).postError();
+        }
+        return idactivity;
+    }
+
+    @Override
+    public List<Integer> ListActivityDetail() {
+        try{
+            String q = "SELECT [_id] FROM [TbActivityDetail]";
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count=cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                idactivitydetail.add(Integer.parseInt(cursor.getString(0)));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context,ex.getMessage(),getMethodName()).postError();
+        }
+        return idactivitydetail;
     }
 
     @Override
@@ -150,19 +193,6 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
         }
         if(null==id)
             id="0x0";
-        return id;
-    }
-
-    @Override
-    public int getMaxId_Activity() {
-        String q="SELECT [_id] FROM TbActivity ORDER BY _id DESC LIMIT 1";
-        Cursor cursor=dbAdapter.ExecuteQ(q);
-        int count=cursor.getCount();
-        cursor.moveToFirst();
-        int id=0;
-        for (int i = 0; i < count; i++) {
-            id=cursor.getInt(0);
-        }
         return id;
     }
 
@@ -243,19 +273,6 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
     }
 
     @Override
-    public int getMaxId_ActivityDetail() {
-        String q="SELECT [_id] FROM [TbActivityDetail] ORDER BY [_id] DESC LIMIT 1";
-        Cursor cursor=dbAdapter.ExecuteQ(q);
-        int count=cursor.getCount();
-        cursor.moveToFirst();
-        int id=0;
-        for (int i = 0; i < count; i++) {
-            id=cursor.getInt(0);
-        }
-        return id;
-    }
-
-    @Override
     public int getCount_ActivityDetail() {
         String q="SELECT Count([_id]) as x FROM TbActivityDetail";
         Cursor cursor=dbAdapter.ExecuteQ(q);
@@ -301,6 +318,38 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
         return ADList;
     }
 
+    @Override
+    public int Id_Function() {
+        String q = "SELECT [Id_Function] FROM [aspnet_Users]";
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
+        int id = 0;
+        for (int i = 0; i < count; i++) {
+            id = cursor.getInt(0);
+        }
+        return id;
+    }
+
+    @Override
+    public int first() {
+        String q = "SELECT [_id] FROM [TbFunction]";
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
+        int id = 0;
+        id = cursor.getInt(0);
+        return id;
+    }
+
+    @Override
+    public void update_idfunction(int id) {
+        String q = "update [aspnet_Users] set [Id_Function] = "+id;
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
+    }
+
     /////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -322,5 +371,18 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
         Cursor cursor = dbAdapter.ExecuteQ(q);
         int count = cursor.getCount();
         cursor.moveToFirst();
+    }
+
+    @Override
+    public int findFunction(int lid) {
+        String q="SELECT Id_Function FROM [TbLesson] WHERE _id = "+ lid;
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        int id=0;
+        for (int i = 0; i < count; i++) {
+            id=cursor.getInt(0);
+        }
+        return id;
     }
 }

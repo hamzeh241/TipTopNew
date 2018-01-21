@@ -20,6 +20,9 @@ import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
+
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Lesson extends BaseSetingApi {
@@ -27,17 +30,17 @@ public class Get_Lesson extends BaseSetingApi {
     MVP_Lesson.ProvidedPresenterOps lesson_presenter;
     Context _context;
     Activity mactivity;
-    int _id;
-    int id_lesson;
+    int _Fid;
+    int now_fid;
     ViewPager mViewPager;
     CardPagerAdapter_L mCardAdapter;
     ShadowTransformer mCardShadowTransformer;
     boolean mnet;
     ProgressDialog progressDialog;
 
-    public Get_Lesson(int fid, int lid, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, ViewPager viewPager, CardPagerAdapter_L cardAdapter, ShadowTransformer shadowTransformer) {
-        _id = fid;
-        id_lesson = lid;
+    public Get_Lesson(int fid, int nfid, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, ViewPager viewPager, CardPagerAdapter_L cardAdapter, ShadowTransformer shadowTransformer) {
+        _Fid = fid;
+        now_fid = nfid;
         lesson_presenter = ppo;
         _context = context;
         mactivity = activity;
@@ -54,13 +57,13 @@ public class Get_Lesson extends BaseSetingApi {
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Lesson?Id="+_id+"&rowVersion=0x0", null, new Response.Listener<JSONArray>() {
+                    url+ "Lesson?Id="+_Fid+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson(), null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
+                    List<Integer> listLesson = lesson_presenter.ListLesson();
                     try {
-                        int maxId = lesson_presenter.getMaxId_Lesson();
                         String Q1 = "insert into TbLesson (_id,Id_Function,LessonNumber,RowVersion) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
@@ -69,13 +72,15 @@ public class Get_Lesson extends BaseSetingApi {
                             String ln = jsonObject.getString("LessonNumber");
                             String row = "1";
                             int Id = Integer.parseInt(id);
+
+                            int type = whatdo(listLesson, Id);
                             // insert
-                            if(Id>maxId) {
+                            if(type == 1){
                                 insert = true;
                                 Q1 = Q1.concat("('" + id + "','" + fid + "','" + ln + "','" + row + "')," );
                             }
                             // update
-                            else {
+                            if(type == 2){
                                 String Q2="update TbLesson set Id_Function='"+fid+"',LessonNumber='"+ln+"',RowVersion='"+row+"' where _id="+Id;
                                 lesson_presenter.Insert_Lesson(Q2);
                             }
@@ -84,7 +89,7 @@ public class Get_Lesson extends BaseSetingApi {
                             Q1 = Q1.substring(0, Q1.trim().length() - 1).concat(";");
                             lesson_presenter.Insert_Lesson(Q1);
                         }
-                        Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,_id,id_lesson,mViewPager,mCardAdapter,mCardShadowTransformer);
+                        Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
                         set_lesson.load();
                         progressDialog.dismiss();
 
@@ -93,7 +98,6 @@ public class Get_Lesson extends BaseSetingApi {
                         e.printStackTrace();
                         new PostError(_context,e.getMessage(), getMethodName()).postError();
                     }
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -102,7 +106,7 @@ public class Get_Lesson extends BaseSetingApi {
                     new ErrorVolley(_context).Error(volleyError,"get");
                     if (volleyError.networkResponse == null) {
                         if (volleyError.getClass().equals(TimeoutError.class)) {
-                            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,_id,id_lesson,mViewPager,mCardAdapter,mCardShadowTransformer);
+                            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
                             set_lesson.load();
                         }
                     }
@@ -111,9 +115,19 @@ public class Get_Lesson extends BaseSetingApi {
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{
-            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,_id,id_lesson,mViewPager,mCardAdapter,mCardShadowTransformer);
+            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
             set_lesson.load();
         }
         return null;
+    }
+
+    public int whatdo(List<Integer> listLesson, int id){
+        int result = 1;
+        for(int j=0 ; j < listLesson.size() ; j++) {
+            if(listLesson.get(j) == id){
+                result = 2;
+            }
+        }
+        return result;
     }
 }

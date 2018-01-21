@@ -7,7 +7,7 @@ import com.android.volley.RetryPolicy;
 
 public class BaseSetingApi {
 
-    public String url = "http://www.tiotop.tdaapp.ir/api/";
+    public String url = "http://tiptop.tdaapp.ir/api/";
     int socketTimeout = 30000;
     public RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
     public static ProgressDialog pDialog;

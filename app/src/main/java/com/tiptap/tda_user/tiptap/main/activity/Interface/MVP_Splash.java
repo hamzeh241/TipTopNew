@@ -11,12 +11,11 @@ public interface MVP_Splash {
 
     interface ProvidedPresenterOps {
         void onDestroy(boolean isChangingConfiguration);
-        void setView(RequiredViewOps view);
+        void setView(MVP_Splash.RequiredViewOps view);
 
         // user
         int getCount_User();
-        int Id_Lesson();
-        int Id_Function(int lid);
+        int Id_Function();
     }
 
     interface RequiredPresenterOps {
@@ -29,7 +28,6 @@ public interface MVP_Splash {
 
         // user
         int getCount_User();
-        int Id_Lesson();
-        int Id_Function(int lid);
+        int Id_Function();
     }
 }

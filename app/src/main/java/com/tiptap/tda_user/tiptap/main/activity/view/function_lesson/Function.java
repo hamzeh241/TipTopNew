@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -39,6 +41,7 @@ public class Function
         setupViews();
         setupMVP();
 
+        id_function = mPresenter.Id_Function();
         new Get_Function
                 (id_function, haveNetworkConnection(), mPresenter, getAppContext(), Function.this, mViewPager, mCardAdapter, mCardShadowTransformer);
     }

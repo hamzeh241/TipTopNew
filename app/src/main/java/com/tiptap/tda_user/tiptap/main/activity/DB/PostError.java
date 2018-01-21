@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 public class PostError {
 
-    public String url = "http://www.tiotop.tdaapp.ir/api/";
+    public String url = "http://tiptop.tdaapp.ir/api/";
     String MsgError;
     String FunName;
     Context context;

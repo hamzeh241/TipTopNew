@@ -14,11 +14,8 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A39;
 import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
-import java.util.List;
 import javax.inject.Inject;
 
 public class Splash
@@ -52,11 +49,7 @@ public class Splash
                     startActivity(new Intent(Splash.this, Login.class));
 
                 }else if (count == 1){
-                    int lid = mPresenter.Id_Lesson();
-                    int fid = 0;
-                    if(lid != 0){
-                        fid = mPresenter.Id_Function(lid);
-                    }
+                    int fid = mPresenter.Id_Function();
                     Function.id_function = fid;
 
                     Splash.this.finish();

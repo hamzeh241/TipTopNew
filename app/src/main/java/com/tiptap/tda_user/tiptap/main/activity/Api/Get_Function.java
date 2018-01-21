@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -20,6 +22,9 @@ import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
+
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Function extends BaseSetingApi {
@@ -57,22 +62,25 @@ public class Get_Function extends BaseSetingApi {
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
+                    List<Integer> listFunction = function_presenter.ListFunction();
                     try {
-                        int maxId = function_presenter.getMaxId_Function();
                         String Q1 = "insert into TbFunction (_id,Title,RowVersion) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
                             String id = jsonObject.getString("C_id");
                             String title = jsonObject.getString("Title");
                             String row = "1";
+
                             int Id = Integer.parseInt(id);
+
+                            int type = whatdo(listFunction, Id);
                             // insert
-                            if(Id>maxId) {
+                            if(type == 1){
                                 insert = true;
                                 Q1 = Q1.concat("('" + id + "','" + title + "','" + row + "')," );
                             }
                             // update
-                            else {
+                            if(type == 2){
                                 String Q2="update TbFunction set Title='"+title+"',RowVersion='"+row+"' where _id="+Id;
                                 function_presenter.Insert_Function(Q2);
                             }
@@ -112,5 +120,15 @@ public class Get_Function extends BaseSetingApi {
             set_function.load();
         }
         return null;
+    }
+
+    public int whatdo(List<Integer> listFunction, int id){
+        int result = 1;
+        for(int j=0 ; j < listFunction.size() ; j++) {
+            if(listFunction.get(j) == id){
+                result = 2;
+            }
+        }
+        return result;
     }
 }

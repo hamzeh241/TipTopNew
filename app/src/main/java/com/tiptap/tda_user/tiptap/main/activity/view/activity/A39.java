@@ -2,7 +2,10 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
@@ -35,13 +39,18 @@ public class A39 extends AppCompatActivity
     public MVP_A39.ProvidedPresenterOps mPresenter;
 
     public static int idlesson;
+    public static int idfunction;
     public static int activitynumber;
     TbActivity tbActivity;
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
-    Button next;
     TextView t[];
     EditText e[];
+    Button play,next;
+    SeekBar seekBar;
+    MediaPlayer mp;
+    Handler seekHandler = new Handler();
+    boolean end = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,30 @@ public class A39 extends AppCompatActivity
 
     }
     private void setupViews() {
+
+        mp = MediaPlayer.create(A39.this, R.raw.music);
+        mp.setVolume(100,100);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                end = true;
+                next.setTextColor(Color.WHITE);
+                next.setBackgroundResource(R.drawable.btn);
+            }
+        });
+
+        seekBar = (SeekBar) findViewById(R.id.seekbar);
+        seekBar.setMax(mp.getDuration());
+        seekUpdation();
+
+        play = (Button)findViewById(R.id.play);
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp.start();
+            }
+        });
+
 
         //String w = "... hello hi... how are you";
         //String w = "... hello hi how are you nice";
@@ -287,31 +320,48 @@ public class A39 extends AppCompatActivity
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 boolean answer = cheak_answer();
-                if(answer) {
+                //  end    and   answer
+                if(true) {
 
                     if(activitynumber == max){
+                        now_less = mPresenter.now_IdLesson();
 
+                        // post
+
+                        // update
+                        List<Integer> id_less = mPresenter.lesson(idfunction);
+                        List<Integer> id_func =  mPresenter.function();
+
+                        for(int i=0 ; i< id_less.size() ; i++){
+                            if(id_less.get(i) == idlesson){
+                                if(i == id_less.size()-1){
+                                    End.gofunction = 1;
+                                    for(int j=0 ; j< id_func.size() ; j++) {
+                                        if (id_func.get(j) == idfunction) {
+                                            if (now_less == idlesson){
+                                                int next_func = j+1;
+                                                mPresenter.update_idfunction(id_func.get(next_func));
+                                                mPresenter.update_idlesson(0);
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                                else{
+                                    End.gofunction = 0;
+                                    if (now_less == idlesson){
+                                        int next_less = i+1;
+                                        mPresenter.update_idlesson(id_less.get(next_less));
+                                    }
+                                }
+                                break;
+                            }
+                        }
                         A39.this.finish();
                         startActivity(new Intent(A39.this, End.class ));
 
-                        now_less = mPresenter.now_IdLesson();
-
-                        if (now_less == idlesson) {
-                            // post
-
-                            // update
-                            List<Integer> id_less = mPresenter.lesson();
-                            for(int i=0 ; i< id_less.size() ; i++){
-                                if(id_less.get(i) == idlesson){
-                                    int next = i+1;
-                                    mPresenter.update_idlesson(id_less.get(next));
-                                }
-                            }
-                        }
-
-                    } else {
+                    }else {
 
                         TbActivity tb_new = mPresenter.getActivity(idlesson, ++activitynumber);
                         int id_at_new = tb_new.getId_ActivityType();
@@ -323,6 +373,7 @@ public class A39 extends AppCompatActivity
 
                             case 3:
                                 //A3.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A3.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A3.class));
@@ -330,42 +381,48 @@ public class A39 extends AppCompatActivity
 
                             case 4:
                                 A4.idlesson = idlesson ;
+                                A4.idfunction = idfunction ;
                                 A4.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A4.class));
                                 break;
 
                             case 5:
-                                //A5.idlesson = idlesson ;
-                                //A5.activitynumber = activitynumber;
+                                A5.idlesson = idlesson ;
+                                A5.idfunction = idfunction ;
+                                A5.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A5.class));
                                 break;
 
                             case 6:
                                 A6.idlesson = idlesson ;
+                                A6.idfunction = idfunction ;
                                 A6.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A6.class));
                                 break;
 
                             case 7:
-                                //A7.idlesson = idlesson ;
-                                //A7.activitynumber = activitynumber;
+                                A7.idlesson = idlesson ;
+                                A7.idfunction = idfunction ;
+                                A7.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A7.class));
                                 break;
 
                             case 8:
-                                //A8.idlesson = idlesson ;
-                                //A8.activitynumber = activitynumber;
+                                A8.idlesson = idlesson ;
+                                A8.idfunction = idfunction ;
+                                A8.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A8.class));
                                 break;
 
                             case 9:
-                                //A9.idlesson = idlesson ;
-                                //A9.activitynumber = activitynumber;
+                                A9.idlesson = idlesson ;
+                                A9.idfunction = idfunction ;
+                                A9.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A9.class));
                                 break;
@@ -378,6 +435,7 @@ public class A39 extends AppCompatActivity
 
                             case 15:
                                 //A15.idlesson = idlesson ;
+                               // A.idfunction = idfunction ;
                                 //A15.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A15.class));
@@ -387,21 +445,24 @@ public class A39 extends AppCompatActivity
                             case 17: break;
 
                             case 18:
-                                //A18.idlesson = idlesson ;
-                                //A18.activitynumber = activitynumber;
+                                A18.idlesson = idlesson ;
+                                A18.idfunction = idfunction ;
+                                A18.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A18.class));
                                 break;
 
                             case 19:
-                                //A19.idlesson = idlesson ;
-                                //A19.activitynumber = activitynumber;
+                                A19.idlesson = idlesson ;
+                                A19.idfunction = idfunction ;
+                                A19.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A19.class));
                                 break;
 
                             case 20:
                                 //A20.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A20.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A20.class));
@@ -410,8 +471,9 @@ public class A39 extends AppCompatActivity
                             case 21: break;
 
                             case 22:
-                                //A22.idlesson = idlesson ;
-                                //A22.activitynumber = activitynumber;
+                                A22.idlesson = idlesson ;
+                                A22.idfunction = idfunction ;
+                                A22.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A22.class));
                                 break;
@@ -419,56 +481,64 @@ public class A39 extends AppCompatActivity
                             case 23: break;
 
                             case 24:
-                                //A24.idlesson = idlesson ;
-                                //A24.activitynumber = activitynumber;
+                                A24.idlesson = idlesson ;
+                                A24.idfunction = idfunction ;
+                                A24.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A24.class));
                                 break;
 
                             case 25:
                                 //A25.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A25.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A25.class));
                                 break;
 
                             case 26:
-                                //A26.idlesson = idlesson ;
-                                //A26.activitynumber = activitynumber;
+                                A26.idlesson = idlesson ;
+                                A26.idfunction = idfunction ;
+                                A26.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A26.class));
                                 break;
 
                             case 27:
                                 //A27.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A27.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A27.class));
                                 break;
 
                             case 28:
-                                //A28.idlesson = idlesson ;
-                                //A28.activitynumber = activitynumber;
+                                A28.idlesson = idlesson ;
+                                A28.idfunction = idfunction ;
+                                A28.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A28.class));
                                 break;
 
                             case 29:
-                                //A29.idlesson = idlesson ;
-                                //A29.activitynumber = activitynumber;
+                                A29.idlesson = idlesson ;
+                                A29.idfunction = idfunction ;
+                                A29.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A29.class));
                                 break;
 
                             case 30:
-                                //A30.idlesson = idlesson ;
-                                //A30.activitynumber = activitynumber;
+                                A30.idlesson = idlesson ;
+                                A30.idfunction = idfunction ;
+                                A30.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A30.class));
                                 break;
 
                             case 31:
                                 //A31.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A31.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A31.class));
@@ -476,28 +546,32 @@ public class A39 extends AppCompatActivity
 
                             case 32:
                                 //A32.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A32.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A32.class));
                                 break;
 
                             case 33:
-                                //A33.idlesson = idlesson ;
-                                //A33.activitynumber = activitynumber;
+                                A33.idlesson = idlesson ;
+                                A33.idfunction = idfunction ;
+                                A33.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A33.class));
                                 break;
 
                             case 34:
-                                //A34.idlesson = idlesson ;
-                                //A34.activitynumber = activitynumber;
+                                A34.idlesson = idlesson ;
+                                A34.idfunction = idfunction ;
+                                A34.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A34.class));
                                 break;
 
                             case 35:
-                                //A35.idlesson = idlesson ;
-                                //A35.activitynumber = activitynumber;
+                                A35.idlesson = idlesson ;
+                                A35.idfunction = idfunction ;
+                                A35.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A35.class));
                                 break;
@@ -506,6 +580,7 @@ public class A39 extends AppCompatActivity
 
                             case 37:
                                 //A37.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A37.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A37.class));
@@ -513,6 +588,7 @@ public class A39 extends AppCompatActivity
 
                             case 38:
                                 //A38.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A38.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A38.class));
@@ -520,6 +596,7 @@ public class A39 extends AppCompatActivity
 
                             case 39:
                                 A39.idlesson = idlesson ;
+                                A39.idfunction = idfunction ;
                                 A39.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A39.class));
@@ -528,6 +605,7 @@ public class A39 extends AppCompatActivity
 
                             case 40:
                                 //A40.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A40.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A40.class));
@@ -535,6 +613,7 @@ public class A39 extends AppCompatActivity
 
                             case 41:
                                 //A41.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A41.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A41.class));
@@ -542,6 +621,7 @@ public class A39 extends AppCompatActivity
 
                             case 42:
                                 //A42.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A42.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A42.class));
@@ -549,6 +629,7 @@ public class A39 extends AppCompatActivity
 
                             case 43:
                                 //A43.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A43.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A43.class));
@@ -556,6 +637,7 @@ public class A39 extends AppCompatActivity
 
                             case 44:
                                 //A44.idlesson = idlesson ;
+                                // A.idfunction = idfunction ;
                                 //A44.activitynumber = activitynumber;
                                 A39.this.finish();
                                 startActivity(new Intent(A39.this,  A44.class));
@@ -565,6 +647,17 @@ public class A39 extends AppCompatActivity
                 }
             }
         });
+    }
+
+    Runnable run = new Runnable() {
+        @Override public void run() {
+            seekUpdation();
+        }
+    };
+
+    public void seekUpdation() {
+        seekBar.setProgress(mp.getCurrentPosition());
+        seekHandler.postDelayed(run, 500);
     }
 
     private void setupMVP(){
@@ -610,11 +703,11 @@ public class A39 extends AppCompatActivity
     public boolean cheak_answer(){
         boolean result = false;
         for(int i=0 ; i<e.length ; i++){
-            if( tbActivityDetailList.get(i).getTitle1().equals( e[i].toString() ) ){
+           /* if( tbActivityDetailList.get(i).getTitle1().equals( e[i].toString() ) ){
                 result = true;
             }else{
                 result = false;
-            }
+            }*/
         }
         return result;
     }

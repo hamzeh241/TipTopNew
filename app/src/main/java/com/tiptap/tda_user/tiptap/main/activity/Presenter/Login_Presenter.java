@@ -59,13 +59,13 @@ public class Login_Presenter
     }
 
     @Override
-    public int getMaxId_Glossary() {
-        return mModel.getMaxId_Glossary();
+    public void Insert_Glossary(String Q) {
+        mModel.Insert_Glossary(Q);
     }
 
     @Override
-    public void Insert_Glossary(String Q) {
-        mModel.Insert_Glossary(Q);
+    public List<Integer> ListGlossary() {
+        return mModel.ListGlossary();
     }
 
     /*  ------ RequiredPresenterOps ------  */

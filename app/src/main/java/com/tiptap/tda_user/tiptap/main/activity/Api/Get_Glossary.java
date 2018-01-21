@@ -16,6 +16,9 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
+
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Glossary extends BaseSetingApi {
@@ -47,9 +50,8 @@ public class Get_Glossary extends BaseSetingApi {
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
-
+                    List<Integer> listGlossary = login_presenter.ListGlossary();
                     try {
-                        int maxId = login_presenter.getMaxId_Glossary();
                         String Q1 = "insert into TbGlossary (_id,Id_Language,TableName,ColumeName,RowNumber,NewTitle,RowVersion) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
@@ -60,16 +62,17 @@ public class Get_Glossary extends BaseSetingApi {
                             String row_number = jsonObject.getString("RowNumber");
                             String new_title = jsonObject.getString("RowVersion");
                             String row_version = jsonObject.getString("TableName");
+
                             int Id = Integer.parseInt(id);
 
+                            int type = whatdo(listGlossary, Id);
                             // insert
-                            if(Id>maxId) {
+                            if(type == 1){
                                 insert = true;
                                 Q1 = Q1.concat("('" + id + "','" + id_language + "','" + table_name + "','" + colume_name + "','" + row_number + "','" + new_title + "','" + row_version + "')," );
                             }
-
                             // update
-                            else {
+                            if(type == 2){
                                 String Q2="update TbGlossary set Id_Language='"+id_language+"',TableName='"+table_name+"',ColumeName='"+colume_name+"',RowNumber='"+row_number+"',NewTitle='"+new_title+"',RowVersion='"+row_version+"' where _id="+Id;
                                 login_presenter.Insert_Glossary(Q2);
                             }
@@ -104,5 +107,15 @@ public class Get_Glossary extends BaseSetingApi {
         }else{}
 
         return null;
+    }
+
+    public int whatdo(List<Integer> listGlossary, int id){
+        int result = 1;
+        for(int j=0 ; j < listGlossary.size() ; j++) {
+            if(listGlossary.get(j) == id){
+                result = 2;
+            }
+        }
+        return result;
     }
 }

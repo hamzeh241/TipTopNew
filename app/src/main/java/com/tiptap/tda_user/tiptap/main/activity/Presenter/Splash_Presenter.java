@@ -48,13 +48,8 @@ public class Splash_Presenter
     }
 
     @Override
-    public int Id_Lesson() {
-        return mModel.Id_Lesson();
-    }
-
-    @Override
-    public int Id_Function(int lid) {
-        return mModel.Id_Function(lid);
+    public int Id_Function() {
+        return mModel.Id_Function();
     }
 
     /*  ------ RequiredPresenterOps ------  */

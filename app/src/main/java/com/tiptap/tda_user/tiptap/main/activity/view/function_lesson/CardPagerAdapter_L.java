@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Activity;
 import com.tiptap.tda_user.tiptap.main.activity.Api.Get_ActivityDetail;
@@ -56,22 +57,21 @@ import java.util.List;
 public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
     MVP_Lesson.ProvidedPresenterOps lesson_presenter;
-    int _id,_fid;
     Context _context;
     Activity _activity;
     private List<CardView> mViews;
     private List<CardItem> mData;
     private float mBaseElevation;
+    int func;
 
     public CardPagerAdapter_L() {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
     }
 
-    public void addCardItem(MVP_Lesson.ProvidedPresenterOps ppo,int fid , int id, Context context, Activity activity, CardItem item) {
+    public void addCardItem(MVP_Lesson.ProvidedPresenterOps ppo, int nid, Context context, Activity activity, CardItem item) {
         lesson_presenter = ppo;
-        _fid = fid;
-        _id = id;
+        func = nid;
         _context = context;
         _activity = activity;
         mViews.add(null);
@@ -125,38 +125,60 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
         titleTextView.setText(item.getTitle());
 
         ImageView img = (ImageView) view.findViewById(R.id.img);
-        Button btn = (Button) view.findViewById(R.id.next);
+        final Button btn = (Button) view.findViewById(R.id.next);
 
         int id_lesson = item.getId();
         int number_lesson = lesson_presenter.lesson_number(id_lesson);
 
-        if(_id == 0){
-            if(number_lesson == 1){
-                int first = lesson_presenter.lesson_id(_fid , 1);
-                lesson_presenter.update_idlesson(first);
-                btn.setBackgroundColor(Color.parseColor("#3CB371"));
-                btn.setText("Start");
-            }
+        int fuser = lesson_presenter.Id_Function();
+        final int luser = lesson_presenter.Id_Lesson();
 
-        }else if(_id != 0){
-            int number_id = lesson_presenter.lesson_number(_id);
-            if(number_lesson < number_id){
-                btn.setBackgroundColor(Color.parseColor("#CCCC00"));
-                btn.setText("Redo");
+        if(func == fuser){
+            if(luser == 0){
+                if(number_lesson == 1){
+                    int first = lesson_presenter.lesson_id(func,1);
+                    lesson_presenter.update_idlesson(first);
+                    btn.setBackgroundColor(Color.parseColor("#3CB371"));
+                    btn.setText("Start");
+                }
+            }else if(luser != 0){
+                int nluser = lesson_presenter.lesson_number(luser);
+                if(number_lesson < nluser){
+                    btn.setBackgroundColor(Color.parseColor("#CCCC00"));
+                    btn.setText("Redo");
+                }
+                if(number_lesson == nluser) {
+                    btn.setBackgroundColor(Color.parseColor("#3CB371"));
+                    btn.setText("Start");
+                }
             }
-            if(number_lesson == number_id){
-                btn.setBackgroundColor(Color.parseColor("#3CB371"));
-                btn.setText("Start");
-            }
+        }
+        if(func < fuser){
+            btn.setBackgroundColor(Color.parseColor("#CCCC00"));
+            btn.setText("Redo");
         }
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int id_lesson = item.getId();
-                int number_lesson = lesson_presenter.lesson_number(id_lesson);
-                int number_id = lesson_presenter.lesson_number(_id);
-                if(number_lesson <= number_id || number_lesson == 1){
+                // int number_lesson = lesson_presenter.lesson_number(id_lesson);
+                // int number_id = lesson_presenter.lesson_number(luser);
+
+                if(btn.getText().equals("Redo")){
+                    int id_activity_type = lesson_presenter.activity_Type(id_lesson);
+                    go_activity(view, id_activity_type, id_lesson);
+                }
+
+                if(btn.getText().equals("Start")){
+                    new Get_Activity(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
+                    new Get_ActivityDetail(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
+
+                    int id_activity_type = lesson_presenter.activity_Type(id_lesson);
+                    go_activity(view, id_activity_type, id_lesson);
+                }
+
+               /* if(number_lesson <= number_id || number_lesson == 1){
 
                     new Get_Activity(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
 
@@ -164,7 +186,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
                     int id_activity_type = lesson_presenter.activity_Type(id_lesson);
                     go_activity(view, id_activity_type, id_lesson);
-                }
+                }*/
 
             }
         });
@@ -195,6 +217,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 3:
                 //A3.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A3.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A3.class));
                 _activity.finish();
@@ -202,20 +225,23 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 4:
                 A4.idlesson = id_l;
+                A4.idfunction = func;
                 A4.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A4.class));
                 _activity.finish();
                 break;
 
             case 5:
-                //A5.idlesson = id_l;
-                //A5.activitynumber = 1;
+                A5.idlesson = id_l;
+                A5.idfunction = func;
+                A5.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A5.class));
                 _activity.finish();
                 break;
 
             case 6:
                 A6.idlesson = id_l;
+                A6.idfunction = func;
                 A6.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A6.class));
                 _activity.finish();
@@ -223,6 +249,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 7:
                 A7.idlesson = id_l;
+                A7.idfunction = func;
                 A7.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A7.class));
                 _activity.finish();
@@ -230,14 +257,16 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 8:
                 A8.idlesson = id_l;
+                A8.idfunction = func;
                 A8.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A8.class));
                 _activity.finish();
                 break;
 
             case 9:
-                //A9.idlesson = id_l;
-                //A9.activitynumber = 1;
+                A9.idlesson = id_l;
+                A9.idfunction = func;
+                A9.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A9.class));
                 _activity.finish();
                 break;
@@ -250,6 +279,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 15:
                 //A15.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A15.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A15.class));
                 _activity.finish();
@@ -259,14 +289,16 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             case 17: break;
 
             case 18:
-                //A18.idlesson = id_l;
-                //A18.activitynumber = 1;
+                A18.idlesson = id_l;
+                A18.idfunction = func;
+                A18.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A18.class));
                 _activity.finish();
                 break;
 
             case 19:
                 A19.idlesson = id_l;
+                A19.idfunction = func;
                 A19.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A19.class));
                 _activity.finish();
@@ -274,6 +306,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 20:
                 //A20.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A20.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A20.class));
                 _activity.finish();
@@ -282,8 +315,9 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             case 21: break;
 
             case 22:
-                //A22.idlesson = id_l;
-                //A22.activitynumber = 1;
+                A22.idlesson = id_l;
+                A22.idfunction = func;
+                A22.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A22.class));
                 _activity.finish();
                 break;
@@ -291,27 +325,31 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             case 23: break;
 
             case 24:
-                //A24.idlesson = id_l;
-                //A24.activitynumber = 1;
+                A24.idlesson = id_l;
+                A24.idfunction = func;
+                A24.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A24.class));
                 _activity.finish();
                 break;
 
             case 25:
                 //A25.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A25.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A25.class));
                 break;
 
             case 26:
-                //A26.idlesson = id_l;
-                //A26.activitynumber = 1;
+                A26.idlesson = id_l;
+                A26.idfunction = func;
+                A26.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A26.class));
                 _activity.finish();
                 break;
 
             case 27:
                 //A27.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A27.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A27.class));
                 _activity.finish();
@@ -319,27 +357,31 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 28:
                 A28.idlesson = id_l;
+                A28.idfunction = func;
                 A28.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A28.class));
                 _activity.finish();
                 break;
 
             case 29:
-                //A29.idlesson = id_l;
-                //A29.activitynumber = 1;
+                A29.idlesson = id_l;
+                A29.idfunction = func;
+                A29.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A29.class));
                 _activity.finish();
                 break;
 
             case 30:
-                //A30.idlesson = id_l;
-                //A30.activitynumber = 1;
+                A30.idlesson = id_l;
+                A30.idfunction = func;
+                A30.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A30.class));
                 _activity.finish();
                 break;
 
             case 31:
                 //A31.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A31.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A31.class));
                 _activity.finish();
@@ -347,28 +389,32 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 32:
                 //A32.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A32.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A32.class));
                 _activity.finish();
                 break;
 
             case 33:
-                //A33.idlesson = id_l;
-                //A33.activitynumber = 1;
+                A33.idlesson = id_l;
+                A33.idfunction = func;
+                A33.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A33.class));
                 _activity.finish();
                 break;
 
             case 34:
-                //A34.idlesson = id_l;
-                //A34.activitynumber = 1;
+                A34.idlesson = id_l;
+                A34.idfunction = func;
+                A34.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A34.class));
                 _activity.finish();
                 break;
 
             case 35:
-                //A35.idlesson = id_l;
-                //A35.activitynumber = 1;
+                A35.idlesson = id_l;
+                A35.idfunction = func;
+                A35.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A35.class));
                 _activity.finish();
                 break;
@@ -377,6 +423,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 37:
                 //A37.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A37.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A37.class));
                 _activity.finish();
@@ -384,20 +431,23 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 38:
                 //A38.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A38.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A38.class));
                 _activity.finish();
                 break;
 
             case 39:
-                //A39.idlesson = id_l;
-                //A39.activitynumber = 1;
+                A39.idlesson = id_l;
+                A39.idfunction = func;
+                A39.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A39.class));
                 _activity.finish();
                 break;
 
             case 40:
                 //A40.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A40.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A40.class));
                 _activity.finish();
@@ -405,6 +455,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 41:
                 //A41.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A41.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A41.class));
                 _activity.finish();
@@ -412,6 +463,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 42:
                 //A42.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A42.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A42.class));
                 _activity.finish();
@@ -419,6 +471,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 43:
                 //A43.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A43.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A43.class));
                 _activity.finish();
@@ -426,6 +479,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
 
             case 44:
                 //A44.idlesson = id_l;
+                //A.idfunction = idfunction ;
                 //A44.activitynumber = 1;
                 view.getContext().startActivity(new Intent(view.getContext(), A44.class));
                 _activity.finish();
