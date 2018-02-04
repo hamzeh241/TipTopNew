@@ -70,7 +70,7 @@ public class A29 extends AppCompatActivity
         textView = (TextView) findViewById(R.id.txt);
         editText = (EditText) findViewById(R.id.edt);
 
-        mp = MediaPlayer.create(A29.this, R.raw.music);
+        //mp = MediaPlayer.create(A29.this, R.raw.music);
         mp.setVolume(100,100);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

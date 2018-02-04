@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/a4" />
+            android:src="@drawable/test" />
 
     </TableRow>
 

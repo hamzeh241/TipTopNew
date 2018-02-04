@@ -136,9 +136,9 @@ public class A29_Model implements MVP_A29.ProvidedModelOps {
                 app.setId_Activity(Integer.parseInt(cursor.getString(3)));
                 app.setTitle1(cursor.getString(4));
                 app.setTitle2(cursor.getString(5));
-                app.setIsAnswer(Boolean.parseBoolean(cursor.getString(6)));
-                app.setOrferAnswer(Integer.parseInt(cursor.getString(7)));
-                app.setOrderPreview(Integer.parseInt(cursor.getString(8)));
+                app.setIsAnswer(cursor.getString(6));
+                app.setOrferAnswer(cursor.getString(7));
+                app.setOrderPreview(cursor.getString(8));
                 app.setRowVersion(cursor.getString(9));
                 ad_List.add(app);
                 cursor.moveToNext();

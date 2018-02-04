@@ -50,7 +50,7 @@
                         android:adjustViewBounds="true"
                         android:cropToPadding="true"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/a5" />
+                        android:src="@drawable/test" />
 
                 </LinearLayout>
 

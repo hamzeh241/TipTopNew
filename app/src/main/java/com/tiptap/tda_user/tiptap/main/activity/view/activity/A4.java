@@ -171,7 +171,7 @@ public class A4 extends AppCompatActivity
 
                 if(correct == count) {
 
-                    showCustomAlert();
+                   // showCustomAlert();
 
                     if(activitynumber == max){
                         now_less = mPresenter.now_IdLesson();

@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
-            android:src="@drawable/a6" />
+            android:src="@drawable/test" />
 
     </TableRow>
 

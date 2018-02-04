@@ -8,9 +8,9 @@ public class TbActivityDetail {
     private int Id_Activity;
     private String Title1;
     private String Title2;
-    private boolean IsAnswer;
-    private int OrferAnswer;
-    private int OrderPreview;
+    private String IsAnswer;
+    private String OrferAnswer;
+    private String OrderPreview;
     private String RowVersion;
 
     public TbActivityDetail(){}
@@ -63,27 +63,27 @@ public class TbActivityDetail {
         Title2 = title2;
     }
 
-    public boolean getIsAnswer() {
+    public String getIsAnswer() {
         return IsAnswer;
     }
 
-    public void setIsAnswer(boolean answer) {
+    public void setIsAnswer(String answer) {
         IsAnswer = answer;
     }
 
-    public int getOrferAnswer() {
+    public String getOrferAnswer() {
         return OrferAnswer;
     }
 
-    public void setOrferAnswer(int orferAnswer) {
+    public void setOrferAnswer(String orferAnswer) {
         OrferAnswer = orferAnswer;
     }
 
-    public int getOrderPreview() {
+    public String getOrderPreview() {
         return OrderPreview;
     }
 
-    public void setOrderPreview(int orderPreview) {
+    public void setOrderPreview(String orderPreview) {
         OrderPreview = orderPreview;
     }
 

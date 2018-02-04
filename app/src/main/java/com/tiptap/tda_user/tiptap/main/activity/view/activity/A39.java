@@ -69,7 +69,7 @@ public class A39 extends AppCompatActivity
     }
     private void setupViews() {
 
-        mp = MediaPlayer.create(A39.this, R.raw.music);
+        //mp = MediaPlayer.create(A39.this, R.raw.music);
         mp.setVolume(100,100);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

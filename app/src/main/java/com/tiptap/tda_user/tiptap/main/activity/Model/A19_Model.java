@@ -3,7 +3,6 @@ package com.tiptap.tda_user.tiptap.main.activity.Model;
 import android.content.Context;
 import android.database.Cursor;
 import android.widget.Toast;
-
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A19;
@@ -136,15 +135,17 @@ public class A19_Model implements MVP_A19.ProvidedModelOps {
                 app.setId_Activity(Integer.parseInt(cursor.getString(3)));
                 app.setTitle1(cursor.getString(4));
                 app.setTitle2(cursor.getString(5));
-                app.setIsAnswer(Boolean.parseBoolean(cursor.getString(6)));
-                app.setOrferAnswer(Integer.parseInt(cursor.getString(7)));
-                app.setOrderPreview(Integer.parseInt(cursor.getString(8)));
+                app.setIsAnswer(cursor.getString(6));
+                app.setOrferAnswer(cursor.getString(7));
+                app.setOrderPreview(cursor.getString(8));
                 app.setRowVersion(cursor.getString(9));
                 ad_List.add(app);
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
             new PostError(context, ex.getMessage(), getMethodName()).postError();
+            Toast.makeText(context, "error : "+ex.getMessage().toString(), Toast.LENGTH_LONG).show();
+
         }
         return ad_List;
     }

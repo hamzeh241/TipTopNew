@@ -72,7 +72,7 @@ public class A22 extends AppCompatActivity
     }
     private void setupViews() {
 
-        mp = MediaPlayer.create(A22.this, R.raw.music);
+        //mp = MediaPlayer.create(A22.this, R.raw.music);
         mp.setVolume(100,100);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -108,7 +108,9 @@ public class A22 extends AppCompatActivity
         //String w = "hello, how are you ...";
         //String w = "hello, how are you ... me to ...";
         //String w = "hello hi... how are you ... me to";
-        String w = "hello hi i am ... how are you";
+        //String w = "hello hi i am ... how are you";
+
+        String w = "A:good ... . My ... is Alex. B:hello ... Robert. A:how is ... ? B: i am ... thanks. And ... ? A:not bad.";
 
         String [] list_w = w.split(Pattern.quote("..."));
 

@@ -66,7 +66,7 @@ public class A6 extends AppCompatActivity
         img = (ImageView)findViewById(R.id.img);
         txt = (TextView)findViewById(R.id.txt);
 
-        mp = MediaPlayer.create(A6.this, R.raw.music);
+        //mp = MediaPlayer.create(A6.this, R.raw.music);
         mp.setVolume(100,100);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

@@ -17,7 +17,7 @@
             android:layout_height="150dp"
             android:adjustViewBounds="true"
             android:gravity="center"
-            android:src="@drawable/a7" />
+            android:src="@drawable/test" />
 
     </TableRow>
 

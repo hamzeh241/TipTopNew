@@ -76,7 +76,7 @@ public class Get_Activity extends BaseSetingApi {
                             }
                             // update
                             if(type == 2){
-                                String Q2="update TbActivity set Id_Lesson='"+idlesson+"',ActivityNumber='"+activitynumber+"',Id_ActivityType='"+idactivitytype+"',Title1='"+title1+"',Title2='"+title2+"',Path1='"+path1+"',Path1='"+path2+"',IsNote='"+isnote+"',RowVersion='"+rowversion+"' where _id="+Id;
+                                String Q2="update TbActivity set Id_Lesson='"+idlesson+"',ActivityNumber='"+activitynumber+"',Id_ActivityType='"+idactivitytype+"',Title1='"+title1+"',Title2='"+title2+"',Path1='"+path1+"',Path2='"+path2+"',IsNote='"+isnote+"',RowVersion='"+rowversion+"' where _id="+Id;
                                 lesson_presenter.Insert_Activity(Q2);
                             }
                         }

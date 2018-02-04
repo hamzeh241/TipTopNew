@@ -66,7 +66,7 @@ public class A30 extends AppCompatActivity
 
         editText = (EditText) findViewById(R.id.edt);
 
-        mp = MediaPlayer.create(A30.this, R.raw.music);
+       // mp = MediaPlayer.create(A30.this, R.raw.music);
         mp.setVolume(100,100);
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
