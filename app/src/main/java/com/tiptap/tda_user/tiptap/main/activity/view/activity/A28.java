@@ -515,7 +515,7 @@ public class A28 extends AppCompatActivity
     public void onCompletion(MediaPlayer mp) {
         end = true;
         play.setBackgroundResource(R.drawable.play);
-        if(editText.getText().equals("")){
+        if(editText.getText().toString().equals("")){
         }else{
             next.setTextColor(Color.WHITE);
             next.setBackgroundResource(R.drawable.btn);

@@ -39,16 +39,7 @@ public class Adapter_A26 extends RecyclerView.Adapter<Adapter_A26.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.textView.setText(mDataList.get(position).toString());
-        if(position == 0){
-            holder.imageView.setBackgroundResource(R.drawable.p1);
-        }else{
-            if(position%2 == 0){
-                holder.imageView.setBackgroundResource(R.drawable.p1);
-            }
-            if(position%2 != 0){
-               // holder.imageView.setBackgroundResource(R.drawable.p2);
-            }
-        }
+        holder.imageView.setBackgroundResource(R.drawable.p1);
     }
 
     @Override

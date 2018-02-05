@@ -77,7 +77,7 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
     @Override
     public void onClick(View v) {
 
-        if (v.getId() == R.id.play) {
+        if (v.getId() == R.id.next) {
 
             switch (next.getText().toString()) {
 
@@ -473,7 +473,7 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
 
     private void addData(ArrayList<String> mDataList) {
         String text = title1;
-        String part[] = text.split(Pattern.quote("/n"));
+        String part[] = text.split(Pattern.quote("\n"));
         part_id1 = new String[part.length][2];
         part_id2 = new String[part.length][2];
 

@@ -401,9 +401,9 @@ public class A19 extends AppCompatActivity
                             break;
 
                         case 32:
-                            //A32.idlesson = idlesson ;
-                            // A.idfunction = idfunction ;
-                            //A32.activitynumber = activitynumber;
+                            A32.idlesson = idlesson ;
+                            A32.idfunction = idfunction ;
+                            A32.activitynumber = activitynumber;
                             A19.this.finish();
                             startActivity(new Intent(A19.this,  A32.class));
                             break;
