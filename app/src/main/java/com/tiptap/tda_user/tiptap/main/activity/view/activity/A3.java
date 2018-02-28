@@ -71,6 +71,11 @@ public class A3 extends AppCompatActivity
 
         max = mPresenter.max_Activitynumber(idlesson);
 
+        // addd
+        // to
+
+        // test
+
         // first
         if(Act_Status.equals("first")){
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
