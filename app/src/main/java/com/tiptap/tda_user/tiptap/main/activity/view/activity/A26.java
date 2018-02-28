@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -19,7 +21,7 @@ import com.tiptap.tda_user.tiptap.di.module.A26_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A26;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.A26_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +41,8 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     String title1;
     int max,now_less;
@@ -48,6 +52,8 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
     Adapter_A26 mAdapter;
     String part_id1 [][];
     String part_id2 [][];
+    ProgressBar p;
+    int all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +78,8 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
         mDataList = new ArrayList<String>();
 
         next = (Button) findViewById(R.id.next);
+        p = (ProgressBar)findViewById(R.id.p);
+        p.setMax(100);
     }
 
     @Override
@@ -85,13 +93,13 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
 
                     int answer = cheak();
                     if (answer == 1) {
-                        Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "CorrectTEST", Toast.LENGTH_LONG).show();
                     } else if (answer == 2) {
                         Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
                     }
 
                     next.setTextColor(Color.WHITE);
-                    next.setBackgroundResource(R.drawable.btn);
+                    next.setBackgroundResource(R.drawable.btn_green);
                     next.setText("countinue");
 
                     break;
@@ -439,6 +447,7 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
         addData(mDataList);
         mAdapter = new Adapter_A26(this, mDataList);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 15, false));
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
             @Override
@@ -511,6 +520,41 @@ public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, O
             }
         }
         return result;
+    }
+
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view); // item position
+            int column = position % spanCount; // item column
+
+            if (includeEdge) {
+                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing;
+                }
+                outRect.bottom = spacing; // item bottom
+            } else {
+                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing; // item top
+                }
+            }
+        }
     }
 
     private void setupMVP(){

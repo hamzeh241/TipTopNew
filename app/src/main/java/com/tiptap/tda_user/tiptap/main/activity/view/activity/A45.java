@@ -37,6 +37,8 @@ public class A45 extends AppCompatActivity
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     List<TbActivityDetail> tbActivityDetailList;
     String title1, title2, path1;
@@ -104,7 +106,7 @@ public class A45 extends AppCompatActivity
             a.setChecked(true);
 
             next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn);
+            next.setBackgroundResource(R.drawable.btn_green);
 
             if( b.isChecked() ){
                 b.setChecked(false);
@@ -115,7 +117,7 @@ public class A45 extends AppCompatActivity
             b.setChecked(true);
 
             next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn);
+            next.setBackgroundResource(R.drawable.btn_green);
 
             if( a.isChecked() ){
                 a.setChecked(false);
@@ -143,13 +145,13 @@ public class A45 extends AppCompatActivity
                         }
 
                         if (ans) {
-                            Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "CorrectTEST", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
                         }
 
                         next.setTextColor(Color.WHITE);
-                        next.setBackgroundResource(R.drawable.btn);
+                        next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
                     }
                     break;

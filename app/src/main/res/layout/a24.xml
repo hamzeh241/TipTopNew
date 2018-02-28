@@ -93,7 +93,7 @@
             android:id="@+id/next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_def"
+            android:background="@drawable/btn_gray"
             android:text="check"
             android:textColor="#919396"
             android:layout_marginLeft="5dp"

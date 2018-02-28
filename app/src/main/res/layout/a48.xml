@@ -13,17 +13,18 @@
         android:weightSum="1">
 
         <LinearLayout
+            android:id="@+id/l"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="He"
+                android:text="He 1t6q5vb652"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
@@ -35,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="an architect"
+                android:text="an architectyoy68o8io678i67i67"
                 android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
@@ -55,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="countinue"
-            android:background="@drawable/btn"
+            android:background="@drawable/btn_green"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="8dp"

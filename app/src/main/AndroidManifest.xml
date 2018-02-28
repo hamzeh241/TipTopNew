@@ -29,9 +29,9 @@
         <activity
             android:name=".main.activity.view.language.Language"/>
         <activity
-            android:name=".main.activity.view.function_lesson.Function"/>
+            android:name=".main.activity.view.function.Function"/>
         <activity
-            android:name=".main.activity.view.function_lesson.Lesson"/>
+            android:name=".main.activity.view.lesson.Lesson"/>
         <activity
             android:name=".main.activity.view.activity.Act_1"/>
         <activity

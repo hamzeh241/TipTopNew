@@ -38,6 +38,8 @@ public class A35 extends AppCompatActivity
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
@@ -227,13 +229,13 @@ public class A35 extends AppCompatActivity
 
                             int answer = cheak();
                             if (answer == 1) {
-                                Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "CorrectTEST", Toast.LENGTH_LONG).show();
                             } else if (answer == 2) {
                                 Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
                             }
 
                             next.setTextColor(Color.WHITE);
-                            next.setBackgroundResource(R.drawable.btn);
+                            next.setBackgroundResource(R.drawable.btn_green);
                             next.setText("countinue");
                         }
 
@@ -624,11 +626,11 @@ public class A35 extends AppCompatActivity
         position++;
         if(position > 0) {
             next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn);
+            next.setBackgroundResource(R.drawable.btn_green);
         }
         if(position == 0){
             next.setTextColor(getResources().getColor(R.color.gray));
-            next.setBackgroundResource(R.drawable.btn_def);
+            next.setBackgroundResource(R.drawable.btn_gray);
         }
     }
 
@@ -648,11 +650,11 @@ public class A35 extends AppCompatActivity
         position--;
         if(position > 0) {
             next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn);
+            next.setBackgroundResource(R.drawable.btn_green);
         }
         if(position == 0){
             next.setTextColor(getResources().getColor(R.color.gray));
-            next.setBackgroundResource(R.drawable.btn_def);
+            next.setBackgroundResource(R.drawable.btn_gray);
         }
     }
 

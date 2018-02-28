@@ -52,7 +52,7 @@ public class Get_Activity extends BaseSetingApi {
                     boolean insert = false;
                     List<Integer> listActivity = lesson_presenter.ListActivity();
                     try {
-                        String Q1 = "insert into TbActivity (_id, Id_Lesson, ActivityNumber, Id_ActivityType, Title1, Title2, Path1, Path2, IsNote, RowVersion) values ";
+                        String Q1 = "insert into TbActivity (_id, Id_Lesson, ActivityNumber, Id_ActivityType, Title1, Title2, Path1, Path2, IsNote, RowVersion, Status) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
                             String id = jsonObject.getString("C_id");
@@ -65,6 +65,7 @@ public class Get_Activity extends BaseSetingApi {
                             String path2 = jsonObject.getString("Path2");
                             String isnote = jsonObject.getString("IsNote");
                             String rowversion = "1";
+                            int status = 0;
 
                             int Id = Integer.parseInt(id);
 
@@ -72,11 +73,11 @@ public class Get_Activity extends BaseSetingApi {
                             // insert
                             if(type == 1){
                                 insert = true;
-                                Q1 = Q1.concat("('" + id + "','" + idlesson + "','" + activitynumber + "','" + idactivitytype + "','" + title1 + "','" + title2 + "','" + path1 + "','" + path2 + "','" + isnote + "','" + rowversion + "')," );
+                                Q1 = Q1.concat("('" + id + "','" + idlesson + "','" + activitynumber + "','" + idactivitytype + "','" + title1 + "','" + title2 + "','" + path1 + "','" + path2 + "','" + isnote + "','" + rowversion + "','" + status + "')," );
                             }
                             // update
                             if(type == 2){
-                                String Q2="update TbActivity set Id_Lesson='"+idlesson+"',ActivityNumber='"+activitynumber+"',Id_ActivityType='"+idactivitytype+"',Title1='"+title1+"',Title2='"+title2+"',Path1='"+path1+"',Path2='"+path2+"',IsNote='"+isnote+"',RowVersion='"+rowversion+"' where _id="+Id;
+                                String Q2="update TbActivity set Id_Lesson='"+idlesson+"',ActivityNumber='"+activitynumber+"',Id_ActivityType='"+idactivitytype+"',Title1='"+title1+"',Title2='"+title2+"',Path1='"+path1+"',Path2='"+path2+"',IsNote='"+isnote+"',RowVersion='"+rowversion+"',Status='"+status+"' where _id="+Id;
                                 lesson_presenter.Insert_Activity(Q2);
                             }
                         }

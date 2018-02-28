@@ -3,11 +3,11 @@ package com.tiptap.tda_user.tiptap.main.activity.Cls;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
+
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.CardItem;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.CardPagerAdapter_L;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.ShadowTransformer;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardItem;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.ShadowTransformer;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 
 public class Set_Lesson extends BaseSetingApi {

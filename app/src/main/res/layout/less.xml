@@ -23,8 +23,8 @@
                 android:id="@+id/img"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="28dp"
-                android:background="@drawable/f1"/>
+                android:layout_marginTop="10dp"
+                android:background="@drawable/f"/>
 
             <TextView
                 android:id="@+id/title"
@@ -47,33 +47,6 @@
                 android:text="Locked" />
 
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_star" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="35dp"
-            android:src="@drawable/ic_star" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="60dp"
-            android:src="@drawable/ic_star" />
 
     </FrameLayout>
 

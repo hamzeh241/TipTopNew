@@ -12,6 +12,8 @@ import com.tiptap.tda_user.tiptap.R;
 public class A25 extends AppCompatActivity {
 
     Button next;
+    public static String Act_Status;
+    public static int idactivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

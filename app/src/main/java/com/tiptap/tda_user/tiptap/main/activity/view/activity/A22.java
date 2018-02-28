@@ -43,6 +43,8 @@ public class A22 extends AppCompatActivity
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
@@ -79,7 +81,7 @@ public class A22 extends AppCompatActivity
             public void onCompletion(MediaPlayer mediaPlayer) {
                 end = true;
                 next.setTextColor(Color.WHITE);
-                next.setBackgroundResource(R.drawable.btn);
+                next.setBackgroundResource(R.drawable.btn_green);
             }
         });
 
@@ -151,6 +153,9 @@ public class A22 extends AppCompatActivity
         LinearLayout l3 = (LinearLayout)findViewById(R.id.l3);
         LinearLayout l4 = (LinearLayout)findViewById(R.id.l4);
         LinearLayout l5 = (LinearLayout)findViewById(R.id.l5);
+        LinearLayout l6 = (LinearLayout)findViewById(R.id.l6);
+        LinearLayout l7 = (LinearLayout)findViewById(R.id.l7);
+        LinearLayout l8 = (LinearLayout)findViewById(R.id.l8);
 
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int added = 0;
@@ -165,7 +170,7 @@ public class A22 extends AppCompatActivity
                     e[id_e] = new EditText(this);
                     e[id_e].setLayoutParams(params);
                     e[id_e].setEms(4);
-                    e[id_e].setTextSize(20);
+                    e[id_e].setTextSize(16);
                     added = added + 5;
                     if( 0 <= added && added <= 33 ){
                         l1.addView(e[id_e]);
@@ -189,7 +194,7 @@ public class A22 extends AppCompatActivity
                     t[id_t] = new TextView(this);
                     t[id_t].setLayoutParams(params);
                     t[id_t].setText(list_w[id_w]);
-                    t[id_t].setTextSize(20);
+                    t[id_t].setTextSize(16);
                     added = added + list_w[id_w].length();
                     if( 0 <= added && added <= 33 ){
                         l1.addView(t[id_t]);
@@ -219,7 +224,7 @@ public class A22 extends AppCompatActivity
                         t[id_t] = new TextView(this);
                         t[id_t].setLayoutParams(params);
                         t[id_t].setText(list_w[id_w]);
-                        t[id_t].setTextSize(20);
+                        t[id_t].setTextSize(16);
                         added = added + list_w[id_w].length();
                         Toast.makeText(getActivityContext(), added+"" , Toast.LENGTH_LONG).show();
                         if( 0 <= added && added <= 33 ){
@@ -246,7 +251,7 @@ public class A22 extends AppCompatActivity
                         e[id_e] = new EditText(this);
                         e[id_e].setLayoutParams(params);
                         e[id_e].setEms(4);
-                        e[id_e].setTextSize(20);
+                        e[id_e].setTextSize(16);
                         added = added + 5;
                         if( 0 <= added && added <= 33 ){
                             l1.addView(e[id_e]);
@@ -275,7 +280,7 @@ public class A22 extends AppCompatActivity
                     e[id_e] = new EditText(this);
                     e[id_e].setLayoutParams(params);
                     e[id_e].setEms(4);
-                    e[id_e].setTextSize(20);
+                    e[id_e].setTextSize(16);
                     added = added + 5;
                     if( 0 <= added && added <= 33 ){
                         l1.addView(e[id_e]);
@@ -299,7 +304,7 @@ public class A22 extends AppCompatActivity
                     t[id_t] = new TextView(this);
                     t[id_t].setLayoutParams(params);
                     t[id_t].setText(list_w[id_w]);
-                    t[id_t].setTextSize(20);
+                    t[id_t].setTextSize(16);
                     added = added + list_w[id_w].length();
                     if( 0 <= added && added <= 33 ){
                         l1.addView(t[id_t]);

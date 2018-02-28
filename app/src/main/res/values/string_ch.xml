@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="A27_CH">听并重复</string>
+    <string name="A7_CH">听力</string>
+    <string name="A19_CH">匹配对</string>
+    <string name="A37_CH"></string>
+    <string name="A33_CH">听并重复</string>
+    <string name="A5_CH">将句子翻译成英文</string>
+    <string name="A8_CH">把话放在他们的位置</string>
+    <string name="A32_CH">听和说</string>
+    <string name="A28_CH">写下你听到的</string>
+    <string name="A46_CH">完成交谈</string>
+    <string name="A3_CH">听</string>
+    <string name="A15_CH">选择正确的答案</string>
+    <string name="A26_CH">订购谈话</string>
+</resources>

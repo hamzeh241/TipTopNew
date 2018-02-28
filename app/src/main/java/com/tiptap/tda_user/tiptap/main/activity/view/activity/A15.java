@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
@@ -36,14 +37,18 @@ public class A15 extends AppCompatActivity
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     List<TbActivityDetail> tbActivityDetailList;
-    String title1, title2;
+    String title1,title2;
     String answer;
     int max,now_less;
-    TextView txt1,txt2;
+    TextView txt1,txt2,t1,t2;
     CheckBox a,b;
     Button next;
+    ProgressBar p;
+    int all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +79,61 @@ public class A15 extends AppCompatActivity
 
         txt1 = (TextView) findViewById(R.id.txt1);
         txt2 = (TextView) findViewById(R.id.txt2);
+        t1 = (TextView)findViewById(R.id.title1);
+        t2 = (TextView)findViewById(R.id.title2);
         a = (CheckBox)findViewById(R.id.a);
         b = (CheckBox)findViewById(R.id.b);
         next = (Button) findViewById(R.id.next);
+        p = (ProgressBar)findViewById(R.id.p);
+        p.setMax(100);
     }
 
     private void after_setup(){
+
+        all = mPresenter.countActivity(idlesson);
+
+        // set all activity false in activitynumber = 1
+        if(activitynumber == 1 && Act_Status.equals("first")){
+            mPresenter.false_activitys(idlesson);
+        }
+
+        // show passed activity
+        List<Integer> p1 = mPresenter.activity_true(idlesson);
+        int p2 = p1.size();
+        if(p2 == 0){
+            p.setProgress(0);
+        }else{
+            double d_number = (double) p2/all;
+            int i_number = (int) (d_number*100);
+            p.setProgress(i_number);
+        }
+
+        t1.setText(R.string.A3_EN);
+        t1.setTextColor(getResources().getColor(R.color.my_black));
+
+        int lang_id = mPresenter.getlanguage();
+        switch (lang_id){
+            // فارسی
+            case 1:
+                t2.setText(R.string.A3_FA);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+            // کردی
+            case 2:
+                t2.setText(R.string.A3_KU);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+            // ترکی آذری
+            case 3:
+                t2.setText(R.string.A3_TA);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+            // چینی
+            case 4:
+                t2.setText(R.string.A3_CH);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+        }
 
         txt1.setText(title1);
         txt2.setText(title2);
@@ -96,7 +150,7 @@ public class A15 extends AppCompatActivity
             a.setChecked(true);
 
             next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn);
+            next.setBackgroundResource(R.drawable.btn_green);
 
             if( b.isChecked() ){
                 b.setChecked(false);
@@ -107,7 +161,7 @@ public class A15 extends AppCompatActivity
             b.setChecked(true);
 
             next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn);
+            next.setBackgroundResource(R.drawable.btn_green);
 
             if( a.isChecked() ){
                 a.setChecked(false);
@@ -135,13 +189,13 @@ public class A15 extends AppCompatActivity
                         }
 
                         if (ans) {
-                            Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "CorrectTEST", Toast.LENGTH_LONG).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
                         }
 
                         next.setTextColor(Color.WHITE);
-                        next.setBackgroundResource(R.drawable.btn);
+                        next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
                     }
                     break;

@@ -42,6 +42,8 @@ public class A4 extends AppCompatActivity
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;

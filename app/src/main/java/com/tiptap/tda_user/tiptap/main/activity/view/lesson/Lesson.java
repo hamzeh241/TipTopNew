@@ -1,14 +1,14 @@
-package com.tiptap.tda_user.tiptap.main.activity.view.function_lesson;
+package com.tiptap.tda_user.tiptap.main.activity.view.lesson;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.R;
@@ -17,11 +17,12 @@ import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Lesson_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Lesson_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Lesson;
-import java.util.List;
+import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
+
 import javax.inject.Inject;
 
 public class Lesson
-        extends AppCompatActivity implements View.OnClickListener, MVP_Lesson.RequiredViewOps{
+        extends Activity implements View.OnClickListener, MVP_Lesson.RequiredViewOps{
 
     int id_function;
     public static int now_id_function;
@@ -108,6 +109,17 @@ public class Lesson
                 mShowingFragments = !mShowingFragments;
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+    }
+
+    public void back(){
+        Lesson.this.finish();
+        startActivity(new Intent(Lesson.this, Function.class));
     }
 
     private boolean haveNetworkConnection() {

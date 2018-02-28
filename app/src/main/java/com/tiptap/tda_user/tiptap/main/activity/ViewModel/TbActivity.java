@@ -12,6 +12,7 @@ public class TbActivity {
     private String Path2;
     private boolean IsNote;
     private String RowVersion;
+    private int Status;
 
     public TbActivity() {}
 
@@ -93,5 +94,13 @@ public class TbActivity {
 
     public void setRowVersion(String rowVersion) {
         RowVersion = rowVersion;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
     }
 }

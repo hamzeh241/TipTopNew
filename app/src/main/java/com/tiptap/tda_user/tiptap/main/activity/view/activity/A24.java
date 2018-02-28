@@ -17,12 +17,11 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.A24_Module;
-import com.tiptap.tda_user.tiptap.main.activity.Api.Post_IdLesson;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A24;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.A24_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
-import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +39,8 @@ public class A24 extends AppCompatActivity
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
@@ -97,13 +98,13 @@ public class A24 extends AppCompatActivity
                             }
 
                             if (answer == true) {
-                                Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "CorrectTEST", Toast.LENGTH_LONG).show();
                             } else if (answer == false) {
                                 Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
                             }
 
                             next.setTextColor(Color.WHITE);
-                            next.setBackgroundResource(R.drawable.btn);
+                            next.setBackgroundResource(R.drawable.btn_green);
                             next.setText("countinue");
 
                         }
@@ -504,7 +505,7 @@ public class A24 extends AppCompatActivity
                     you_say = result.get(0);
                     Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
                     next.setTextColor(Color.WHITE);
-                    next.setBackgroundResource(R.drawable.btn);
+                    next.setBackgroundResource(R.drawable.btn_green);
                 }
                 break;
             }

@@ -19,8 +19,11 @@ public class A37_Model
     DBAdapter dbAdapter;
     Context context;
     private TbActivity act;
+    private TbActivity act2;
     private List<TbActivityDetail> ad_List;
     List<Integer> less;
+    List<Integer> act_false;
+    List<Integer> act_true;
     List<Integer> func;
 
     public A37_Model(MVP_A37.RequiredPresenterOps presenter, Context _conContext) {
@@ -29,6 +32,8 @@ public class A37_Model
         dbAdapter = new DBAdapter(context);
         ad_List = new ArrayList<>();
         less = new ArrayList<>();
+        act_false = new ArrayList<>();
+        act_true = new ArrayList<>();
         func = new ArrayList<>();
     }
 
@@ -67,6 +72,51 @@ public class A37_Model
             new PostError(context, ex.getMessage(), getMethodName()).postError();
         }
         return act;
+    }
+
+    @Override
+    public int countActivity(int id_lesson) {
+        int count = 0;
+        try {
+            String q = "SELECT [_id] FROM [TbActivity] where Id_Lesson = " + id_lesson;
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            count = cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context, ex.getMessage(), getMethodName()).postError();
+        }
+        return count;
+    }
+
+    @Override
+    public TbActivity getActivity2(int id_activity) {
+        try {
+            String q = "SELECT [_id],[Id_Lesson],[ActivityNumber],[Id_ActivityType],[Title1],[Title2],[Path1],[Path2],[IsNote],[RowVersion] FROM [TbActivity] where _id = " + id_activity;
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count = cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                TbActivity app = new TbActivity();
+                app.set_id(Integer.parseInt(cursor.getString(0)));
+                app.setId_Lesson(Integer.parseInt(cursor.getString(1)));
+                app.setActivityNumber(Integer.parseInt(cursor.getString(2)));
+                app.setId_ActivityType(Integer.parseInt(cursor.getString(3)));
+                app.setTitle1(cursor.getString(4));
+                app.setTitle2(cursor.getString(5));
+                app.setPath1(cursor.getString(6));
+                app.setPath2(cursor.getString(7));
+                app.setIsNote(Boolean.parseBoolean(cursor.getString(8)));
+                app.setRowVersion(cursor.getString(9));
+                act2 = app;
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context, ex.getMessage(), getMethodName()).postError();
+        }
+        return act2;
     }
 
     @Override
@@ -130,6 +180,42 @@ public class A37_Model
     }
 
     @Override
+    public List<Integer> activity_false(int lid) {
+        act_false = new ArrayList<>();
+        try {
+            String q = "SELECT [_id] FROM [TbActivity] where [Id_Lesson]= "+ lid +" and Status = 0 ORDER BY [ActivityNumber] ASC";
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count = cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                act_false.add(cursor.getInt(0));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context, ex.getMessage(), getMethodName()).postError();
+        }
+        return act_false;
+    }
+
+    @Override
+    public List<Integer> activity_true(int lid) {
+        act_true = new ArrayList<>();
+        try {
+            String q = "SELECT DISTINCT [_id] FROM [TbActivity] where [Status] = 1 and [Id_Lesson]= "+ lid;
+            Cursor cursor = dbAdapter.ExecuteQ(q);
+            int count = cursor.getCount();
+            cursor.moveToFirst();
+            for (int i = 0; i < count; i++) {
+                act_true.add(cursor.getInt(0));
+                cursor.moveToNext();
+            }
+        } catch (Exception ex) {
+            new PostError(context, ex.getMessage(), getMethodName()).postError();
+        }
+        return act_true;
+    }
+
+    @Override
     public void update_idlesson(int id_lesson) {
         Toast.makeText(context, "update lesson"+id_lesson, Toast.LENGTH_LONG).show();
         String q = "update [aspnet_Users] set [Id_Lesson] = "+id_lesson;
@@ -172,6 +258,22 @@ public class A37_Model
     public void update_idfunction(int id_function) {
         Toast.makeText(context, "update function"+id_function, Toast.LENGTH_LONG).show();
         String q = "update [aspnet_Users] set [Id_Function] = "+id_function;
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
+    }
+
+    @Override
+    public void update_activity(int id_activity) {
+        String q = "update [TbActivity] set [Status] = 1 where _id = "+id_activity;
+        Cursor cursor = dbAdapter.ExecuteQ(q);
+        int count = cursor.getCount();
+        cursor.moveToFirst();
+    }
+
+    @Override
+    public void false_activitys(int id_lesson) {
+        String q = "update [TbActivity] set [Status] = 0 where Id_Lesson = "+id_lesson;
         Cursor cursor = dbAdapter.ExecuteQ(q);
         int count = cursor.getCount();
         cursor.moveToFirst();

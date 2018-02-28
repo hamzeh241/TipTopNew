@@ -18,11 +18,18 @@ public interface MVP_A7 {
 
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
+        int countActivity(int id_lesson);
+        TbActivity getActivity2(int id_activity);
         int max_Activitynumber(int id_lesson);
         List<Integer> lesson(int fid);
+        List<Integer> activity_false(int lid);
+        List<Integer> activity_true(int lid);
         List<Integer> function();
         void update_idlesson(int id_lesson);
         void update_idfunction(int id_function);
+        void update_activity(int id_activity);
+        void false_activitys(int id_lesson);
+        int getlanguage();
 
         // user
         int now_IdLesson();
@@ -41,11 +48,18 @@ public interface MVP_A7 {
 
         // Activity
         TbActivity getActivity(int id_lesson , int activityNumber);
+        int countActivity(int id_lesson);
+        TbActivity getActivity2(int id_activity);
         int max_Activitynumber(int id_lesson);
         List<Integer> lesson(int fid);
+        List<Integer> activity_false(int lid);
+        List<Integer> activity_true(int lid);
         List<Integer> function();
         void update_idlesson(int id_lesson);
         void update_idfunction(int id_function);
+        void update_activity(int id_activity);
+        void false_activitys(int id_lesson);
+        int getlanguage();
 
         // user
         int now_IdLesson();

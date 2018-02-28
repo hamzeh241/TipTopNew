@@ -1,7 +1,6 @@
 package com.tiptap.tda_user.tiptap.di.component;
 
 import android.app.Application;
-
 import com.tiptap.tda_user.tiptap.di.module.A15_Module;
 import com.tiptap.tda_user.tiptap.di.module.A18_Module;
 import com.tiptap.tda_user.tiptap.di.module.A19_Module;
@@ -26,6 +25,7 @@ import com.tiptap.tda_user.tiptap.di.module.A3_Module;
 import com.tiptap.tda_user.tiptap.di.module.A42_Module;
 import com.tiptap.tda_user.tiptap.di.module.A45_Module;
 import com.tiptap.tda_user.tiptap.di.module.A46_Module;
+import com.tiptap.tda_user.tiptap.di.module.A48_Module;
 import com.tiptap.tda_user.tiptap.di.module.A4_Module;
 import com.tiptap.tda_user.tiptap.di.module.A5_Module;
 import com.tiptap.tda_user.tiptap.di.module.A6_Module;
@@ -80,4 +80,5 @@ public interface AppComponent {
     A42_Component getA42Component(A42_Module module);
     A45_Component getA45Component(A45_Module module);
     A46_Component getA46Component(A46_Module module);
+    A48_Component getA48Component(A48_Module module);
 }

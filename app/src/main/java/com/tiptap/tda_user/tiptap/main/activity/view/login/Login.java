@@ -23,7 +23,8 @@ import com.tiptap.tda_user.tiptap.main.activity.Api.Post_User;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Login_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLanguage;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
+import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;

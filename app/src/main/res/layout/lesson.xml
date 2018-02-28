@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="top"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -19,10 +18,10 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            app:srcCompat="@drawable/tiptoplogo"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="18dp"/>
+            android:layout_margin="18dp"
+            android:src="@drawable/tiptoplogo" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewPager"

@@ -36,6 +36,8 @@ public class A6 extends AppCompatActivity
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
+    public static String Act_Status;
+    public static int idactivity;
     TbActivity tbActivity;
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
@@ -73,7 +75,7 @@ public class A6 extends AppCompatActivity
             public void onCompletion(MediaPlayer mediaPlayer) {
                 end = 1;
                 next.setTextColor(Color.WHITE);
-                next.setBackgroundResource(R.drawable.btn);
+                next.setBackgroundResource(R.drawable.btn_green);
             }
         });
 

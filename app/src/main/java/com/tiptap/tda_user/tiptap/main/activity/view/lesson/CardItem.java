@@ -1,4 +1,4 @@
-package com.tiptap.tda_user.tiptap.main.activity.view.function_lesson;
+package com.tiptap.tda_user.tiptap.main.activity.view.lesson;
 
 public class CardItem {
     private int Id;

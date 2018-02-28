@@ -50,6 +50,16 @@ public class A28_Presenter
     }
 
     @Override
+    public int countActivity(int id_lesson) {
+        return mModel.countActivity(id_lesson);
+    }
+
+    @Override
+    public TbActivity getActivity2(int id_activity) {
+        return mModel.getActivity2(id_activity);
+    }
+
+    @Override
     public int max_Activitynumber(int id_lesson) {
         return mModel.max_Activitynumber(id_lesson);
     }
@@ -57,6 +67,16 @@ public class A28_Presenter
     @Override
     public List<Integer> lesson(int fid) {
         return mModel.lesson(fid);
+    }
+
+    @Override
+    public List<Integer> activity_false(int lid) {
+        return mModel.activity_false(lid);
+    }
+
+    @Override
+    public List<Integer> activity_true(int lid) {
+        return mModel.activity_true(lid);
     }
 
     @Override
@@ -72,6 +92,21 @@ public class A28_Presenter
     @Override
     public void update_idfunction(int id_function) {
         mModel.update_idfunction(id_function);
+    }
+
+    @Override
+    public void update_activity(int id_activity) {
+        mModel.update_activity(id_activity);
+    }
+
+    @Override
+    public void false_activitys(int id_lesson) {
+        mModel.false_activitys(id_lesson);
+    }
+
+    @Override
+    public int getlanguage() {
+        return mModel.getlanguage();
     }
 
     @Override

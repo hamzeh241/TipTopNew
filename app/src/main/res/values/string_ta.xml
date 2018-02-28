@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="A27_TA">Dinle ve tekrar et</string>
+    <string name="A7_TA">Dinleme</string>
+    <string name="A19_TA">Eşleşen Çiftler</string>
+    <string name="A37_TA"></string>
+    <string name="A33_TA">Dinle ve tekrar et</string>
+    <string name="A5_TA">Cümleyi ingilizce çevir</string>
+    <string name="A8_TA">Sözleri yerine koy</string>
+    <string name="A32_TA">Dinle ve söyle</string>
+    <string name="A28_TA">Duyduğun şeyi yaz</string>
+    <string name="A46_TA">Diyaloğu tamamla</string>
+    <string name="A3_TA">dinlemek</string>
+    <string name="A15_TA">Doğru cevabı seç</string>
+    <string name="A26_TA">Sohbeti sırala</string>
+</resources>

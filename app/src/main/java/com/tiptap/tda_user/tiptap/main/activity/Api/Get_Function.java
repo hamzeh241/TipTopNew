@@ -3,28 +3,24 @@ package com.tiptap.tda_user.tiptap.main.activity.Api;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.support.v4.view.ViewPager;
-import android.widget.Toast;
-
+import android.support.v7.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.CardPagerAdapter_F;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.ShadowTransformer;
 import com.tiptap.tda_user.tiptap.main.activity.Cls.Set_Function;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
+import com.tiptap.tda_user.tiptap.main.activity.view.function.Function_Adapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.List;
-
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Function extends BaseSetingApi {
@@ -33,20 +29,22 @@ public class Get_Function extends BaseSetingApi {
     int _id_function;
     Context _context;
     Activity mactivity;
-    ViewPager mViewPager;
-    CardPagerAdapter_F mCardAdapter;
-    ShadowTransformer mCardShadowTransformer;
     boolean mnet;
     ProgressDialog progressDialog;
+    RecyclerView mRecyclerView;
+    Function_Adapter mAdapter;
+    ArrayList<String> Data;
+    ArrayList<Integer> Id;
 
-    public Get_Function(int id_function, boolean net, MVP_Function.ProvidedPresenterOps ppo, Context context, Activity activity, ViewPager viewPager, CardPagerAdapter_F cardAdapter, ShadowTransformer shadowTransformer) {
+    public Get_Function(int id_function, boolean net, MVP_Function.ProvidedPresenterOps ppo, Context context, Activity activity, RecyclerView r, Function_Adapter fa, ArrayList<String> d, ArrayList<Integer> i) {
         _id_function = id_function;
         function_presenter = ppo;
         mactivity = activity;
         _context = context;
-        mViewPager = viewPager;
-        mCardAdapter = cardAdapter;
-        mCardShadowTransformer = shadowTransformer;
+        mRecyclerView = r;
+        mAdapter = fa;
+        Data = d;
+        Id = i;
         mnet = net;
         progressDialog = new ProgressDialog(mactivity);
         get();
@@ -89,7 +87,7 @@ public class Get_Function extends BaseSetingApi {
                             Q1 = Q1.substring(0, Q1.trim().length() - 1).concat(";");
                             function_presenter.Insert_Function(Q1);
                         }
-                        Set_Function set_function = new Set_Function(_id_function,function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
+                        Set_Function set_function = new Set_Function(function_presenter,mactivity,_id_function,mRecyclerView,mAdapter,Data,Id);
                         set_function.load();
                         progressDialog.dismiss();
 
@@ -107,7 +105,7 @@ public class Get_Function extends BaseSetingApi {
                     new ErrorVolley(_context).Error(volleyError,"get");
                     if (volleyError.networkResponse == null) {
                         if (volleyError.getClass().equals(TimeoutError.class)) {
-                            Set_Function set_function = new Set_Function(_id_function,function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
+                            Set_Function set_function = new Set_Function(function_presenter,mactivity,_id_function,mRecyclerView,mAdapter,Data,Id);
                             set_function.load();
                         }
                     }
@@ -116,7 +114,7 @@ public class Get_Function extends BaseSetingApi {
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{
-            Set_Function set_function = new Set_Function(_id_function,function_presenter,mViewPager,mCardAdapter,mCardShadowTransformer);
+            Set_Function set_function = new Set_Function(function_presenter,mactivity,_id_function,mRecyclerView,mAdapter,Data,Id);
             set_function.load();
         }
         return null;

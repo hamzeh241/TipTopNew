@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import com.tiptap.tda_user.tiptap.R;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Lesson;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
+import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 
 
 public class End extends AppCompatActivity {

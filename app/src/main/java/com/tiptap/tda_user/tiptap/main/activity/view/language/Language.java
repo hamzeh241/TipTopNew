@@ -1,22 +1,9 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.language;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import com.hitomi.cmlibrary.OnMenuStatusChangeListener;
-import com.tiptap.tda_user.tiptap.common.SampleApp;
-import com.tiptap.tda_user.tiptap.R;
-import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.main.activity.view.function_lesson.Function;
 
-import javax.inject.Inject;
+import com.tiptap.tda_user.tiptap.R;
 
 public class Language extends AppCompatActivity {//implements MVP_Language
        // .RequiredViewOps {

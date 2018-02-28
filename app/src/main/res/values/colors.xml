@@ -29,4 +29,8 @@
     <color name="teal_500">#009688</color>
     <color name="teal_400">#26A69A</color>
 
+    <!-- use it -->
+    <color name="my_white">#F5F5F5</color>
+    <color name="my_black">#424242</color>
+
 </resources>
