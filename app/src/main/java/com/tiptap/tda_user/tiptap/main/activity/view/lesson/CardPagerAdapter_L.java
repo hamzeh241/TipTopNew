@@ -138,24 +138,28 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                 if(number_lesson == 1){
                     int first = lesson_presenter.lesson_id(func,1);
                     lesson_presenter.update_idlesson(first);
-                    btn.setBackgroundColor(Color.parseColor("#3CB371"));
+                    btn.setBackgroundResource(R.drawable.btn_blue);
                     btn.setText("Start");
+                    btn.setTextColor(Color.parseColor("#000000"));
                 }
             }else if(luser != 0){
                 int nluser = lesson_presenter.lesson_number(luser);
                 if(number_lesson < nluser){
-                    btn.setBackgroundColor(Color.parseColor("#CCCC00"));
+                    btn.setBackgroundResource(R.drawable.btn_green);
                     btn.setText("Redo");
+                    btn.setTextColor(Color.parseColor("#000000"));
                 }
                 if(number_lesson == nluser) {
-                    btn.setBackgroundColor(Color.parseColor("#3CB371"));
+                    btn.setBackgroundResource(R.drawable.btn_blue);
                     btn.setText("Start");
+                    btn.setTextColor(Color.parseColor("#000000"));
                 }
             }
         }
         if(func < fuser){
-            btn.setBackgroundColor(Color.parseColor("#CCCC00"));
+            btn.setBackgroundResource(R.drawable.btn_green);
             btn.setText("Redo");
+            btn.setTextColor(Color.parseColor("#000000"));
         }
 
         btn.setOnClickListener(new View.OnClickListener() {

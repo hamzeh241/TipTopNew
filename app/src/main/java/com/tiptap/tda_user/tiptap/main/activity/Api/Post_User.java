@@ -26,17 +26,16 @@ public class Post_User extends BaseSetingApi {
     Context _context;
     Activity _activity;
     String Result = "";
-    String user_name;
-    String _email;
-    String _password;
+    String user_name, name_inapp, _email, _password;
     int language_id;
 
-    public Post_User(MVP_Login.ProvidedPresenterOps ppo, Context context, Activity activity, String username, String email, String password, int lid) {
+    public Post_User(MVP_Login.ProvidedPresenterOps ppo, Context context, Activity activity, String username, String nameinapp, String email, String password, int lid) {
         login_presenter = ppo;
         choose = "login";
         _context = context;
         _activity = activity;
         user_name = username;
+        name_inapp = nameinapp;
         _email = email;
         _password = password;
         language_id = lid;
@@ -56,7 +55,7 @@ public class Post_User extends BaseSetingApi {
 
                 if(response.equals("200")) {
                     Result = response;
-                    String Q = "insert into aspnet_Users (UserName,Password,Email,Id_Language) values ('" + user_name + "','" + _password + "','" + _email + "','" + language_id + "')" ;
+                    String Q = "insert into aspnet_Users (UserName,NameInApp,Password,Email,Id_Language) values ('" + user_name + "','" + name_inapp +"','" + _password + "','" + _email + "','" + language_id + "')" ;
                     login_presenter.Insert_User(Q);
                 }
                 else {

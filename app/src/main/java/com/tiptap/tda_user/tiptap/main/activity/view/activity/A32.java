@@ -4,18 +4,22 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -28,16 +32,10 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.A32_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
-import android.media.MediaPlayer.OnBufferingUpdateListener;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -48,7 +46,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A32 extends AppCompatActivity
-        implements MVP_A32.RequiredViewOps, OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener {
+        implements MVP_A32.RequiredViewOps, OnClickListener{
 
     private static final String TAG = A32.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A32.class.getName());
@@ -65,27 +63,28 @@ public class A32 extends AppCompatActivity
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
     LinearLayout l[];
-    int line = 0;
-    ImageView b[];
-    int bline = 0;
-    TextView t[],t1,t2;
+    int added = 0;
+    ImageView b_mic[],b_play[];
+    int id_bplay = 0;
+    TextView t1,t2;
+    TextView t[];
     TextView e[];
-    String title1, path1;
+    String tohi1 = "----------------", tohi2 = "----------------------------------------";
+    String ans[];
+    int xali = 0;
+    String path1[];
     int count=0;
-    Button play,next;
-    SeekBar seekBar;
-    private MediaPlayer mp;
+    Button next;
+    private MediaPlayer mp,mpt,mpf;
     int mpLength;
-    final Handler handler = new Handler();
     boolean end = false;
     final int REQ_CODE_SPEECH_INPUT = 100;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
-    String tohi = "---------------------";
     TextView now_say;
     ProgressBar p;
-    String ad1,ad2,ad3;
-    String z1[],z2[],z3[];
+    String z1[];
     int all;
+    int fill = 0;
+    String url_download = "http://tiptop.tdaapp.ir/image/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +93,9 @@ public class A32 extends AppCompatActivity
 
         setupViews();
         setupMVP();
+
+        // hide keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         max = mPresenter.max_Activitynumber(idlesson);
 
@@ -107,25 +109,8 @@ public class A32 extends AppCompatActivity
         }
 
         idactivity = tbActivity.get_id();
-        title1 = tbActivity.getTitle1();
-        path1 = tbActivity.getPath1();
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         count = tbActivityDetailList.size();
-        switch (count){
-            case 1:
-                ad1 = tbActivityDetailList.get(0).getTitle1();
-                break;
-            case 2:
-                ad1 = tbActivityDetailList.get(0).getTitle1();
-                ad2 = tbActivityDetailList.get(1).getTitle1();
-                break;
-            case 3:
-                ad1 = tbActivityDetailList.get(0).getTitle1();
-                ad2 = tbActivityDetailList.get(1).getTitle1();
-                ad3 = tbActivityDetailList.get(2).getTitle1();
-                break;
-        }
-
         after_setup();
     }
 
@@ -147,12 +132,10 @@ public class A32 extends AppCompatActivity
         LinearLayout l8 = (LinearLayout)findViewById(R.id.l8);
 
         l = new LinearLayout[]{l1, l2, l3, l4, l5, l6, l7, l8};
-
-;       next = (Button) findViewById(R.id.next);
+        next = (Button) findViewById(R.id.next);
         mp = new MediaPlayer();
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
-        seekBar.setMax(99);
-        play = (Button) findViewById(R.id.play);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup(){
@@ -204,517 +187,335 @@ public class A32 extends AppCompatActivity
 
         next.setOnClickListener(this);
 
-        seekBar.setMax(99);
-        seekBar.setOnTouchListener(this);
+        /* ------------------------------------------------------------------------------------------------------ */
+        // each row - title2
 
-        play.setOnClickListener(this);
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
 
-        mp.setOnBufferingUpdateListener(this);
-        mp.setOnCompletionListener(this);
-
-        switch (count){
-            // 1 ja xali
-            case 1:
-
-                int baxsh11 = 0;
-                for(int i=0 ; i<ad1.length() ; i++){
-                    if(ad1.charAt(i) == ','){
-                        baxsh11++;
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
                     }
                 }
-
-                switch (baxsh11){
-                    // 1 baxsh
-                    case 0:
-                        z1 = ad1.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad1.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z1 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad1.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z1 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    xali = xali + (z.length);
                 }
-                break;
-
-            // 2 ja xali
-            case 2:
-
-                int baxsh21 = 0;
-                for(int i=0 ; i<ad1.length() ; i++){
-                    if(ad1.charAt(i) == ','){
-                        baxsh21++;
-                    }
+                else if(have == 0){
+                    xali = xali + 1;
                 }
-
-                switch (baxsh21){
-                    // 1 baxsh
-                    case 0:
-                        z1 = ad1.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad1.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z1 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad1.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z1 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                int baxsh22 = 0;
-                for(int i=0 ; i<ad2.length() ; i++){
-                    if(ad2.charAt(i) == ','){
-                        baxsh22++;
-                    }
-                }
-
-                switch (baxsh22){
-                    // 1 baxsh
-                    case 0:
-                        z2 = ad2.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad2.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z2 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z2[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad2.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z2 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " +c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                break;
-
-            // 3 ja xali
-            case 3:
-
-                int baxsh31 = 0;
-                for(int i=0 ; i<ad1.length() ; i++){
-                    if(ad1.charAt(i) == ','){
-                        baxsh31++;
-                    }
-                }
-
-                switch (baxsh31){
-                    // 1 baxsh
-                    case 0:
-                        z1 = ad1.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad1.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z1 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " +y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad1.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z1 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                int baxsh32 = 0;
-                for(int i=0 ; i<ad2.length() ; i++){
-                    if(ad2.charAt(i) == ','){
-                        baxsh32++;
-                    }
-                }
-
-                switch (baxsh32){
-                    // 1 baxsh
-                    case 0:
-                        z2 = ad2.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad2.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z2 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad3.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z2 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z2[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                int baxsh33 = 0;
-                for(int i=0 ; i<ad3.length() ; i++){
-                    if(ad1.charAt(i) == ','){
-                        baxsh33++;
-                    }
-                }
-
-                switch (baxsh33){
-                    // 1 baxsh
-                    case 0:
-                        z3 = ad1.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad1.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z3 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z3[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad1.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z3 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z3[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-                break;
+            }
         }
 
-        String w = title1;
+        ans = new String[xali];
+        int c = 0;
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
 
-        String [] list_w = w.split(Pattern.quote("..."));
-
-        int start = 0;
-        int end = 0;
-        String s_s = w.substring(0, 3);
-        if(s_s.equals("...")){start = 1;}
-        String s_e = w.substring(w.length()-3, w.length());
-        if(s_e.equals("...")){end = 1;}
-
-        int t_number = 0;
-        int id_w = 0;
-        if(list_w[0].equals("")){
-            id_w = 1;
-            t_number = list_w.length-1;
-        }else{
-            t_number = list_w.length;
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
+                    }
+                }
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    for(int j=0 ; j<z.length ; j++){
+                        ans[c] = z[j];
+                        c++;
+                    }
+                }
+                else if(have == 0){
+                    ans[c] = temp;
+                    c++;
+                }
+            }
         }
 
-        int e_number = 0;
-        if(t_number > 1){
-            e_number = (t_number-1)+(start)+(end);
-        }else{
-            e_number = (start)+(end);
-        }
-
-        int total = t_number + e_number;
-
-        t = new TextView[t_number];
-        int id_t = 0;
-        e = new TextView[e_number];
+        e = new TextView[xali];
         int id_e = 0;
 
-        String now = "txt";
+        // all voice in path1[]
+        int cpath = 0;
+        for(int p=0 ; p<count ; p++){
+            String temp = tbActivityDetailList.get(p).getPath1();
+            if(temp.equals("null")){
 
-        b = new ImageView[e_number];
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        for(int i=0 ; i<total ; i++){
-
-            final int finalId_e = id_e;
-
-            // start
-            if(i == 0 ){
-                if(start == 1){
-                    e[id_e] = new TextView(this);
-                    e[id_e].setLayoutParams(params);
-                    //e[id_e].setText(tohi);
-                    e[id_e].setGravity(Gravity.CENTER);
-                    e[id_e].setTextSize(16);
-
-                    b[bline] = new ImageView(this);
-                    b[bline].setBackgroundResource(R.drawable.mics);
-                    b[bline].setMaxWidth(40);
-                    b[bline].setPadding(0,0,10,0);
-
-                    l[line].addView(b[bline]);
-                    l[line].addView(e[id_e]);
-
-                    final int finalId_e1 = id_e;
-                    b[bline].setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            now_say = e[finalId_e1];
-                            promptSpeechInput();
-                        }
-                    });
-
-                    bline++;
-                    line++;
-                    id_e++;
-                }
-
-                if(start == 0){
-                    t[id_t] = new TextView(this);
-                    t[id_t].setLayoutParams(params);
-                    t[id_t].setText(list_w[id_w]);
-                    t[id_t].setTextColor(getResources().getColor(R.color.my_black));
-                    t[id_t].setTextSize(16);
-                    l[line].addView(t[id_t]);
-                    line++;
-                    now = "edt";
-                    id_w++;
-                    id_t++;
-                }
-            }
-
-            if(i!=0 && i!=total-1){
-                // textview
-                switch (now) {
-                    case "txt":
-                        t[id_t] = new TextView(this);
-                        t[id_t].setLayoutParams(params);
-                        t[id_t].setText(list_w[id_w]);
-                        t[id_t].setTextColor(getResources().getColor(R.color.my_black));
-                        t[id_t].setTextSize(16);
-                        l[line].addView(t[id_t]);
-                        line++;
-                        now = "edt";
-                        id_w++;
-                        id_t++;
-                        break;
-
-                    case "edt":
-                        e[id_e] = new TextView(this);
-                        e[id_e].setLayoutParams(params);
-                       // e[id_e].setText(tohi);
-                        e[id_e].setGravity(Gravity.CENTER);
-                        e[id_e].setTextSize(16);
-
-                        b[bline] = new ImageView(this);
-                        b[bline].setBackgroundResource(R.drawable.mics);
-                        b[bline].setMaxWidth(40);
-                        b[bline].setPadding(0,0,10,0);
-
-                        l[line].addView(b[bline]);
-                        l[line].addView(e[id_e]);
-
-                        final int finalId_e1 = id_e;
-                        b[bline].setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                now_say = e[finalId_e1];
-                                promptSpeechInput();
-                            }
-                        });
-
-                        bline++;
-                        line++;
-                        now = "txt";
-                        id_e++;
-                        break;
-                }
-            }
-
-            // end
-            if(i == total-1){
-                if(end == 1){
-                    e[id_e] = new EditText(this);
-                    e[id_e].setLayoutParams(params);
-                    //e[id_e].setText(tohi);
-                    e[id_e].setGravity(Gravity.CENTER);
-                    e[id_e].setTextSize(16);
-
-                    b[bline] = new ImageView(this);
-                    b[bline].setBackgroundResource(R.drawable.mics);
-                    b[bline].setMaxWidth(40);
-                    b[bline].setPadding(0,0,10,0);
-
-                    l[line].addView(b[bline]);
-                    l[line].addView(e[id_e]);
-
-                    final int finalId_e1 = id_e;
-                    b[bline].setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            now_say = e[finalId_e1];
-                            promptSpeechInput();
-                        }
-                    });
-
-                    bline++;
-                    line++;
-                    id_e++;
-                }
-
-                if(end == 0){
-                    t[id_t] = new TextView(this);
-                    t[id_t].setLayoutParams(params);
-                    t[id_t].setText(list_w[id_w]);
-                    t[id_t].setTextColor(getResources().getColor(R.color.my_black));
-                    t[id_t].setTextSize(16);
-                    l[line].addView(t[id_t]);
-                    line++;
-                    now = "edt";
-                    id_w++;
-                    id_t++;
-                }
-
+            }else{
+                cpath++;
             }
         }
-    }
 
-    private void SeekBarProgressUpdater() {
-        seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
-        if (mp.isPlaying()) {
-            Runnable notification = new Runnable() {
-                public void run() {
-                    SeekBarProgressUpdater();
+        path1 = new String[cpath];
+        int pcount = 0;
+        for(int p=0 ; p<count ; p++){
+            String temp = tbActivityDetailList.get(p).getPath1();
+            if(temp.equals("null")){
+
+            }else{
+               path1[pcount] = temp;
+               pcount++;
+            }
+        }
+
+        b_mic = new ImageView[xali];
+        b_play = new ImageView[path1.length];
+
+        // ------------------------------------------------------------------------------------------------------
+        // each row - title1
+        for(int i=0 ; i<count ; i++) {
+
+            // ------------------------------------------------------------------------------------------------------
+            // splite textview & edittext
+
+            String w = tbActivityDetailList.get(i).getTitle1();
+            w = w.replace("…", "...");
+            String[] list_w = w.split(Pattern.quote("..."));
+
+            int start = 0;
+            int end = 0;
+
+            // only ...
+            if(w.equals("...")){
+                start = 1;
+            }else{
+                String s_s = w.substring(0, 3);
+                if (s_s.equals("...")) {
+                    start = 1;
                 }
-            };
-            handler.postDelayed(notification,1000);
+                String s_e = w.substring(w.length() - 3, w.length());
+                if (s_e.equals("...")) {
+                    end = 1;
+                }
+            }
+
+            int t_number = 0;
+            int id_w = 0;
+
+            if(w.equals("...")){
+                t_number = 0;
+            }else{
+                if (list_w[0].equals("")) {
+                    id_w = 1;
+                    t_number = list_w.length - 1;
+                } else {
+                    t_number = list_w.length;
+                }
+            }
+
+            int e_number = 0;
+            if (t_number > 1) {
+                e_number = (t_number - 1) + (start) + (end);
+            } else {
+                e_number = (start) + (end);
+            }
+
+            int total = t_number + e_number;
+            t = new TextView[t_number];
+            int id_t = 0;
+
+            // ------------------------------------------------------------------------------------------------------
+            // add to view
+            String now = "txt";
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(10,6,6,6);
+
+            if(total == 1){
+                // only ...
+                if(w.equals("...")) {
+                    b_mic[id_e] = new ImageView(this);
+                    b_mic[id_e].setBackgroundResource(R.drawable.mic1);
+                    b_mic[id_e].setPadding(12,12,12,12);
+                    l[added].addView(b_mic[id_e]);
+
+                    e[id_e] = new TextView(this);
+                    e[id_e].setLayoutParams(params);
+                    e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                    e[id_e].setText(tohi2);
+                    e[id_e].setTextSize(16);
+                    e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                    e[id_e].addTextChangedListener(new CheckEdit());
+                    l[added].addView(e[id_e]);
+
+                    final int finalId_e1 = id_e;
+                    b_mic[id_e].setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            now_say = e[finalId_e1];
+                            promptSpeechInput();
+                        }
+                    });
+
+                    id_e++;
+                    added++;
+                }
+                // only text without ...
+                else{
+                    b_play[id_bplay] = new ImageView(this);
+                    b_play[id_bplay].setBackgroundResource(R.drawable.play1);
+                    b_play[id_bplay].setPadding(12,12,12,12);
+                    l[added].addView(b_play[id_bplay]);
+
+                    t[id_t] = new TextView(this);
+                    t[id_t].setLayoutParams(params);
+                    t[id_t].setText(list_w[0]);
+                    t[id_t].setTextSize(16);
+                    l[added].addView(t[id_t]);
+
+                    final int final_id_bplay = id_bplay;
+                    b_play[id_bplay].setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            play(final_id_bplay);
+                        }
+                    });
+
+                    id_bplay++;
+                    added++;
+                }
+
+            }else{
+                for(int xi=0 ; xi<total ; xi++){
+
+                    final int finalId_e = id_e;
+
+                    // start
+                    if(xi == 0){
+                        if(start == 1){
+                            b_mic[id_e] = new ImageView(this);
+                            b_mic[id_e].setBackgroundResource(R.drawable.mic1);
+                            b_mic[id_e].setPadding(12,12,12,12);
+                            l[added].addView(b_mic[id_e]);
+
+                            e[id_e] = new TextView(this);
+                            e[id_e].setLayoutParams(params);
+                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setText(tohi1);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new CheckEdit());
+                            l[added].addView(e[id_e]);
+
+                            final int finalId_e1 = id_e;
+                            b_mic[id_e].setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    now_say = e[finalId_e1];
+                                    promptSpeechInput();
+                                }
+                            });
+
+                            id_e++;
+                        }
+
+                        if(start == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            l[added].addView(t[id_t]);
+
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+
+                    if(xi!=0 && xi!=total-1){
+                        // textview
+                        switch (now) {
+                            case "txt":
+                                t[id_t] = new TextView(this);
+                                t[id_t].setLayoutParams(params);
+                                t[id_t].setText(list_w[id_w]);
+                                t[id_t].setTextSize(16);
+                                l[added].addView(t[id_t]);
+
+                                now = "edt";
+                                id_w++;
+                                id_t++;
+                                break;
+
+                            case "edt":
+                                b_mic[id_e] = new ImageView(this);
+                                b_mic[id_e].setBackgroundResource(R.drawable.mic1);
+                                b_mic[id_e].setPadding(12,12,12,12);
+                                l[added].addView(b_mic[id_e]);
+
+                                e[id_e] = new TextView(this);
+                                e[id_e].setLayoutParams(params);
+                                e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                                e[id_e].setText(tohi1);
+                                e[id_e].setTextSize(16);
+                                e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                                e[id_e].addTextChangedListener(new CheckEdit());
+                                l[added].addView(e[id_e]);
+
+                                final int finalId_e1 = id_e;
+                                b_mic[id_e].setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        now_say = e[finalId_e1];
+                                        promptSpeechInput();
+                                    }
+                                });
+
+                                now = "txt";
+                                id_e++;
+                                break;
+                        }
+                    }
+
+                    // end
+                    if(xi == total-1){
+                        if(end == 1){
+                            b_mic[id_e] = new ImageView(this);
+                            b_mic[id_e].setBackgroundResource(R.drawable.mic1);
+                            b_mic[id_e].setPadding(12,12,12,12);
+                            l[added].addView(b_mic[id_e]);
+
+                            e[id_e] = new TextView(this);
+                            e[id_e].setLayoutParams(params);
+                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setText(tohi1);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new CheckEdit());
+                            l[added].addView(e[id_e]);
+
+                            final int finalId_e1 = id_e;
+                            b_mic[id_e].setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    now_say = e[finalId_e1];
+                                    promptSpeechInput();
+                                }
+                            });
+
+                            id_e++;
+                        }
+
+                        if(end == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            l[added].addView(t[id_t]);
+
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+                }
+                added++;
+            }
         }
     }
 
@@ -725,191 +526,116 @@ public class A32 extends AppCompatActivity
             promptSpeechInput();
         }
 
-        if (v.getId() == R.id.play) {
-            try {
-                String voice_url = url_download + path1;
-                mp.setDataSource(voice_url);
-                mp.prepare();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            mpLength = mp.getDuration();
-
-            if (!mp.isPlaying()) {
-                mp.start();
-                play.setBackgroundResource(R.drawable.pause);
-            } else {
-                mp.pause();
-                play.setBackgroundResource(R.drawable.play);
-            }
-            SeekBarProgressUpdater();
-        }
-
         if (v.getId() == R.id.next) {
-
-            boolean eb[];
-            boolean eb_final = false;
-            switch(count) {
-
-                case 1:
-
-                    eb = new boolean[1];
-                    if(e[0].getText().toString().equals("")){
-
-                    }else{
-                        eb[0] = true;
-                    }
-                    if(eb[0]){
-                        eb_final = true;
-                    }
-                    break;
-
-                case 2:
-
-                    eb = new boolean[2];
-                    if(e[0].getText().toString().equals("")){
-
-                    }else{
-                        eb[0] = true;
-                    }
-                    if(e[1].getText().toString().equals("")){
-
-                    }else{
-                        eb[1] = true;
-                    }
-                    if(eb[0]) {
-                        if (eb[1]) {
-                            eb_final = true;
-                        }
-                    }
-                    break;
-
-                case 3:
-
-                    eb = new boolean[3];
-                    if(e[0].getText().toString().equals("")){
-
-                    }else{
-                        eb[0] = true;
-                    }
-                    if(e[1].getText().toString().equals("")){
-
-                    }else{
-                        eb[1] = true;
-                    }
-                    if(e[2].getText().toString().equals("")){
-
-                    }else{
-                        eb[2] = true;
-                    }
-                    if(eb[0]) {
-                        if (eb[1]) {
-                            if(eb[2]) {
-                                eb_final = true;
-                            }
-                        }
-                    }
-                    break;
-
-            }
 
             mp.stop();
             switch (next.getText().toString()) {
 
                 case "check":
 
-                    if(end && eb_final){
-
-                        boolean answer = cheak();
-
-                        if (answer == true) {
-
-                            // update - true
-                            mPresenter.update_activity(idactivity);
-
-                            // show passed activity
-                            List<Integer> passed1 = mPresenter.activity_true(idlesson);
-                            int passed2 = passed1.size();
-                            if(passed2 == 0){
-                                p.setProgress(0);
-                            }else{
-                                double d_number = (double) passed2/all;
-                                int i_number = (int) (d_number*100);
-                                p.setProgress(i_number);
-                            }
-
-                            // Clickable_false
-                            t1.setClickable(false);
-                            t2.setClickable(false);
-                            play.setClickable(false);
-                            for(int i=0 ; i<b.length ; i++){
-                                b[i].setClickable(false);
-                            }
-                            seekBar.setClickable(false);
-                            p.setClickable(false);
-
-                            // Fragment_true
-                            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
-                            Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
-                            linearLayout.setAnimation(slide_down);
-                            linearLayout.setVisibility(View.VISIBLE);
-
-                            Fragment_True f1 = new Fragment_True();
-                            FragmentManager fragMan = getSupportFragmentManager();
-                            FragmentTransaction fragTransaction = fragMan.beginTransaction();
-                            fragTransaction.add(R.id.fragment1, f1);
-                            fragTransaction.commit();
-
-                        } else if (answer == false) {
-
-                            // Clickable_false
-                            t1.setClickable(false);
-                            t2.setClickable(false);
-                            play.setClickable(false);
-                            for(int i=0 ; i<b.length ; i++){
-                                b[i].setClickable(false);
-                            }
-                            seekBar.setClickable(false);
-                            p.setClickable(false);
-
-                            // Fragment_false
-                            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
-                            Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
-                            linearLayout.setAnimation(slide_down);
-                            linearLayout.setVisibility(View.VISIBLE);
-
-                            Fragment_False f2 = new Fragment_False();
-                            switch (count){
-                                case 1:
-                                    f2.t.setText(z1[0]);
-                                    break;
-
-                                case 2:
-                                    f2.t.setText(z1[0]+" / "+z2[0]);
-                                    break;
-
-                                case 3 :
-                                    f2.t.setText(z1[0]+" / "+z2[0]+" / "+z3[0]);
-                                    break;
-                            }
-                            FragmentManager fragMan = getSupportFragmentManager();
-                            FragmentTransaction fragTransaction = fragMan.beginTransaction();
-                            fragTransaction.add(R.id.fragment2, f2);
-                            fragTransaction.commit();
+                    fill = 0;
+                    for(int i=0 ; i<e.length ; i++){
+                        if (e[i].getText().toString().equals(tohi1) || e[i].getText().toString().equals(tohi2)) {
+                            // nothing
+                        }else {
+                            fill++;
                         }
+                    }
 
-                        next.setTextColor(Color.WHITE);
-                        next.setBackgroundResource(R.drawable.btn_green);
-                        next.setText("countinue");
+                    if(fill == e.length){
+                        if(end){
+
+                            String answer = cheak();
+                            if (answer.equals("")) {
+
+                                // update - true
+                                mPresenter.update_activity(idactivity);
+
+                                // show passed activity
+                                List<Integer> passed1 = mPresenter.activity_true(idlesson);
+                                int passed2 = passed1.size();
+                                if(passed2 == 0){
+                                    p.setProgress(0);
+                                }else{
+                                    double d_number = (double) passed2/all;
+                                    int i_number = (int) (d_number*100);
+                                    p.setProgress(i_number);
+                                }
+
+                                // Clickable_false
+                                t1.setClickable(false);
+                                t2.setClickable(false);
+                                for(int i=0 ; i<b_mic.length ; i++){
+                                    b_mic[i].setClickable(false);
+                                }
+                                for(int i=0 ; i<b_play.length ; i++){
+                                    b_play[i].setClickable(false);
+                                }
+                                p.setClickable(false);
+
+                                // Fragment_true
+                                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
+                                Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                                linearLayout.setAnimation(slide_down);
+                                linearLayout.setVisibility(View.VISIBLE);
+
+                                Fragment_True f1 = new Fragment_True();
+                                FragmentManager fragMan = getSupportFragmentManager();
+                                FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                                fragTransaction.add(R.id.fragment1, f1);
+                                fragTransaction.commit();
+
+                                // play sound
+                                mpt.start();
+
+                            } else {
+
+                                // Clickable_false
+                                t1.setClickable(false);
+                                t2.setClickable(false);
+                                for(int i=0 ; i<b_mic.length ; i++){
+                                    b_mic[i].setClickable(false);
+                                }
+                                for(int i=0 ; i<b_play.length ; i++){
+                                    b_play[i].setClickable(false);
+                                }
+                                p.setClickable(false);
+
+                                // Fragment_false
+                                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
+                                Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                                linearLayout.setAnimation(slide_down);
+                                linearLayout.setVisibility(View.VISIBLE);
+
+                                Fragment_False f2 = new Fragment_False();
+                                f2.t.setText(answer);
+
+                                FragmentManager fragMan = getSupportFragmentManager();
+                                FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                                fragTransaction.add(R.id.fragment2, f2);
+                                fragTransaction.commit();
+
+                                // play sound
+                                mpf.start();
+                            }
+
+                            next.setTextColor(Color.WHITE);
+                            next.setBackgroundResource(R.drawable.btn_green);
+                            next.setText("countinue");
+
+                        }else{
+                            Toast.makeText(getApplicationContext(), "به فایل های صوتی گوش دهید", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        Toast.makeText(getApplicationContext(), "جاهای خالی را پر کنید", Toast.LENGTH_LONG).show();
                     }
 
                     break;
 
                 case "countinue":
 
-                    if(end && eb_final){
+                    if(fill == e.length && end){
+
                         // first
                         if(Act_Status.equals("first")){
 
@@ -1994,41 +1720,23 @@ public class A32 extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if(v.getId() == R.id.seekbar){
-            if(mp.isPlaying()){
-                SeekBar sb = (SeekBar)v;
-                int playPositionInMillisecconds = (mpLength / 100) * sb.getProgress();
-                mp.seekTo(playPositionInMillisecconds);
+    class CheckEdit implements TextWatcher {
+        public void afterTextChanged(Editable s) {
+            try {
+                if(s.toString().equals("")){ // && fill == 0
+                    next.setTextColor(Color.GRAY);
+                    next.setBackgroundResource(R.drawable.btn_gray);
+                }
+                else{
+                    //fill++;
+                    next.setTextColor(Color.WHITE);
+                    next.setBackgroundResource(R.drawable.btn_green);
+                }
             }
+            catch(NumberFormatException nfe){}
         }
-        return false;
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-        play.setBackgroundResource(R.drawable.play);
-        int fill = 0;
-        for(int i=0 ; i<e.length ; i++) {
-            if (e[i].getText().toString().equals("")) {
-
-            } else {
-                fill++;
-            }
-        }
-        if(e.length == fill){
-            if(end){
-                next.setTextColor(Color.WHITE);
-                next.setBackgroundResource(R.drawable.btn_green);
-            }
-        }
-    }
-
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        seekBar.setSecondaryProgress(percent);
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
     }
 
     private void setupMVP(){
@@ -2091,9 +1799,9 @@ public class A32 extends AppCompatActivity
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     now_say.setTextSize(16);
-                    now_say.setPadding(20,0,0,0);
+                    now_say.setPadding(10,0,0,0);
                     now_say.setText(result.get(0));
-                    now_say.setTextColor(getResources().getColor(R.color.my_black));
+                    now_say.setTextColor(getResources().getColor(R.color.blue));
 
                     int fill = 0;
                     for(int i=0 ; i<e.length ; i++) {
@@ -2115,86 +1823,127 @@ public class A32 extends AppCompatActivity
         }
     }
 
-    public boolean cheak(){
-        boolean final_answer = false;
-        boolean answer[];
-        switch (count){
-            case 1:
-                answer = new boolean[1];
-                for(int i = 0 ; i < z1.length ; i++){
-                    String a = nice_string(e[0].getText().toString());
-                    String b = nice_string(z1[i]);
-                    if(a.equals(b)){
-                        answer[0] = true;
-                    }
-                }
-                if(answer[0]){
-                    final_answer = true;
-                }
-                break;
+    public void play(final int i){
 
-            case 2 :
-                answer = new boolean[2];
-                for(int i = 0 ; i < z1.length ; i++){
-                    String a = nice_string(e[0].getText().toString());
-                    String b = nice_string(z1[i]);
-                    if(a.equals(b)){
-                        answer[0] = true;
+        if(haveNetworkConnection()){
+            try {
+                String voice_url = null;
+                mp = new MediaPlayer();
+                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                voice_url = url_download + path1[i];
+                mp.setDataSource(voice_url);
+                mp.prepare();
+                mpLength = mp.getDuration();
+                mp.start();
+                b_play[i].setBackgroundResource(R.drawable.pause1);
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        end=true;
+                        b_play[i].setBackgroundResource(R.drawable.play1);
                     }
-                }
-                for(int i = 0 ; i < z2.length ; i++){
-                    String a = nice_string(e[1].getText().toString());
-                    String b = nice_string(z2[i]);
-                    if(a.equals(b)){
-                        answer[1] = true;
-                    }
-                }
-                if(answer[0]){
-                    if(answer[1]){
-                        final_answer = true;
-                    }
-                }
-                break;
+                });
 
-            case 3:
-                answer = new boolean[2];
-                for(int i = 0 ; i < z1.length ; i++){
-                    String a = nice_string(e[0].getText().toString());
-                    String b = nice_string(z1[i]);
-                    if(a.equals(b)){
-                        answer[0] = true;
-                    }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else{
+            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public String cheak(){
+
+        String result = "";
+        boolean final_answer = true;
+        boolean answer[] = new boolean[xali];
+        int cc = 0;
+
+        for(int i=0 ; i < e.length ; i++){
+
+            // yek javab
+            int baxsh = 0;
+            for(int j=0 ; j<ans[i].length() ; j++){
+                if(ans[i].charAt(j) == ','){
+                    baxsh++;
                 }
-                for(int i = 0 ; i < z2.length ; i++){
-                    String a = nice_string(e[1].getText().toString());
-                    String b = nice_string(z2[i]);
-                    if(a.equals(b)){
-                        answer[1] = true;
-                    }
-                }
-                answer = new boolean[2];
-                for(int i = 0 ; i < z3.length ; i++){
-                    String a = nice_string(e[2].getText().toString());
-                    String b = nice_string(z3[i]);
-                    if(a.equals(b)){
-                        answer[0] = true;
-                    }
-                }
-                if(answer[0]){
-                    if(answer[1]) {
-                        if (answer[2]) {
-                            final_answer = true;
+            }
+
+            z1 = null;
+            switch (baxsh){
+                // 1 baxsh
+                case 0:
+                    z1 = ans[i].split("/");
+                    break;
+
+                // 2 baxsh
+                case 1:
+                    String[] s = ans[i].split(",");
+                    String[] x = s[0].split("/");
+                    String[] y = s[1].split("/");
+
+                    z1 = new String[x.length * y.length];
+                    int count2 = 0;
+                    for (int ii = 0; ii < x.length; ii++) {
+                        for (int jj = 0; jj < y.length; jj++) {
+                            z1[count2] = x[ii] + " " + y[jj];
+                            count2++;
                         }
                     }
+                    break;
+
+                // 3 baxsh
+                case 2:
+                    String[] a = ans[i].split(",");
+                    String[] b = a[0].split("/");
+                    String[] c = a[1].split("/");
+                    String[] d = a[2].split("/");
+
+                    z1 = new String[b.length * c.length* d.length];
+                    int count3 = 0;
+                    for (int ii = 0; ii < b.length ; ii++) {
+                        for (int jj = 0; jj < c.length ; jj++) {
+                            for(int k = 0 ; k < d.length ; k++){
+                                z1[count3] = b[ii] + " " + c[jj] + " " + d[k];
+                                count3++;
+                            }
+                        }
+                    }
+                    break;
+            }
+
+            // moqayese ba javab
+            result = result + " / "+ z1[0] ;
+            for(int j=0 ; j < z1.length ; j++){
+                String a = nice_string( e[i].getText().toString() );
+                String b = nice_string( z1[j].toString() );
+                if(a.equals(b)){
+                    answer[cc] = true;
+                    cc++;
                 }
-                break;
+            }
         }
-        return final_answer;
+
+        for(int x=0 ; x<answer.length ; x++){
+            if(answer[x]){
+
+            }else{
+                final_answer = false;
+            }
+        }
+
+        if(final_answer){
+            return "";
+        }else{
+            return result;
+        }
     }
 
     public String nice_string (String a){
         // space in first or end
         String b = a.trim();
+        // ever name
+        b = b.replace("&", "");
         // other space
         b = b.replace(" ", "");
         // other
@@ -2221,5 +1970,21 @@ public class A32 extends AppCompatActivity
         mp.stop();
         A32.this.finish();
         startActivity(new Intent(A32.this, Lesson.class));
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 }

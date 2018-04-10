@@ -41,7 +41,7 @@ public class A20 extends AppCompatActivity
     TbActivity tbActivity;
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
-    LinearLayout l1,l2,l3,l4,l5,l6;
+    LinearLayout linear;
     TextView t[];
     EditText e[];
     Button next;
@@ -68,23 +68,21 @@ public class A20 extends AppCompatActivity
     private void setupViews() {
 
         next = (Button) findViewById(R.id.next);
-
-        l1= (LinearLayout)findViewById(R.id.l1);
-        l2 = (LinearLayout)findViewById(R.id.l2);
-        l3 = (LinearLayout)findViewById(R.id.l3);
-        l4 = (LinearLayout)findViewById(R.id.l4);
-        l5 = (LinearLayout)findViewById(R.id.l5);
-        l6 = (LinearLayout)findViewById(R.id.l6);
+        linear = (LinearLayout)findViewById(R.id.linear);
     }
 
     private void after_setup() {
 
         next.setOnClickListener(this);
 
-        //-String w = "A:good ... . My ... is Alex. B:hello ... Robert. A:how is ... ? B: i am ... thanks. And ... ? A:not bad.";
-        //-String w = "A:hi iam logo. B: ... ... ... A: nice to meet you ...! B:...";
-        //-String w = "A: hi i am tiptop. what ... you ? B: ... ... ... A: it is a pleasure to meet you ! B: ...";
-        String w = "A:hello i am sara. B:... ... ... A: how are you? B: ... ... ... A:i am great.";
+        String w = "...te...";
+        /*String w = "te...";
+        String w = "...te...er";
+        String w = "...tor";
+        String w = "...si...r";
+        String w = "an...chi...";
+        String w = "...am a student.";
+        String w = "She ... a banker.";*/
 
         String [] list_w = w.split(Pattern.quote("..."));
 
@@ -121,7 +119,6 @@ public class A20 extends AppCompatActivity
         String now = "txt";
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        int added = 0;
 
         for(int i=0 ; i<total ; i++){
 
@@ -133,26 +130,8 @@ public class A20 extends AppCompatActivity
                     e[id_e] = new EditText(this);
                     e[id_e].setLayoutParams(params);
                     e[id_e].setEms(4);
-                    e[id_e].setTextSize(18);
-                    added = added + 5;
-                    if( 1 <= added && added <= 24 ){
-                        l1.addView(e[id_e]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(e[id_e]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(e[id_e]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(e[id_e]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(e[id_e]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(e[id_e]);
-                    }
+                    e[id_e].setTextSize(16);
+                    linear.addView(e[id_e]);
                     id_e++;
                 }
 
@@ -160,26 +139,8 @@ public class A20 extends AppCompatActivity
                     t[id_t] = new TextView(this);
                     t[id_t].setLayoutParams(params);
                     t[id_t].setText(list_w[id_w]);
-                    t[id_t].setTextSize(18);
-                    added = added + list_w[id_w].length();
-                    if( 1 <= added && added <= 24 ){
-                        l1.addView(t[id_t]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(t[id_t]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(t[id_t]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(t[id_t]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(t[id_t]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(t[id_t]);
-                    }
+                    t[id_t].setTextSize(16);
+                    linear.addView(t[id_t]);
                     now = "edt";
                     id_w++;
                     id_t++;
@@ -193,26 +154,8 @@ public class A20 extends AppCompatActivity
                         t[id_t] = new TextView(this);
                         t[id_t].setLayoutParams(params);
                         t[id_t].setText(list_w[id_w]);
-                        t[id_t].setTextSize(18);
-                        added = added + list_w[id_w].length();
-                        if( 1 <= added && added <= 24 ){
-                            l1.addView(t[id_t]);
-                        }
-                        if( 25 <= added && added <= 48 ){
-                            l2.addView(t[id_t]);
-                        }
-                        if( 49 <= added && added <= 72 ){
-                            l3.addView(t[id_t]);
-                        }
-                        if( 73 <= added && added <= 96 ){
-                            l4.addView(t[id_t]);
-                        }
-                        if( 97 <= added && added <= 120 ){
-                            l5.addView(t[id_t]);
-                        }
-                        if( 121 <= added && added <= 144 ){
-                            l6.addView(t[id_t]);
-                        }
+                        t[id_t].setTextSize(16);
+                        linear.addView(t[id_t]);
                         now = "edt";
                         id_w++;
                         id_t++;
@@ -222,26 +165,8 @@ public class A20 extends AppCompatActivity
                         e[id_e] = new EditText(this);
                         e[id_e].setLayoutParams(params);
                         e[id_e].setEms(4);
-                        e[id_e].setTextSize(18);
-                        added = added + 5;
-                        if( 1 <= added && added <= 24 ){
-                            l1.addView(e[id_e]);
-                        }
-                        if( 25 <= added && added <= 48 ){
-                            l2.addView(e[id_e]);
-                        }
-                        if( 49 <= added && added <= 72 ){
-                            l3.addView(e[id_e]);
-                        }
-                        if( 73 <= added && added <= 96 ){
-                            l4.addView(e[id_e]);
-                        }
-                        if( 97 <= added && added <= 120 ){
-                            l5.addView(e[id_e]);
-                        }
-                        if( 121 <= added && added <= 144 ){
-                            l6.addView(e[id_e]);
-                        }
+                        e[id_e].setTextSize(16);
+                        linear.addView(e[id_e]);
                         now = "txt";
                         id_e++;
                         break;
@@ -254,26 +179,8 @@ public class A20 extends AppCompatActivity
                     e[id_e] = new EditText(this);
                     e[id_e].setLayoutParams(params);
                     e[id_e].setEms(4);
-                    e[id_e].setTextSize(18);
-                    added = added + 5;
-                    if( 0 <= added && added <= 24 ){
-                        l1.addView(e[id_e]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(e[id_e]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(e[id_e]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(e[id_e]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(e[id_e]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(e[id_e]);
-                    }
+                    e[id_e].setTextSize(16);
+                    linear.addView(e[id_e]);
                     id_e++;
                 }
 
@@ -281,26 +188,8 @@ public class A20 extends AppCompatActivity
                     t[id_t] = new TextView(this);
                     t[id_t].setLayoutParams(params);
                     t[id_t].setText(list_w[id_w]);
-                    t[id_t].setTextSize(18);
-                    added = added + list_w[id_w].length();
-                    if( 1 <= added && added <= 24 ){
-                        l1.addView(t[id_t]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(t[id_t]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(t[id_t]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(t[id_t]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(t[id_t]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(t[id_t]);
-                    }
+                    t[id_t].setTextSize(16);
+                    linear.addView(t[id_t]);
                     now = "edt";
                     id_w++;
                     id_t++;

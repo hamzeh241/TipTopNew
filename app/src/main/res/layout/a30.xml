@@ -77,7 +77,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="write Translate here"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:inputType="text"/>
 
     </TableRow>
 

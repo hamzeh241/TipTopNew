@@ -12,14 +12,23 @@
         android:gravity="center"
         android:weightSum="1">
 
-        <ImageView
-            android:id="@+id/imageView4"
+        <LinearLayout
+            android:id="@+id/holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/nice" />
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/end_lesson"
+                android:layout_marginTop="20dp"/>
+
+        </LinearLayout>
 
     </TableRow>
 
@@ -60,7 +69,8 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:background="@drawable/btn_green"
-            android:text="countinue" />
+            android:text="countinue"
+            android:textColor="@color/withe"/>
 
     </TableRow>
 

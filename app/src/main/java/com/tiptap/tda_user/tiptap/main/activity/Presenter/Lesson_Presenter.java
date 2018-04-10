@@ -131,6 +131,11 @@ public class Lesson_Presenter
     }
 
     @Override
+    public String your_name() {
+        return mModel.your_name();
+    }
+
+    @Override
     public String getMaxRowV_ActivityDetail() {
         return mModel.getMaxRowV_ActivityDetail();
     }

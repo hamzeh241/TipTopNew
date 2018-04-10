@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -55,6 +57,7 @@ public class A5 extends AppCompatActivity
     String z[];
     String title1, title2;
     Button next;
+    MediaPlayer mpt, mpf;
     int all;
 
     @Override
@@ -64,6 +67,9 @@ public class A5 extends AppCompatActivity
 
         setupViews();
         setupMVP();
+
+        // hide keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         max = mPresenter.max_Activitynumber(idlesson);
 
@@ -92,6 +98,8 @@ public class A5 extends AppCompatActivity
         next = (Button)findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup() {
@@ -249,6 +257,9 @@ public class A5 extends AppCompatActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else if (answer == false) {
 
                             // Clickable_false
@@ -270,6 +281,9 @@ public class A5 extends AppCompatActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -1461,6 +1475,10 @@ public class A5 extends AppCompatActivity
     }
 
     public void back(){
+        mpt.stop();
+        mpt.release();
+        mpf.stop();
+        mpf.release();
         A5.this.finish();
         startActivity(new Intent(A5.this, Lesson.class));
     }

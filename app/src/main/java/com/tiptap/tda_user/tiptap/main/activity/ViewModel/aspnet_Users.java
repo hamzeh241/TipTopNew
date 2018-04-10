@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.ViewModel;
 public class aspnet_Users {
 
     private String UserName;
+    private String NameInApp;
     private String Password;
     private String Email;
     private int Id_Lesson;
@@ -10,6 +11,14 @@ public class aspnet_Users {
     private int Id_Language;
 
     public aspnet_Users() {}
+
+    public String getNameInApp() {
+        return NameInApp;
+    }
+
+    public void setNameInApp(String nameInApp) {
+        NameInApp = nameInApp;
+    }
 
     public String getUserName() {
         return UserName;

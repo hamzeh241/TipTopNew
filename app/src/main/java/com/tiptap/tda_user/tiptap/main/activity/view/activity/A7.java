@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,7 @@ import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 public class A7 extends AppCompatActivity
                 implements MVP_A7.RequiredViewOps,
@@ -97,7 +100,6 @@ public class A7 extends AppCompatActivity
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();
         seekBar = (SeekBar) findViewById(R.id.seekbar);
-        seekBar.setMax(99);
         play = (Button) findViewById(R.id.play);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
@@ -160,8 +162,6 @@ public class A7 extends AppCompatActivity
         next.setOnClickListener(this);
 
         play.setOnClickListener(this);
-
-        seekBar.setMax(99);
         seekBar.setOnTouchListener(this);
 
         mp.setOnBufferingUpdateListener(this);
@@ -185,25 +185,31 @@ public class A7 extends AppCompatActivity
     public void onClick(View v) {
 
         if (v.getId() == R.id.play) {
-            try {
-                String voice_url = url_download + path2;
-                mp.setDataSource(voice_url);
-                mp.prepare();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(haveNetworkConnection()){
+                try {
+                    String voice_url = url_download + path2;
+                    mp.setDataSource(voice_url);
+                    mp.prepare();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                mpLength = mp.getDuration();
+
+                if (!mp.isPlaying()) {
+                    mp.start();
+                    play.setBackgroundResource(R.drawable.pause);
+                } else {
+                    mp.pause();
+                    play.setBackgroundResource(R.drawable.play);
+                }
+                SeekBarProgressUpdater();
+
+            } else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
-
-            mpLength = mp.getDuration();
-
-            if (!mp.isPlaying()) {
-                mp.start();
-                play.setBackgroundResource(R.drawable.pause);
-            } else {
-                mp.pause();
-                play.setBackgroundResource(R.drawable.play);
-            }
-            SeekBarProgressUpdater();
         }
 
         if (v.getId() == R.id.next) {
@@ -1378,8 +1384,24 @@ public class A7 extends AppCompatActivity
 
     public void back(){
         mp.stop();
+        mp.release();
         A7.this.finish();
         startActivity(new Intent(A7.this, Lesson.class));
     }
 
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
 }

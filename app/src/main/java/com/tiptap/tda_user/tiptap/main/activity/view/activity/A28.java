@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -60,7 +61,7 @@ public class A28 extends AppCompatActivity
     Button play,next;
     SeekBar seekBar;
     TextView t1,t2;
-    private MediaPlayer mp;
+    private MediaPlayer mp, mpt, mpf;
     ProgressBar p;
     int mpLength;
     final Handler handler = new Handler();
@@ -75,6 +76,9 @@ public class A28 extends AppCompatActivity
 
         setupViews();
         setupMVP();
+
+        // hide keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         max = mPresenter.max_Activitynumber(idlesson);
 
@@ -106,6 +110,8 @@ public class A28 extends AppCompatActivity
         editText = (EditText) findViewById(R.id.txt);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup(){
@@ -156,14 +162,9 @@ public class A28 extends AppCompatActivity
         }
 
         next.setOnClickListener(this);
-
         play.setOnClickListener(this);
-
         editText.addTextChangedListener(new CheckEdit());
-
-        seekBar.setMax(99);
         seekBar.setOnTouchListener(this);
-
         mp.setOnBufferingUpdateListener(this);
         mp.setOnCompletionListener(this);
 
@@ -257,6 +258,9 @@ public class A28 extends AppCompatActivity
                                 fragTransaction.add(R.id.fragment1, f1);
                                 fragTransaction.commit();
 
+                                // play sound
+                                mpt.start();
+
                             } else if (answer == false) {
 
                                 // Clickable_false
@@ -280,6 +284,9 @@ public class A28 extends AppCompatActivity
                                 FragmentTransaction fragTransaction = fragMan.beginTransaction();
                                 fragTransaction.add(R.id.fragment2, f2);
                                 fragTransaction.commit();
+
+                                // play sound
+                                mpf.start();
                             }
 
                             next.setTextColor(Color.WHITE);

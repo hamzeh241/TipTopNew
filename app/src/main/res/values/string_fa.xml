@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="A27_FA">گوش دهید و تکرار کنید</string>
+    <string name="A27_FA">گوش کنید و تکرار کنید</string>
     <string name="A7_FA">گوش دهید</string>
-    <string name="A19_FA">مترادف ها را بیابید</string>
+    <string name="A19_FA">کلمات زیر را به هم وصل کنید</string>
     <string name="A37_FA"></string>
     <string name="A33_FA">گوش دهید و تکرار کنید</string>
     <string name="A5_FA">جمله زیر را به انگلیسی بنویسید</string>
-    <string name="A8_FA">جمله زیر را مرتب کنید</string>
-    <string name="A32_FA">گوش دهید و پاسخ دهید</string>
-    <string name="A28_FA">آنچه را که می شنوید بنویسید</string>
+    <string name="A8_FA">کلمات زیر را در جای مناسب قرار دهید</string>
+    <string name="A32_FA">گوش کنید و جواب دهید</string>
+    <string name="A28_FA">آنچه را که میشنوید بنویسید</string>
     <string name="A46_FA">مکالمه زیر را کامل کنید</string>
     <string name="A3_FA">گوش دهید</string>
-    <string name="A15_FA">گزینه صحیح را انتخاب کنید</string>
-    <string name="A26_FA">مکالمه زیر را مرتب کنید</string>
+    <string name="A15_FA">جواب درست را باتوجە بە مکالمە انتخاب کنید</string>
+    <string name="A26_FA">جملات زیر را مرتب کنید تا مکالمە کامل شود</string>
 </resources>

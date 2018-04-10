@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
@@ -63,7 +65,7 @@ public class A33 extends AppCompatActivity
     String title1, path1;
     Button play,next;
     SeekBar seekBar;
-    MediaPlayer mp;
+    MediaPlayer mp, mpt, mpf;
     int mpLength;
     final Handler handler = new Handler();
     boolean end = false;
@@ -114,6 +116,8 @@ public class A33 extends AppCompatActivity
         play = (Button) findViewById(R.id.play);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup(){
@@ -170,7 +174,6 @@ public class A33 extends AppCompatActivity
         voice.setOnClickListener(this);
         play.setOnClickListener(this);
 
-        seekBar.setMax(99);
         seekBar.setOnTouchListener(this);
 
         mp.setOnBufferingUpdateListener(this);
@@ -193,29 +196,40 @@ public class A33 extends AppCompatActivity
     public void onClick(View v) {
 
         if(v.getId() == R.id.voice){
-            promptSpeechInput();
+            if(haveNetworkConnection()){
+                promptSpeechInput();
+            }else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+            }
         }
 
         if (v.getId() == R.id.play) {
-            try {
-                String voice_url = url_download + path1;
-                mp.setDataSource(voice_url);
-                mp.prepare();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(haveNetworkConnection()){
+                try {
+                    mp.reset();
+                    String voice_url = url_download + path1;
+                    mp.setDataSource(voice_url);
+                    mp.prepare();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                mpLength = mp.getDuration();
+
+                if (!mp.isPlaying()) {
+                    mp.start();
+                    play.setBackgroundResource(R.drawable.pause);
+                } else {
+                    mp.pause();
+                    play.setBackgroundResource(R.drawable.play);
+                }
+                SeekBarProgressUpdater();
+
+            }else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
-
-            mpLength = mp.getDuration();
-
-            if (!mp.isPlaying()) {
-                mp.start();
-                play.setBackgroundResource(R.drawable.pause);
-            } else {
-                mp.pause();
-                play.setBackgroundResource(R.drawable.play);
-            }
-            SeekBarProgressUpdater();
         }
 
         if (v.getId() == R.id.next) {
@@ -267,6 +281,9 @@ public class A33 extends AppCompatActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else {
 
                             // Clickable_false
@@ -290,6 +307,9 @@ public class A33 extends AppCompatActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -1508,15 +1528,14 @@ public class A33 extends AppCompatActivity
                 if(b.charAt(i+1) == 's'){
                     b = b.replace("’s", "is");
                 }
-                if(b.charAt(i+1) == 'm'){
+               /* if(b.charAt(i+1) == 'm'){
                     b = b.replace("’m", "am");
                 }
                 if(b.charAt(i+1) == 'r'){
                     b = b.replace("’r", "are");
-                }
+                }*/
             }
         }
-        // be good
         return b;
     }
 
@@ -1530,6 +1549,22 @@ public class A33 extends AppCompatActivity
         mp.stop();
         A33.this.finish();
         startActivity(new Intent(A33.this, Lesson.class));
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 }
 

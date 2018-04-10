@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.VideoView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -92,7 +95,7 @@ public class A37 extends AppCompatActivity
 
         next = (Button)findViewById(R.id.next);
         pd = new ProgressDialog(this);
-        pd.setMessage("در حال دریافت اطلاعات از سرور ...");
+        pd.setMessage("در حال دریافت اطلاعات ...");
         pd.show();
     }
 
@@ -116,10 +119,15 @@ public class A37 extends AppCompatActivity
             p.setProgress(i_number);
         }
 
-        Uri uri = Uri.parse(url_download+path1);
-        video_view.setVideoURI(uri);
-        video_view.requestFocus();
-        video_view.setOnPreparedListener(this);
+        if(haveNetworkConnection()) {
+            Uri uri = Uri.parse(url_download+path1);
+            video_view.setVideoURI(uri);
+            video_view.requestFocus();
+            video_view.setOnPreparedListener(this);
+        }else {
+            pd.dismiss();
+            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+        }
 
         next.setOnClickListener(this);
     }
@@ -1276,5 +1284,21 @@ public class A37 extends AppCompatActivity
     public void back(){
         A37.this.finish();
         startActivity(new Intent(A37.this, Lesson.class));
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 }

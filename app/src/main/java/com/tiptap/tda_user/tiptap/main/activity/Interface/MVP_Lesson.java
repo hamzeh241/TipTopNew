@@ -37,6 +37,7 @@ public interface MVP_Lesson {
         void Insert_Activity(String Q);
         List<TbActivity> getListActivity(int lid);
         int activity_Type(int lid);
+        String your_name();
 
         // activity_detail
         String getMaxRowV_ActivityDetail();
@@ -78,6 +79,7 @@ public interface MVP_Lesson {
         void Insert_Activity(String Q);
         List<TbActivity> getListActivity(int aid);
         int activity_Type(int lid);
+        String your_name();
 
         // activity_detail
         String getMaxRowV_ActivityDetail();

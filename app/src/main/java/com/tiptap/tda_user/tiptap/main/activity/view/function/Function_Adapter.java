@@ -1,7 +1,6 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.function;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -62,18 +61,18 @@ public class Function_Adapter extends RecyclerView.Adapter<Function_Adapter.View
         if(_id == 0){
             if(id_function == first){
                 function_presenter.update_idfunction(first);
-                holder.button.setBackgroundResource(R.drawable.btn_green);
+                holder.button.setBackgroundResource(R.drawable.btn_blue);
                 holder.button.setText("Start");
                 holder.button.setTextColor(Color.parseColor("#000000"));
             }
         } else {
             if(id_function < _id){
-                holder.button.setBackgroundResource(R.drawable.btn_yellow);
+                holder.button.setBackgroundResource(R.drawable.btn_green);
                 holder.button.setText("Redo");
                 holder.button.setTextColor(Color.parseColor("#000000"));
             }
             if(id_function == _id){
-                holder.button.setBackgroundResource(R.drawable.btn_green);
+                holder.button.setBackgroundResource(R.drawable.btn_blue);
                 holder.button.setText("Start");
                 holder.button.setTextColor(Color.parseColor("#000000"));
             }

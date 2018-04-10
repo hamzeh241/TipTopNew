@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="A27_EN">Listen and Repeat</string>
+    <string name="A27_EN">Listen and repeat</string>
     <string name="A7_EN">Listening</string>
-    <string name="A19_EN">Matching Pairs</string>
+    <string name="A19_EN">Match the following words</string>
     <string name="A37_EN"></string>
     <string name="A33_EN">Listen and Repeat</string>
     <string name="A5_EN">Translate below sentence to english</string>
-    <string name="A8_EN">Put the words in their place</string>
+    <string name="A8_EN">Put the following words in correct place</string>
     <string name="A32_EN">Listen and Say</string>
     <string name="A28_EN">Write what you hear</string>
     <string name="A46_EN">Complete the conversation</string>

@@ -385,4 +385,17 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
         }
         return id;
     }
+
+    @Override
+    public String your_name() {
+        String q="SELECT [NameInApp] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        String n="";
+        for (int i = 0; i < count; i++) {
+            n = cursor.getString(0);
+        }
+        return n;
+    }
 }

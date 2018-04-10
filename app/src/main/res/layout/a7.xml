@@ -157,6 +157,7 @@
                 android:textSize="16sp" />
 
         </ScrollView>
+
     </TableRow>
 
     <TableRow
@@ -170,15 +171,14 @@
             android:id="@+id/next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="countinue"
-            android:textColor="#919396"
-            android:background="@drawable/btn_gray"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:layout_weight="1"/>
-
+            android:layout_weight="1"
+            android:background="@drawable/btn_gray"
+            android:text="countinue"
+            android:textColor="#919396" />
     </TableRow>
 
 </TableLayout>

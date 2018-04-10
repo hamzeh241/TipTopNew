@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
@@ -31,6 +33,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A27;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.A27_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -63,7 +66,7 @@ public class A27 extends AppCompatActivity
     Button play,next;
     SeekBar seekBar;
     ProgressBar p;
-    private MediaPlayer mp;
+    MediaPlayer mp, mpt, mpf;
     int mpLength;
     final Handler handler = new Handler();
     boolean end = false;
@@ -113,6 +116,8 @@ public class A27 extends AppCompatActivity
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
         mp = new MediaPlayer();
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup(){
@@ -172,13 +177,8 @@ public class A27 extends AppCompatActivity
         Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         voice.setOnClickListener(this);
-
         next.setOnClickListener(this);
-
         play.setOnClickListener(this);
-
-        seekBar.setMax(99);
-
         mp.setOnBufferingUpdateListener(this);
         mp.setOnCompletionListener(this);
 
@@ -199,29 +199,40 @@ public class A27 extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.voice){
-            promptSpeechInput();
+            if(haveNetworkConnection()){
+                promptSpeechInput();
+            } else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+            }
         }
 
         if(v.getId() == R.id.play){
-            try {
-                String voice_url = url_download+path2;
-                mp.setDataSource(voice_url);
-                mp.prepare();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+            if(haveNetworkConnection()){
+                try {
+                    String voice_url = url_download+path2;
+                    mp.setDataSource(voice_url);
+                    mp.prepare();
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+
+                mpLength = mp.getDuration();
+
+                if(!mp.isPlaying()){
+                    mp.start();
+                    play.setBackgroundResource(R.drawable.pause);
+                }else {
+                    mp.pause();
+                    play.setBackgroundResource(R.drawable.play);
+                }
+                SeekBarProgressUpdater();
+
+            }else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
-
-            mpLength = mp.getDuration();
-
-            if(!mp.isPlaying()){
-                mp.start();
-                play.setBackgroundResource(R.drawable.pause);
-            }else {
-                mp.pause();
-                play.setBackgroundResource(R.drawable.play);
-            }
-            SeekBarProgressUpdater();
         }
 
         if(v.getId() == R.id.next){
@@ -275,6 +286,9 @@ public class A27 extends AppCompatActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else {
 
                             // Clickable_false
@@ -299,6 +313,9 @@ public class A27 extends AppCompatActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -1489,14 +1506,15 @@ public class A27 extends AppCompatActivity
         // other space
         b = b.replace(" ", "");
         // other
+        b = b.replace(",", "");
         b = b.replace(".", "");
         b = b.replace("!", "");
         b = b.replace("?", "");
         b = b.replace("؟", "");
-        b = b.replace(",", "");
-        b = b.replace("’", "");
-        b = b.replace("'", "");
         b = b.replace("\n", "");
+        // apastrof
+        b = b.replace("’", "’");
+        b = b.replace("'", "’");
         // lowerCase
         b = b.toLowerCase();
         return b;
@@ -1510,7 +1528,28 @@ public class A27 extends AppCompatActivity
 
     public void back(){
         mp.stop();
+        mp.release();
+        mpt.stop();
+        mpt.release();
+        mpf.stop();
+        mpf.release();
         A27.this.finish();
         startActivity(new Intent(A27.this, Lesson.class));
+    }
+
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 }

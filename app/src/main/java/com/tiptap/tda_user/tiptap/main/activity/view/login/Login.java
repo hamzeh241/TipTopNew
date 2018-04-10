@@ -36,7 +36,7 @@ public class Login
     List<TbLanguage> lans;
     List<String> title_lans;
     int Id_Language = 0;
-    EditText username, email, password;
+    EditText username, nameinapp, email, password;
     Spinner s;
     Button b;
     private static final String TAG = Login.class.getSimpleName();
@@ -77,6 +77,7 @@ public class Login
             public void onClick(View view) {
 
                 String Username = username.getText().toString();
+                String NameInApp = nameinapp.getText().toString();
                 String Email = email.getText().toString();
                 String Password = password.getText().toString();
 
@@ -86,7 +87,7 @@ public class Login
 
                         try{
 
-                            new Post_User(mPresenter, getAppContext(), Login.this, Username, Email, Password, Id_Language).post();
+                            new Post_User(mPresenter, getAppContext(), Login.this, Username, NameInApp, Email, Password, Id_Language).post();
 
                             new Get_Glossary(haveNetworkConnection(), mPresenter, getAppContext(), Login.this, Id_Language);
 
@@ -114,6 +115,7 @@ public class Login
 
     private void setupViews(){
         username = (EditText) findViewById(R.id.name);
+        nameinapp = (EditText) findViewById(R.id.nameinapp);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         b = (Button)findViewById(R.id.login);

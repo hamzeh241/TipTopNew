@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:weightSum="5">
+            android:weightSum="6">
 
             <EditText
                 android:id="@+id/name"
@@ -26,7 +26,23 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_weight="1"
-                android:hint="نام" />
+                android:hint="نام"
+                android:inputType="text"
+                android:layout_gravity="right"
+                android:gravity="right"/>
+
+            <EditText
+                android:id="@+id/nameinapp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:hint="نام کاربری"
+                android:inputType="text"
+                android:layout_gravity="right"
+                android:gravity="right"/>
 
             <EditText
                 android:id="@+id/email"
@@ -36,7 +52,10 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:hint="ایمیل" />
+                android:hint="ایمیل"
+                android:inputType="textEmailAddress"
+                android:layout_gravity="right"
+                android:gravity="right"/>
 
             <EditText
                 android:id="@+id/password"
@@ -46,7 +65,10 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
-                android:hint="کلمه عبور" />
+                android:hint="کلمه عبور"
+                android:inputType="textPassword"
+                android:layout_gravity="right"
+                android:gravity="right"/>
 
             <Spinner
                 android:id="@+id/spinner"
@@ -62,11 +84,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
-                android:text="login"
+                android:text="ورود"
                 android:textColor="#000"
                 android:layout_gravity="center"
                 android:padding="6dp"

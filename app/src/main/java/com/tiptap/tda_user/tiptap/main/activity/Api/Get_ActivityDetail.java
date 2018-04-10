@@ -46,8 +46,9 @@ public class Get_ActivityDetail extends BaseSetingApi {
         if(mnet){
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
+            String your_name = lesson_presenter.your_name();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "ActivityDetail?id="+_id+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson(), null, new Response.Listener<JSONArray>() {
+                    url+ "ActivityDetail?id="+_id+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson()+"&name="+your_name, null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {

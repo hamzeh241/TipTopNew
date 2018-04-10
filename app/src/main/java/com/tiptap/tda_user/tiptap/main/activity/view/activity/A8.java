@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +25,8 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.A8_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import android.view.View.OnClickListener;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -53,6 +56,7 @@ public class A8 extends AppCompatActivity
     static int position = 0;
     ProgressBar p;
     LinearLayout t, a;
+    MediaPlayer mpt, mpf;
     int all;
 
     @Override
@@ -93,6 +97,8 @@ public class A8 extends AppCompatActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup(){
@@ -245,6 +251,9 @@ public class A8 extends AppCompatActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else if (answer == false) {
 
                             // Clickable_false
@@ -270,6 +279,9 @@ public class A8 extends AppCompatActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -1417,7 +1429,7 @@ public class A8 extends AppCompatActivity
                 // disable
                 //t.setTextColor(getResources().getColor(R.color.gray));
                 //t.setBackgroundColor(getResources().getColor(R.color.gray));
-                t.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_dis));
+                t.setBackgroundDrawable(getResources().getDrawable(R.drawable.border_gray));
                 t.setClickable(false);
             }
         }
@@ -1518,6 +1530,10 @@ public class A8 extends AppCompatActivity
     }
 
     public void back(){
+        mpt.stop();
+        mpt.release();
+        mpf.stop();
+        mpf.release();
         A8.this.finish();
         startActivity(new Intent(A8.this, Lesson.class));
     }

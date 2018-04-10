@@ -3,15 +3,18 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -53,16 +56,18 @@ public class A46 extends AppCompatActivity
     int max,now_less;
     List<TbActivityDetail> tbActivityDetailList;
     LinearLayout l[];
-    int line = 0;
+    int added = 0;
     TextView t[];
-    String title1;
-    TextView t1,t2;
-    String ad1,ad2,ad3;
-    String z1[],z2[],z3[];
     EditText e[];
+    String ans[];
+    String z[];
+    int xali = 0;
+    String title1, title2;
+    TextView t1,t2;
     Button next;
     ProgressBar p;
     int fill=0, count=0;
+    MediaPlayer mpt, mpf;
     int all;
 
     @Override
@@ -72,6 +77,9 @@ public class A46 extends AppCompatActivity
 
         setupViews();
         setupMVP();
+
+        // hide keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         max = mPresenter.max_Activitynumber(idlesson);
 
@@ -85,24 +93,8 @@ public class A46 extends AppCompatActivity
         }
 
         idactivity = tbActivity.get_id();
-        title1 = tbActivity.getTitle1();
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         count = tbActivityDetailList.size();
-        switch (count){
-            case 1:
-                ad1 = tbActivityDetailList.get(0).getTitle1();
-                break;
-            case 2:
-                ad1 = tbActivityDetailList.get(0).getTitle1();
-                ad2 = tbActivityDetailList.get(1).getTitle1();
-                break;
-            case 3:
-                ad1 = tbActivityDetailList.get(0).getTitle1();
-                ad2 = tbActivityDetailList.get(1).getTitle1();
-                ad3 = tbActivityDetailList.get(2).getTitle1();
-                break;
-        }
-
         after_setup();
     }
 
@@ -125,6 +117,8 @@ public class A46 extends AppCompatActivity
         LinearLayout l8 = (LinearLayout)findViewById(R.id.l8);
 
         l = new LinearLayout[]{l1, l2, l3, l4, l5, l6, l7, l8};
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup() {
@@ -176,558 +170,229 @@ public class A46 extends AppCompatActivity
 
         next.setOnClickListener(this);
 
-        switch (count){
+        /* ------------------------------------------------------------------------------------------------------ */
+        // each row - title2
 
-            // 1 ja xali
-            /////////////////////////////////  ad1 (1)  /////////////////////////////
-            case 1:
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
 
-                int baxsh11 = 0;
-                for(int i=0 ; i<ad1.length() ; i++){
-                    if(ad1.charAt(i) == ','){
-                        baxsh11++;
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
                     }
                 }
-
-                switch (baxsh11){
-                    // 1 baxsh
-                    case 0:
-                        z1 = ad1.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad1.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z1 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad1.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z1 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    xali = xali + (z.length);
                 }
-                break;
-
-            // 2 ja xali
-            /////////////////////////////////  ad1 (2)  /////////////////////////////
-            case 2:
-
-                int baxsh21 = 0;
-                for(int i=0 ; i<ad1.length() ; i++){
-                    if(ad1.charAt(i) == ','){
-                        baxsh21++;
-                    }
+                else if(have == 0){
+                    xali = xali + 1;
                 }
-
-                switch (baxsh21){
-                    // 1 baxsh
-                    case 0:
-                        z1 = ad1.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad1.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z1 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad1.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z1 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                /////////////////////////////////  ad2 (2)  /////////////////////////////
-                int baxsh22 = 0;
-                for(int i=0 ; i<ad2.length() ; i++){
-                    if(ad2.charAt(i) == ','){
-                        baxsh22++;
-                    }
-                }
-
-                switch (baxsh22){
-                    // 1 baxsh
-                    case 0:
-                        z2 = ad2.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad2.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z2 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z2[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad2.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z2 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                break;
-
-            // 3 ja xali
-            /////////////////////////////////  ad1 (3)  /////////////////////////////
-            case 3:
-
-                int baxsh31 = 0;
-                for(int i=0 ; i<ad1.length() ; i++){
-                    if(ad1.charAt(i) == ','){
-                        baxsh31++;
-                    }
-                }
-
-                switch (baxsh31){
-                    // 1 baxsh
-                    case 0:
-                        z1 = ad1.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad1.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z1 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad1.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z1 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z1[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                /////////////////////////////////  ad2 (3)  /////////////////////////////
-                int baxsh32 = 0;
-                for(int i=0 ; i<ad2.length() ; i++){
-                    if(ad2.charAt(i) == ','){
-                        baxsh32++;
-                    }
-                }
-
-                switch (baxsh32){
-                    // 1 baxsh
-                    case 0:
-                        z2 = ad2.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad2.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z2 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z1[count2] = x[i] + " " +y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad2.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z2 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z2[count3] = b[i] + " " + c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-
-                /////////////////////////////////  ad3 (3) /////////////////////////////
-                int baxsh33 = 0;
-                for(int i=0 ; i<ad3.length() ; i++){
-                    if(ad3.charAt(i) == ','){
-                        baxsh33++;
-                    }
-                }
-
-                switch (baxsh33){
-                    // 1 baxsh
-                    case 0:
-                        z3 = ad3.split("/");
-                        break;
-
-                    // 2 baxsh
-                    case 1:
-                        String[] s = ad3.split(",");
-                        String[] x = s[0].split("/");
-                        String[] y = s[1].split("/");
-
-                        z3 = new String[x.length * y.length];
-                        int count2 = 0;
-                        for (int i = 0; i < x.length; i++) {
-                            for (int j = 0; j < y.length; j++) {
-                                z3[count2] = x[i] + " " + y[j];
-                                count2++;
-                            }
-                        }
-                        break;
-
-                    // 3 baxsh
-                    case 2:
-                        String[] a = ad3.split(",");
-                        String[] b = a[0].split("/");
-                        String[] c = a[1].split("/");
-                        String[] d = a[2].split("/");
-
-                        z3 = new String[b.length * c.length* d.length];
-                        int count3 = 0;
-                        for (int i = 0; i < b.length ; i++) {
-                            for (int j = 0; j < c.length ; j++) {
-                                for(int k = 0 ; k < d.length ; k++){
-                                    z3[count3] = b[i] + " " +c[j] + " " + d[k];
-                                    count3++;
-                                }
-                            }
-                        }
-                        break;
-                }
-                break;
+            }
         }
 
-        String w = title1;
-        String [] list_w = w.split(Pattern.quote("..."));
+        ans = new String[xali];
+        int c = 0;
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
 
-        int start = 0;
-        int end = 0;
-        String s_s = w.substring(0, 3);
-        if(s_s.equals("...")){start = 1;}
-        String s_e = w.substring(w.length()-3, w.length());
-        if(s_e.equals("...")){end = 1;}
-
-        int t_number = 0;
-        int id_w = 0;
-        if(list_w[0].equals("")){
-            id_w = 1;
-            t_number = list_w.length-1;
-        }else{
-            t_number = list_w.length;
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
+                    }
+                }
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    for(int j=0 ; j<z.length ; j++){
+                        ans[c] = z[j];
+                        c++;
+                    }
+                }
+                else if(have == 0){
+                    ans[c] = temp;
+                    c++;
+                }
+            }
         }
 
-        int e_number = 0;
-        if(t_number > 1){
-            e_number = (t_number-1)+(start)+(end);
-        }else{
-            e_number = (start)+(end);
-        }
-
-        int total = t_number + e_number;
-
-        t = new TextView[t_number];
-        int id_t = 0;
-        e = new EditText[e_number];
+        e = new EditText[xali];
         int id_e = 0;
 
-        String now = "txt";
+        // ------------------------------------------------------------------------------------------------------
+        // each row - title1
+        for(int i=0 ; i<count ; i++) {
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        int added = 0;
+            // ------------------------------------------------------------------------------------------------------
+            // splite textview & edittext
 
-        for(int i=0 ; i<total ; i++){
+            String w = tbActivityDetailList.get(i).getTitle1();
+            w = w.replace("…", "...");
+            String[] list_w = w.split(Pattern.quote("..."));
 
-            final int finalId_e = id_e;
+            int start = 0;
+            int end = 0;
 
-            // start
-            if(i == 0 ){
-                if(start == 1){
-                    e[id_e] = new EditText(this);
-                    e[id_e].setLayoutParams(params);
-                    e[id_e].setEms(4);
-                    e[id_e].setTextSize(16);
-                    e[id_e].addTextChangedListener(new CheckEdit());
-                    l[line].addView(e[id_e]);
-                    line++;
-                    /*added = added + 5;
-                    if( 1 <= added && added <= 24 ){
-                        l1.addView(e[id_e]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(e[id_e]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(e[id_e]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(e[id_e]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(e[id_e]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(e[id_e]);
-                    }*/
-                    id_e++;
+            // only ...
+            if(w.equals("...")){
+                start = 1;
+            }else{
+                String s_s = w.substring(0, 3);
+                if (s_s.equals("...")) {
+                    start = 1;
                 }
-
-                if(start == 0){
-                    t[id_t] = new TextView(this);
-                    t[id_t].setLayoutParams(params);
-                    t[id_t].setText(list_w[id_w]);
-                    t[id_t].setTextSize(16);
-                    l[line].addView(t[id_t]);
-                    line++;
-                    /*added = added + list_w[id_w].length();
-                    if( 1 <= added && added <= 24 ){
-                        l1.addView(t[id_t]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(t[id_t]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(t[id_t]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(t[id_t]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(t[id_t]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(t[id_t]);
-                    }*/
-                    now = "edt";
-                    id_w++;
-                    id_t++;
+                String s_e = w.substring(w.length() - 3, w.length());
+                if (s_e.equals("...")) {
+                    end = 1;
                 }
             }
 
-            if(i!=0 && i!=total-1){
-                // textview
-                switch (now) {
-                    case "txt":
-                        t[id_t] = new TextView(this);
-                        t[id_t].setLayoutParams(params);
-                        t[id_t].setText(list_w[id_w]);
-                        t[id_t].setTextSize(16);
-                        l[line].addView(t[id_t]);
-                        line++;
-                        /*added = added + list_w[id_w].length();
-                        if( 1 <= added && added <= 24 ){
-                            l1.addView(t[id_t]);
-                        }
-                        if( 25 <= added && added <= 48 ){
-                            l2.addView(t[id_t]);
-                        }
-                        if( 49 <= added && added <= 72 ){
-                            l3.addView(t[id_t]);
-                        }
-                        if( 73 <= added && added <= 96 ){
-                            l4.addView(t[id_t]);
-                        }
-                        if( 97 <= added && added <= 120 ){
-                            l5.addView(t[id_t]);
-                        }
-                        if( 121 <= added && added <= 144 ){
-                            l6.addView(t[id_t]);
-                        }*/
-                        now = "edt";
-                        id_w++;
-                        id_t++;
-                        break;
+            int t_number = 0;
+            int id_w = 0;
 
-                    case "edt":
-                        e[id_e] = new EditText(this);
-                        e[id_e].setLayoutParams(params);
-                        e[id_e].setEms(4);
-                        e[id_e].setTextSize(16);
-                        e[id_e].addTextChangedListener(new CheckEdit());
-                        l[line].addView(e[id_e]);
-                        line++;
-                        /*added = added + 5;
-                        if( 1 <= added && added <= 24 ){
-                            l1.addView(e[id_e]);
-                        }
-                        if( 25 <= added && added <= 48 ){
-                            l2.addView(e[id_e]);
-                        }
-                        if( 49 <= added && added <= 72 ){
-                            l3.addView(e[id_e]);
-                        }
-                        if( 73 <= added && added <= 96 ){
-                            l4.addView(e[id_e]);
-                        }
-                        if( 97 <= added && added <= 120 ){
-                            l5.addView(e[id_e]);
-                        }
-                        if( 121 <= added && added <= 144 ){
-                            l6.addView(e[id_e]);
-                        }*/
-                        now = "txt";
-                        id_e++;
-                        break;
+            if(w.equals("...")){
+                t_number = 0;
+            }else{
+                if (list_w[0].equals("")) {
+                    id_w = 1;
+                    t_number = list_w.length - 1;
+                } else {
+                    t_number = list_w.length;
                 }
             }
 
-            // end
-            if(i == total-1){
-                if(end == 1){
+            int e_number = 0;
+            if (t_number > 1) {
+                e_number = (t_number - 1) + (start) + (end);
+            } else {
+                e_number = (start) + (end);
+            }
+
+            int total = t_number + e_number;
+            t = new TextView[t_number];
+            int id_t = 0;
+
+            // ------------------------------------------------------------------------------------------------------
+            // add to view
+            String now = "txt";
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            if(total == 1){
+                // only ...
+                if(w.equals("...")) {
                     e[id_e] = new EditText(this);
                     e[id_e].setLayoutParams(params);
-                    e[id_e].setEms(4);
+                    e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                    e[id_e].setEms(12);
                     e[id_e].setTextSize(16);
+                    e[id_e].setTextColor(getResources().getColor(R.color.blue));
                     e[id_e].addTextChangedListener(new CheckEdit());
-                    l[line].addView(e[id_e]);
-                    line++;
-                    /*added = added + 5;
-                    if( 0 <= added && added <= 24 ){
-                        l1.addView(e[id_e]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(e[id_e]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(e[id_e]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(e[id_e]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(e[id_e]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(e[id_e]);
-                    }*/
+                    l[added].addView(e[id_e]);
                     id_e++;
+                    added++;
                 }
-
-                if(end == 0){
+                // only text without ...
+                else{
                     t[id_t] = new TextView(this);
                     t[id_t].setLayoutParams(params);
-                    t[id_t].setText(list_w[id_w]);
+                    t[id_t].setText(list_w[0]);
                     t[id_t].setTextSize(16);
-                    l[line].addView(t[id_t]);
-                    line++;
-                    /*added = added + list_w[id_w].length();
-                    if( 1 <= added && added <= 24 ){
-                        l1.addView(t[id_t]);
-                    }
-                    if( 25 <= added && added <= 48 ){
-                        l2.addView(t[id_t]);
-                    }
-                    if( 49 <= added && added <= 72 ){
-                        l3.addView(t[id_t]);
-                    }
-                    if( 73 <= added && added <= 96 ){
-                        l4.addView(t[id_t]);
-                    }
-                    if( 97 <= added && added <= 120 ){
-                        l5.addView(t[id_t]);
-                    }
-                    if( 121 <= added && added <= 144 ){
-                        l6.addView(t[id_t]);
-                    }*/
-                    now = "edt";
-                    id_w++;
-                    id_t++;
+                    l[added].addView(t[id_t]);
+                    added++;
                 }
 
+            }else{
+                for(int xi=0 ; xi<total ; xi++){
+
+                    final int finalId_e = id_e;
+
+                    // start
+                    if(xi == 0){
+                        if(start == 1){
+                            e[id_e] = new EditText(this);
+                            e[id_e].setLayoutParams(params);
+                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setEms(5);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new CheckEdit());
+                            l[added].addView(e[id_e]);
+                            id_e++;
+                        }
+
+                        if(start == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            l[added].addView(t[id_t]);
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+
+                    if(xi!=0 && xi!=total-1){
+                        // textview
+                        switch (now) {
+                            case "txt":
+                                t[id_t] = new TextView(this);
+                                t[id_t].setLayoutParams(params);
+                                t[id_t].setText(list_w[id_w]);
+                                t[id_t].setTextSize(16);
+                                l[added].addView(t[id_t]);
+                                now = "edt";
+                                id_w++;
+                                id_t++;
+                                break;
+
+                            case "edt":
+                                e[id_e] = new EditText(this);
+                                e[id_e].setLayoutParams(params);
+                                e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                                e[id_e].setEms(5);
+                                e[id_e].setTextSize(16);
+                                e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                                e[id_e].addTextChangedListener(new CheckEdit());
+                                l[added].addView(e[id_e]);
+                                now = "txt";
+                                id_e++;
+                                break;
+                        }
+                    }
+
+                    // end
+                    if(xi == total-1){
+                        if(end == 1){
+                            e[id_e] = new EditText(this);
+                            e[id_e].setLayoutParams(params);
+                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setEms(5);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new CheckEdit());
+                            l[added].addView(e[id_e]);
+                            id_e++;
+                        }
+
+                        if(end == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            l[added].addView(t[id_t]);
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+                }
+                added++;
             }
         }
     }
@@ -750,10 +415,10 @@ public class A46 extends AppCompatActivity
                         }
                     }
 
-                    if( fill == count ) {
+                    if( fill == xali ) {
 
-                        boolean answer = cheak();
-                        if (answer) {
+                        String answer = cheak();
+                        if (answer.equals("")) {
 
                             // update - true
                             mPresenter.update_activity(idactivity);
@@ -790,6 +455,9 @@ public class A46 extends AppCompatActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else {
 
                             // Clickable_false
@@ -808,23 +476,15 @@ public class A46 extends AppCompatActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            switch (count){
-                                case 1:
-                                    f2.t.setText(z1[0]);
-                                    break;
+                            f2.t.setText(answer);
 
-                                case 2:
-                                    f2.t.setText(z1[0]+" / "+z2[0]);
-                                    break;
-
-                                case 3 :
-                                    f2.t.setText(z1[0]+" / "+z2[0]+" / "+z3[0]);
-                                    break;
-                            }
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
 
                         }
 
@@ -833,13 +493,13 @@ public class A46 extends AppCompatActivity
                         next.setText("countinue");
                     }
                     else{
-                        Toast.makeText(getApplicationContext(), "please fill the blankes", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "جاهای خالی را پر کنید", Toast.LENGTH_LONG).show();
                     }
 
                     break;
 
                 case "countinue":
-                    if( fill == count ) {
+                    if( fill == xali ) {
 
                         // first
                         if(Act_Status.equals("first")){
@@ -1925,81 +1585,91 @@ public class A46 extends AppCompatActivity
         }
     }
 
-    public boolean cheak(){
-        boolean final_answer = false;
-        boolean answer[];
-        switch (count){
-            case 1:
-                answer = new boolean[1];
-                for(int i = 0 ; i < z1.length ; i++){
-                    String a = nice_string(e[0].getText().toString());
-                    String b = nice_string(z1[i]);
-                    if(a.equals(b)){
-                        answer[0] = true;
-                    }
-                }
-                if(answer[0]){
-                    final_answer = true;
-                }
-                break;
+    public String cheak(){
 
-            case 2 :
-                answer = new boolean[2];
-                for(int i = 0 ; i < z1.length ; i++){
-                    String a = nice_string(e[0].getText().toString());
-                    String b = nice_string(z1[i]);
-                    if(a.equals(b)){
-                        answer[0] = true;
-                    }
-                }
-                for(int i = 0 ; i < z2.length ; i++){
-                    String a = nice_string(e[1].getText().toString());
-                    String b = nice_string(z2[i]);
-                    if(a.equals(b)){
-                        answer[1] = true;
-                    }
-                }
-                if(answer[0]){
-                    if(answer[1]){
-                        final_answer = true;
-                    }
-                }
-                break;
+        String result = "";
+        boolean final_answer = true;
+        boolean answer[] = new boolean[xali];
+        int cc = 0;
 
-            case 3:
-                answer = new boolean[3];
-                for(int i = 0 ; i < z1.length ; i++){
-                    String a = nice_string(e[0].getText().toString());
-                    String b = nice_string(z1[i]);
-                    if(a.equals(b)){
-                        answer[0] = true;
-                    }
-                }
-                for(int i = 0 ; i < z2.length ; i++){
-                    String a = nice_string(e[1].getText().toString());
-                    String b = nice_string(z2[i]);
-                    if(a.equals(b)){
-                        answer[1] = true;
-                    }
-                }
+        for(int i=0 ; i < e.length ; i++){
 
-                for(int i = 0 ; i < z3.length ; i++){
-                    String a = nice_string(e[2].getText().toString());
-                    String b = nice_string(z3[i]);
-                    if(a.equals(b)){
-                        answer[2] = true;
-                    }
+            // yek javab
+            int baxsh = 0;
+            for(int j=0 ; j<ans[i].length() ; j++){
+                if(ans[i].charAt(j) == ','){
+                    baxsh++;
                 }
-                if(answer[0]){
-                    if(answer[1]) {
-                        if (answer[2]) {
-                            final_answer = true;
+            }
+
+            z = null;
+            switch (baxsh){
+                // 1 baxsh
+                case 0:
+                    z = ans[i].split("/");
+                    break;
+
+                // 2 baxsh
+                case 1:
+                    String[] s = ans[i].split(",");
+                    String[] x = s[0].split("/");
+                    String[] y = s[1].split("/");
+
+                    z = new String[x.length * y.length];
+                    int count2 = 0;
+                    for (int ii = 0; ii < x.length; i++) {
+                        for (int jj = 0; jj < y.length; jj++) {
+                            z[count2] = x[ii] + " " + y[jj];
+                            count2++;
                         }
                     }
+                    break;
+
+                // 3 baxsh
+                case 2:
+                    String[] a = ans[i].split(",");
+                    String[] b = a[0].split("/");
+                    String[] c = a[1].split("/");
+                    String[] d = a[2].split("/");
+
+                    z = new String[b.length * c.length* d.length];
+                    int count3 = 0;
+                    for (int ii = 0; ii < b.length ; ii++) {
+                        for (int jj = 0; jj < c.length ; jj++) {
+                            for(int k = 0 ; k < d.length ; k++){
+                                z[count3] = b[ii] + " " + c[jj] + " " + d[k];
+                                count3++;
+                            }
+                        }
+                    }
+                    break;
+            }
+
+            // moqayese ba javab
+            result = result + " / "+ z[0] ;
+            for(int j=0 ; j < z.length ; j++){
+                String a = nice_string( e[i].getText().toString() );
+                String b = nice_string( z[j].toString() );
+                if(a.equals(b)){
+                    answer[cc] = true;
+                    cc++;
                 }
-                break;
+            }
         }
-        return final_answer;
+
+        for(int x=0 ; x<answer.length ; x++){
+            if(answer[x]){
+
+            }else{
+                final_answer = false;
+            }
+        }
+
+        if(final_answer){
+            return "";
+        }else{
+            return result;
+        }
    }
 
     public String nice_string (String a){
@@ -2013,8 +1683,8 @@ public class A46 extends AppCompatActivity
         b = b.replace("?", "");
         b = b.replace("؟", "");
         b = b.replace(",", "");
-        b = b.replace("’", "");
-        b = b.replace("'", "");
+        b = b.replace("’", "'");
+        b = b.replace("'", "'");
         b = b.replace("\n", "");
         // lowerCase
         b = b.toLowerCase();
