@@ -80,7 +80,20 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
             id="0x0";
         return id;
     }
-
+    @Override
+    public int getcountUser() {
+        String q="SELECT Count(UserName) as count FROM aspnet_Users";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        int count=cursor.getCount();
+        cursor.moveToFirst();
+        int id=0;
+        for (int i = 0; i < count; i++) {
+            id=cursor.getInt(0);
+        }
+        //if(null==id)
+           // id="0x0";
+        return id;
+    }
     @Override
     public void Insert_Glossary(String Q) {
         dbAdapter.ExecuteQ(Q);

@@ -16,6 +16,8 @@ import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
+import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
@@ -28,8 +30,11 @@ public class Post_User extends BaseSetingApi {
     String Result = "";
     String user_name, name_inapp, _email, _password;
     int language_id;
+    boolean mnet;
 
-    public Post_User(MVP_Login.ProvidedPresenterOps ppo, Context context, Activity activity, String username, String nameinapp, String email, String password, int lid) {
+
+    public Post_User(MVP_Login.ProvidedPresenterOps ppo, Context context, Activity activity,
+                     String username, String nameinapp, String email, String password, int lid,boolean net) {
         login_presenter = ppo;
         choose = "login";
         _context = context;
@@ -39,6 +44,7 @@ public class Post_User extends BaseSetingApi {
         _email = email;
         _password = password;
         language_id = lid;
+        mnet = net;
     }
 
     public String post() throws JSONException {
@@ -55,8 +61,16 @@ public class Post_User extends BaseSetingApi {
 
                 if(response.equals("200")) {
                     Result = response;
-                    String Q = "insert into aspnet_Users (UserName,NameInApp,Password,Email,Id_Language) values ('" + user_name + "','" + name_inapp +"','" + _password + "','" + _email + "','" + language_id + "')" ;
-                    login_presenter.Insert_User(Q);
+                    if(login_presenter.CountUser()==0) {
+                        String Q = "insert into aspnet_Users (UserName,NameInApp,Password,Email,Id_Language) values ('" + user_name + "','" + name_inapp + "','" + _password + "','" + _email + "','" + language_id + "')";
+                        login_presenter.Insert_User(Q);
+                    }
+                    else
+                    {
+                        String Q2="update aspnet_Users set UserName='"+user_name+"',NameInApp='"+name_inapp+"',Password='"+_password+"',Email='"+_email+"',Id_Language='"+language_id;
+                        login_presenter.Insert_User(Q2);
+                    }
+                    new Get_Glossary(mnet, login_presenter, _context, _activity, language_id);
                 }
                 else {
                     Toast.makeText(_context,"خطا در ارسال اطلاعات به سرور",Toast.LENGTH_LONG).show();

@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.Api;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -15,6 +16,8 @@ import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,22 +28,28 @@ import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_ActivityDetail extends BaseSetingApi {
 
+    CardPagerAdapter_L cl;
     MVP_Lesson.ProvidedPresenterOps lesson_presenter;
     Context _context;
     Activity mactivity;
     boolean mnet;
     int _id;
     ProgressDialog progressDialog;
+    View _view;
 
-    public Get_ActivityDetail(int id, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity) {
+    public Get_ActivityDetail(int id, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity,View view) {
         lesson_presenter = ppo;
         mactivity = activity;
         _context = context;
         mnet = net;
         _id = id;
+        _view = view;
         progressDialog = new ProgressDialog(mactivity);
+        cl=new CardPagerAdapter_L();
         get();
     }
+
+
 
     public Get_ActivityDetail get() {
         if(mnet){
@@ -88,6 +97,8 @@ public class Get_ActivityDetail extends BaseSetingApi {
                             lesson_presenter.Insert_Activity(Q1);
                         }
                         progressDialog.dismiss();
+                        int id_activity_type = lesson_presenter.activity_Type(_id);
+                        cl.go_activity(_view, id_activity_type, _id);
 
                     } catch (JSONException e) {
                         Toast.makeText(_context, "JSONException : "+ e.getCause()+e.getMessage() , Toast.LENGTH_LONG).show();

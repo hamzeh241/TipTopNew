@@ -25,10 +25,10 @@ import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Function extends BaseSetingApi {
 
-    MVP_Function.ProvidedPresenterOps function_presenter;
-    int _id_function;
-    Context _context;
-    Activity mactivity;
+    private MVP_Function.ProvidedPresenterOps function_presenter;
+    private int _id_function;
+    private Context _context;
+    private Activity mactivity;
     boolean mnet;
     ProgressDialog progressDialog;
     RecyclerView mRecyclerView;

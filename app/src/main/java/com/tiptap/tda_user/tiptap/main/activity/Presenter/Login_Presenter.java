@@ -37,6 +37,11 @@ public class Login_Presenter
         mView = new WeakReference<>(view);
     }
 
+    @Override
+    public int CountUser() {
+        return mModel.getcountUser();
+    }
+
     public void setModel(MVP_Login.ProvidedModelOps model) {
         mModel = model;
     }

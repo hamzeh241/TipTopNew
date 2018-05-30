@@ -3,6 +3,8 @@ package com.tiptap.tda_user.tiptap.main.activity.Api;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -13,6 +15,9 @@ import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
+import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
+import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -83,6 +88,8 @@ public class Get_Glossary extends BaseSetingApi {
                             login_presenter.Insert_Glossary(Q1);
                         }
                         progressDialog.dismiss();
+                        mactivity.finish();
+                        mactivity.startActivity(new Intent(mactivity, Function.class));
 
                     } catch (JSONException e) {
                         progressDialog.dismiss();

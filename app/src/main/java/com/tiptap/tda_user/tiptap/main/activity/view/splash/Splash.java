@@ -18,10 +18,7 @@ import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
 import javax.inject.Inject;
 
-public class Splash
-        extends AppCompatActivity
-        implements MVP_Splash.RequiredViewOps {
-
+public class Splash extends AppCompatActivity implements MVP_Splash.RequiredViewOps {
     TextView text;
     private static final String TAG = Splash.class.getSimpleName();
 

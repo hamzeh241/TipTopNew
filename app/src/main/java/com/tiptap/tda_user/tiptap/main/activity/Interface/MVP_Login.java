@@ -15,6 +15,7 @@ public interface MVP_Login {
         void onDestroy(boolean isChangingConfiguration);
         void setView(MVP_Login.RequiredViewOps view);
 
+        int CountUser();
         // language
         List<TbLanguage> getLanguages();
 
@@ -43,6 +44,9 @@ public interface MVP_Login {
 
         // Glossary
         String getMaxRowV_Glossary();
+
+        int getcountUser();
+
         void Insert_Glossary(String Q);
         List<Integer> ListGlossary();
     }

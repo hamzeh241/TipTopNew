@@ -82,18 +82,10 @@ public class Login
                 String Password = password.getText().toString();
 
                 if(validate()){
-
                     if(haveNetworkConnection()){
 
                         try{
-
-                            new Post_User(mPresenter, getAppContext(), Login.this, Username, NameInApp, Email, Password, Id_Language).post();
-
-                            new Get_Glossary(haveNetworkConnection(), mPresenter, getAppContext(), Login.this, Id_Language);
-
-                            Login.this.finish();
-                            startActivity(new Intent(Login.this, Function.class));
-
+                            new Post_User(mPresenter, getAppContext(), Login.this, Username, NameInApp, Email, Password, Id_Language,haveNetworkConnection()).post();
                         }catch (Exception e){}
 
                     }else {
@@ -131,13 +123,11 @@ public class Login
     }
 
     private void initialize(){
-        Log.d(TAG, "initialize");
         setupComponent();
         mStateMaintainer.put(Login_Presenter.class.getSimpleName(), mPresenter);
     }
 
     private void reinitialize() {
-        Log.d(TAG, "reinitialize");
         mPresenter = mStateMaintainer.get(Login_Presenter.class.getSimpleName());
         mPresenter.setView(this);
         if ( mPresenter == null )
@@ -145,18 +135,12 @@ public class Login
     }
 
     private void setupComponent(){
-        Log.d(TAG, "setupComponent");
-        SampleApp.get(this)
-                .getAppComponent()
-                .getLoginComponent(new Login_Module(this))
-                .inject(this);
+        SampleApp.get(this).getAppComponent().getLoginComponent(new Login_Module(this)).inject(this);
     }
-
     @Override
     public Context getAppContext() {
         return getApplicationContext();
     }
-
     @Override
     public Context getActivityContext() {
         return this;

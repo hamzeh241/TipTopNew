@@ -3,6 +3,8 @@ package com.tiptap.tda_user.tiptap.main.activity.Api;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.view.View;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -29,13 +31,15 @@ public class Get_Activity extends BaseSetingApi {
     boolean mnet;
     int _id;
     ProgressDialog progressDialog;
+    View _view;
 
-    public Get_Activity(int id, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity) {
+    public Get_Activity(int id, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, View view) {
         lesson_presenter = ppo;
         mactivity = activity;
         _context = context;
         mnet = net;
         _id = id;
+        _view = view;
         progressDialog = new ProgressDialog(mactivity);
         get();
     }
@@ -87,6 +91,7 @@ public class Get_Activity extends BaseSetingApi {
                             lesson_presenter.Insert_Activity(Q1);
                         }
                         progressDialog.dismiss();
+                        new Get_ActivityDetail(_id, mnet, lesson_presenter, _context, mactivity,_view);
 
                     } catch (JSONException e) {
                         progressDialog.dismiss();

@@ -166,35 +166,13 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             @Override
             public void onClick(View view) {
                 int id_lesson = item.getId();
-                // int number_lesson = lesson_presenter.lesson_number(id_lesson);
-                // int number_id = lesson_presenter.lesson_number(luser);
-
                 if(btn.getText().equals("Redo")){
                     int id_activity_type = lesson_presenter.activity_Type(id_lesson);
                     go_activity(view, id_activity_type, id_lesson);
                 }
-
-                if(btn.getText().equals("Start")){
-
-                    new Get_Activity(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
-                    new Get_ActivityDetail(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
-
-                    int id_activity_type = lesson_presenter.activity_Type(id_lesson);
-
-                    Toast.makeText(_context, ""+id_activity_type, Toast.LENGTH_LONG).show();
-                    go_activity(view, id_activity_type, id_lesson);
+               else if(btn.getText().equals("Start")){
+                    new Get_Activity(id_lesson, haveNetworkConnection(),lesson_presenter,_context,_activity,view);
                 }
-
-               /* if(number_lesson <= number_id || number_lesson == 1){
-
-                    new Get_Activity(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
-
-                    new Get_ActivityDetail(id_lesson, haveNetworkConnection(), lesson_presenter, _context, _activity);
-
-                    int id_activity_type = lesson_presenter.activity_Type(id_lesson);
-                    go_activity(view, id_activity_type, id_lesson);
-                }*/
-
             }
         });
     }
