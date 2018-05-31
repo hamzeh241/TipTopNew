@@ -32,7 +32,7 @@ import java.util.Random;
 import javax.inject.Inject;
 import android.widget.LinearLayout.LayoutParams;
 
-public class A8 extends AppCompatActivity
+public class A8 extends BaseActivity
                 implements MVP_A8.RequiredViewOps, OnClickListener {
 
     private static final String TAG = A8.class.getSimpleName();

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
 
-public class A9 extends AppCompatActivity
+public class A9 extends BaseActivity
         implements MVP_A9.RequiredViewOps {
 
     private static final String TAG = A9.class.getSimpleName();

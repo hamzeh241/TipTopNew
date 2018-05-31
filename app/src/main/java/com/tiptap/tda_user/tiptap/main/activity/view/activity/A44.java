@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.tiptap.tda_user.tiptap.R;
 
-public class A44 extends AppCompatActivity {
+public class A44 extends BaseActivity {
 
     Button next;
 

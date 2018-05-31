@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
 
-public class A5 extends AppCompatActivity
+public class A5 extends BaseActivity
         implements MVP_A5.RequiredViewOps, OnClickListener{
 
     private static final String TAG = A5.class.getSimpleName();

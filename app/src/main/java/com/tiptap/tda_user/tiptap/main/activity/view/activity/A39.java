@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
-public class A39 extends AppCompatActivity
+public class A39 extends BaseActivity
                  implements MVP_A39.RequiredViewOps {
 
     private static final String TAG = A39.class.getSimpleName();

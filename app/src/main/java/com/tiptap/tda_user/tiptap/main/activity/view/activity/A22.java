@@ -31,7 +31,7 @@ import android.widget.Toast;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
-public class A22 extends AppCompatActivity
+public class A22 extends BaseActivity
         implements MVP_A22.RequiredViewOps {
 
     private static final String TAG = A22.class.getSimpleName();

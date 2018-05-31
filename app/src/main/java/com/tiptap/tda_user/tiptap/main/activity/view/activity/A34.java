@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.inject.Inject;
 
-public class A34 extends AppCompatActivity
+public class A34 extends BaseActivity
                  implements MVP_A34.RequiredViewOps {
 
     private static final String TAG = A34.class.getSimpleName();

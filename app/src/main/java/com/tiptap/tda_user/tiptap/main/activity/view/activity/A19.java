@@ -28,7 +28,7 @@ import java.util.Random;
 import javax.inject.Inject;
 import android.view.View.OnClickListener;
 
-public class A19 extends AppCompatActivity
+public class A19 extends BaseActivity
                  implements MVP_A19.RequiredViewOps,
                  OnClickListener{
 

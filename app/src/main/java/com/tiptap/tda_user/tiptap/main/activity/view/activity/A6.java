@@ -24,7 +24,7 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.List;
 import javax.inject.Inject;
 
-public class A6 extends AppCompatActivity
+public class A6 extends BaseActivity
         implements MVP_A6.RequiredViewOps {
 
     private static final String TAG = A6.class.getSimpleName();

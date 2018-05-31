@@ -30,7 +30,7 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-public class A4 extends AppCompatActivity
+public class A4 extends BaseActivity
         implements MVP_A4.RequiredViewOps {
 
     private static final String TAG = A4.class.getSimpleName();

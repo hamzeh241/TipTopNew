@@ -24,7 +24,7 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.List;
 import javax.inject.Inject;
 
-public class A15 extends AppCompatActivity
+public class A15 extends BaseActivity
         implements MVP_A15.RequiredViewOps,
         OnClickListener{
 

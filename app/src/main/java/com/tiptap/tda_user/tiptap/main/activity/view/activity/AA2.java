@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import com.tiptap.tda_user.tiptap.R;
 
-public class AA2 extends AppCompatActivity {
+public class AA2 extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

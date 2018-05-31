@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
-public class A20 extends AppCompatActivity
+public class A20 extends BaseActivity
         implements MVP_A20.RequiredViewOps,View.OnClickListener {
 
     private static final String TAG = A20.class.getSimpleName();

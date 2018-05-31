@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
-public class A18 extends AppCompatActivity
+public class A18 extends BaseActivity
                  implements MVP_A18.RequiredViewOps{
 
     private static final String TAG = A18.class.getSimpleName();

@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.tiptap.tda_user.tiptap.R;
 
-public class A25 extends AppCompatActivity {
+public class A25 extends BaseActivity {
 
     Button next;
     public static String Act_Status;

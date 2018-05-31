@@ -45,7 +45,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
-public class A32 extends AppCompatActivity
+public class A32 extends BaseActivity
         implements MVP_A32.RequiredViewOps, OnClickListener{
 
     private static final String TAG = A32.class.getSimpleName();
@@ -1972,19 +1972,5 @@ public class A32 extends AppCompatActivity
         startActivity(new Intent(A32.this, Lesson.class));
     }
 
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
-    }
+
 }

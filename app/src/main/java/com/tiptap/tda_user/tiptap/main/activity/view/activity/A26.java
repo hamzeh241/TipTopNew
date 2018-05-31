@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import android.view.View.OnClickListener;
 
-public class A26 extends AppCompatActivity implements MVP_A26.RequiredViewOps, OnClickListener {
+public class A26 extends BaseActivity implements MVP_A26.RequiredViewOps, OnClickListener {
 
     private static final String TAG = A26.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A26.class.getName());

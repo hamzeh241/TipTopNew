@@ -38,7 +38,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
-public class A46 extends AppCompatActivity
+public class A46 extends BaseActivity
         implements MVP_A46.RequiredViewOps,OnClickListener {
 
     private static final String TAG = A46.class.getSimpleName();

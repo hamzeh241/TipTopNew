@@ -352,8 +352,9 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                 A27.idfunction = func ;
                 A27.activitynumber = 1;
                 A27.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A27.class));
                 _activity.finish();
+                view.getContext().startActivity(new Intent(view.getContext(), A27.class));
+
                 break;
 
             case 28:

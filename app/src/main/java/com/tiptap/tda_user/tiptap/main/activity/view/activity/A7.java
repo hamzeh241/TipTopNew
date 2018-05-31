@@ -35,7 +35,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
-public class A7 extends AppCompatActivity
+public class A7 extends BaseActivity
                 implements MVP_A7.RequiredViewOps,
                 OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener {
 
@@ -44,7 +44,6 @@ public class A7 extends AppCompatActivity
 
     @Inject
     public MVP_A7.ProvidedPresenterOps mPresenter;
-
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
@@ -1389,19 +1388,5 @@ public class A7 extends AppCompatActivity
         startActivity(new Intent(A7.this, Lesson.class));
     }
 
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
-    }
+
 }

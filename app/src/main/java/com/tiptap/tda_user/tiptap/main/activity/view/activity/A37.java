@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
 
-public class A37 extends AppCompatActivity
+public class A37 extends BaseActivity
                  implements MVP_A37.RequiredViewOps,
                  OnClickListener, OnPreparedListener {
 
@@ -1286,19 +1286,5 @@ public class A37 extends AppCompatActivity
         startActivity(new Intent(A37.this, Lesson.class));
     }
 
-    private boolean haveNetworkConnection() {
-        boolean haveConnectedWifi = false;
-        boolean haveConnectedMobile = false;
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
-        for (NetworkInfo ni : netInfo) {
-            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
-                if (ni.isConnected())
-                    haveConnectedWifi = true;
-            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
-                if (ni.isConnected())
-                    haveConnectedMobile = true;
-        }
-        return haveConnectedWifi || haveConnectedMobile;
-    }
+
 }

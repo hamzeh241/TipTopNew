@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
-public class A35 extends AppCompatActivity
+public class A35 extends BaseActivity
         implements MVP_A35.RequiredViewOps {
 
     private static final String TAG = A35.class.getSimpleName();

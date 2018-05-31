@@ -39,7 +39,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 
-public class A28 extends AppCompatActivity
+public class A28 extends BaseActivity
                  implements MVP_A28.RequiredViewOps,
                  OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener{
 

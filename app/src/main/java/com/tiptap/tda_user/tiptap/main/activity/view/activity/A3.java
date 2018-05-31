@@ -32,7 +32,7 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-public class A3 extends AppCompatActivity
+public class A3 extends BaseActivity
         implements MVP_A3.RequiredViewOps,
         OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener {
 

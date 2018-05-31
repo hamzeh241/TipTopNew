@@ -28,7 +28,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class A29 extends AppCompatActivity
+public class A29 extends BaseActivity
                  implements MVP_A29.RequiredViewOps {
 
     private static final String TAG = A29.class.getSimpleName();
