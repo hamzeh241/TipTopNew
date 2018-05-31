@@ -1,101 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#eee">
+    android:background="@drawable/login_bg">
 
-    <android.support.v7.widget.CardView
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logologin" />
+
+    <RelativeLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp">
+        android:layout_below="@+id/logo">
 
-        <LinearLayout
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/name_til"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="6">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:hint="نام"
-                android:inputType="text"
-                android:layout_gravity="right"
-                android:gravity="right"/>
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/nameinapp_til"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_til">
 
             <EditText
                 android:id="@+id/nameinapp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:hint="نام کاربری"
-                android:inputType="text"
-                android:layout_gravity="right"
-                android:gravity="right"/>
+                android:inputType="text" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/email_til"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameinapp_til">
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:hint="ایمیل"
-                android:inputType="textEmailAddress"
-                android:layout_gravity="right"
-                android:gravity="right"/>
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_til"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_til">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                android:hint="کلمه عبور"
-                android:inputType="textPassword"
                 android:layout_gravity="right"
-                android:gravity="right"/>
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:layout_weight="1"
-                android:text="ورود"
-                android:textColor="#000"
-                android:layout_gravity="center"
-                android:padding="6dp"
-                android:background="#9aea5c"/>
+                android:gravity="right"
+                android:hint="کلمه عبور"
+                android:inputType="textPassword" />
 
-        </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
 
-    </android.support.v7.widget.CardView>
 
-</LinearLayout>
+        <Spinner
+            android:layoutDirection="rtl"
+            android:textAlignment="gravity"
+            android:gravity="end"
+            android:textDirection="rtl"
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:minHeight="50dp"
+            android:layout_below="@+id/password_til"
+            android:spinnerMode="dialog"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/selector_btn_login"
+        android:text="ورود"
+        android:textColor="@color/withe"
+        android:textSize="15sp" />
+
+
+</RelativeLayout>

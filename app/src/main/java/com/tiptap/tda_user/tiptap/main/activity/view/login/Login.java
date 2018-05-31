@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.jaredrummler.materialspinner.MaterialSpinner;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -27,6 +29,7 @@ import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 
 public class Login
@@ -56,11 +59,12 @@ public class Login
         lans = mPresenter.getLanguages();
         title_lans = new ArrayList<String>();
 
-        for(int i=0 ; i<lans.size() ; i++){
+        for (int i = 0; i < lans.size(); i++) {
             title_lans.add(lans.get(i).getLanguage());
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, title_lans);
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, title_lans);
         s.setAdapter(adapter);
         s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -81,19 +85,20 @@ public class Login
                 String Email = email.getText().toString();
                 String Password = password.getText().toString();
 
-                if(validate()){
-                    if(haveNetworkConnection()){
+                if (validate()) {
+                    if (haveNetworkConnection()) {
 
-                        try{
-                            new Post_User(mPresenter, getAppContext(), Login.this, Username, NameInApp, Email, Password, Id_Language,haveNetworkConnection()).post();
-                        }catch (Exception e){}
+                        try {
+                            new Post_User(mPresenter, getAppContext(), Login.this, Username, NameInApp, Email, Password, Id_Language, haveNetworkConnection()).post();
+                        } catch (Exception e) {
+                        }
 
-                    }else {
-                        Toast.makeText(getApplicationContext(), "خطا در اتصال به اینترنت" , Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "خطا در اتصال به اینترنت", Toast.LENGTH_LONG).show();
                     }
 
-                }else {
-                    Toast.makeText(getApplicationContext(), "تمام اطلاعات را به درستی وارد کنید" , Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "تمام اطلاعات را به درستی وارد کنید", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -105,24 +110,24 @@ public class Login
         mPresenter.onDestroy(isChangingConfigurations());
     }
 
-    private void setupViews(){
+    private void setupViews() {
         username = (EditText) findViewById(R.id.name);
         nameinapp = (EditText) findViewById(R.id.nameinapp);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-        b = (Button)findViewById(R.id.login);
+        b = (Button) findViewById(R.id.login);
         s = (Spinner) findViewById(R.id.spinner);
     }
 
-    private void setupMVP(){
-        if ( mStateMaintainer.firstTimeIn() ) {
+    private void setupMVP() {
+        if (mStateMaintainer.firstTimeIn()) {
             initialize();
         } else {
             reinitialize();
         }
     }
 
-    private void initialize(){
+    private void initialize() {
         setupComponent();
         mStateMaintainer.put(Login_Presenter.class.getSimpleName(), mPresenter);
     }
@@ -130,17 +135,19 @@ public class Login
     private void reinitialize() {
         mPresenter = mStateMaintainer.get(Login_Presenter.class.getSimpleName());
         mPresenter.setView(this);
-        if ( mPresenter == null )
+        if (mPresenter == null)
             setupComponent();
     }
 
-    private void setupComponent(){
+    private void setupComponent() {
         SampleApp.get(this).getAppComponent().getLoginComponent(new Login_Module(this)).inject(this);
     }
+
     @Override
     public Context getAppContext() {
         return getApplicationContext();
     }
+
     @Override
     public Context getActivityContext() {
         return this;
@@ -190,7 +197,7 @@ public class Login
             password.setError(null);
         }
 
-        if(Id_Language == 0){
+        if (Id_Language == 0) {
             valid = false;
         }
 
