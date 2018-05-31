@@ -44,13 +44,8 @@ public class A7 extends BaseActivity
 
     @Inject
     public MVP_A7.ProvidedPresenterOps mPresenter;
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
+
+
     String title1, path1, path2;
     ImageView img;
     TextView txt,t1,t2;
@@ -61,7 +56,7 @@ public class A7 extends BaseActivity
     int mpLength;
     final Handler handler = new Handler();
     boolean end = false;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
+
     int all;
 
     @Override

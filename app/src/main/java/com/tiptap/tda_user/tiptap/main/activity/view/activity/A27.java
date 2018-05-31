@@ -53,11 +53,7 @@ public class A27 extends BaseActivity
     @Inject
     public MVP_A27.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
+
     TbActivity tbActivity;
     String title1, path1, path2;
     int max,now_less;
@@ -72,8 +68,7 @@ public class A27 extends BaseActivity
     boolean end = false;
     String you_say = "";
     ImageView voice;
-    final int REQ_CODE_SPEECH_INPUT = 100;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
+
     int all;
 
     @Override
