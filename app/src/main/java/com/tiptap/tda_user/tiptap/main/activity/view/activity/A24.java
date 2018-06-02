@@ -35,22 +35,9 @@ public class A24 extends BaseActivity
 
     @Inject
     public MVP_A24.ProvidedPresenterOps mPresenter;
-
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
     String you_say = "";
-    Button next;
-    TextView txt1,txt2;
     String true_txt="";
     ImageView voice;
-    final int REQ_CODE_SPEECH_INPUT = 100;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

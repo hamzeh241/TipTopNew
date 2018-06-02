@@ -34,21 +34,11 @@ public class A45 extends BaseActivity
     @Inject
     public MVP_A45.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    List<TbActivityDetail> tbActivityDetailList;
-    String title1, title2, path1;
+
     String answer;
-    int max,now_less;
-    TextView txt1,txt2;
+
     CheckBox a,b;
-    ImageView img;
-    Button next;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

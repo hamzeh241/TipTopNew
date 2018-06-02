@@ -45,20 +45,6 @@ public class A7 extends BaseActivity
     @Inject
     public MVP_A7.ProvidedPresenterOps mPresenter;
 
-
-    String title1, path1, path2;
-    ImageView img;
-    TextView txt,t1,t2;
-    Button play,next;
-    SeekBar seekBar;
-    ProgressBar p;
-    private MediaPlayer mp;
-    int mpLength;
-    final Handler handler = new Handler();
-    boolean end = false;
-
-    int all;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,17 +149,6 @@ public class A7 extends BaseActivity
 
     }
 
-    private void SeekBarProgressUpdater() {
-        seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
-        if (mp.isPlaying()) {
-            Runnable notification = new Runnable() {
-                public void run() {
-                    SeekBarProgressUpdater();
-                }
-            };
-            handler.postDelayed(notification,1000);
-        }
-    }
 
     @Override
     public void onClick(View v) {

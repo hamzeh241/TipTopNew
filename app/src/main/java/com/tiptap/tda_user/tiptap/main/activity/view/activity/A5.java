@@ -42,23 +42,9 @@ public class A5 extends BaseActivity
 
     @Inject
     public MVP_A5.ProvidedPresenterOps mPresenter;
-
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
-    TextView txt,t1,t2;
     EditText edt;
-    ProgressBar p;
     String z[];
-    String title1, title2;
-    Button next;
     MediaPlayer mpt, mpf;
-    int all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

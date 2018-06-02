@@ -32,18 +32,11 @@ public class A48 extends BaseActivity
     @Inject
     public MVP_A48.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    String title1, title2;
-    int max,now_less;
+
     LinearLayout l;
     TextView t[];
     EditText e[];
-    Button next;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

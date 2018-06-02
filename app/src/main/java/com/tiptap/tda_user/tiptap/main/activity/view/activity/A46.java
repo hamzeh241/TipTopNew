@@ -47,14 +47,8 @@ public class A46 extends BaseActivity
     @Inject
     public MVP_A46.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
+
+
     LinearLayout l[];
     int added = 0;
     TextView t[];
@@ -62,13 +56,9 @@ public class A46 extends BaseActivity
     String ans[];
     String z[];
     int xali = 0;
-    String title1, title2;
-    TextView t1,t2;
-    Button next;
-    ProgressBar p;
+
     int fill=0, count=0;
-    MediaPlayer mpt, mpf;
-    int all;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

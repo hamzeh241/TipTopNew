@@ -32,18 +32,19 @@ public class Get_ActivityDetail extends BaseSetingApi {
     MVP_Lesson.ProvidedPresenterOps lesson_presenter;
     Context _context;
     Activity mactivity;
-    boolean mnet;
+int func;
     int _id;
     ProgressDialog progressDialog;
     View _view;
-
-    public Get_ActivityDetail(int id, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity,View view) {
+    boolean IsNet;
+    public Get_ActivityDetail(int id,  MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity,View view,int nid,boolean _isNet) {
         lesson_presenter = ppo;
         mactivity = activity;
         _context = context;
-        mnet = net;
+        func=nid;
         _id = id;
         _view = view;
+        IsNet=_isNet;
         progressDialog = new ProgressDialog(mactivity);
         cl=new CardPagerAdapter_L();
         get();
@@ -52,7 +53,7 @@ public class Get_ActivityDetail extends BaseSetingApi {
 
 
     public Get_ActivityDetail get() {
-        if(mnet){
+        if(IsNet){
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             String your_name = lesson_presenter.your_name();
@@ -98,7 +99,7 @@ public class Get_ActivityDetail extends BaseSetingApi {
                         }
                         progressDialog.dismiss();
                         int id_activity_type = lesson_presenter.activity_Type(_id);
-                        cl.go_activity(_view, id_activity_type, _id);
+                       go_activity(_view, id_activity_type, _id,func,mactivity);
 
                     } catch (JSONException e) {
                         Toast.makeText(_context, "JSONException : "+ e.getCause()+e.getMessage() , Toast.LENGTH_LONG).show();

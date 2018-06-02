@@ -53,15 +53,6 @@ public class A32 extends BaseActivity
 
     @Inject
     public MVP_A32.ProvidedPresenterOps mPresenter;
-
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
     LinearLayout l[];
     int added = 0;
     ImageView b_mic[],b_play[];
@@ -74,18 +65,10 @@ public class A32 extends BaseActivity
     int xali = 0;
     String path1[];
     int count=0;
-    Button next;
-    private MediaPlayer mp,mpt,mpf;
-    int mpLength;
     boolean end = false;
-    final int REQ_CODE_SPEECH_INPUT = 100;
     TextView now_say;
-    ProgressBar p;
     String z1[];
-    int all;
     int fill = 0;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -1939,26 +1922,7 @@ public class A32 extends BaseActivity
         }
     }
 
-    public String nice_string (String a){
-        // space in first or end
-        String b = a.trim();
-        // ever name
-        b = b.replace("&", "");
-        // other space
-        b = b.replace(" ", "");
-        // other
-        b = b.replace(".", "");
-        b = b.replace("!", "");
-        b = b.replace("?", "");
-        b = b.replace("؟", "");
-        b = b.replace(",", "");
-        b = b.replace("'", "");
-        b = b.replace("’", "");
-        b = b.replace("\n", "");
-        // lowerCase
-        b = b.toLowerCase();
-        return b;
-    }
+
 
     @Override
     public void onBackPressed() {

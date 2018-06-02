@@ -32,15 +32,8 @@ public class A18 extends BaseActivity
     @Inject
     public MVP_A18.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
-    Button next;
+
+
     String w1;
     String w2 [];
     String tohi = "-------";

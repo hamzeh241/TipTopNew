@@ -36,19 +36,10 @@ public class A34 extends BaseActivity
     @Inject
     public MVP_A34.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
+
+
     String you_say = "";
-    Button next;
-    TextView txt;
     ImageView voice;
-    private final int REQ_CODE_SPEECH_INPUT = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

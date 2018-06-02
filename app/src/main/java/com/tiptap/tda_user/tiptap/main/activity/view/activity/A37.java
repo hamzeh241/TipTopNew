@@ -41,20 +41,12 @@ public class A37 extends BaseActivity
     @Inject
     public MVP_A37.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    Button next;
+
     VideoView video_view;
-    String path1;
-    ProgressBar p;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
+
+
     ProgressDialog pd;
-    int all;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

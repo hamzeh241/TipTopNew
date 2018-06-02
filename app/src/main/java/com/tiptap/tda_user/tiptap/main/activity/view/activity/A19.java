@@ -38,26 +38,21 @@ public class A19 extends BaseActivity
     @Inject
     public MVP_A19.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
+
+
+
     int count;
     String w1[],w2[];
     String s1[][],s2[][];
     TextView t1[],t2[],ti1,ti2;
     static String aval_type = null;
     static int aval_int;
-    ProgressBar p;
+
     static String aval_original;
     int correct=0;
-    Button next;
+
     LinearLayout l [][];
-    int all;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

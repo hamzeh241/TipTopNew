@@ -53,30 +53,8 @@ public class A33 extends BaseActivity
 
     @Inject
     public MVP_A33.ProvidedPresenterOps mPresenter;
-
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    List<TbActivityDetail> tbActivityDetailList;
-    int max,now_less;
-    String title1, path1;
-    Button play,next;
-    SeekBar seekBar;
-    MediaPlayer mp, mpt, mpf;
-    int mpLength;
-    final Handler handler = new Handler();
-    boolean end = false;
     String you_say = "";
-    TextView txt,t1,t2;
     ImageView voice;
-    ProgressBar p;
-    final int REQ_CODE_SPEECH_INPUT = 100;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
-    int all;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,17 +158,7 @@ public class A33 extends BaseActivity
         mp.setOnCompletionListener(this);
     }
 
-    private void SeekBarProgressUpdater() {
-        seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
-        if (mp.isPlaying()) {
-            Runnable notification = new Runnable() {
-                public void run() {
-                    SeekBarProgressUpdater();
-                }
-            };
-            handler.postDelayed(notification,1000);
-        }
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -1507,37 +1475,7 @@ public class A33 extends BaseActivity
         }
     }
 
-    public String nice_string (String a){
-        // space in first or end
-        String b = a.trim();
-        // other space
-        b = b.replace(" ", "");
-        // other
-        b = b.replace(".", "");
-        b = b.replace("!", "");
-        b = b.replace("?", "");
-        b = b.replace("؟", "");
-        b = b.replace(",", "");
-        b = b.replace("\n", "");
-        // lowerCase
-        b = b.toLowerCase();
-        // apastrof
-        b = b.replace("'", "’");
-        for(int i=0 ; i<b.length() ; i++){
-            if(b.charAt(i) == '’'){
-                if(b.charAt(i+1) == 's'){
-                    b = b.replace("’s", "is");
-                }
-               /* if(b.charAt(i+1) == 'm'){
-                    b = b.replace("’m", "am");
-                }
-                if(b.charAt(i+1) == 'r'){
-                    b = b.replace("’r", "are");
-                }*/
-            }
-        }
-        return b;
-    }
+
 
     @Override
     public void onBackPressed() {

@@ -38,22 +38,13 @@ public class A26 extends BaseActivity implements MVP_A26.RequiredViewOps, OnClic
     @Inject
     public MVP_A26.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    String title1;
-    int max,now_less;
-    Button next;
+
     RecyclerView mRecyclerView;
     ArrayList<String> mDataList;
     Adapter_A26 mAdapter;
     String part_id1 [][];
     String part_id2 [][];
-    ProgressBar p;
-    int all;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

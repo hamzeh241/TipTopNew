@@ -40,21 +40,12 @@ public class A22 extends BaseActivity
     @Inject
     public MVP_A22.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
-    ImageView img;
+
+
     TextView t[];
     EditText e[];
-    Button play,next;
-    SeekBar seekBar;
-    MediaPlayer mp;
-    Handler seekHandler = new Handler();
+
+
     boolean end = false;
 
     @Override

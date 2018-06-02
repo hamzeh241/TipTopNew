@@ -39,14 +39,8 @@ public class A4 extends BaseActivity
     @Inject
     public MVP_A4.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
+
+
     int count;
     String w1[],w2[];
     String s1[][],s2[][];
@@ -55,7 +49,7 @@ public class A4 extends BaseActivity
     static int aval_int;
     static String aval_original;
     int correct=0;
-    Button next;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

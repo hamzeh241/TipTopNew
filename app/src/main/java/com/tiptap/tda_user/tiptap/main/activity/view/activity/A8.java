@@ -41,20 +41,13 @@ public class A8 extends BaseActivity
     @Inject
     public MVP_A8.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    String title1,title2;
-    int max,now_less;
+
     TextView t1[],t2[],ti1,ti2;;
     String w [];
-    Button next;
+
     String tohi = "-------";
     static int position = 0;
-    ProgressBar p;
+
     LinearLayout t, a;
     MediaPlayer mpt, mpf;
     int all;

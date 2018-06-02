@@ -38,20 +38,10 @@ public class A39 extends BaseActivity
     @Inject
     public MVP_A39.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    List<TbActivityDetail> tbActivityDetailList;
+
     TextView t[];
     EditText e[];
-    Button play,next;
-    SeekBar seekBar;
-    MediaPlayer mp;
-    Handler seekHandler = new Handler();
+
     boolean end = false;
 
     @Override

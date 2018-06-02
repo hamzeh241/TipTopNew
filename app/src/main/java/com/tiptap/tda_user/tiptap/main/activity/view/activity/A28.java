@@ -49,24 +49,12 @@ public class A28 extends BaseActivity
     @Inject
     public MVP_A28.ProvidedPresenterOps mPresenter;
 
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
     EditText editText;
-    String title1,path1;
-    Button play,next;
-    SeekBar seekBar;
-    TextView t1,t2;
-    private MediaPlayer mp, mpt, mpf;
-    ProgressBar p;
-    int mpLength;
-    final Handler handler = new Handler();
+
+
+
     boolean end = false;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
+
     int all;
 
     @Override
@@ -171,17 +159,6 @@ public class A28 extends BaseActivity
     }
 
 
-    private void SeekBarProgressUpdater() {
-        seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
-        if (mp.isPlaying()) {
-            Runnable notification = new Runnable() {
-                public void run() {
-                    SeekBarProgressUpdater();
-                }
-            };
-            handler.postDelayed(notification,1000);
-        }
-    }
 
     @Override
     public void onClick(View v) {

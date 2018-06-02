@@ -1,16 +1,21 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnBufferingUpdateListener;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -18,49 +23,19 @@ import com.tiptap.tda_user.tiptap.di.module.A3_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A3;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.A3_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import android.media.MediaPlayer.OnBufferingUpdateListener;
-import android.media.MediaPlayer.OnCompletionListener;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.ProgressBar;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
 
-public class A3 extends BaseActivity
-        implements MVP_A3.RequiredViewOps,
-        OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener {
+public class A3 extends BaseActivity implements MVP_A3.RequiredViewOps,OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener {
 
     private static final String TAG = A3.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A3.class.getName());
 
     @Inject
     public MVP_A3.ProvidedPresenterOps mPresenter;
-
-    public static int idlesson;
-    public static int idfunction;
-    public static int activitynumber;
-    public static String Act_Status;
-    public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    String title1, path1;
-    TextView txt,t1,t2;
-    Button play,next;
-    SeekBar seekBar;
-    private MediaPlayer mp;
-    int mpLength;
-    final Handler handler = new Handler();
-    boolean end = false;
-    String url_download = "http://tiptop.tdaapp.ir/image/";
-    ProgressBar p;
-    int all;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,18 +138,6 @@ public class A3 extends BaseActivity
         mp.setOnBufferingUpdateListener(this);
         mp.setOnCompletionListener(this);
 
-    }
-
-    private void SeekBarProgressUpdater() {
-        seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
-        if (mp.isPlaying()) {
-            Runnable notification = new Runnable() {
-                public void run() {
-                    SeekBarProgressUpdater();
-                }
-            };
-            handler.postDelayed(notification,1000);
-        }
     }
 
     @Override
@@ -1355,15 +1318,4 @@ public class A3 extends BaseActivity
                 .getA3Component(new A3_Module(this))
                 .inject(this);
     }
-
-    @Override
-    public Context getActivityContext() {
-        return this;
-    }
-
-    @Override
-    public Context getAppContext() {
-        return getApplicationContext();
-    }
-
 }

@@ -28,24 +28,25 @@ public class Get_Activity extends BaseSetingApi {
     MVP_Lesson.ProvidedPresenterOps lesson_presenter;
     Context _context;
     Activity mactivity;
-    boolean mnet;
+int func;
     int _id;
     ProgressDialog progressDialog;
     View _view;
-
-    public Get_Activity(int id, boolean net, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, View view) {
+boolean IsNet;
+    public Get_Activity(int id,  MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, View view,int nid,boolean _isNet) {
         lesson_presenter = ppo;
         mactivity = activity;
         _context = context;
-        mnet = net;
+        func=nid;
         _id = id;
         _view = view;
+        IsNet=_isNet;
         progressDialog = new ProgressDialog(mactivity);
         get();
     }
 
     public Get_Activity get() {
-        if(mnet){
+        if(IsNet){
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             String your_name = lesson_presenter.your_name();
@@ -91,7 +92,7 @@ public class Get_Activity extends BaseSetingApi {
                             lesson_presenter.Insert_Activity(Q1);
                         }
                         progressDialog.dismiss();
-                        new Get_ActivityDetail(_id, mnet, lesson_presenter, _context, mactivity,_view);
+                        new Get_ActivityDetail(_id,lesson_presenter, _context, mactivity,_view,func,IsNet);
 
                     } catch (JSONException e) {
                         progressDialog.dismiss();
