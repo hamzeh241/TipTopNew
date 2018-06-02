@@ -41,7 +41,7 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-public class A27 extends BaseActivity  implements MVP_A27.RequiredViewOps,OnClickListener, OnCompletionListener, OnBufferingUpdateListener {
+public class A27 extends BaseActivity implements MVP_A27.RequiredViewOps,OnClickListener, OnCompletionListener, OnBufferingUpdateListener {
     private static final String TAG = A27.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A27.class.getName());
     @Inject
@@ -203,8 +203,8 @@ public class A27 extends BaseActivity  implements MVP_A27.RequiredViewOps,OnClic
 
                     if( end && you_say != "" ) {
 
-                        String a = nice_string( you_say );
-                        String b = nice_string( title1 );
+                        String a = nice_string1( you_say );
+                        String b = nice_string1( title1 );
 
                         if (a.equals(b)) {
 
@@ -344,14 +344,18 @@ public class A27 extends BaseActivity  implements MVP_A27.RequiredViewOps,OnClic
                                     int id_act = id_act_false.get(rnd);
                                     TbActivity tb_new_f = mPresenter.getActivity2(id_act);
                                     int id_at_new_f = tb_new_f.getId_ActivityType();
-                                    go_activity(id_at_new_f,"second",id_act);
+
+                                    // second
+                                    go_activity1(id_at_new_f,"second",id_act);
                                 }
 
                             } else {
 
                                 TbActivity tb_new = mPresenter.getActivity(idlesson, ++activitynumber);
                                 int id_at_new = tb_new.getId_ActivityType();
-                                go_activity(id_at_new,"first",activitynumber);
+
+                                // first
+                                go_activity2(id_at_new,"first",activitynumber);
 
                             }
                         }
@@ -415,8 +419,9 @@ public class A27 extends BaseActivity  implements MVP_A27.RequiredViewOps,OnClic
 
                                 TbActivity tb_new_f = mPresenter.getActivity2(id_act);
                                 int id_at_new_f = tb_new_f.getId_ActivityType();
-                                go_activity(id_at_new_f,"second",id_act);
 
+                                // second
+                                go_activity1(id_at_new_f,"second",id_act);
                             }
                         }
                     }

@@ -2,9 +2,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -23,11 +20,8 @@ import com.tiptap.tda_user.tiptap.di.module.A4_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A4;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.A4_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
-
 import java.util.List;
 import java.util.Random;
-
 import javax.inject.Inject;
 
 public class A4 extends BaseActivity
@@ -39,8 +33,6 @@ public class A4 extends BaseActivity
     @Inject
     public MVP_A4.ProvidedPresenterOps mPresenter;
 
-
-
     int count;
     String w1[],w2[];
     String s1[][],s2[][];
@@ -49,7 +41,6 @@ public class A4 extends BaseActivity
     static int aval_int;
     static String aval_original;
     int correct=0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,6 +201,7 @@ public class A4 extends BaseActivity
 
                         TbActivity tb_new = mPresenter.getActivity(idlesson, ++activitynumber);
                         int id_at_new = tb_new.getId_ActivityType();
+
 
                         switch (id_at_new){
 
