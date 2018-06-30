@@ -71,15 +71,20 @@ public class BaseActivity extends AppCompatActivity {
         b = b.replace("?", "");
         b = b.replace("؟", "");
         b = b.replace(",", "");
-        b = b.replace("’", "");
-        b = b.replace("'", "");
+        b = b.replace("’", "’");
+        b = b.replace("'", "’");
         b = b.replace("\n", "");
         // apastrof
-        b = b.replace("'", "’");
         for(int i=0 ; i<b.length() ; i++){
             if(b.charAt(i) == '’'){
                 if(b.charAt(i+1) == 's'){
                     b = b.replace("’s", "is");
+                }
+                if(b.charAt(i+1) == 'm'){
+                    b = b.replace("’m", "am");
+                }
+                if(b.charAt(i+1) == 'r'){
+                    b = b.replace("’r", "are");
                 }
             }
         }
@@ -99,22 +104,23 @@ public class BaseActivity extends AppCompatActivity {
         b = b.replace("?", "");
         b = b.replace("؟", "");
         b = b.replace(",", "");
+        b = b.replace("’", "’");
+        b = b.replace("'", "’");
         b = b.replace("\n", "");
         // lowerCase
         b = b.toLowerCase();
         // apastrof
-        b = b.replace("'", "’");
         for(int i=0 ; i<b.length() ; i++){
             if(b.charAt(i) == '’'){
                 if(b.charAt(i+1) == 's'){
                     b = b.replace("’s", "is");
                 }
-               /* if(b.charAt(i+1) == 'm'){
+                if(b.charAt(i+1) == 'm'){
                     b = b.replace("’m", "am");
                 }
                 if(b.charAt(i+1) == 'r'){
                     b = b.replace("’r", "are");
-                }*/
+                }
             }
         }
         return b;
