@@ -4,6 +4,7 @@ import android.app.Application;
 import com.tiptap.tda_user.tiptap.di.module.A15_Module;
 import com.tiptap.tda_user.tiptap.di.module.A18_Module;
 import com.tiptap.tda_user.tiptap.di.module.A19_Module;
+import com.tiptap.tda_user.tiptap.di.module.A1_Module;
 import com.tiptap.tda_user.tiptap.di.module.A20_Module;
 import com.tiptap.tda_user.tiptap.di.module.A22_Module;
 import com.tiptap.tda_user.tiptap.di.module.A24_Module;
@@ -50,6 +51,7 @@ public interface AppComponent {
     Splash_Component getSplashComponent(Splash_Module module);
     Login_Component getLoginComponent(Login_Module module);
 
+    A1_Component getA1Component(A1_Module module);
     A4_Component getA4Component(A4_Module module);
     A3_Component getA3Component(A3_Module module);
     A5_Component getA5Component(A5_Module module);

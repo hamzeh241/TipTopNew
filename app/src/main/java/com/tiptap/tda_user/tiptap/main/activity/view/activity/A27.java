@@ -23,7 +23,6 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -33,12 +32,10 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A27;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.A27_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-
 import javax.inject.Inject;
 
 public class A27 extends BaseActivity implements MVP_A27.RequiredViewOps,OnClickListener, OnCompletionListener, OnBufferingUpdateListener {
@@ -151,7 +148,6 @@ public class A27 extends BaseActivity implements MVP_A27.RequiredViewOps,OnClick
         play.setOnClickListener(this);
         mp.setOnBufferingUpdateListener(this);
         mp.setOnCompletionListener(this);
-
     }
 
     @Override

@@ -52,7 +52,6 @@ public class A46 extends BaseActivity
     String ans[];
     String z[];
     int xali = 0;
-
     int fill=0, count=0;
 
     @Override
@@ -96,12 +95,8 @@ public class A46 extends BaseActivity
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
         LinearLayout l3 = (LinearLayout)findViewById(R.id.l3);
         LinearLayout l4  = (LinearLayout)findViewById(R.id.l4);
-        LinearLayout l5 = (LinearLayout)findViewById(R.id.l5);
-        LinearLayout l6 = (LinearLayout)findViewById(R.id.l6);
-        LinearLayout l7 = (LinearLayout)findViewById(R.id.l7);
-        LinearLayout l8 = (LinearLayout)findViewById(R.id.l8);
 
-        l = new LinearLayout[]{l1, l2, l3, l4, l5, l6, l7, l8};
+        l = new LinearLayout[]{l1, l2, l3, l4};
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -21,7 +20,6 @@ import com.tiptap.tda_user.tiptap.di.module.A26_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A26;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.A26_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -38,13 +36,11 @@ public class A26 extends BaseActivity implements MVP_A26.RequiredViewOps, OnClic
     @Inject
     public MVP_A26.ProvidedPresenterOps mPresenter;
 
-
     RecyclerView mRecyclerView;
     ArrayList<String> mDataList;
     Adapter_A26 mAdapter;
     String part_id1 [][];
     String part_id2 [][];
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

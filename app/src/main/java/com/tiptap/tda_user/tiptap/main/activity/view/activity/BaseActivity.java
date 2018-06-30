@@ -74,6 +74,15 @@ public class BaseActivity extends AppCompatActivity {
         b = b.replace("’", "");
         b = b.replace("'", "");
         b = b.replace("\n", "");
+        // apastrof
+        b = b.replace("'", "’");
+        for(int i=0 ; i<b.length() ; i++){
+            if(b.charAt(i) == '’'){
+                if(b.charAt(i+1) == 's'){
+                    b = b.replace("’s", "is");
+                }
+            }
+        }
         // lowerCase
         b = b.toLowerCase();
         return b;
