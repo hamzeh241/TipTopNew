@@ -50,6 +50,7 @@ public class Post_User extends BaseSetingApi {
     public String post() throws JSONException {
         JSONObject _jsonBody=new JSONObject();
         _jsonBody.put("UserName",user_name);
+        _jsonBody.put("NameInApp",name_inapp);
         _jsonBody.put("Email", _email);
         _jsonBody.put("Password",_password);
         _jsonBody.put("Id_Language",language_id);
