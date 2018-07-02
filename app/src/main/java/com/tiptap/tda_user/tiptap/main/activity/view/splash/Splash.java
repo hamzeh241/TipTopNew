@@ -8,15 +8,28 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Function;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A7;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Splash;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A1;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
 import javax.inject.Inject;
+
+import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.idlesson;
+import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.Act_Status;
+import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.activitynumber;
+import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.idfunction;
+import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.idactivity;
 
 public class Splash extends AppCompatActivity implements MVP_Splash.RequiredViewOps {
     TextView text;
@@ -24,6 +37,7 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
 
     @Inject
     public MVP_Splash.ProvidedPresenterOps mPresenter;
+
     private final StateMaintainer mStateMaintainer = new StateMaintainer(getFragmentManager(), Splash.class.getName());
 
     @Override
@@ -49,8 +63,19 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                     int fid = mPresenter.Id_Function();
                     Function.id_function = fid;
 
+                   // Splash.this.finish();
+                    //__________________________________
+
+
+                    A1.idlesson = 4 ;
+                    A1.idfunction = 2 ;
+                    A1.idactivity = 184;
+                    A1.Act_Status = "first";
+                    A1.activitynumber=13;
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this, Function.class));
+                    startActivity(new Intent(Splash.this,  A1.class));
+                    //_____________________________________
+                   // startActivity(new Intent(Splash.this, Function.class));
 
                 }
             }

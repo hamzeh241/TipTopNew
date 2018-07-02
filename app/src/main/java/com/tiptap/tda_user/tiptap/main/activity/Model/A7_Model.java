@@ -64,7 +64,7 @@ public class A7_Model implements MVP_A7.ProvidedModelOps {
                 app.setPath1(cursor.getString(6));
                 app.setPath2(cursor.getString(7));
                 app.setIsNote(Boolean.parseBoolean(cursor.getString(8)));
-                app.setRowVersion(cursor.getString(9));
+               // app.setRowVersion(cursor.getString(9));
                 act = app;
                 cursor.moveToNext();
             }}

@@ -41,6 +41,8 @@
         <activity
             android:name=".main.activity.view.activity.A19"/>
         <activity
+            android:name=".main.activity.view.activity.A1"/>
+        <activity
             android:name=".main.activity.view.activity.End"/>
         <activity
             android:name=".main.activity.view.activity.A7"/>
