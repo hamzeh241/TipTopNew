@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="A1_FA">"..."</string>
     <string name="A27_FA">گوش کنید و تکرار کنید</string>
     <string name="A7_FA">گوش دهید</string>
+    <string name="A2_FA">...</string>
     <string name="A19_FA">کلمات زیر را به هم وصل کنید</string>
     <string name="A37_FA"></string>
     <string name="A33_FA">گوش دهید و تکرار کنید</string>
@@ -13,4 +15,5 @@
     <string name="A3_FA">گوش دهید</string>
     <string name="A15_FA">جواب درست را باتوجە بە مکالمە انتخاب کنید</string>
     <string name="A26_FA">جملات زیر را مرتب کنید تا مکالمە کامل شود</string>
+    <string name="A38_FA">...</string>
 </resources>

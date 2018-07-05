@@ -24,10 +24,9 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.A32_Module;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A32;
-import com.tiptap.tda_user.tiptap.main.activity.Presenter.A32_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -43,13 +42,13 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A32 extends BaseActivity
-        implements MVP_A32.RequiredViewOps, OnClickListener{
+        implements MVP_Main.RequiredViewOps, OnClickListener{
 
     private static final String TAG = A32.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A32.class.getName());
 
     @Inject
-    public MVP_A32.ProvidedPresenterOps mPresenter;
+    public MVP_Main.ProvidedPresenterOps mPresenter;
     LinearLayout l[];
     int added = 0;
     ImageView b_mic[],b_play[];
@@ -794,12 +793,12 @@ public class A32 extends BaseActivity
     private void initialize(){
         Log.d(TAG, "initialize");
         setupComponent();
-        mStateMaintainer.put(A32_Presenter.class.getSimpleName(), mPresenter);
+        mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
     }
 
     private void reinitialize() {
         Log.d(TAG, "reinitialize");
-        mPresenter = mStateMaintainer.get(A32_Presenter.class.getSimpleName());
+        mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
         if ( mPresenter == null )
             setupComponent();

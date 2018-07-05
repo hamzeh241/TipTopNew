@@ -18,8 +18,8 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.A19_Module;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A19;
-import com.tiptap.tda_user.tiptap.main.activity.Presenter.A19_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
@@ -29,14 +29,14 @@ import javax.inject.Inject;
 import android.view.View.OnClickListener;
 
 public class A19 extends BaseActivity
-                 implements MVP_A19.RequiredViewOps,
+                 implements MVP_Main.RequiredViewOps,
                  OnClickListener{
 
     private static final String TAG = A19.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A19.class.getName());
 
     @Inject
-    public MVP_A19.ProvidedPresenterOps mPresenter;
+    public MVP_Main.ProvidedPresenterOps mPresenter;
 
     int count;
     String w1[],w2[];
@@ -404,12 +404,12 @@ public class A19 extends BaseActivity
     private void initialize(){
         Log.d(TAG, "initialize");
         setupComponent();
-        mStateMaintainer.put(A19_Presenter.class.getSimpleName(), mPresenter);
+        mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
     }
 
     private void reinitialize() {
         Log.d(TAG, "reinitialize");
-        mPresenter = mStateMaintainer.get(A19_Presenter.class.getSimpleName());
+        mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
         if ( mPresenter == null )
             setupComponent();

@@ -12,13 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.A26_Module;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A26;
-import com.tiptap.tda_user.tiptap.main.activity.Presenter.A26_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,13 +29,13 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import android.view.View.OnClickListener;
 
-public class A26 extends BaseActivity implements MVP_A26.RequiredViewOps, OnClickListener {
+public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnClickListener {
 
     private static final String TAG = A26.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A26.class.getName());
 
     @Inject
-    public MVP_A26.ProvidedPresenterOps mPresenter;
+    public MVP_Main.ProvidedPresenterOps mPresenter;
 
     RecyclerView mRecyclerView;
     ArrayList<String> mDataList;
@@ -59,16 +60,101 @@ public class A26 extends BaseActivity implements MVP_A26.RequiredViewOps, OnClic
     }
 
     private void setupViews() {
-
+        p = (ProgressBar)findViewById(R.id.p);
+        p.setMax(100);
+        t1 = (TextView)findViewById(R.id.title1);
+        t2 = (TextView)findViewById(R.id.title2);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDataList = new ArrayList<String>();
-
         next = (Button) findViewById(R.id.next);
-        p = (ProgressBar)findViewById(R.id.p);
-        p.setMax(100);
     }
+    private void after_setup(){
 
+        all = mPresenter.countActivity(idlesson);
+
+        // set all activity false in activitynumber = 1
+        if(activitynumber == 1 && Act_Status.equals("first")){
+            mPresenter.false_activitys(idlesson);
+        }
+
+        // show passed activity
+        List<Integer> p1 = mPresenter.activity_true(idlesson);
+        int p2 = p1.size();
+        if(p2 == 0){
+            p.setProgress(0);
+        }else{
+            double d_number = (double) p2/all;
+            int i_number = (int) (d_number*100);
+            p.setProgress(i_number);
+        }
+
+        t1.setText(R.string.A26_EN);
+        t1.setTextColor(getResources().getColor(R.color.my_black));
+
+        int lang_id = mPresenter.getlanguage();
+        switch (lang_id){
+            // فارسی
+            case 1:
+                t2.setText(R.string.A26_FA);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+            // کردی
+            case 2:
+                t2.setText(R.string.A26_KU);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+            // ترکی آذری
+            case 3:
+                t2.setText(R.string.A26_TA);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+            // چینی
+            case 4:
+                t2.setText(R.string.A26_CH);
+                t2.setTextColor(getResources().getColor(R.color.my_black));
+                break;
+        }
+
+        next.setOnClickListener(this);
+
+        next.setOnClickListener(this);
+
+        addData(mDataList);
+        mAdapter = new Adapter_A26(this, mDataList);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 15, false));
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+                return makeMovementFlags(dragFlags, 0);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
+                int start = viewHolder.getAdapterPosition();
+                int end = target.getAdapterPosition();
+                String temp0 = part_id2[start][0];
+                String temp1 = part_id2[start][1];
+                part_id2[start][0] = part_id2[end][0];
+                part_id2[start][1] = part_id2[end][1];
+                part_id2[end][0] = temp0;
+                part_id2[end][1] = temp1;
+
+                Collections.swap(mDataList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                mAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
+        });
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+    }
     @Override
     public void onClick(View v) {
 
@@ -427,45 +513,7 @@ public class A26 extends BaseActivity implements MVP_A26.RequiredViewOps, OnClic
         }
     }
 
-    private void after_setup(){
 
-        next.setOnClickListener(this);
-
-        addData(mDataList);
-        mAdapter = new Adapter_A26(this, mDataList);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 15, false));
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
-            @Override
-            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                int dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
-                return makeMovementFlags(dragFlags, 0);
-            }
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-
-                int start = viewHolder.getAdapterPosition();
-                int end = target.getAdapterPosition();
-                String temp0 = part_id2[start][0];
-                String temp1 = part_id2[start][1];
-                part_id2[start][0] = part_id2[end][0];
-                part_id2[start][1] = part_id2[end][1];
-                part_id2[end][0] = temp0;
-                part_id2[end][1] = temp1;
-
-                Collections.swap(mDataList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                mAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                return true;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {}
-        });
-        itemTouchHelper.attachToRecyclerView(mRecyclerView);
-
-    }
 
     private void addData(ArrayList<String> mDataList) {
         String text = title1;
@@ -555,12 +603,12 @@ public class A26 extends BaseActivity implements MVP_A26.RequiredViewOps, OnClic
     private void initialize(){
         Log.d(TAG, "initialize");
         setupComponent();
-        mStateMaintainer.put(A26_Presenter.class.getSimpleName(), mPresenter);
+        mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
     }
 
     private void reinitialize() {
         Log.d(TAG, "reinitialize");
-        mPresenter = mStateMaintainer.get(A26_Presenter.class.getSimpleName());
+        mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
         if ( mPresenter == null )
             setupComponent();

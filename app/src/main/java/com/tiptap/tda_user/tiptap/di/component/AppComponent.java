@@ -13,6 +13,7 @@ import com.tiptap.tda_user.tiptap.di.module.A26_Module;
 import com.tiptap.tda_user.tiptap.di.module.A27_Module;
 import com.tiptap.tda_user.tiptap.di.module.A28_Module;
 import com.tiptap.tda_user.tiptap.di.module.A29_Module;
+import com.tiptap.tda_user.tiptap.di.module.A2_Module;
 import com.tiptap.tda_user.tiptap.di.module.A30_Module;
 import com.tiptap.tda_user.tiptap.di.module.A31_Module;
 import com.tiptap.tda_user.tiptap.di.module.A32_Module;
@@ -24,7 +25,7 @@ import com.tiptap.tda_user.tiptap.di.module.A38_Module;
 import com.tiptap.tda_user.tiptap.di.module.A39_Module;
 import com.tiptap.tda_user.tiptap.di.module.A3_Module;
 import com.tiptap.tda_user.tiptap.di.module.A42_Module;
-import com.tiptap.tda_user.tiptap.di.module.A45_Module;
+
 import com.tiptap.tda_user.tiptap.di.module.A46_Module;
 import com.tiptap.tda_user.tiptap.di.module.A48_Module;
 import com.tiptap.tda_user.tiptap.di.module.A4_Module;
@@ -52,6 +53,7 @@ public interface AppComponent {
     Login_Component getLoginComponent(Login_Module module);
 
     A1_Component getA1Component(A1_Module module);
+    A2_Component getA2Component(A2_Module module);
     A4_Component getA4Component(A4_Module module);
     A3_Component getA3Component(A3_Module module);
     A5_Component getA5Component(A5_Module module);
@@ -80,7 +82,9 @@ public interface AppComponent {
     A38_Component getA38Component(A38_Module module);
     A39_Component getA39Component(A39_Module module);
     A42_Component getA42Component(A42_Module module);
-    A45_Component getA45Component(A45_Module module);
+
     A46_Component getA46Component(A46_Module module);
     A48_Component getA48Component(A48_Module module);
+
+
 }

@@ -1,9 +1,9 @@
 package com.tiptap.tda_user.tiptap.di.module;
 
 import com.tiptap.tda_user.tiptap.di.scope.ActivityScope;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A15;
-import com.tiptap.tda_user.tiptap.main.activity.Model.A15_Model;
-import com.tiptap.tda_user.tiptap.main.activity.Presenter.A15_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Model.Main_Model;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
 import dagger.Module;
 import dagger.Provides;
@@ -25,9 +25,9 @@ public class A15_Module {
 
     @Provides
     @ActivityScope
-    MVP_A15.ProvidedPresenterOps providedPresenterOps() {
-        A15_Presenter presenter = new A15_Presenter( activity );
-        A15_Model model = new A15_Model( presenter , activity );
+    MVP_Main.ProvidedPresenterOps providedPresenterOps() {
+        Main_Presenter presenter = new Main_Presenter( activity );
+        Main_Model model = new Main_Model( presenter , activity );
         presenter.setModel( model );
         return presenter;
     }

@@ -4,22 +4,27 @@ import com.tiptap.tda_user.tiptap.di.scope.ActivityScope;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Model.Main_Model;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A3;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A2;
+
 import dagger.Module;
 import dagger.Provides;
 
+/**
+ * Created by tafsiri on 6/25/2018.
+ */
+
 @Module
-public class A3_Module {
+public class A2_Module {
 
-    private A3 activity;
+    private A2 activity;
 
-    public A3_Module(A3 activity) {
+    public A2_Module(A2 activity) {
         this.activity = activity;
     }
 
     @Provides
     @ActivityScope
-    A3 providesA3Activity() {
+    A2 providesA2Activity() {
         return activity;
     }
 

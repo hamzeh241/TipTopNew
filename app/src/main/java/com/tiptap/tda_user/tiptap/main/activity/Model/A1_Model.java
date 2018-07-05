@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A1;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.ArrayList;
@@ -13,9 +13,9 @@ import java.util.List;
 
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
-public class A1_Model implements MVP_A1.ProvidedModelOps {
+public class A1_Model implements MVP_Main.ProvidedModelOps {
 
-    private MVP_A1.RequiredPresenterOps mPresenter;
+    private MVP_Main.RequiredPresenterOps mPresenter;
     DBAdapter dbAdapter;
     Context context;
     private TbActivity act;
@@ -26,7 +26,7 @@ public class A1_Model implements MVP_A1.ProvidedModelOps {
     List<Integer> less;
     List<Integer> func;
 
-    public A1_Model(MVP_A1.RequiredPresenterOps presenter, Context _conContext) {
+    public A1_Model(MVP_Main.RequiredPresenterOps presenter, Context _conContext) {
         mPresenter = presenter;
         context = _conContext;
         dbAdapter = new DBAdapter(context);
@@ -225,7 +225,7 @@ public class A1_Model implements MVP_A1.ProvidedModelOps {
                 app.setIsAnswer(cursor.getString(6));
                 app.setOrferAnswer(cursor.getString(7));
                 app.setOrderPreview(cursor.getString(8));
-                app.setRowVersion(cursor.getString(9));
+               // app.setRowVersion(cursor.getString(9));
                 ad_List.add(app);
                 cursor.moveToNext();
             }
@@ -233,6 +233,11 @@ public class A1_Model implements MVP_A1.ProvidedModelOps {
             new PostError(context,ex.getMessage(),getMethodName()).postError();
         }
         return ad_List;
+    }
+
+    @Override
+    public int count_ActivityDetail(int id_activity) {
+        return 0;
     }
 
     @Override

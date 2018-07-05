@@ -47,7 +47,11 @@
         <activity
             android:name=".main.activity.view.activity.A7"/>
         <activity
+            android:name=".main.activity.view.activity.A2"/>
+        <activity
             android:name=".main.activity.view.activity.A37"/>
+        <activity
+            android:name=".main.activity.view.activity.A38"/>
         <activity
             android:name=".main.activity.view.activity.A8"/>
         <activity

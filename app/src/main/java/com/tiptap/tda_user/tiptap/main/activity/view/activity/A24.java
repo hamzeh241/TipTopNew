@@ -17,10 +17,9 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.A24_Module;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A24;
-import com.tiptap.tda_user.tiptap.main.activity.Presenter.A24_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +27,13 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 public class A24 extends BaseActivity
-        implements MVP_A24.RequiredViewOps {
+        implements MVP_Main.RequiredViewOps {
 
     private static final String TAG = A24.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A24.class.getName());
 
     @Inject
-    public MVP_A24.ProvidedPresenterOps mPresenter;
+    public MVP_Main.ProvidedPresenterOps mPresenter;
     String you_say = "";
     String true_txt="";
     ImageView voice;
@@ -439,12 +438,12 @@ public class A24 extends BaseActivity
     private void initialize(){
         Log.d(TAG, "initialize");
         setupComponent();
-        mStateMaintainer.put(A24_Presenter.class.getSimpleName(), mPresenter);
+        mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
     }
 
     private void reinitialize() {
         Log.d(TAG, "reinitialize");
-        mPresenter = mStateMaintainer.get(A24_Presenter.class.getSimpleName());
+        mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
         if ( mPresenter == null )
             setupComponent();

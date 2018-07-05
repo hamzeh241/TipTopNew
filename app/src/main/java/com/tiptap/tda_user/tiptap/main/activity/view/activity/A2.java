@@ -7,228 +7,275 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+import android.widget.Toast;
+import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A5_Module;
+import com.tiptap.tda_user.tiptap.di.module.A2_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+
 import java.util.List;
 import java.util.Random;
+
 import javax.inject.Inject;
 
-public class A5 extends BaseActivity
-        implements MVP_Main.RequiredViewOps, OnClickListener{
 
-    private static final String TAG = A5.class.getSimpleName();
-    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A5.class.getName());
+/**
+ * Created by tafsiri on 6/25/2018.
+ */
+
+public class A2 extends BaseActivity
+        implements MVP_Main.RequiredViewOps,
+        View.OnClickListener, View.OnTouchListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
+
+    private static final String TAG = A2.class.getSimpleName();
+    private final StateMaintainer mStateMaintainer = new StateMaintainer(getFragmentManager(), A2.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-    EditText edt;
-    String z[];
-    MediaPlayer mpt, mpf;
 
-    @Override
+    CheckBox a, b;
+    EditText editText;
+    TextView text;
+    String answer, title1detailactivity, title2detailactivity;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a5);
+        setContentView(R.layout.a2);
 
         setupViews();
         setupMVP();
 
-        // hide keyboard
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
         max = mPresenter.max_Activitynumber(idlesson);
 
         // first
-        if(Act_Status.equals("first")){
+        if (Act_Status.equals("first")) {
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         }
         // second
-        if(Act_Status.equals("second")) {
+        if (Act_Status.equals("second")) {
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
+        // get tbactivity
         idactivity = tbActivity.get_id();
-        title1 = tbActivity.getTitle1();
-        title2 = tbActivity.getTitle2();
 
+        title1 = tbActivity.getTitle1();
+        path1 = tbActivity.getPath1();
+        path2 = tbActivity.getPath2();
+
+
+        // get tbactvity detail
+        tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
+        title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
+        title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
+
+        //Find Answer
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
+            answer = title1;
+        }
+
+        //////////////
+       else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
+           // answer = title2;
+            answer=tbActivityDetailList.get(1).getTitle1();
+        }
+//answer=title2detailactivity;
+//String aa=answer;
         after_setup();
     }
 
-    private void setupViews(){
-
-        t1 = (TextView)findViewById(R.id.title1);
-        t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView) findViewById(R.id.txt);
-        edt = (EditText) findViewById(R.id.edt);
-        next = (Button)findViewById(R.id.next);
-        p = (ProgressBar)findViewById(R.id.p);
-        p.setMax(100);
-        mpt = MediaPlayer.create (this, R.raw.true_sound);
-        mpf =  MediaPlayer.create (this, R.raw.false_sound);
+    //set up graphic Elements
+    private void setupViews() {
+        img = (ImageView) findViewById(R.id.img);
+        t1 = (TextView) findViewById(R.id.title1);
+        t2 = (TextView) findViewById(R.id.title2);
+        txt1 = (TextView) findViewById(R.id.txt1);
+        txt2 = (TextView) findViewById(R.id.txt2);
+        a = (CheckBox) findViewById(R.id.a);
+        b = (CheckBox) findViewById(R.id.b);
+        p = (ProgressBar) findViewById(R.id.p);
+        next = (Button) findViewById(R.id.next);
+        text = (TextView) findViewById(R.id.title);
+        mp = new MediaPlayer();
     }
 
     private void after_setup() {
 
+        if (title1==null) {
+
+        } else {
+
+            text.setText(title1);
+        }
         all = mPresenter.countActivity(idlesson);
 
         // set all activity false in activitynumber = 1
-        if(activitynumber == 1 && Act_Status.equals("first")){
+        if (activitynumber == 1 && Act_Status.equals("first")) {
             mPresenter.false_activitys(idlesson);
         }
 
         // show passed activity
         List<Integer> p1 = mPresenter.activity_true(idlesson);
         int p2 = p1.size();
-        if(p2 == 0){
+        if (p2 == 0) {
             p.setProgress(0);
-        }else{
-            double d_number = (double) p2/all;
-            int i_number = (int) (d_number*100);
+        } else {
+            double d_number = (double) p2 / all;
+            int i_number = (int) (d_number * 100);
             p.setProgress(i_number);
         }
 
-        t1.setText(R.string.A5_EN);
+        next.setOnClickListener(this);
+
+        t1.setText(R.string.A2_EN);
         t1.setTextColor(getResources().getColor(R.color.my_black));
 
+        //Choising Language
         int lang_id = mPresenter.getlanguage();
-        switch (lang_id){
+        switch (lang_id) {
             // فارسی
             case 1:
-                t2.setText(R.string.A5_FA);
+                t2.setText(R.string.A2_FA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // کردی
             case 2:
-                t2.setText(R.string.A5_KU);
+                t2.setText(R.string.A2_KU);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // ترکی آذری
             case 3:
-                t2.setText(R.string.A5_TA);
+                t2.setText(R.string.A2_TA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // چینی
             case 4:
-                t2.setText(R.string.A5_CH);
+                t2.setText(R.string.A2_CH);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
         }
 
-        txt.setText(title1);
-        txt.setTextColor(getResources().getColor(R.color.my_black));
+        //get image
+        String img_url = url_download + path1;
+        Glide.with(this).load(img_url).into(img);
 
-        edt.addTextChangedListener(new CheckEdit());
+        // set text for checkbox
+        txt1.setText(title1detailactivity);
+        txt2.setText(title2detailactivity);
 
+        //set OnClickListener
         next.setOnClickListener(this);
+        a.setOnClickListener(this);
+        b.setOnClickListener(this);
 
-        int baxsh = 0;
-        for(int i=0 ; i<title2.length() ; i++){
-            if(title2.charAt(i) == ','){
-                baxsh++;
-            }
-        }
-
-        switch (baxsh){
-            // 1 baxsh
-            case 0:
-                z = title2.split("/");
-                break;
-
-            // 2 baxsh
-            case 1:
-                String[] s = title2.split(",");
-                String[] x = s[0].split("/");
-                String[] y = s[1].split("/");
-
-                z = new String[x.length * y.length];
-                int count2 = 0;
-                for (int i = 0; i < x.length; i++) {
-                    for (int j = 0; j < y.length; j++) {
-                        z[count2] = x[i] + " " + y[j];
-                        count2++;
-                    }
-                }
-                break;
-
-            // 3 baxsh
-            case 2:
-                String[] a = title2.split(",");
-                String[] b = a[0].split("/");
-                String[] c = a[1].split("/");
-                String[] d = a[2].split("/");
-
-                z = new String[b.length * c.length* d.length];
-                int count3 = 0;
-                for (int i = 0; i < b.length ; i++) {
-                    for (int j = 0; j < c.length ; j++) {
-                        for(int k = 0 ; k < d.length ; k++){
-                            z[count3] = b[i] + " " + c[j] + " " + d[k];
-                            count3++;
-                        }
-                    }
-                }
-                break;
-        }
     }
 
     @Override
+    // check answer for checkbox and play music for true answer
     public void onClick(View v) {
+        boolean ans = false;
+        if (v.getId() == R.id.a) {
+            a.setChecked(true);
 
+            next.setTextColor(Color.WHITE);
+            next.setBackgroundResource(R.drawable.btn_green);
+
+            if (b.isChecked()) {
+                b.setChecked(false);
+            }
+        }
+
+        if (v.getId() == R.id.b) {
+            b.setChecked(true);
+
+            next.setTextColor(Color.WHITE);
+            next.setBackgroundResource(R.drawable.btn_green);
+
+            if (a.isChecked()) {
+                a.setChecked(false);
+            }
+        }
+        //handeling the next
         if (v.getId() == R.id.next) {
 
             switch (next.getText().toString()) {
 
                 case "check":
+                    //checking the answer
+                    if (a.isChecked() || b.isChecked()) {
+                        if (a.isChecked()) {
+                            if (txt1.getText().equals(answer)) {
+                                ans = true;
+                            }
+                        }
+                        if (b.isChecked()) {
+                            if (txt2.getText().equals(answer)) {
+                                ans = true;
+                            }
+                        }
+                        if (ans) {
 
-                    if(edt.getText().toString().equals("")){
-                        // nothing
-                    }else{
+                            //play sound
+                            if (haveNetworkConnection()) {
+                                try {
+                                    String voice_url = url_download + path2;
+                                    mp.setDataSource(voice_url);
+                                    mp.prepare();
 
-                        boolean answer = cheak_answer();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
 
-                        if (answer == true) {
-                            
+                                mpLength = mp.getDuration();
+                                mp.start();
+
+                            //    SeekBarProgressUpdater();
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                            }
+                            mp.setOnBufferingUpdateListener(this);
+                            mp.setOnCompletionListener(this);
                             // update - true
                             mPresenter.update_activity(idactivity);
 
                             // show passed activity
                             List<Integer> passed1 = mPresenter.activity_true(idlesson);
                             int passed2 = passed1.size();
-                            if(passed2 == 0){
+                            if (passed2 == 0) {
                                 p.setProgress(0);
-                            }else{
-                                double d_number = (double) passed2/all;
-                                int i_number = (int) (d_number*100);
+                            } else {
+                                double d_number = (double) passed2 / all;
+                                int i_number = (int) (d_number * 100);
                                 p.setProgress(i_number);
                             }
-                            
+
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
-                            txt.setClickable(false);
-                            edt.setClickable(false);
-                            edt.setFocusable(false);
+                            txt1.setClickable(false);
+                            txt2.setClickable(false);
+                            img.setClickable(false);
+                            a.setClickable(false);
+                            b.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_true
@@ -243,16 +290,16 @@ public class A5 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
-                            // play sound
-                            mpt.start();
-
-                        } else if (answer == false) {
+                        } else {
 
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
-                            txt.setClickable(false);
-                            edt.setClickable(false);
+                            txt1.setClickable(false);
+                            txt2.setClickable(false);
+                            img.setClickable(false);
+                            a.setClickable(false);
+                            b.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_false
@@ -262,33 +309,30 @@ public class A5 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(z[0]);
+                            f2.t.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
-
-                            // play sound
-                            mpf.start();
                         }
 
+                        // change text color for button next when answer is true or false
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
-
                     }
-
                     break;
 
                 case "countinue":
 
-                    if(edt.getText().toString() != ""){
+
+                    if (a.isChecked() || b.isChecked()) {
 
                         // first
-                        if(Act_Status.equals("first")){
+                        if (Act_Status.equals("first")) {
 
                             // max - end of lesson
-                            if(activitynumber == max) {
+                            if (activitynumber == max) {
 
                                 // list of false answer
                                 List<Integer> id_act_false = mPresenter.activity_false(idlesson);
@@ -330,19 +374,16 @@ public class A5 extends BaseActivity
                                             break;
                                         }
                                     }
-                                    A5.this.finish();
-                                    startActivity(new Intent(A5.this, End.class));
+                                    A2.this.finish();
+                                    startActivity(new Intent(A2.this, End.class));
                                 }
 
                                 // number != 0 and go on to Next
                                 else {
-
-                                    // next is random
-                                    int max_range = (id_act_false.size())-1;
+                                    int max_range = (id_act_false.size()) - 1;
                                     int min_range = 0;
                                     int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
                                     int id_act = id_act_false.get(rnd);
-
                                     TbActivity tb_new_f = mPresenter.getActivity2(id_act);
                                     int id_at_new_f = tb_new_f.getId_ActivityType();
 
@@ -357,18 +398,19 @@ public class A5 extends BaseActivity
 
                                 // first
                                 go_activity2(id_at_new, "first", activitynumber);
+
                             }
                         }
 
                         // second
-                        if(Act_Status.equals("second")){
+                        if (Act_Status.equals("second")) {
 
                             // list of false answer
                             List<Integer> id_act_f = mPresenter.activity_false(idlesson);
                             int number = id_act_f.size();
 
                             // number = 0 and update
-                            if(number == 0){
+                            if (number == 0) {
 
                                 // get now lesson
                                 now_less = mPresenter.now_IdLesson();
@@ -403,15 +445,16 @@ public class A5 extends BaseActivity
                                         break;
                                     }
                                 }
-                                A5.this.finish();
-                                startActivity(new Intent(A5.this, End.class));
+                                A2.this.finish();
+                                startActivity(new Intent(A2.this, End.class));
 
                             }
 
                             // number != 0 and go on to Next
-                            else{
+                            else {
+
                                 // next is random
-                                int max_range = (id_act_f.size())-1;
+                                int max_range = (id_act_f.size()) - 1;
                                 int min_range = 0;
                                 int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
                                 int id_act = id_act_f.get(rnd);
@@ -423,21 +466,48 @@ public class A5 extends BaseActivity
                                 go_activity1(id_at_new_f, "second", id_act);
                             }
                         }
+
                     }
+
                     break;
             }
         }
     }
 
-    private void setupMVP(){
-        if ( mStateMaintainer.firstTimeIn() ) {
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+//        seekBar.setSecondaryProgress(percent);
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        end = true;
+        play.setBackgroundResource(R.drawable.play);
+        next.setTextColor(Color.WHITE);
+        next.setBackgroundResource(R.drawable.btn_green);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (v.getId() == R.id.seekbar) {
+            if (mp.isPlaying()) {
+                SeekBar sb = (SeekBar) v;
+                int playPositionInMillisecconds = (mpLength / 100) * sb.getProgress();
+                mp.seekTo(playPositionInMillisecconds);
+            }
+        }
+        return false;
+    }
+
+    private void setupMVP() {
+        if (mStateMaintainer.firstTimeIn()) {
             initialize();
         } else {
             reinitialize();
         }
     }
 
-    private void initialize(){
+    private void initialize() {
         Log.d(TAG, "initialize");
         setupComponent();
         mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
@@ -447,15 +517,16 @@ public class A5 extends BaseActivity
         Log.d(TAG, "reinitialize");
         mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
-        if ( mPresenter == null )
+        if (mPresenter == null)
             setupComponent();
     }
 
-    private void setupComponent(){
+    private void setupComponent() {
         Log.d(TAG, "setupComponent");
+
         SampleApp.get(this)
                 .getAppComponent()
-                .getA5Component(new A5_Module(this))
+                .getA2Component(new A2_Module(this))
                 .inject(this);
     }
 
@@ -469,49 +540,15 @@ public class A5 extends BaseActivity
         return getApplicationContext();
     }
 
-    public boolean cheak_answer(){
-        boolean result = false;
-        String r = edt.getText().toString();
-        for(int i=0 ; i<z.length ; i++){
-            String a = nice_string1( r );
-            String b = nice_string1( z[i] );
-            if(a.equals(b)){
-                result = true;
-            }
-        }
-        return result;
-    }
-
-    class CheckEdit implements TextWatcher {
-        public void afterTextChanged(Editable s) {
-            try {
-                if(s.toString().equals("")){
-                    next.setTextColor(Color.GRAY);
-                    next.setBackgroundResource(R.drawable.btn_gray);
-                }
-                else{
-                    next.setTextColor(Color.WHITE);
-                    next.setBackgroundResource(R.drawable.btn_green);
-                }
-            }
-            catch(NumberFormatException nfe){}
-        }
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-    }
-
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
         back();
     }
 
-    public void back(){
-        mpt.stop();
-        mpt.release();
-        mpf.stop();
-        mpf.release();
-        A5.this.finish();
-        startActivity(new Intent(A5.this, Lesson.class));
+    public void back() {
+        mp.stop();
+        mp.release();
+        A2.this.finish();
+        startActivity(new Intent(A2.this, Lesson.class));
     }
 }

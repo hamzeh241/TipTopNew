@@ -1,159 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1">
-
-    <TableRow
+    android:weightSum="1"
+    android:orientation="vertical"
+    android:background="@color/my_white">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.15"
-        android:gravity="center"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
-            android:text="say a negative and positive for each picture"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.25"
-        android:gravity="center"
-        android:weightSum="1">
-
-        <ImageView
-            android:id="@+id/img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="6dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:cropToPadding="false"
-            android:scaleType="fitCenter"
-            android:src="@drawable/test" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.55"
-        android:gravity="center"
-        android:weightSum="1">
-
-        <LinearLayout
+        android:layout_weight="0.1"
+        android:orientation="vertical">
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:weightSum="2">
-
-            <LinearLayout
+            android:layout_weight="1">
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:weightSum="1">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="end"
-                    android:text="She "
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
+                <ProgressBar
+                    android:id="@+id/p"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_margin="7dp" />
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="4"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="end"
-                    android:text="a nurse"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            </TableRow>
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_weight="0.1"
+                android:gravity="center"
+                android:weightSum="1">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:id="@+id/title1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/title2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:weightSum="1">
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:gravity="end"
-                    android:text="She "
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
+                    android:layout_marginTop="6dp"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:cropToPadding="false"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/test" />
 
-                <EditText
-                    android:layout_width="wrap_content"
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.55"
+                android:gravity="center"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/l1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/l2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.05"
+                android:gravity="center"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/next"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="4"/>
+                    android:text="check"
+                    android:textColor="#919396"
+                    android:background="@drawable/btn_gray"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="end"
-                    android:text="a actor"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </TableRow>
-
-    <TableRow
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/holder1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.05"
-        android:gravity="center"
-        android:weightSum="1">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible">
 
-        <Button
-            android:id="@+id/next"
+        <fragment
+            android:id="@+id/fragment1"
+            android:name="com.tiptap.tda_user.tiptap.main.activity.view.activity.Fragment_True"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="countinue"
-            android:background="@drawable/btn_green"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"/>
+            android:layout_gravity="center"
+            tools:layout="@layout/fragment_true"></fragment>
 
-    </TableRow>
+    </LinearLayout>
 
-</TableLayout>
+    <LinearLayout
+        android:id="@+id/holder2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible">
+
+        <fragment
+            android:id="@+id/fragment2"
+            android:name="com.tiptap.tda_user.tiptap.main.activity.view.activity.Fragment_False"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:layout="@layout/fragment_false"></fragment>
+
+    </LinearLayout>
+
+</RelativeLayout>

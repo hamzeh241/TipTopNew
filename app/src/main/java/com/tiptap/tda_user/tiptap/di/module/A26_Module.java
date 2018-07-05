@@ -1,9 +1,9 @@
 package com.tiptap.tda_user.tiptap.di.module;
 
 import com.tiptap.tda_user.tiptap.di.scope.ActivityScope;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A26;
-import com.tiptap.tda_user.tiptap.main.activity.Model.A26_Model;
-import com.tiptap.tda_user.tiptap.main.activity.Presenter.A26_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Model.Main_Model;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
 import dagger.Module;
 import dagger.Provides;
@@ -25,9 +25,9 @@ public class A26_Module {
 
     @Provides
     @ActivityScope
-    MVP_A26.ProvidedPresenterOps providedPresenterOps() {
-        A26_Presenter presenter = new A26_Presenter( activity );
-        A26_Model model = new A26_Model( presenter , activity );
+    MVP_Main.ProvidedPresenterOps providedPresenterOps() {
+        Main_Presenter presenter = new Main_Presenter( activity );
+        Main_Model model = new Main_Model( presenter , activity );
         presenter.setModel( model );
         return presenter;
     }

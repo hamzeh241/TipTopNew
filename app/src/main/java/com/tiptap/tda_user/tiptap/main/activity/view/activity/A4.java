@@ -17,21 +17,21 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.A4_Module;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A4;
-import com.tiptap.tda_user.tiptap.main.activity.Presenter.A4_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
 
 public class A4 extends BaseActivity
-        implements MVP_A4.RequiredViewOps {
+        implements MVP_Main.RequiredViewOps {
 
     private static final String TAG = A4.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A4.class.getName());
 
     @Inject
-    public MVP_A4.ProvidedPresenterOps mPresenter;
+    public MVP_Main.ProvidedPresenterOps mPresenter;
 
     int count;
     String w1[],w2[];
@@ -497,12 +497,12 @@ public class A4 extends BaseActivity
     private void initialize(){
         Log.d(TAG, "initialize");
         setupComponent();
-        mStateMaintainer.put(A4_Presenter.class.getSimpleName(), mPresenter);
+        mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
     }
 
     private void reinitialize() {
         Log.d(TAG, "reinitialize");
-        mPresenter = mStateMaintainer.get(A4_Presenter.class.getSimpleName());
+        mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
         if ( mPresenter == null )
             setupComponent();

@@ -8,28 +8,18 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
-
-import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Function;
-import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_A7;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Splash;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A1;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A2;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A38;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
 import javax.inject.Inject;
-
-import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.idlesson;
-import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.Act_Status;
-import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.activitynumber;
-import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.idfunction;
-import static com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity.idactivity;
 
 public class Splash extends AppCompatActivity implements MVP_Splash.RequiredViewOps {
     TextView text;
@@ -66,14 +56,16 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                    // Splash.this.finish();
                     //__________________________________
 
-
-                    A1.idlesson = 4 ;
-                    A1.idfunction = 2 ;
-                    A1.idactivity = 184;
-                    A1.Act_Status = "first";
-                    A1.activitynumber=13;
+                    A2.idlesson = 7 ;
+                    A2.idfunction = 3 ;
+                    A2.idactivity = 186;
+                    A2.Act_Status = "first";
+                    A2.activitynumber=19;
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this,  A1.class));
+                    startActivity(new Intent(Splash.this,  A2.class));
+
+
+
                     //_____________________________________
                    // startActivity(new Intent(Splash.this, Function.class));
 
