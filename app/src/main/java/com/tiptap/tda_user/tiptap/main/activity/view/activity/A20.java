@@ -23,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -113,7 +114,7 @@ public class A20 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar) findViewById(R.id.p);
         p.setMax(100);
-        img = (ImageView)findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.img);
         linear = (LinearLayout) findViewById(R.id.linear);
     }
 
@@ -173,8 +174,9 @@ public class A20 extends BaseActivity
 
         //get image
 
-        String img_url = url_download + path1;
-        Glide.with(this).load(img_url).into(img);
+        //get image]
+        path1 = tbActivity.getPath1();
+        getImage(path1);
 
 
         next.setOnClickListener(this);
@@ -475,7 +477,7 @@ public class A20 extends BaseActivity
                                 e[i].setClickable(false);
                                 e[i].setFocusable(false);
                             }
-                            img = (ImageView)findViewById(R.id.img);
+
 
 
                             // Fragment_true
@@ -502,7 +504,7 @@ public class A20 extends BaseActivity
                                 e[i].setFocusable(false);
                             }
                             p.setClickable(false);
-                            img = (ImageView)findViewById(R.id.img);
+
 
                             // Fragment_false
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
