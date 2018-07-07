@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="red">#FF4081</color>
+    <color name="green">#2cdf7f</color>
+    <color name="blue">#4760ed</color>
+    <color name="black">#212121</color>
+    <color name="withe">#FFFFFF</color>
+    <color name="gray">#919396</color>
+
+    <color name="stpi_default_circle_color">#b3bdc2</color>
+    <color name="stpi_default_primary_color">#00b47c</color>
+    <color name="stpi_default_line_color">#b3bdc2</color>
+    <color name="stpi_default_text_color">#000</color>
+
+    <color name="indicator_1">#f1d60f</color>
+    <color name="indicator_2">#f5a903</color>
+    <color name="indicator_3">#e44d07</color>
+    <color name="indicator_4">#d40808</color>
+
+    <!-- pink color  & indigo color -->
+    <color name="pink_700">#c2185b</color>
+    <color name="pink_500">#e91e63</color>
+    <color name="pink_400">#EC407A</color>
+    <color name="teal_700">#00796B</color>
+    <color name="teal_500">#009688</color>
+    <color name="teal_400">#26A69A</color>
+
+    <!-- use it -->
+    <color name="my_white">#F5F5F5</color>
+    <color name="my_black">#424242</color>
+
+</resources>
