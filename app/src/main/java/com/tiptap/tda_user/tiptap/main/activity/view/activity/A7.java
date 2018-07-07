@@ -19,6 +19,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -73,7 +74,7 @@ public class A7 extends BaseActivity
 
     private void setupViews() {
 
-        img = (ImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.img);
         txt = (TextView) findViewById(R.id.txt);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
@@ -136,7 +137,9 @@ public class A7 extends BaseActivity
         txt.setTextColor(getResources().getColor(R.color.my_black));
 
         String img_url = url_download+path1;
-        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
+        //GlideApp.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
+
+       Glide.with(this).load(img_url).into(img);
 
         next.setOnClickListener(this);
 

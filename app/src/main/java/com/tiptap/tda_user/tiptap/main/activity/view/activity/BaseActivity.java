@@ -2,16 +2,23 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.LruCache;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.List;
@@ -39,10 +46,10 @@ public class BaseActivity extends AppCompatActivity {
     TextView txt1,txt2,t1,t2,txt;
     Button play,next;
     List<TbActivityDetail> tbActivityDetailList;
-    ImageView img;
+    NetworkImageView img;
     String you_say = "";
     ImageView voice;
-
+    ImageLoader imageLoader;
 
     public boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
@@ -775,5 +782,20 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),  A46.class));
                 break;
         }
+    }
+    public void getImage(String path){
+        path1=path;
+        String img_url = url_download + path1;
+        RequestQueue newRequest= Volley.newRequestQueue(BaseActivity.this);
+        imageLoader = new ImageLoader(newRequest, new ImageLoader.ImageCache() {
+            private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(10);
+            public void putBitmap(String url, Bitmap bitmap) {
+                mCache.put(url, bitmap);
+            }
+            public Bitmap getBitmap(String url) {
+                return mCache.get(url);
+            }
+        });
+        img.setImageUrl(img_url,imageLoader);
     }
 }

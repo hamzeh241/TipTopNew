@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -53,7 +55,7 @@ public class A6 extends BaseActivity
 
     private void setupViews(){
 
-        img = (ImageView)findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.img);
         txt = (TextView)findViewById(R.id.txt);
 
         //mp = MediaPlayer.create(A6.this, R.raw.music);

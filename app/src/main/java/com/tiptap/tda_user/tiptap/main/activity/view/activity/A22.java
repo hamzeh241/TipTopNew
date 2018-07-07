@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -89,7 +91,7 @@ public class A22 extends BaseActivity
         });
 
 
-        img = (ImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.img);
        // img.setImageURI("");
 
         //String w = "... hello hi... how are you";

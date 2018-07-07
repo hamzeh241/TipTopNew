@@ -2,12 +2,14 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -21,6 +23,11 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -30,6 +37,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+
 
 import java.util.List;
 import java.util.Random;
@@ -104,7 +112,7 @@ public class A2 extends BaseActivity
 
     //set up graphic Elements
     private void setupViews() {
-        img = (ImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.img);
         t1 = (TextView) findViewById(R.id.title1);
         t2 = (TextView) findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -174,8 +182,7 @@ public class A2 extends BaseActivity
         }
 
         //get image
-        String img_url = url_download + path1;
-        Glide.with(this).load(img_url).into(img);
+      getImage(path1);
 
         // set text for checkbox
         txt1.setText(title1detailactivity);
