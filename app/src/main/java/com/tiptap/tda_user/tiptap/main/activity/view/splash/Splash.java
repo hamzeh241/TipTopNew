@@ -58,13 +58,14 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                     //__________________________________
 
 
-                    A2.idlesson = 7 ;
-                    A2.idfunction = 3 ;
-                    A2.idactivity = 185;
+                    A2.idlesson = 21 ;
+                    A2.idfunction = 7 ;
+                    A2.idactivity = 467;
                     A2.Act_Status = "first";
-                    A2.activitynumber=18;
+                    A2.activitynumber=23;
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this,  A2.class));
+
 
 
 

@@ -105,8 +105,7 @@ public class A2 extends BaseActivity
            // answer = title2;
             answer=tbActivityDetailList.get(1).getTitle1();
         }
-//answer=title2detailactivity;
-//String aa=answer;
+
         after_setup();
     }
 
