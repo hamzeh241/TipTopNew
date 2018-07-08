@@ -38,6 +38,7 @@ import com.tiptap.tda_user.tiptap.di.module.AppModule;
 import com.tiptap.tda_user.tiptap.di.module.Function_Module;
 import com.tiptap.tda_user.tiptap.di.module.Lesson_Module;
 import com.tiptap.tda_user.tiptap.di.module.Login_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import javax.inject.Singleton;
 import dagger.Component;
@@ -82,7 +83,7 @@ public interface AppComponent {
     A38_Component getA38Component(A38_Module module);
     A39_Component getA39Component(A39_Module module);
     A42_Component getA42Component(A42_Module module);
-
+    A45_Component getA45Component(Main_Module module);
     A46_Component getA46Component(A46_Module module);
     A48_Component getA48Component(A48_Module module);
 

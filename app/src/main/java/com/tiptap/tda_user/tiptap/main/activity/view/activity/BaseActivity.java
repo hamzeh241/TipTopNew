@@ -19,11 +19,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
+import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.List;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity   implements MVP_Main.RequiredViewOps {
 
    public final int REQ_CODE_SPEECH_INPUT = 100;
    public String url_download = "http://tiptop.tdaapp.ir/image/";
