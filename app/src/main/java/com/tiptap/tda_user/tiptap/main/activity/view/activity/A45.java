@@ -173,6 +173,8 @@ public class A45 extends BaseActivity
        path1 = tbActivity.getPath1();
         getImage(path1);
 
+
+
         // set text for checkbox
 
         txt1.setText(title1detailactivity);
