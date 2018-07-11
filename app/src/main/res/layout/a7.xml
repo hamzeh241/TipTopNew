@@ -77,7 +77,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

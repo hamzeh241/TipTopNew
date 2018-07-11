@@ -84,8 +84,10 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
+        // get tbactivity
         idactivity = tbActivity.get_id();
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
+        path1 = tbActivity.getPath1();
         count = tbActivityDetailList.size();
         after_setup();
     }
@@ -98,6 +100,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
         next = (Button) findViewById(R.id.next);
         LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
+
         l = new LinearLayout[]{l1, l2};
     }
     private void after_setup() {
@@ -148,6 +151,8 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
         }
 
         next.setOnClickListener(this);
+        //get image
+        getImage(path1);
 
         /* ------------------------------------------------------------------------------------------------------ */
         // each row - title2
@@ -416,6 +421,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
+                            img.setClickable(false);
                             for(int i=0 ; i<e.length ; i++){
                                 e[i].setClickable(false);
                                 e[i].setFocusable(false);
@@ -442,6 +448,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
+                            img.setClickable(false);
                             for(int i=0 ; i<e.length ; i++){
                                 e[i].setClickable(false);
                                 e[i].setFocusable(false);
@@ -689,7 +696,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                 String a = nice_string1( e[i].getText().toString() );
                 String b = nice_string1( z[j].toString() );
                 if(a.equals(b)){
-                    if(cc<=answer.length){
+                    if(cc<answer.length){
                         answer[cc] = true;
                         cc++;
                     }
