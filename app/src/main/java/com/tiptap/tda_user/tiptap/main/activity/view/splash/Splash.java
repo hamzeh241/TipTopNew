@@ -14,7 +14,7 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A18;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
 import javax.inject.Inject;
@@ -54,13 +54,19 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                    // Splash.this.finish();
                     //__________________________________
 
-                    A18.idlesson = 11 ;
-                    A18.idfunction = 4 ;
-                    A18.idactivity = 197;
-                    A18.Act_Status = "first";
-                    A18.activitynumber = 5;
+
+                    A26.idlesson = 24 ;
+                    A26.idfunction =8;
+                    A26.idactivity = 556;
+                    A26.Act_Status = "first";
+                    A26.activitynumber=17;
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this,  A18.class));
+                    startActivity(new Intent(Splash.this,  A26.class));
+
+
+
+
+
 
                     //_____________________________________
                    // startActivity(new Intent(Splash.this, Function.class));
@@ -77,7 +83,7 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
     }
 
     private void setupViews(){
-        text = (TextView)findViewById(R.id.img);
+        text = (TextView)findViewById(R.id.txt);
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/GreatVibes.ttf");
         text.setTypeface(type);
     }

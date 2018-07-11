@@ -2,12 +2,14 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.util.LruCache;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,12 +17,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -29,9 +37,17 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+
+
 import java.util.List;
 import java.util.Random;
+
 import javax.inject.Inject;
+
+
+/**
+ * Created by tafsiri on 6/25/2018.
+ */
 
 public class A2 extends BaseActivity
         implements MVP_Main.RequiredViewOps,
@@ -72,6 +88,7 @@ public class A2 extends BaseActivity
         title1 = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
         path2 = tbActivity.getPath2();
+
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
@@ -164,7 +181,7 @@ public class A2 extends BaseActivity
         }
 
         //get image
-        getImage(path1);
+      getImage(path1);
 
         // set text for checkbox
         txt1.setText(title1detailactivity);
@@ -314,150 +331,152 @@ public class A2 extends BaseActivity
 
                 case "countinue":
 
-                    if (a.isChecked() || b.isChecked()) {
+
+            if (a.isChecked() || b.isChecked()) {
+
+                // first
+                if (Act_Status.equals("first")) {
+
+                    // max - end of lesson
+                    if (activitynumber == max) {
+
+                        // list of false answer
+                        List<Integer> id_act_false = mPresenter.activity_false(idlesson);
+                        int number = id_act_false.size();
+
+                        // number = 0 and update
+                        if (number == 0) {
+
+                            // get now lesson
+                            now_less = mPresenter.now_IdLesson();
+
+                            // post
+
+                            // update
+                            List<Integer> id_less = mPresenter.lesson(idfunction);
+                            List<Integer> id_func = mPresenter.function();
+
+                            for (int i = 0; i < id_less.size(); i++) {
+                                if (id_less.get(i) == idlesson) {
+                                    if (i == id_less.size() - 1) {
+                                        End.gofunction = 1;
+                                        for (int j = 0; j < id_func.size(); j++) {
+                                            if (id_func.get(j) == idfunction) {
+                                                if (now_less == idlesson) {
+                                                    int next_func = j + 1;
+                                                    mPresenter.update_idfunction(id_func.get(next_func));
+                                                    mPresenter.update_idlesson(0);
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        End.gofunction = 0;
+                                        if (now_less == idlesson) {
+                                            int next_less = i + 1;
+                                            mPresenter.update_idlesson(id_less.get(next_less));
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            A2.this.finish();
+                            startActivity(new Intent(A2.this, End.class));
+                        }
+
+                        // number != 0 and go on to Next
+                        else {
+                            int max_range = (id_act_false.size()) - 1;
+                            int min_range = 0;
+                            int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
+                            int id_act = id_act_false.get(rnd);
+                            TbActivity tb_new_f = mPresenter.getActivity2(id_act);
+                            int id_at_new_f = tb_new_f.getId_ActivityType();
+
+                            // second
+                            go_activity1(id_at_new_f, "second", id_act);
+                        }
+
+                    } else {
+
+                        TbActivity tb_new = mPresenter.getActivity(idlesson, ++activitynumber);
+                        int id_at_new = tb_new.getId_ActivityType();
 
                         // first
-                        if (Act_Status.equals("first")) {
+                        go_activity2(id_at_new, "first", activitynumber);
 
-                            // max - end of lesson
-                            if (activitynumber == max) {
+                    }
+                }
 
-                                // list of false answer
-                                List<Integer> id_act_false = mPresenter.activity_false(idlesson);
-                                int number = id_act_false.size();
+                // second
+                if (Act_Status.equals("second")) {
 
-                                // number = 0 and update
-                                if (number == 0) {
+                    // list of false answer
+                    List<Integer> id_act_f = mPresenter.activity_false(idlesson);
+                    int number = id_act_f.size();
 
-                                    // get now lesson
-                                    now_less = mPresenter.now_IdLesson();
+                    // number = 0 and update
+                    if (number == 0) {
 
-                                    // post
+                        // get now lesson
+                        now_less = mPresenter.now_IdLesson();
 
-                                    // update
-                                    List<Integer> id_less = mPresenter.lesson(idfunction);
-                                    List<Integer> id_func = mPresenter.function();
+                        // post
 
-                                    for (int i = 0; i < id_less.size(); i++) {
-                                        if (id_less.get(i) == idlesson) {
-                                            if (i == id_less.size() - 1) {
-                                                End.gofunction = 1;
-                                                for (int j = 0; j < id_func.size(); j++) {
-                                                    if (id_func.get(j) == idfunction) {
-                                                        if (now_less == idlesson) {
-                                                            int next_func = j + 1;
-                                                            mPresenter.update_idfunction(id_func.get(next_func));
-                                                            mPresenter.update_idlesson(0);
-                                                        }
-                                                        break;
-                                                    }
-                                                }
-                                            } else {
-                                                End.gofunction = 0;
-                                                if (now_less == idlesson) {
-                                                    int next_less = i + 1;
-                                                    mPresenter.update_idlesson(id_less.get(next_less));
-                                                }
+                        // update
+                        List<Integer> id_less = mPresenter.lesson(idfunction);
+                        List<Integer> id_func = mPresenter.function();
+
+                        for (int i = 0; i < id_less.size(); i++) {
+                            if (id_less.get(i) == idlesson) {
+                                if (i == id_less.size() - 1) {
+                                    End.gofunction = 1;
+                                    for (int j = 0; j < id_func.size(); j++) {
+                                        if (id_func.get(j) == idfunction) {
+                                            if (now_less == idlesson) {
+                                                int next_func = j + 1;
+                                                mPresenter.update_idfunction(id_func.get(next_func));
+                                                mPresenter.update_idlesson(0);
                                             }
                                             break;
                                         }
                                     }
-                                    A2.this.finish();
-                                    startActivity(new Intent(A2.this, End.class));
-                                }
-
-                                // number != 0 and go on to Next
-                                else {
-                                    int max_range = (id_act_false.size()) - 1;
-                                    int min_range = 0;
-                                    int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
-                                    int id_act = id_act_false.get(rnd);
-                                    TbActivity tb_new_f = mPresenter.getActivity2(id_act);
-                                    int id_at_new_f = tb_new_f.getId_ActivityType();
-
-                                    // second
-                                    go_activity1(id_at_new_f, "second", id_act);
-                                }
-
-                            } else {
-
-                                TbActivity tb_new = mPresenter.getActivity(idlesson, ++activitynumber);
-                                int id_at_new = tb_new.getId_ActivityType();
-
-                                // first
-                                go_activity2(id_at_new, "first", activitynumber);
-
-                            }
-                        }
-
-                        // second
-                        if (Act_Status.equals("second")) {
-
-                            // list of false answer
-                            List<Integer> id_act_f = mPresenter.activity_false(idlesson);
-                            int number = id_act_f.size();
-
-                            // number = 0 and update
-                            if (number == 0) {
-
-                                // get now lesson
-                                now_less = mPresenter.now_IdLesson();
-
-                                // post
-
-                                // update
-                                List<Integer> id_less = mPresenter.lesson(idfunction);
-                                List<Integer> id_func = mPresenter.function();
-
-                                for (int i = 0; i < id_less.size(); i++) {
-                                    if (id_less.get(i) == idlesson) {
-                                        if (i == id_less.size() - 1) {
-                                            End.gofunction = 1;
-                                            for (int j = 0; j < id_func.size(); j++) {
-                                                if (id_func.get(j) == idfunction) {
-                                                    if (now_less == idlesson) {
-                                                        int next_func = j + 1;
-                                                        mPresenter.update_idfunction(id_func.get(next_func));
-                                                        mPresenter.update_idlesson(0);
-                                                    }
-                                                    break;
-                                                }
-                                            }
-                                        } else {
-                                            End.gofunction = 0;
-                                            if (now_less == idlesson) {
-                                                int next_less = i + 1;
-                                                mPresenter.update_idlesson(id_less.get(next_less));
-                                            }
-                                        }
-                                        break;
+                                } else {
+                                    End.gofunction = 0;
+                                    if (now_less == idlesson) {
+                                        int next_less = i + 1;
+                                        mPresenter.update_idlesson(id_less.get(next_less));
                                     }
                                 }
-                                A2.this.finish();
-                                startActivity(new Intent(A2.this, End.class));
-
-                            }
-
-                            // number != 0 and go on to Next
-                            else {
-
-                                // next is random
-                                int max_range = (id_act_f.size()) - 1;
-                                int min_range = 0;
-                                int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
-                                int id_act = id_act_f.get(rnd);
-
-                                TbActivity tb_new_f = mPresenter.getActivity2(id_act);
-                                int id_at_new_f = tb_new_f.getId_ActivityType();
-
-                                // second
-                                go_activity1(id_at_new_f, "second", id_act);
+                                break;
                             }
                         }
+                        A2.this.finish();
+                        startActivity(new Intent(A2.this, End.class));
 
                     }
-                    break;
+
+                    // number != 0 and go on to Next
+                    else {
+
+                        // next is random
+                        int max_range = (id_act_f.size()) - 1;
+                        int min_range = 0;
+                        int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
+                        int id_act = id_act_f.get(rnd);
+
+                        TbActivity tb_new_f = mPresenter.getActivity2(id_act);
+                        int id_at_new_f = tb_new_f.getId_ActivityType();
+
+                        // second
+                        go_activity1(id_at_new_f, "second", id_act);
+                    }
+                }
+
             }
+
+            break;
+        }
         }
     }
 

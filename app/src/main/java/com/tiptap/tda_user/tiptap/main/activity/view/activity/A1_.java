@@ -47,6 +47,7 @@ public class A1_ extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
 
     LinearLayout l[];
+    LinearLayout[] al;
     int added = 0;
     TextView t[];
     EditText e[];
@@ -54,19 +55,17 @@ public class A1_ extends BaseActivity
     String z[];
     int xali = 0;
     int fill=0, count=0;
+    int layoutLength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a1);
-
-        setupViews();
         setupMVP();
-
         // hide keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        max = mPresenter.max_Activitynumber(idlesson);
+
 
         // first
         if(Act_Status.equals("first")){
@@ -77,9 +76,15 @@ public class A1_ extends BaseActivity
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
+        // get tbactivity
         idactivity = tbActivity.get_id();
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
+        layoutLength=mPresenter.count_ActivityDetail(idactivity);
+        max = mPresenter.max_Activitynumber(idlesson);
+    //    path1 = tbActivity.getPath1();
         count = tbActivityDetailList.size();
+        setupViews();
+
         after_setup();
     }
 
@@ -92,8 +97,18 @@ public class A1_ extends BaseActivity
         LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
         LinearLayout l3 = (LinearLayout)findViewById(R.id.l3);
-        l = new LinearLayout[]{l1, l2, l3};
+        al=new LinearLayout[]{l1,l2,l3};
+        AssignLinearLayout();
         next = (Button) findViewById(R.id.next);
+    }
+    public  void AssignLinearLayout(){
+        if(al.length<layoutLength)
+        l = new LinearLayout[al.length];
+        else
+            l = new LinearLayout[layoutLength];
+        for(int i=0;i<l.length;i++){
+            l[i]=al[i];
+        }
     }
 
     private void after_setup() {
@@ -145,6 +160,7 @@ public class A1_ extends BaseActivity
 
         next.setOnClickListener(this);
 
+
         /* ------------------------------------------------------------------------------------------------------ */
         // each row - title2
 
@@ -159,6 +175,7 @@ public class A1_ extends BaseActivity
                         have = 1;
                     }
                 }
+                //counting the sentences part
                 if(have == 1){
                     String z[] = temp.split("_");
                     xali = xali + (z.length);
@@ -267,6 +284,7 @@ public class A1_ extends BaseActivity
                     e[id_e].setTextSize(16);
                     e[id_e].setTextColor(getResources().getColor(R.color.blue));
                     e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                    if(added<l.length)
                     l[added].addView(e[id_e]);
                     id_e++;
                     added++;
@@ -296,6 +314,7 @@ public class A1_ extends BaseActivity
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                            if(added<l.length)
                             l[added].addView(e[id_e]);
                             id_e++;
                         }
@@ -305,6 +324,7 @@ public class A1_ extends BaseActivity
                             t[id_t].setLayoutParams(params);
                             t[id_t].setText(list_w[id_w]);
                             t[id_t].setTextSize(16);
+                            if(added<l.length)
                             l[added].addView(t[id_t]);
                             now = "edt";
                             id_w++;
@@ -334,6 +354,7 @@ public class A1_ extends BaseActivity
                                 e[id_e].setTextSize(16);
                                 e[id_e].setTextColor(getResources().getColor(R.color.blue));
                                 e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                                if(added<l.length)
                                 l[added].addView(e[id_e]);
                                 now = "txt";
                                 id_e++;
@@ -351,6 +372,7 @@ public class A1_ extends BaseActivity
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                            if(added<l.length)
                             l[added].addView(e[id_e]);
                             id_e++;
                         }
@@ -360,6 +382,7 @@ public class A1_ extends BaseActivity
                             t[id_t].setLayoutParams(params);
                             t[id_t].setText(list_w[id_w]);
                             t[id_t].setTextSize(16);
+                            if(added<l.length)
                             l[added].addView(t[id_t]);
                             now = "edt";
                             id_w++;
@@ -371,7 +394,6 @@ public class A1_ extends BaseActivity
             }
         }
     }
-
     @Override
     public void onClick(View v) {
 
@@ -412,6 +434,7 @@ public class A1_ extends BaseActivity
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
+
                             for(int i=0 ; i<e.length ; i++){
                                 e[i].setClickable(false);
                                 e[i].setFocusable(false);
@@ -430,11 +453,15 @@ public class A1_ extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+
+
+
                         } else {
 
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
+
                             for(int i=0 ; i<e.length ; i++){
                                 e[i].setClickable(false);
                                 e[i].setFocusable(false);

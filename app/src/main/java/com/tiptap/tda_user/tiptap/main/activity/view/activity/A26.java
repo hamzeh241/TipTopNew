@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,9 +59,16 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
         max = mPresenter.max_Activitynumber(idlesson);
 
-        tbActivity = mPresenter.getActivity(idlesson, activitynumber);
-        title1 = tbActivity.getTitle1();
+        // first
+        if(Act_Status.equals("first")){
+            tbActivity = mPresenter.getActivity(idlesson, activitynumber);
+        }
+        // second
+        if(Act_Status.equals("second")) {
+            tbActivity = mPresenter.getActivity2(idactivity);
+        }
 
+        title1 = tbActivity.getTitle1();
         after_setup();
     }
 
@@ -119,8 +131,6 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
         next.setOnClickListener(this);
 
-        next.setOnClickListener(this);
-
         addData(mDataList);
         mAdapter = new Adapter_A26(this, mDataList);
         mRecyclerView.setAdapter(mAdapter);
@@ -166,12 +176,60 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                 case "check":
 
                     int answer = cheak();
-                    if (answer == 1) {
-                        Toast.makeText(getApplicationContext(), "CorrectTEST", Toast.LENGTH_LONG).show();
-                    } else if (answer == 2) {
-                        Toast.makeText(getApplicationContext(), "False", Toast.LENGTH_LONG).show();
-                    }
 
+                    if (answer==1) {
+
+                        // update - true
+                        mPresenter.update_activity(idactivity);
+
+                        // show passed activity
+                        List<Integer> passed1 = mPresenter.activity_true(idlesson);
+                        int passed2 = passed1.size();
+                        if (passed2 == 0) {
+                            p.setProgress(0);
+                        } else {
+                            double d_number = (double) passed2 / all;
+                            int i_number = (int) (d_number * 100);
+                            p.setProgress(i_number);
+                        }
+
+                        // Clickable_false
+                        t1.setClickable(false);
+                        t2.setClickable(false);
+                        p.setClickable(false);
+
+                        // Fragment_true
+                        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
+                        Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                        linearLayout.setAnimation(slide_down);
+                        linearLayout.setVisibility(View.VISIBLE);
+
+                        Fragment_True f1 = new Fragment_True();
+                        FragmentManager fragMan = getSupportFragmentManager();
+                        FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                        fragTransaction.add(R.id.fragment1, f1);
+                        fragTransaction.commit();
+
+                    }else if (answer == 2) {
+
+                        // Clickable_false
+                        t1.setClickable(false);
+                        t2.setClickable(false);
+                        p.setClickable(false);
+
+                        // Fragment_false
+                        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
+                        Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                        linearLayout.setAnimation(slide_down);
+                        linearLayout.setVisibility(View.VISIBLE);
+
+                        Fragment_False f2 = new Fragment_False();
+                        f2.t.setText("please put the Sentences in correct arrange");
+                        FragmentManager fragMan = getSupportFragmentManager();
+                        FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                        fragTransaction.add(R.id.fragment2, f2);
+                        fragTransaction.commit();
+                    }
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                     next.setText("countinue");
@@ -179,335 +237,146 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                     break;
 
                 case "countinue":
+                        // first
+                        if (Act_Status.equals("first")) {
 
-                    if(activitynumber == max){
-                        now_less = mPresenter.now_IdLesson();
+                            // max - end of lesson
+                            if (activitynumber == max) {
 
-                        // post
+                                // list of false answer
+                                List<Integer> id_act_false = mPresenter.activity_false(idlesson);
+                                int number = id_act_false.size();
 
-                        // update
-                        List<Integer> id_less = mPresenter.lesson(idfunction);
-                        List<Integer> id_func =  mPresenter.function();
+                                // number = 0 and update
+                                if (number == 0) {
 
-                        for(int i=0 ; i< id_less.size() ; i++){
-                            if(id_less.get(i) == idlesson){
-                                if(i == id_less.size()-1){
-                                    End.gofunction = 1;
-                                    for(int j=0 ; j< id_func.size() ; j++) {
-                                        if (id_func.get(j) == idfunction) {
-                                            if (now_less == idlesson){
-                                                int next_func = j+1;
-                                                mPresenter.update_idfunction(id_func.get(next_func));
-                                                mPresenter.update_idlesson(0);
+                                    // get now lesson
+                                    now_less = mPresenter.now_IdLesson();
+
+                                    // post
+
+                                    // update
+                                    List<Integer> id_less = mPresenter.lesson(idfunction);
+                                    List<Integer> id_func = mPresenter.function();
+
+                                    for (int i = 0; i < id_less.size(); i++) {
+                                        if (id_less.get(i) == idlesson) {
+                                            if (i == id_less.size() - 1) {
+                                                End.gofunction = 1;
+                                                for (int j = 0; j < id_func.size(); j++) {
+                                                    if (id_func.get(j) == idfunction) {
+                                                        if (now_less == idlesson) {
+                                                            int next_func = j + 1;
+                                                            mPresenter.update_idfunction(id_func.get(next_func));
+                                                            mPresenter.update_idlesson(0);
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                            } else {
+                                                End.gofunction = 0;
+                                                if (now_less == idlesson) {
+                                                    int next_less = i + 1;
+                                                    mPresenter.update_idlesson(id_less.get(next_less));
+                                                }
                                             }
                                             break;
                                         }
                                     }
+                                    A26.this.finish();
+                                    startActivity(new Intent(A26.this, End.class));
                                 }
-                                else{
-                                    End.gofunction = 0;
-                                    if (now_less == idlesson){
-                                        int next_less = i+1;
-                                        mPresenter.update_idlesson(id_less.get(next_less));
-                                    }
+
+                                // number != 0 and go on to Next
+                                else {
+                                    int max_range = (id_act_false.size()) - 1;
+                                    int min_range = 0;
+                                    int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
+                                    int id_act = id_act_false.get(rnd);
+                                    TbActivity tb_new_f = mPresenter.getActivity2(id_act);
+                                    int id_at_new_f = tb_new_f.getId_ActivityType();
+
+                                    // second
+                                    go_activity1(id_at_new_f, "second", id_act);
                                 }
-                                break;
+
+                            } else {
+
+                                TbActivity tb_new = mPresenter.getActivity(idlesson, ++activitynumber);
+                                int id_at_new = tb_new.getId_ActivityType();
+
+                                // first
+                                go_activity2(id_at_new, "first", activitynumber);
+
                             }
                         }
-                        A26.this.finish();
-                        startActivity(new Intent(A26.this, End.class ));
 
-                    } else {
+                        // second
+                        if (Act_Status.equals("second")) {
 
-                        TbActivity tb_new = mPresenter.getActivity(idlesson, ++activitynumber);
-                        int id_at_new = tb_new.getId_ActivityType();
+                            // list of false answer
+                            List<Integer> id_act_f = mPresenter.activity_false(idlesson);
+                            int number = id_act_f.size();
 
-                        switch (id_at_new){
+                            // number = 0 and update
+                            if (number == 0) {
 
-                            case 1: break;
-                            case 2: break;
+                                // get now lesson
+                                now_less = mPresenter.now_IdLesson();
 
-                            case 3:
-                                //A3.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A3.activitynumber = activitynumber;
+                                // post
+
+                                // update
+                                List<Integer> id_less = mPresenter.lesson(idfunction);
+                                List<Integer> id_func = mPresenter.function();
+
+                                for (int i = 0; i < id_less.size(); i++) {
+                                    if (id_less.get(i) == idlesson) {
+                                        if (i == id_less.size() - 1) {
+                                            End.gofunction = 1;
+                                            for (int j = 0; j < id_func.size(); j++) {
+                                                if (id_func.get(j) == idfunction) {
+                                                    if (now_less == idlesson) {
+                                                        int next_func = j + 1;
+                                                        mPresenter.update_idfunction(id_func.get(next_func));
+                                                        mPresenter.update_idlesson(0);
+                                                    }
+                                                    break;
+                                                }
+                                            }
+                                        } else {
+                                            End.gofunction = 0;
+                                            if (now_less == idlesson) {
+                                                int next_less = i + 1;
+                                                mPresenter.update_idlesson(id_less.get(next_less));
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
                                 A26.this.finish();
-                                startActivity(new Intent(A26.this,  A3.class));
-                                break;
+                                startActivity(new Intent(A26.this, End.class));
 
-                            case 4:
-                                A4.idlesson = idlesson ;
-                                A4.idfunction = idfunction ;
-                                A4.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A4.class));
-                                break;
+                            }
 
-                            case 5:
-                                A5.idlesson = idlesson ;
-                                A5.idfunction = idfunction ;
-                                A5.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A5.class));
-                                break;
+                            // number != 0 and go on to Next
+                            else {
 
-                            case 6:
-                                A6.idlesson = idlesson ;
-                                A6.idfunction = idfunction ;
-                                A6.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A6.class));
-                                break;
+                                // next is random
+                                int max_range = (id_act_f.size()) - 1;
+                                int min_range = 0;
+                                int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
+                                int id_act = id_act_f.get(rnd);
 
-                            case 7:
-                                A7.idlesson = idlesson ;
-                                A7.idfunction = idfunction ;
-                                A7.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A7.class));
-                                break;
+                                TbActivity tb_new_f = mPresenter.getActivity2(id_act);
+                                int id_at_new_f = tb_new_f.getId_ActivityType();
 
-                            case 8:
-                                A8.idlesson = idlesson ;
-                                A8.idfunction = idfunction ;
-                                A8.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A8.class));
-                                break;
-
-                            case 9:
-                                A9.idlesson = idlesson ;
-                                A9.idfunction = idfunction ;
-                                A9.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A9.class));
-                                break;
-
-                            case 10: break;
-                            case 11: break;
-                            case 12: break;
-                            case 13: break;
-                            case 14: break;
-
-                            case 15:
-                                //A15.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A15.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A15.class));
-                                break;
-
-                            case 16: break;
-                            case 17: break;
-
-                            case 18:
-                                A18.idlesson = idlesson ;
-                                A18.idfunction = idfunction ;
-                                A18.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A18.class));
-                                break;
-
-                            case 19:
-                                A19.idlesson = idlesson ;
-                                A19.idfunction = idfunction ;
-                                A19.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A19.class));
-                                break;
-
-                            case 20:
-                                //A20.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A20.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A20.class));
-                                break;
-
-                            case 21: break;
-
-                            case 22:
-                                A22.idlesson = idlesson ;
-                                A22.idfunction = idfunction ;
-                                A22.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A22.class));
-                                break;
-
-                            case 23: break;
-
-                            case 24:
-                                A24.idlesson = idlesson ;
-                                A24.idfunction = idfunction ;
-                                A24.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A24.class));
-                                break;
-
-                            case 25:
-                                //A25.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A25.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A25.class));
-                                break;
-
-                            case 26:
-                                A26.idlesson = idlesson ;
-                                A26.idfunction = idfunction ;
-                                A26.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A26.class));
-                                break;
-
-                            case 27:
-                                //A27.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A27.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A27.class));
-                                break;
-
-                            case 28:
-                                A28.idlesson = idlesson ;
-                                A28.idfunction = idfunction ;
-                                A28.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A28.class));
-                                break;
-
-                            case 29:
-                                A29.idlesson = idlesson ;
-                                A29.idfunction = idfunction ;
-                                A29.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A29.class));
-                                break;
-
-                            case 30:
-                                A30.idlesson = idlesson ;
-                                A30.idfunction = idfunction ;
-                                A30.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A30.class));
-                                break;
-
-                            case 31:
-                                //A31.idlesson = idlesson ;
-                                //A31.idfunction = idfunction ;
-                                //A31.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A31.class));
-                                break;
-
-                            case 32:
-                                //A32.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A32.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A32.class));
-                                break;
-
-                            case 33:
-                                A33.idlesson = idlesson ;
-                                A33.idfunction = idfunction ;
-                                A33.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A33.class));
-                                break;
-
-                            case 34:
-                                A34.idlesson = idlesson ;
-                                A34.idfunction = idfunction ;
-                                A34.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A34.class));
-                                break;
-
-                            case 35:
-                                A35.idlesson = idlesson ;
-                                A35.idfunction = idfunction ;
-                                A35.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A35.class));
-                                break;
-
-                            case 36: break;
-
-                            case 37:
-                                //A37.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A37.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A37.class));
-                                break;
-
-                            case 38:
-                                //A38.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A38.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A38.class));
-                                break;
-
-                            case 39:
-                                A39.idlesson = idlesson ;
-                                A39.idfunction = idfunction ;
-                                A39.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A39.class));
-                                break;
-
-                            case 40:
-                                //A40.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A40.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A40.class));
-                                break;
-
-                            case 41:
-                                //A41.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A41.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A41.class));
-                                break;
-
-                            case 42:
-                                //A42.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A42.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A42.class));
-                                break;
-
-                            case 43:
-                                //A43.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A43.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A43.class));
-                                break;
-
-                            case 44:
-                                //A44.idlesson = idlesson ;
-                                //A.idfunction = idfunction ;
-                                //A44.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A44.class));
-                                break;
-
-                            case 46:
-                                A46.idlesson = idlesson ;
-                                A46.idfunction = idfunction ;
-                                A46.activitynumber = activitynumber;
-                                A26.this.finish();
-                                startActivity(new Intent(A26.this,  A46.class));
-                                break;
+                                // second
+                                go_activity1(id_at_new_f, "second", id_act);
+                            }
                         }
 
-                    }
+
 
                     break;
             }
