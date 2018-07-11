@@ -2,14 +2,12 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.util.LruCache;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,18 +15,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -37,17 +29,9 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
-
 import java.util.List;
 import java.util.Random;
-
 import javax.inject.Inject;
-
-
-/**
- * Created by tafsiri on 6/25/2018.
- */
 
 public class A2 extends BaseActivity
         implements MVP_Main.RequiredViewOps,
@@ -88,7 +72,6 @@ public class A2 extends BaseActivity
         title1 = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
         path2 = tbActivity.getPath2();
-
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
@@ -181,7 +164,7 @@ public class A2 extends BaseActivity
         }
 
         //get image
-      getImage(path1);
+        getImage(path1);
 
         // set text for checkbox
         txt1.setText(title1detailactivity);
@@ -331,7 +314,6 @@ public class A2 extends BaseActivity
 
                 case "countinue":
 
-
                     if (a.isChecked() || b.isChecked()) {
 
                         // first
@@ -474,7 +456,6 @@ public class A2 extends BaseActivity
                         }
 
                     }
-
                     break;
             }
         }

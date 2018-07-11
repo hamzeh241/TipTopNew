@@ -36,7 +36,6 @@ public class Main_Presenter implements MVP_Main.ProvidedPresenterOps, MVP_Main.R
         }
     }
 
-
     @Override
     public void setView(MVP_Main.RequiredViewOps view) {
             mView = new WeakReference<>(view);

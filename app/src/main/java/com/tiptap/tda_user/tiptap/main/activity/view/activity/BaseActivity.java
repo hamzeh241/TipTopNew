@@ -24,7 +24,7 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.List;
 
-public class BaseActivity extends AppCompatActivity   implements MVP_Main.RequiredViewOps {
+public class BaseActivity extends AppCompatActivity implements MVP_Main.RequiredViewOps {
 
    public final int REQ_CODE_SPEECH_INPUT = 100;
    public String url_download = "http://tiptop.tdaapp.ir/image/";

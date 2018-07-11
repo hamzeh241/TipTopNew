@@ -78,7 +78,7 @@ public class A33 extends BaseActivity
 
     private void setupViews() {
 
-        txt = (TextView) findViewById(R.id.txt);
+        txt = (TextView) findViewById(R.id.img);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();

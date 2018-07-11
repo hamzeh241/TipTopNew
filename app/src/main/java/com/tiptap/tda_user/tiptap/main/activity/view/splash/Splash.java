@@ -14,10 +14,7 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A2;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A38;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A18;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
 import javax.inject.Inject;
@@ -57,19 +54,13 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                    // Splash.this.finish();
                     //__________________________________
 
-
-                    A2.idlesson = 7 ;
-                    A2.idfunction = 3 ;
-                    A2.idactivity = 186;
-                    A2.Act_Status = "first";
-                    A2.activitynumber=19;
+                    A18.idlesson = 11 ;
+                    A18.idfunction = 4 ;
+                    A18.idactivity = 197;
+                    A18.Act_Status = "first";
+                    A18.activitynumber = 5;
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this,  A2.class));
-
-
-
-
-
+                    startActivity(new Intent(Splash.this,  A18.class));
 
                     //_____________________________________
                    // startActivity(new Intent(Splash.this, Function.class));
@@ -86,7 +77,7 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
     }
 
     private void setupViews(){
-        text = (TextView)findViewById(R.id.txt);
+        text = (TextView)findViewById(R.id.img);
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/GreatVibes.ttf");
         text.setTypeface(type);
     }

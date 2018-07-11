@@ -13,19 +13,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.Main_Module;
-import com.tiptap.tda_user.tiptap.di.module.Main_Module;
+import com.tiptap.tda_user.tiptap.di.module.A45_Module;
 
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 
@@ -486,7 +483,7 @@ public class A45 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA45Component(new Main_Module(this))
+                .getA45Component(new A45_Module(this))
                 .inject(this);
     }
 

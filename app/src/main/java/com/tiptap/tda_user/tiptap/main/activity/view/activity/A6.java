@@ -6,11 +6,9 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -22,7 +20,7 @@ import com.tiptap.tda_user.tiptap.di.module.A6_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
+
 import java.util.List;
 import javax.inject.Inject;
 
@@ -56,7 +54,7 @@ public class A6 extends BaseActivity
     private void setupViews(){
 
         img = (NetworkImageView) findViewById(R.id.img);
-        txt = (TextView)findViewById(R.id.txt);
+        txt = (TextView)findViewById(R.id.img);
 
         //mp = MediaPlayer.create(A6.this, R.raw.music);
         mp.setVolume(100,100);
