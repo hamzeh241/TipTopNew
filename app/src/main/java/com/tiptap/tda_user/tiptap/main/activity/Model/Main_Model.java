@@ -3,19 +3,14 @@ package com.tiptap.tda_user.tiptap.main.activity.Model;
 import android.content.Context;
 import android.database.Cursor;
 import android.widget.Toast;
-
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
-
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
-
 /**
  * Created by tafsiri on 6/30/2018.
  */
@@ -311,5 +306,4 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
         }
         return id;
     }
-
 }

@@ -43,6 +43,8 @@
         <activity
             android:name=".main.activity.view.activity.A1"/>
         <activity
+            android:name=".main.activity.view.activity.A1_"/>
+        <activity
             android:name=".main.activity.view.activity.End"/>
         <activity
             android:name=".main.activity.view.activity.A7"/>
@@ -94,8 +96,6 @@
             android:name=".main.activity.view.activity.A33"/>
         <activity
             android:name=".main.activity.view.activity.A5"/>
-        <activity
-            android:name=".main.activity.view.activity.A38"/>
         <activity
             android:name=".main.activity.view.activity.A42"/>
         <activity

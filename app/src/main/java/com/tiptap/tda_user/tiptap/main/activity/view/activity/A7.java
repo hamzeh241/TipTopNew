@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -75,7 +74,7 @@ public class A7 extends BaseActivity
     private void setupViews() {
 
         img = (NetworkImageView) findViewById(R.id.img);
-        txt = (TextView) findViewById(R.id.txt);
+        txt = (TextView) findViewById(R.id.img);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();

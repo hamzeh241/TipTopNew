@@ -20,7 +20,7 @@ public class Main_Module {
 
     @Provides
     @ActivityScope
-    BaseActivity providesA1Activity() {
+    BaseActivity providesActivity() {
         return activity;
     }
 
@@ -28,8 +28,8 @@ public class Main_Module {
     @ActivityScope
     MVP_Main.ProvidedPresenterOps providedPresenterOps() {
        Main_Presenter presenter = new Main_Presenter( activity );
-        Main_Model model = new Main_Model( presenter , activity );
-        presenter.setModel( model );
-        return presenter;
+       Main_Model model = new Main_Model( presenter , activity );
+       presenter.setModel( model );
+       return presenter;
     }
 }

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +19,6 @@ import com.tiptap.tda_user.tiptap.di.module.A34_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +54,7 @@ public class A34 extends BaseActivity
     }
 
     private void setupViews() {
-        txt = (TextView)findViewById(R.id.txt);
+        txt = (TextView)findViewById(R.id.img);
         next = (Button)findViewById(R.id.next);
         voice = (ImageView) findViewById(R.id.voice);
 

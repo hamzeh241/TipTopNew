@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
@@ -90,7 +89,7 @@ public class A28 extends BaseActivity
         seekBar.setMax(99);
         play = (Button) findViewById(R.id.play);
         next = (Button) findViewById(R.id.next);
-        editText = (EditText) findViewById(R.id.txt);
+        editText = (EditText) findViewById(R.id.img);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
