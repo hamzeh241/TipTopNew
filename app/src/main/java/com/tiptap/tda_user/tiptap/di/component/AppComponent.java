@@ -61,7 +61,7 @@ public interface AppComponent {
     A7_Component getA7Component(A7_Module module);
     A8_Component getA8Component(A8_Module module);
     A9_Component getA9Component(A9_Module module);
-    A15_Component getA15Component(A15_Module module);
+    A15_Component getA15Component(Main_Module module);
     A18_Component getA18Component(A18_Module module);
     A19_Component getA19Component(A19_Module module);
     A20_Component getA20Component(A20_Module module);

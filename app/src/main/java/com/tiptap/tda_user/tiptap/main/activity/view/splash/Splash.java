@@ -15,6 +15,7 @@ import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A3;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A4;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
@@ -56,13 +57,13 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                     //__________________________________
 
 
-                    A4.idlesson = 8 ;
-                    A4.idfunction =3;
-                    A4.idactivity = 123;
-                    A4.Act_Status = "first";
-                    A4.activitynumber=17;
+                    A3.idlesson = 18 ;
+                    A3.idfunction =6;
+                    A3.idactivity = 360;
+                    A3.Act_Status = "first";
+                    A3.activitynumber=2;
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this,  A4.class));
+                    startActivity(new Intent(Splash.this,  A3.class));
 
 
 

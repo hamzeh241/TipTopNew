@@ -62,7 +62,7 @@
                 android:fadeScrollbars="false">
 
                 <TextView
-                    android:id="@+id/img"
+                    android:id="@+id/text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="A: Hi, I’m David. \n B: hello, my name is Fred. \n A: nice to meet you.\n B: nice to meet you too. \n A: Good bye. \n B: bye.B: nice to meet you too. \n A: Good bye. \n B: bye."

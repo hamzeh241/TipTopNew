@@ -53,8 +53,8 @@ public class A6 extends BaseActivity
 
     private void setupViews(){
 
-        img = (NetworkImageView) findViewById(R.id.img);
-        txt = (TextView)findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.text);
+        txt = (TextView)findViewById(R.id.text);
 
         //mp = MediaPlayer.create(A6.this, R.raw.music);
         mp.setVolume(100,100);

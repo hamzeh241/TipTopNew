@@ -93,7 +93,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
         p.setMax(100);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.text);
         next = (Button) findViewById(R.id.next);
         LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
