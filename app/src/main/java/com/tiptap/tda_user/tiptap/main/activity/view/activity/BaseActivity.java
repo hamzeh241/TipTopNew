@@ -44,7 +44,7 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
     boolean end = false;
     ProgressBar p;
     int all;
-    TextView txt1,txt2,t1,t2,txt;
+    TextView txt1,txt2,t1,t2,txt,txt3;
     Button play,next;
     List<TbActivityDetail> tbActivityDetailList;
     NetworkImageView img;
@@ -166,12 +166,12 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 4:
-                A4.idlesson = idlesson ;
-                A4.idfunction = idfunction ;
+              A4.idlesson = idlesson ;
+               A4.idfunction = idfunction ;
                 A4.idactivity = id_act;
                 A4.Act_Status = Status;
                 this.finish();
-                startActivity(new Intent(getApplicationContext(),  A4.class));
+               startActivity(new Intent(getApplicationContext(),  A4.class));
                 break;
 
             case 5:
@@ -482,7 +482,7 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
             case 4:
                 A4.idlesson = idlesson ;
                 A4.idfunction = idfunction ;
-                A4.activitynumber = activitynumber;
+               A4.activitynumber = activitynumber;
                 A4.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A4.class));

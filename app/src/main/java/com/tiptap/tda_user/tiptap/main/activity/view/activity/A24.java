@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
@@ -48,15 +49,13 @@ public class A24 extends BaseActivity
     String true_txt="";
     ImageView voice;
     TextView text;
-    String answer, title1detailactivity, title2detailactivity;
+    String answer, title1detailactivity, title2detailactivity,a,title3detailactivity;
+    int count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a24);
-
-        setupViews();
         setupMVP();
-
         // first
         if (Act_Status.equals("first")) {
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
@@ -77,7 +76,25 @@ public class A24 extends BaseActivity
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
         title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
+        count =mPresenter.count_ActivityDetail(idactivity);
 
+        if(count==3) {
+            if (tbActivityDetailList.get(2) != null)
+                title3detailactivity = tbActivityDetailList.get(2).getTitle1().toString();
+        }
+        if(tbActivityDetailList.get(0).getIsAnswer()!=null){
+            true_txt =  title1detailactivity ;
+        }else if(tbActivityDetailList.get(1).getIsAnswer()!=null){
+            true_txt =  title2detailactivity ;
+        }
+        else if(count==3) {
+            if (tbActivityDetailList.get(2).getIsAnswer() != null) {
+                true_txt = title3detailactivity;
+            }
+        }
+
+
+        setupViews();
         after_setup();
     }
 
@@ -87,20 +104,20 @@ public class A24 extends BaseActivity
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         img = (NetworkImageView) findViewById(R.id.img);
-        text = (TextView) findViewById(R.id.title);
+
         txt1 = (TextView)findViewById(R.id.txt1);
         txt2 = (TextView)findViewById(R.id.txt2);
+        txt3 = (TextView)findViewById(R.id.txt3);
+
+          if(count==3)
+            txt3.setVisibility(View.VISIBLE);
+
         voice = (ImageView) findViewById(R.id.voice);
         next = (Button)findViewById(R.id.next);
     }
     private void after_setup() {
 
-        if (title1==null) {
 
-        } else {
-
-            text.setText(title1);
-        }
         all = mPresenter.countActivity(idlesson);
 
         // set all activity false in activitynumber = 1
@@ -153,7 +170,9 @@ public class A24 extends BaseActivity
         // set text for textbox
         txt1.setText(title1detailactivity);
         txt2.setText(title2detailactivity);
-
+        if(count==3) {
+            txt3.setText(title3detailactivity);
+        }
         //set OnClickListener
         voice.setOnClickListener(this);
         next.setOnClickListener(this);
@@ -176,10 +195,10 @@ public class A24 extends BaseActivity
                     if( you_say != "" ) {
 
                         String userAnswer = nice_string1( you_say );
-                         true_txt =  title1 ;
-
+                  //       true_txt =  title1 ;
+                        true_txt=nice_string1(true_txt);
                         if (userAnswer.equals(true_txt)) {
-
+                        a=you_say;
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -197,7 +216,7 @@ public class A24 extends BaseActivity
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
-                            text.setClickable(false);
+                            txt3.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
                             voice.setClickable(false);
@@ -222,7 +241,7 @@ public class A24 extends BaseActivity
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
-                            text.setClickable(false);
+                            txt3.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
                             voice.setClickable(false);

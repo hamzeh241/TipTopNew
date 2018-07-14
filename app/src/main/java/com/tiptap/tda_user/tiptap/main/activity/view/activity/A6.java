@@ -143,7 +143,7 @@ public class A6 extends BaseActivity
                                 break;
 
                             case 4:
-                                A4.idlesson = idlesson ;
+                               A4.idlesson = idlesson ;
                                 A4.idfunction = idfunction ;
                                 A4.activitynumber = activitynumber;
                                 A6.this.finish();

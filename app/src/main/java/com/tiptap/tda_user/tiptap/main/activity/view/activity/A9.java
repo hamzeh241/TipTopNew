@@ -195,7 +195,7 @@ public class A9 extends BaseActivity
 
                                     case 4:
                                         A4.idlesson = idlesson;
-                                        A4.idfunction = idfunction;
+                                       A4.idfunction = idfunction;
                                         A4.activitynumber = activitynumber;
                                         A9.this.finish();
                                         startActivity(new Intent(A9.this, A4.class));
