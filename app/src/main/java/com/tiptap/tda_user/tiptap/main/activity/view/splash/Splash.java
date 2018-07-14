@@ -84,8 +84,8 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
 
     private void setupViews(){
         text = (TextView)findViewById(R.id.txt);
-        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/GreatVibes.ttf");
-        text.setTypeface(type);
+//        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/GreatVibes.ttf");
+//        text.setTypeface(type);
     }
 
     private void setupMVP(){

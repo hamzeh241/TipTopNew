@@ -28,6 +28,7 @@ import javax.inject.Inject;
 public class A4 extends BaseActivity
         implements MVP_Main.RequiredViewOps {
 
+
     private static final String TAG = A4.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A4.class.getName());
 
@@ -513,7 +514,7 @@ public class A4 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA4Component(new A4_Module(this))
+                .getA4Component(new Main_Module(this))
                 .inject(this);
     }
 
