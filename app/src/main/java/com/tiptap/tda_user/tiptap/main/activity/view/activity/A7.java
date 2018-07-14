@@ -73,8 +73,8 @@ public class A7 extends BaseActivity
 
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.img);
-        txt = (TextView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.text);
+        txt = (TextView) findViewById(R.id.text);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();

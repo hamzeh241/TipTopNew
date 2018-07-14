@@ -56,7 +56,7 @@ public class A29 extends BaseActivity
 
     private void setupViews(){
 
-        textView = (TextView) findViewById(R.id.img);
+        textView = (TextView) findViewById(R.id.text);
         editText = (EditText) findViewById(R.id.edt);
 
         //mp = MediaPlayer.create(A29.this, R.raw.music);

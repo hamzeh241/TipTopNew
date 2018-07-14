@@ -77,7 +77,7 @@ public class A5 extends BaseActivity
 
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView) findViewById(R.id.img);
+        txt = (TextView) findViewById(R.id.text);
         edt = (EditText) findViewById(R.id.edt);
         next = (Button)findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);

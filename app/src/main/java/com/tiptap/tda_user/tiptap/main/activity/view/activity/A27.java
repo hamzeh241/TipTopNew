@@ -75,8 +75,8 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
 
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView)findViewById(R.id.img);
-        img = (NetworkImageView) findViewById(R.id.img);
+        txt = (TextView)findViewById(R.id.text);
+        img = (NetworkImageView) findViewById(R.id.text);
         voice = (ImageView)findViewById(R.id.voice);
         next = (Button) findViewById(R.id.next);
         play = (Button)findViewById(R.id.play);

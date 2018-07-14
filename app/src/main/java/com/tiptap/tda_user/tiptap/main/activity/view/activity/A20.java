@@ -110,7 +110,7 @@ public class A20 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar) findViewById(R.id.p);
         p.setMax(100);
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.text);
         linear = (LinearLayout) findViewById(R.id.linear);
     }
 
