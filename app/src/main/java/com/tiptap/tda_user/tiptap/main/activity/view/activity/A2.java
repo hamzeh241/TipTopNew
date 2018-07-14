@@ -84,7 +84,6 @@ public class A2 extends BaseActivity
 
         // get tbactivity
         idactivity = tbActivity.get_id();
-
         title1 = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
         path2 = tbActivity.getPath2();
