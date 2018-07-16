@@ -12,7 +12,7 @@ import dagger.Subcomponent;
  */
 
 @ActivityScope
-@Subcomponent(modules = Main_Module.class )
+@Subcomponent(modules =A4_Module.class )
 public interface A4_Component {
     A4 inject(A4 activity);
 }

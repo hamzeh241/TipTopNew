@@ -16,21 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.A15_Module;
-import com.tiptap.tda_user.tiptap.di.module.A45_Module;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.List;
 import java.util.Random;
-
 import javax.inject.Inject;
 
 public class A15 extends BaseActivity
@@ -42,8 +38,6 @@ public class A15 extends BaseActivity
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-
-
 
     String answer,title3;
     TextView txt3;
@@ -68,34 +62,48 @@ public class A15 extends BaseActivity
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
-
         // get tbactivity
         tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         int idactivity = tbActivity.get_id();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
-        count=tbActivityDetailList.size();
+        count =mPresenter.count_ActivityDetail(idactivity);
+        //count=tbActivityDetailList.size();
+
         if(count==2) {
+            // cheak box title
             title1 = tbActivityDetailList.get(0).getTitle1().toString();
             title2 = tbActivityDetailList.get(1).getTitle1().toString();
+
+            // invisible cheak box 3
+            c.setVisibility(View.INVISIBLE);
+            txt3.setVisibility(View.INVISIBLE);
+
+            // find true answer
+            if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+                answer = title1;
+            }
+            if(tbActivityDetailList.get(1).getIsAnswer().equals("1")){
+                answer = title2;
+            }
         }
-        else{
+        else if(count == 3){
+            // cheak box title
             title1 = tbActivityDetailList.get(0).getTitle1().toString();
             title2 = tbActivityDetailList.get(1).getTitle1().toString();
-            title3= tbActivityDetailList.get(2).getTitle1().toString();
-        }
+            title3 = tbActivityDetailList.get(2).getTitle1().toString();
 
-
-
-        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
-            answer = title1;
-        }
-        if(tbActivityDetailList.get(1).getIsAnswer().equals("true")){
-            answer = title2;
-        }
-        if(tbActivityDetailList.get(2).getIsAnswer().equals("true")){
-            answer = title3;
+            // find true answer
+            if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+                answer = title1;
+            }
+           else if(tbActivityDetailList.get(1).getIsAnswer().equals("1")){
+                answer = title2;
+            }
+           else if(tbActivityDetailList.get(2).getIsAnswer().equals("1")){
+                answer = title3;
+            }
         }
 
         after_setup();
@@ -143,29 +151,31 @@ public class A15 extends BaseActivity
         switch (lang_id){
             // فارسی
             case 1:
-                t2.setText(R.string.A3_FA);
+                t2.setText(R.string.A15_FA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // کردی
             case 2:
-                t2.setText(R.string.A3_KU);
+                t2.setText(R.string.A15_KU);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // ترکی آذری
             case 3:
-                t2.setText(R.string.A3_TA);
+                t2.setText(R.string.A15_TA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // چینی
             case 4:
-                t2.setText(R.string.A3_CH);
+                t2.setText(R.string.A15_CH);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
         }
 
         txt1.setText(title1);
         txt2.setText(title2);
-        txt3.setText(title3);
+        if (count==3) {
+            txt3.setText(title3);
+        }
 
         next.setOnClickListener(this);
         a.setOnClickListener(this);
@@ -220,22 +230,43 @@ public class A15 extends BaseActivity
 
                 case "check":
 
+                    boolean ans = false;
 
-                    if (a.isChecked() || b.isChecked()) {
+                    if(count == 2){
 
-                        boolean ans = false;
-                        if (a.isChecked()) {
-                            if (txt1.getText().equals(answer)) {
-                                ans = true;
+                        if (a.isChecked() || b.isChecked()) {
+                            if (a.isChecked()) {
+                                if (txt1.getText().equals(answer)) {
+                                    ans = true;
+                                }
+                            }
+                            if (b.isChecked()) {
+                                if (txt2.getText().equals(answer)) {
+                                    ans = true;
+                                }
                             }
                         }
-                        if (b.isChecked()) {
-                            if (txt2.getText().equals(answer)) {
-                                ans = true;
+                    }
+
+                    if(count == 3){
+                        if (a.isChecked() || b.isChecked() || c.isChecked()) {
+                            if (a.isChecked()) {
+                                if (txt1.getText().equals(answer)) {
+                                    ans = true;
+                                }
+                            }
+                            if (b.isChecked()) {
+                                if (txt2.getText().equals(answer)) {
+                                    ans = true;
+                                }
+                            }
+                            if (c.isChecked()) {
+                                if (txt3.getText().equals(answer)) {
+                                    ans = true;
+                                }
                             }
                         }
-
-                        c.setVisibility(View.INVISIBLE);
+                    }
 
                         if (ans) {
 
@@ -259,9 +290,10 @@ public class A15 extends BaseActivity
                             t2.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
-                            img.setClickable(false);
+                            txt3.setClickable(false);
                             a.setClickable(false);
                             b.setClickable(false);
+                            c.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_true
@@ -284,9 +316,10 @@ public class A15 extends BaseActivity
                             t2.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
-                            img.setClickable(false);
+                            txt3.setClickable(false);
                             a.setClickable(false);
                             b.setClickable(false);
+                            c.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_false
@@ -296,7 +329,7 @@ public class A15 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(title1);
+                            f2.t.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -310,13 +343,13 @@ public class A15 extends BaseActivity
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
-                    }
+
                     break;
 
                 case "countinue":
 
 
-                    if (a.isChecked() || b.isChecked()) {
+                    if (a.isChecked() || b.isChecked() || c.isChecked()) {
 
                         // first
                         if (Act_Status.equals("first")) {
@@ -492,7 +525,7 @@ public class A15 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA15Component(new Main_Module(this))
+                .getA15Component(new A15_Module(this))
                 .inject(this);
     }
 
