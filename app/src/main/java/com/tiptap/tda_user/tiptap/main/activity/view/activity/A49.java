@@ -1,14 +1,20 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
+/**
+ * Created by tafsiri on 7/14/2018.
+ */
+
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.opengl.Visibility;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,32 +34,36 @@ import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Pattern;
+
 
 import javax.inject.Inject;
 
-public class A24 extends BaseActivity
+public class A49 extends BaseActivity
         implements MVP_Main.RequiredViewOps,View.OnClickListener, View.OnTouchListener {
 
-    private static final String TAG = A24.class.getSimpleName();
-    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A24.class.getName());
+    private static final String TAG = A49.class.getSimpleName();
+    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A49.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
     String you_say = "";
     String true_txt="";
-    ImageView voice;
+    ImageView voice,voice1;
     TextView text;
-    String answer, title1detailactivity, title2detailactivity,a,title3detailactivity;
+    Button play1;
+    public MediaPlayer mp1;
+    String userAnswer;
+    String answer, title1detailactivity, title2detailactivity,a;
     int count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a24);
+        setContentView(R.layout.a49);
         setupMVP();
         // first
         if (Act_Status.equals("first")) {
@@ -68,30 +78,16 @@ public class A24 extends BaseActivity
         idactivity = tbActivity.get_id();
         title1 = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
-        path2 = tbActivity.getPath2();
         max = mPresenter.max_Activitynumber(idlesson);
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
         title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
+        path2 =  tbActivityDetailList.get(0).getPath1();
         count =mPresenter.count_ActivityDetail(idactivity);
 
-        if(count==3) {
-            if (tbActivityDetailList.get(2) != null)
-                title3detailactivity = tbActivityDetailList.get(2).getTitle1().toString();
-        }
-        if(tbActivityDetailList.get(0).getIsAnswer()!=null){
-            true_txt =  title1detailactivity ;
-        }else if(tbActivityDetailList.get(1).getIsAnswer()!=null){
-            true_txt =  title2detailactivity ;
-        }
-        else if(count==3) {
-            if (tbActivityDetailList.get(2).getIsAnswer() != null) {
-                true_txt = title3detailactivity;
-            }
-        }
-
+        true_txt =  tbActivityDetailList.get(1).getTitle2().toString();
 
         setupViews();
         after_setup();
@@ -99,20 +95,16 @@ public class A24 extends BaseActivity
 
     private void setupViews() {
         p = (ProgressBar)findViewById(R.id.p);
-      //  p.setMax(100);
+        p.setMax(100);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         img = (NetworkImageView) findViewById(R.id.img);
-
+        play=(Button)findViewById(R.id.play);
         txt1 = (TextView)findViewById(R.id.txt1);
-        txt2 = (TextView)findViewById(R.id.txt2);
-        txt3 = (TextView)findViewById(R.id.txt3);
-
-          if(count==3)
-            txt3.setVisibility(View.VISIBLE);
-
         voice = (ImageView) findViewById(R.id.voice);
+        txt2 = (TextView)findViewById(R.id.txt2);
         next = (Button)findViewById(R.id.next);
+        mp = new MediaPlayer();
     }
     private void after_setup() {
 
@@ -134,7 +126,7 @@ public class A24 extends BaseActivity
             p.setProgress(i_number);
         }
 
-        t1.setText(R.string.A24_EN);
+        t1.setText(R.string.A49_EN);
         t1.setTextColor(getResources().getColor(R.color.my_black));
 
         //Choising Language
@@ -142,22 +134,22 @@ public class A24 extends BaseActivity
         switch (lang_id) {
             // فارسی
             case 1:
-                t2.setText(R.string.A24_FA);
+                t2.setText(R.string.A49_FA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // کردی
             case 2:
-                t2.setText(R.string.A24_KU);
+                t2.setText(R.string.A49_KU);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // ترکی آذری
             case 3:
-                t2.setText(R.string.A24_TA);
+                t2.setText(R.string.A49_TA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // چینی
             case 4:
-                t2.setText(R.string.A24_CH);
+                t2.setText(R.string.A49_CH);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
         }
@@ -168,35 +160,61 @@ public class A24 extends BaseActivity
         // set text for textbox
         txt1.setText(title1detailactivity);
         txt2.setText(title2detailactivity);
-        if(count==3) {
-            txt3.setText(title3detailactivity);
-        }
         //set OnClickListener
+        play.setOnClickListener(this);
         voice.setOnClickListener(this);
         next.setOnClickListener(this);
 
     }
-        @Override
-        public void onClick(View view) {
-            if (view.getId() == R.id.voice) {
-                if (haveNetworkConnection()) {
-                    promptSpeechInput();
-                } else {
-                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.play){
+            //play sound 1
+            if(haveNetworkConnection()){
+                try {
+                    String voice_url = url_download+path2;
+                    mp.setDataSource(voice_url);
+                    mp.prepare();
+
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
                 }
+                mpLength = mp.getDuration();
+
+                if(!mp.isPlaying()){
+                    mp.start();
+                    play.setBackgroundResource(R.drawable.pause);
+                }else {
+                    mp.pause();
+                    play.setBackgroundResource(R.drawable.play);
+                }
+
+            }else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
-            if(view.getId() == R.id.next){
-             switch (next.getText().toString()) {
+        }
+        if (view.getId() == R.id.voice) {
+            if (haveNetworkConnection()) {
+                promptSpeechInput();
+
+            } else {
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+            }
+
+        }
+        if(view.getId() == R.id.next){
+            switch (next.getText().toString()) {
                 case "check":
                     //you_say != ""
 
                     if( you_say != "" ) {
 
-                        String userAnswer = nice_string1( you_say );
-                  //       true_txt =  title1 ;
+                         userAnswer = nice_string1( you_say );
+                        //       true_txt =  title1 ;
                         true_txt=nice_string1(true_txt);
-                        if (userAnswer.equals(true_txt)) {
-                        a=you_say;
+                        if (cheak()) {
+                            a=you_say;
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -214,12 +232,12 @@ public class A24 extends BaseActivity
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
-                            txt3.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
                             voice.setClickable(false);
                             img.setClickable(false);
                             p.setClickable(false);
+                            play.setClickable(false);
 
                             // Fragment_true
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
@@ -239,12 +257,12 @@ public class A24 extends BaseActivity
                             // Clickable_false
                             t1.setClickable(false);
                             t2.setClickable(false);
-                            txt3.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
                             voice.setClickable(false);
                             img.setClickable(false);
                             p.setClickable(false);
+                            play.setClickable(false);
 
 
                             // Fragment_false
@@ -254,7 +272,7 @@ public class A24 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(title1);
+                            f2.t.setText(true_txt);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -269,7 +287,6 @@ public class A24 extends BaseActivity
                     break;
 
                 case "countinue":
-
 
                     // first
                     if (Act_Status.equals("first")) {
@@ -317,8 +334,8 @@ public class A24 extends BaseActivity
                                         break;
                                     }
                                 }
-                                A24.this.finish();
-                                startActivity(new Intent(A24.this, End.class));
+                                A49.this.finish();
+                                startActivity(new Intent(A49.this, End.class));
                             }
 
                             // number != 0 and go on to Next
@@ -388,8 +405,8 @@ public class A24 extends BaseActivity
                                     break;
                                 }
                             }
-                            A24.this.finish();
-                            startActivity(new Intent(A24.this, End.class));
+                            A49.this.finish();
+                            startActivity(new Intent(A49.this, End.class));
 
                         }
 
@@ -413,7 +430,31 @@ public class A24 extends BaseActivity
                     break;
             }
         }
+    }
+    public boolean cheak(){
+        boolean flag=false;
+        if (true_txt.equals("null")) {
+
+        }else {
+            int have = 0;
+            for (int j = 0; j < true_txt.length(); j++) {
+                if (true_txt.charAt(j) == '/') {
+                    have = 1;
+                }
+            }
+            if (have == 1) {
+                String part[] = true_txt.split(Pattern.quote("/"));
+                for (int i = 0; i < part.length; i++) {
+                    if (userAnswer.equals(part[i]))
+                        flag = true;
+                }
+            } else {
+                if (userAnswer.equals(true_txt))
+                    flag = true;
+            }
         }
+      return  flag;
+    }
 
 
     private void setupMVP(){
@@ -442,7 +483,7 @@ public class A24 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA24Component(new Main_Module(this))
+                .getA49Component(new Main_Module(this))
                 .inject(this);
     }
 
@@ -476,7 +517,9 @@ public class A24 extends BaseActivity
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     you_say = result.get(0);
-                    Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
+                    txt2.setTextColor(getResources().getColor(R.color.red));
+                    txt2.setText(you_say);
+                   // Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                 }
