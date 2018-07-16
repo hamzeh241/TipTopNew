@@ -762,7 +762,7 @@ public class A4 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA4Component(new Main_Module(this))
+                .getA4Component(new A4_Module(this))
                 .inject(this);
     }
 

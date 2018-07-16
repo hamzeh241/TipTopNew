@@ -28,6 +28,7 @@ import com.tiptap.tda_user.tiptap.di.module.A42_Module;
 import com.tiptap.tda_user.tiptap.di.module.A45_Module;
 import com.tiptap.tda_user.tiptap.di.module.A46_Module;
 import com.tiptap.tda_user.tiptap.di.module.A48_Module;
+import com.tiptap.tda_user.tiptap.di.module.A4_Module;
 import com.tiptap.tda_user.tiptap.di.module.A5_Module;
 import com.tiptap.tda_user.tiptap.di.module.A6_Module;
 import com.tiptap.tda_user.tiptap.di.module.A7_Module;
@@ -39,6 +40,9 @@ import com.tiptap.tda_user.tiptap.di.module.Lesson_Module;
 import com.tiptap.tda_user.tiptap.di.module.Login_Module;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A4;
+
 import javax.inject.Singleton;
 import dagger.Component;
 
@@ -56,12 +60,12 @@ public interface AppComponent {
     A2_Component getA2Component(A2_Module module);
     A3_Component getA3Component(A3_Module module);
     A5_Component getA5Component(A5_Module module);
-    A4_Component getA4Component(Main_Module module);
+    A4_Component getA4Component(A4_Module module);
     A6_Component getA6Component(A6_Module module);
     A7_Component getA7Component(A7_Module module);
     A8_Component getA8Component(A8_Module module);
     A9_Component getA9Component(A9_Module module);
-    A15_Component getA15Component(Main_Module module);
+    A15_Component getA15Component(A15_Module module);
     A18_Component getA18Component(A18_Module module);
     A19_Component getA19Component(A19_Module module);
     A20_Component getA20Component(A20_Module module);

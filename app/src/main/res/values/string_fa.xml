@@ -5,6 +5,7 @@
     <string name="A1_FA">املای کلمات را کامل کنید.</string>
     <string name="A38_FA">املای کلمات را کامل کنید.</string>
     <string name="A18_FA">گزینه صحیح را انتخاب کنید.</string>
+    <string name="A24_FA">گزینه صحیح را انتخاب کنید.</string>
     <string name="A27_FA">گوش کنید و تکرار کنید</string>
     <string name="A7_FA">گوش دهید</string>
     <string name="A19_FA">کلمات زیر را به هم وصل کنید</string>
@@ -18,6 +19,6 @@
     <string name="A45_FA"> با توجه به مکالمه گزینه صحیح را انتخاب کنید.</string>
     <string name="A46_FA">مکالمه زیر را کامل کنید</string>
     <string name="A3_FA">گوش دهید</string>
-    <string name="A15_FA">جواب درست را باتوجە بە مکالمە انتخاب کنید</string>
+    <string name="A15_FA">گزینه صحیح را انتخاب کنید</string>
     <string name="A26_FA">جملات زیر را مرتب کنید تا مکالمە کامل شود</string>
 </resources>
