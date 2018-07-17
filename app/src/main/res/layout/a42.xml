@@ -90,7 +90,6 @@
                 android:gravity="center"
                 android:weightSum="1">
 
-
                 <LinearLayout
                     android:id="@+id/l"
                     android:layout_width="match_parent"
