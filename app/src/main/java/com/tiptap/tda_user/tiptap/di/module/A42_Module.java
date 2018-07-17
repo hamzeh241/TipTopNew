@@ -2,6 +2,8 @@ package com.tiptap.tda_user.tiptap.di.module;
 
 import com.tiptap.tda_user.tiptap.di.scope.ActivityScope;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
+import com.tiptap.tda_user.tiptap.main.activity.Model.Main_Model;
+import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A42;
 
 import dagger.Module;
@@ -25,10 +27,9 @@ public class A42_Module {
     @Provides
     @ActivityScope
     MVP_Main.ProvidedPresenterOps providedPresenterOps() {
-       /* A42_Presenter presenter = new A42_Presenter( activity );
-        A42_Model model = new A42_Model( presenter , activity );
+        Main_Presenter presenter = new Main_Presenter( activity );
+        Main_Model model = new Main_Model( presenter , activity );
         presenter.setModel( model );
-        return presenter;*/
-        return null;
+        return presenter;
     }
 }

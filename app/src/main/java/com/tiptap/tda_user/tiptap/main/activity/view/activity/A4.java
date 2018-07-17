@@ -55,7 +55,7 @@ public class A4 extends BaseActivity
 
     LinearLayout l[];
     int added = 0;
-    TextView t[];
+    TextView t[],text;
     EditText e[];
     String ans[];
     String z[];
@@ -97,11 +97,13 @@ public class A4 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
-
+        text=(TextView)findViewById(R.id.title);
         LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
         LinearLayout l3 = (LinearLayout)findViewById(R.id.l3);
-        LinearLayout l4  = (LinearLayout)findViewById(R.id.l4);
+        LinearLayout l4 = (LinearLayout)findViewById(R.id.l4);
+
+
 
         l = new LinearLayout[]{l1, l2, l3, l4};
     }
