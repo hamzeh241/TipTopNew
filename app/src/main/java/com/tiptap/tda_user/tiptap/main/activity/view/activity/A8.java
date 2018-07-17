@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A8_Module;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
@@ -459,7 +458,7 @@ public class A8 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA8Component(new A8_Module(this))
+                .getA8Component(new Main_Module(this))
                 .inject(this);
     }
 

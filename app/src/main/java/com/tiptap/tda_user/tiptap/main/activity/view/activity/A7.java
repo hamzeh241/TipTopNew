@@ -23,7 +23,7 @@ import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A7_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -397,7 +397,7 @@ public class A7 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA7Component(new A7_Module(this))
+                .getA7Component(new Main_Module(this))
                 .inject(this);
     }
 

@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A34_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -452,7 +452,7 @@ public class A34 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA34Component(new A34_Module(this))
+                .getA34Component(new Main_Module(this))
                 .inject(this);
     }
 
