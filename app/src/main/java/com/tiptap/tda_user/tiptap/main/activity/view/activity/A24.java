@@ -24,7 +24,6 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A24_Module;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
@@ -48,7 +47,7 @@ public class A24 extends BaseActivity
     String you_say = "";
     String true_txt="";
     ImageView voice;
-    TextView text, txt3;
+    TextView text;
     String answer, title1detailactivity, title2detailactivity,a,title3detailactivity;
     int count;
     @Override
@@ -100,7 +99,7 @@ public class A24 extends BaseActivity
 
     private void setupViews() {
         p = (ProgressBar)findViewById(R.id.p);
-        //  p.setMax(100);
+      //  p.setMax(100);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         img = (NetworkImageView) findViewById(R.id.img);
@@ -109,7 +108,7 @@ public class A24 extends BaseActivity
         txt2 = (TextView)findViewById(R.id.txt2);
         txt3 = (TextView)findViewById(R.id.txt3);
 
-        if(count==3)
+          if(count==3)
             txt3.setVisibility(View.VISIBLE);
 
         voice = (ImageView) findViewById(R.id.voice);
@@ -141,22 +140,22 @@ public class A24 extends BaseActivity
         //Choising Language
         int lang_id = mPresenter.getlanguage();
         switch (lang_id) {
-            // ÙØ§Ø±Ø³ÛŒ
+            // فارسی
             case 1:
                 t2.setText(R.string.A24_FA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
-            // Ú©Ø±Ø¯ÛŒ
+            // کردی
             case 2:
                 t2.setText(R.string.A24_KU);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
-            // ØªØ±Ú©ÛŒ Ø¢Ø°Ø±ÛŒ
+            // ترکی آذری
             case 3:
                 t2.setText(R.string.A24_TA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
-            // Ú†ÛŒÙ†ÛŒ
+            // چینی
             case 4:
                 t2.setText(R.string.A24_CH);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
@@ -177,27 +176,27 @@ public class A24 extends BaseActivity
         next.setOnClickListener(this);
 
     }
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.voice) {
-            if (haveNetworkConnection()) {
-                promptSpeechInput();
-            } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.voice) {
+                if (haveNetworkConnection()) {
+                    promptSpeechInput();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
             }
-        }
-        if(view.getId() == R.id.next){
-            switch (next.getText().toString()) {
+            if(view.getId() == R.id.next){
+             switch (next.getText().toString()) {
                 case "check":
                     //you_say != ""
 
                     if( you_say != "" ) {
 
                         String userAnswer = nice_string1( you_say );
-                        //       true_txt =  title1 ;
+                  //       true_txt =  title1 ;
                         true_txt=nice_string1(true_txt);
                         if (userAnswer.equals(true_txt)) {
-                            a=you_say;
+                        a=you_say;
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -414,7 +413,7 @@ public class A24 extends BaseActivity
                     break;
             }
         }
-    }
+        }
 
 
     private void setupMVP(){
@@ -443,7 +442,7 @@ public class A24 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA24Component(new A24_Module(this))
+                .getA24Component(new Main_Module(this))
                 .inject(this);
     }
 

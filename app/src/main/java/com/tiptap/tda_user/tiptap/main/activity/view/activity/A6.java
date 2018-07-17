@@ -16,7 +16,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A6_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -143,7 +143,7 @@ public class A6 extends BaseActivity
                                 break;
 
                             case 4:
-                                A4.idlesson = idlesson ;
+                               A4.idlesson = idlesson ;
                                 A4.idfunction = idfunction ;
                                 A4.activitynumber = activitynumber;
                                 A6.this.finish();
@@ -448,7 +448,7 @@ public class A6 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA6Component(new A6_Module(this))
+                .getA6Component(new Main_Module(this))
                 .inject(this);
     }
 

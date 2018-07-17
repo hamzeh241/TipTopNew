@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A9_Module;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
@@ -195,7 +194,7 @@ public class A9 extends BaseActivity
 
                                     case 4:
                                         A4.idlesson = idlesson;
-                                        A4.idfunction = idfunction;
+                                       A4.idfunction = idfunction;
                                         A4.activitynumber = activitynumber;
                                         A9.this.finish();
                                         startActivity(new Intent(A9.this, A4.class));
@@ -501,7 +500,7 @@ public class A9 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA9Component(new A9_Module(this))
+                .getA9Component(new Main_Module(this))
                 .inject(this);
     }
 

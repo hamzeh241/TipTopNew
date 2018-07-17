@@ -116,5 +116,7 @@
             android:name=".main.activity.view.activity.A47"/>
         <activity
             android:name=".main.activity.view.activity.A48"/>
+        <activity
+            android:name=".main.activity.view.activity.A49"/>
     </application>
 </manifest>

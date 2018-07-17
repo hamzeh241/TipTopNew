@@ -20,12 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A2_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -77,7 +76,6 @@ public class A2 extends BaseActivity
 
         // get tbactivity
         idactivity = tbActivity.get_id();
-
         title1 = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
         path2 = tbActivity.getPath2();
@@ -525,7 +523,7 @@ public class A2 extends BaseActivity
 
         SampleApp.get(this)
                 .getAppComponent()
-                .getA2Component(new A2_Module(this))
+                .getA2Component(new Main_Module(this))
                 .inject(this);
     }
 

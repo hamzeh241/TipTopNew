@@ -14,11 +14,10 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A3;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A4;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A42;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A1_;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A2;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A47;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A49;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
 import javax.inject.Inject;
@@ -59,13 +58,15 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                     //__________________________________
 
 
-                    A42.idlesson = 238 ;
-                    A42.idfunction =13;
-                    A42.idactivity =1141 ;
-                    A42.Act_Status = "first";
-                    A42.activitynumber=16;
+                    A49.idlesson = 18 ;
+                    A49.idfunction =6;
+                    A49.idactivity = 404;
+                    A49.Act_Status = "first";
+                    A49.activitynumber=48;
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this,  A42.class));
+                    startActivity(new Intent(Splash.this,  A49.class));
+
+
 
 
 

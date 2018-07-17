@@ -57,7 +57,7 @@
                     <TextView
                         android:id="@+id/title1"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="48dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -68,7 +68,7 @@
                     <TextView
                         android:id="@+id/title2"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="48dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
@@ -103,14 +103,14 @@
                         android:layout_marginRight="7dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:weightSum="4"
+                        android:weightSum="3"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp">
 
                         <LinearLayout
                             android:id="@+id/l1"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
@@ -121,7 +121,7 @@
                         <LinearLayout
                             android:id="@+id/l2"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
@@ -132,7 +132,7 @@
                         <LinearLayout
                             android:id="@+id/l3"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
