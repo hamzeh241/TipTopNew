@@ -56,6 +56,7 @@ public interface AppComponent {
     A42_Component getA42Component(Main_Module module);
     A45_Component getA45Component(Main_Module module);
     A46_Component getA46Component(Main_Module module);
+    A47_Component getA47Component(Main_Module module);
     A48_Component getA48Component(Main_Module module);
     A49_Component getA49Component(Main_Module module);
 
