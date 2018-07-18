@@ -43,6 +43,8 @@
         <activity
             android:name=".main.activity.view.activity.A1"/>
         <activity
+            android:name=".main.activity.view.activity.A10"/>
+        <activity
             android:name=".main.activity.view.activity.A1_"/>
         <activity
             android:name=".main.activity.view.activity.End"/>
