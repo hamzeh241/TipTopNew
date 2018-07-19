@@ -89,13 +89,6 @@ public class A20 extends BaseActivity
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
 
 
-        // set title 1
-        if (title1activity.equals("") || title1activity.equals("null")) {
-            // nothing
-        } else {
-            // show title 1
-
-        }
 
         after_setup();
     }
@@ -115,7 +108,7 @@ public class A20 extends BaseActivity
 
     private void after_setup() {
 
-        if (title1activity.equals("null")) {
+        if (title1activity==null) {
 
         } else {
 
