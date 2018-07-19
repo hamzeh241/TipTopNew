@@ -552,6 +552,7 @@ public class A47 extends BaseActivity
         }
         return  part;
     }
+    //Cheaking the userAnswer with the CorrectAnswer
     public boolean cheak(String correctAnswer, String userAnswer){
         boolean flag=false;
         if (correctAnswer.equals("null")) {
