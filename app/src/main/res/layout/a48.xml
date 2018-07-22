@@ -121,11 +121,11 @@
                         android:id="@+id/txt1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginLeft="2dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="hello , I am mark and go t my bycycle"
+                        android:text="hello , I am mark and go t "
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp"
                         android:layout_marginTop="4dp"
@@ -134,7 +134,6 @@
                         android:id="@+id/voice"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:src="@drawable/mic" />
                 </LinearLayout>
@@ -164,11 +163,11 @@
                                 android:id="@+id/txt2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginLeft="2dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="hello , I am mark and go to t my bycycle"
+                                android:text="hello , I am mark and "
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="16sp"
                                 android:layout_weight="1"/>
@@ -176,7 +175,6 @@
                                 android:id="@+id/voice1"
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
-                                android:layout_marginLeft="10dp"
                                 android:layout_marginRight="10dp"
                                 android:src="@drawable/mic" />
                         </LinearLayout>
