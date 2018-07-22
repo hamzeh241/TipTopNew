@@ -14,9 +14,11 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A12;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A1_;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A2;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A20;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A45;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A47;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A49;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
@@ -60,13 +62,13 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
 
 
 
-                    A20.idlesson = 7 ;
-                    A20.idfunction =3;
-                    A20.idactivity = 99;
-                    A20.Act_Status = "first";
-                    A20.activitynumber=13;
+                    A12.idlesson = 227 ;
+                    A12.idfunction =10;
+                    A12.idactivity = 900;
+                    A12.Act_Status = "first";
+                    A12.activitynumber=19;
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this,  A20.class));
+                    startActivity(new Intent(Splash.this,  A12.class));
 
                     //_____________________________________
                    // startActivity(new Intent(Splash.this, Function.class));

@@ -77,14 +77,14 @@ public class A45 extends BaseActivity
         title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
 
         // find answer
-        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
-            answer = title1;
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+            answer = tbActivityDetailList.get(0).getTitle1().toString();
         }
 
         //////////////
-        else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
+        else if (tbActivityDetailList.get(1).getIsAnswer().equals("1")) {
             // answer = title2;
-            answer=tbActivityDetailList.get(1).getTitle1();
+            answer=tbActivityDetailList.get(1).getTitle1().toString();
         }
 //answer=title2detailactivity;
 //String aa=answer;
