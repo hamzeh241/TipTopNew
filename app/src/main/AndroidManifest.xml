@@ -47,6 +47,8 @@
         <activity
             android:name=".main.activity.view.activity.A1_"/>
         <activity
+            android:name=".main.activity.view.activity.A6"/>
+        <activity
             android:name=".main.activity.view.activity.End"/>
         <activity
             android:name=".main.activity.view.activity.A7"/>
@@ -64,8 +66,6 @@
             android:name=".main.activity.view.activity.A28"/>
         <activity
             android:name=".main.activity.view.activity.A4"/>
-        <activity
-            android:name=".main.activity.view.activity.A6"/>
         <activity
             android:name=".main.activity.view.activity.A30"/>
         <activity
