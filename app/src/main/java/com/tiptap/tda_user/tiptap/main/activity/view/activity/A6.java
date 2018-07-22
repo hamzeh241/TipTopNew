@@ -663,6 +663,7 @@ public class A6 extends BaseActivity
                                     f2.t.setText(true_ans1+" / "+true_ans2);
                                 }
 
+
                             }
                             if(count == 9){
 
