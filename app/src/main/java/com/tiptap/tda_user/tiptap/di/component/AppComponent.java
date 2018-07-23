@@ -33,6 +33,7 @@ public interface AppComponent {
     A8_Component getA8Component(Main_Module module);
     A9_Component getA9Component(Main_Module module);
     A10_Component getA10Component(Main_Module module);
+    A11_Component getA11Component(Main_Module module);
     A15_Component getA15Component(Main_Module module);
     A18_Component getA18Component(Main_Module module);
     A19_Component getA19Component(Main_Module module);
