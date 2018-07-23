@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -104,6 +105,8 @@ public class A20 extends BaseActivity
         p.setMax(100);
         img = (NetworkImageView) findViewById(R.id.text);
         linear = (LinearLayout) findViewById(R.id.linear);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup() {
@@ -466,7 +469,8 @@ public class A20 extends BaseActivity
                                 e[i].setFocusable(false);
                             }
 
-
+                            // play sound
+                            mpt.start();
 
                             // Fragment_true
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
@@ -509,6 +513,8 @@ public class A20 extends BaseActivity
                             fragTransaction.commit();
 
 
+                            // play sound
+                            mpf.start();
 
                         }
 

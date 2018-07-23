@@ -100,6 +100,9 @@ public class A4 extends BaseActivity
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
         LinearLayout l3 = (LinearLayout)findViewById(R.id.l3);
         LinearLayout l4 = (LinearLayout)findViewById(R.id.l4);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
+
 
 
 
@@ -440,6 +443,8 @@ public class A4 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
 
                         } else {
 
@@ -465,6 +470,9 @@ public class A4 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
 
 
                         }
