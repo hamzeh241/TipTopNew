@@ -99,7 +99,8 @@
                         android:layout_gravity="center"
                         android:cropToPadding="false"
                         android:gravity="center"
-                        android:src="@drawable/test" />
+                        android:src="@drawable/test"
+                        android:layout_marginBottom="10dp"/>
 
                     <TextView
                         android:id="@+id/title"
@@ -107,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginBottom="6dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text=""
                         android:textColor="@color/black"
