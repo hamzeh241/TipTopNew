@@ -9,14 +9,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+
+import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -25,29 +28,31 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+
 import java.util.List;
 import java.util.Random;
+
 import javax.inject.Inject;
 
-public class A15 extends BaseActivity
+public class A14 extends BaseActivity
         implements MVP_Main.RequiredViewOps,
-        OnClickListener{
+        OnClickListener {
 
-    private static final String TAG = A15.class.getSimpleName();
-    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A15.class.getName());
+    private static final String TAG = A14.class.getSimpleName();
+    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A14.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
 
-    String answer,title3;
-    TextView txt3;
-    int count;
+    String answer;
+    String title1detailactivity, title2detailactivity, title1activity, title3detailactivity;
     CheckBox a,b,c;
+    TextView text,txt3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a15);
+        setContentView(R.layout.a14);
 
         setupViews();
         setupMVP();
@@ -64,71 +69,61 @@ public class A15 extends BaseActivity
 
         // get tbactivity
         tbActivity = mPresenter.getActivity(idlesson, activitynumber);
-        int idactivity = tbActivity.get_id();
+        idactivity = tbActivity.get_id();
+        title1activity = tbActivity.getTitle1();
+        //path1 = tbActivity.getPath1();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
-        count =mPresenter.count_ActivityDetail(idactivity);
-        //count=tbActivityDetailList.size();
+        title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
+        title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
+        title3detailactivity = tbActivityDetailList.get(2).getTitle1().toString();
 
-        if(count==2) {
-            // cheak box title
-            title1 = tbActivityDetailList.get(0).getTitle1().toString();
-            title2 = tbActivityDetailList.get(1).getTitle1().toString();
-
-            // invisible cheak box 3
-            c.setVisibility(View.INVISIBLE);
-            txt3.setVisibility(View.INVISIBLE);
-
-            // find true answer
-            if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
-                answer = title1;
-            }
-            if(tbActivityDetailList.get(1).getIsAnswer().equals("1")){
-                answer = title2;
-            }
+        // find answer
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+            answer = tbActivityDetailList.get(0).getTitle1().toString();
         }
-        else if(count == 3){
-            // cheak box title
-            title1 = tbActivityDetailList.get(0).getTitle1().toString();
-            title2 = tbActivityDetailList.get(1).getTitle1().toString();
-            title3 = tbActivityDetailList.get(2).getTitle1().toString();
 
-            // find true answer
-            if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
-                answer = title1;
-            }
-           else if(tbActivityDetailList.get(1).getIsAnswer().equals("1")){
-                answer = title2;
-            }
-           else if(tbActivityDetailList.get(2).getIsAnswer().equals("1")){
-                answer = title3;
-            }
+        //////////////
+        else if (tbActivityDetailList.get(1).getIsAnswer().equals("1")) {
+            // answer = title2;
+            answer=tbActivityDetailList.get(1).getTitle1().toString();
         }
+
+        else if (tbActivityDetailList.get(2).getIsAnswer().equals("1")){
+            //answer =title2;
+            answer=tbActivityDetailList.get(2).getTitle1().toString();
+        }
+//answer=title2detailactivity;
+//String aa=answer;
 
         after_setup();
     }
-
+      //set layout
     private void setupViews() {
 
-        txt1 = (TextView) findViewById(R.id.txt1);
-        txt2 = (TextView) findViewById(R.id.txt2);
-        txt3=(TextView)findViewById(R.id.txt33);
+        img = (NetworkImageView) findViewById(R.id.text);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
+        txt1 = (TextView) findViewById(R.id.txt1);
+        txt2 = (TextView) findViewById(R.id.txt2);
+        txt3=(TextView) findViewById(R.id.txt3);
         a = (CheckBox)findViewById(R.id.a);
         b = (CheckBox)findViewById(R.id.b);
         c=(CheckBox)findViewById(R.id.c);
-        next = (Button) findViewById(R.id.next);
+        seekBar = (SeekBar) findViewById(R.id.seekbar);
         p = (ProgressBar)findViewById(R.id.p);
-        p.setMax(100);
+        next = (Button) findViewById(R.id.next);
+        text=(TextView)findViewById(R.id.title);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
+
     }
 
     private void after_setup(){
 
-        all = mPresenter.countActivity(idlesson);
+        text.setText(title1activity);
+
 
         // set all activity false in activitynumber = 1
         if(activitynumber == 1 && Act_Status.equals("first")){
@@ -137,7 +132,7 @@ public class A15 extends BaseActivity
 
         // show passed activity
         List<Integer> p1 = mPresenter.activity_true(idlesson);
-        int p2 = p1.size();
+        int p2= p1.size();
         if(p2 == 0){
             p.setProgress(0);
         }else{
@@ -146,39 +141,48 @@ public class A15 extends BaseActivity
             p.setProgress(i_number);
         }
 
-        t1.setText(R.string.A3_EN);
+        next.setOnClickListener(this);
+
+        t1.setText(R.string.A14_EN);
         t1.setTextColor(getResources().getColor(R.color.my_black));
 
         int lang_id = mPresenter.getlanguage();
         switch (lang_id){
             // فارسی
             case 1:
-                t2.setText(R.string.A15_FA);
+                t2.setText(R.string.A14_FA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // کردی
             case 2:
-                t2.setText(R.string.A15_KU);
+                t2.setText(R.string.A14_KU);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // ترکی آذری
             case 3:
-                t2.setText(R.string.A15_TA);
+                t2.setText(R.string.A14_TA);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
             // چینی
             case 4:
-                t2.setText(R.string.A15_CH);
+                t2.setText(R.string.A14_CH);
                 t2.setTextColor(getResources().getColor(R.color.my_black));
                 break;
         }
 
-        txt1.setText(title1);
-        txt2.setText(title2);
-        if (count==3) {
-            txt3.setText(title3);
-        }
+        //get image
 
+       path1 = tbActivity.getPath1();
+        getImage(path1);
+
+
+
+        // set text for checkbox
+
+        txt1.setText(title1detailactivity);
+        txt2.setText(title2detailactivity);
+        txt3.setText(title3detailactivity);
+         //
         next.setOnClickListener(this);
         a.setOnClickListener(this);
         b.setOnClickListener(this);
@@ -186,8 +190,9 @@ public class A15 extends BaseActivity
     }
 
     @Override
-    public void onClick(View v) {
 
+     // check answer for checkbox and change text color for true answer
+    public void onClick(View v) {
 
         if (v.getId() == R.id.a) {
             a.setChecked(true);
@@ -236,50 +241,32 @@ public class A15 extends BaseActivity
         }
 
 
+        //
         if (v.getId() == R.id.next) {
 
             switch (next.getText().toString()) {
 
                 case "check":
 
-                    boolean ans = false;
+                    if (a.isChecked() || b.isChecked() || c.isChecked()) {
 
-                    if(count == 2){
-
-                        if (a.isChecked() || b.isChecked()) {
-                            if (a.isChecked()) {
-                                if (txt1.getText().equals(answer)) {
-                                    ans = true;
-                                }
-                            }
-                            if (b.isChecked()) {
-                                if (txt2.getText().equals(answer)) {
-                                    ans = true;
-                                }
+                        boolean ans = false;
+                        if (a.isChecked()) {
+                            if (txt1.getText().equals(answer)) {
+                                ans = true;
                             }
                         }
-                    }
-
-                    if(count == 3){
-                        if (a.isChecked() || b.isChecked() || c.isChecked()) {
-                            if (a.isChecked()) {
-                                if (txt1.getText().equals(answer)) {
-                                    ans = true;
-                                }
-                            }
-                            if (b.isChecked()) {
-                                if (txt2.getText().equals(answer)) {
-                                    ans = true;
-                                }
-                            }
-                            if (c.isChecked()) {
-                                if (txt3.getText().equals(answer)) {
-                                    ans = true;
-                                }
+                        if (b.isChecked()) {
+                            if (txt2.getText().equals(answer)) {
+                                ans = true;
                             }
                         }
-                    }
 
+                        if (c.isChecked()) {
+                            if (txt3.getText().equals(answer)) {
+                                ans = true;
+                            }
+                        }
                         if (ans) {
 
 
@@ -303,6 +290,7 @@ public class A15 extends BaseActivity
                             txt1.setClickable(false);
                             txt2.setClickable(false);
                             txt3.setClickable(false);
+                            img.setClickable(false);
                             a.setClickable(false);
                             b.setClickable(false);
                             c.setClickable(false);
@@ -332,6 +320,7 @@ public class A15 extends BaseActivity
                             txt1.setClickable(false);
                             txt2.setClickable(false);
                             txt3.setClickable(false);
+                            img.setClickable(false);
                             a.setClickable(false);
                             b.setClickable(false);
                             c.setClickable(false);
@@ -359,7 +348,7 @@ public class A15 extends BaseActivity
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
-
+                    }
                     break;
 
                 case "countinue":
@@ -413,8 +402,8 @@ public class A15 extends BaseActivity
                                             break;
                                         }
                                     }
-                                    A15.this.finish();
-                                    startActivity(new Intent(A15.this, End.class));
+                                    A14.this.finish();
+                                    startActivity(new Intent(A14.this, End.class));
                                 }
 
                                 // number != 0 and go on to Next
@@ -484,8 +473,8 @@ public class A15 extends BaseActivity
                                         break;
                                     }
                                 }
-                                A15.this.finish();
-                                startActivity(new Intent(A15.this, End.class));
+                                A14.this.finish();
+                                startActivity(new Intent(A14.this, End.class));
 
                             }
 
@@ -509,21 +498,19 @@ public class A15 extends BaseActivity
                     }
 
                     break;
-
             }
-        }
-    }
+        }}
 
 
-    private void setupMVP() {
-        if (mStateMaintainer.firstTimeIn()) {
+    private void setupMVP(){
+        if ( mStateMaintainer.firstTimeIn() ) {
             initialize();
         } else {
             reinitialize();
         }
     }
 
-    private void initialize() {
+    private void initialize(){
         Log.d(TAG, "initialize");
         setupComponent();
         mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
@@ -533,15 +520,15 @@ public class A15 extends BaseActivity
         Log.d(TAG, "reinitialize");
         mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
-        if (mPresenter == null)
+        if ( mPresenter == null )
             setupComponent();
     }
 
-    private void setupComponent() {
+    private void setupComponent(){
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA15Component(new Main_Module(this))
+                .getA14Component(new Main_Module(this))
                 .inject(this);
     }
 
@@ -551,9 +538,9 @@ public class A15 extends BaseActivity
         back();
     }
 
-    public void back() {
-        A15.this.finish();
-        startActivity(new Intent(A15.this, Lesson.class));
+    public void back(){
+        A14.this.finish();
+        startActivity(new Intent(A14.this, Lesson.class));
     }
 
     @Override
