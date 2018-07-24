@@ -32,15 +32,15 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:layout_margin="7dp" />
+                    android:layout_margin="7dp"
+                    android:layout_weight="1" />
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="0.1"
+                android:layout_weight="0.2"
                 android:gravity="center"
                 android:weightSum="1">
 
@@ -80,46 +80,37 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:gravity="center"
                 android:weightSum="1">
 
-                <com.android.volley.toolbox.NetworkImageView
-                    android:id="@+id/text"
+                <TextView
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:cropToPadding="false"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="6dp"
                     android:gravity="center"
-                    android:src="@drawable/test" />
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.65"
-                android:weightSum="1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.45"
+                android:weightSum="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.75"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginBottom="6dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -147,8 +138,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="25dp">
+                        android:layout_marginTop="25dp"
+                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/b"
