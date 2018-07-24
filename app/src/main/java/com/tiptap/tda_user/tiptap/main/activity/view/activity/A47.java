@@ -530,7 +530,7 @@ public class A47 extends BaseActivity
             }
             part[1] = "................";
         }
-        part[0]=nice_string1(part[0]);
+   //     part[0]=nice_string1(part[0]);
         part[0]=part[0].trim();
         return  part;
     }
