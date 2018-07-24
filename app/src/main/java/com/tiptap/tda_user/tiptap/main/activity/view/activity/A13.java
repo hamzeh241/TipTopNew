@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
@@ -18,9 +19,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -44,7 +47,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A13 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,View.OnClickListener, View.OnTouchListener {
+        implements MVP_Main.RequiredViewOps,View.OnClickListener, View.OnTouchListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
 
     private static final String TAG = A13.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A13.class.getName());
@@ -53,8 +56,8 @@ public class A13 extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
     String true_txt="";
     TextView text,txt4,txt5,txt6,txt7,txt8;
-    String userAnswer2;
-    // String userAnswer;
+    EditText editText;
+     String userAnswer;
     String title1detailactivity, title2detailactivity,answer2;
     String temp[];
     int count;
@@ -62,6 +65,9 @@ public class A13 extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a13);
+
+        // hide keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setupMVP();
         // first
         if (Act_Status.equals("first")) {
@@ -76,18 +82,22 @@ public class A13 extends BaseActivity
         idactivity = tbActivity.get_id();
         // get question
         title1 = tbActivity.getTitle1();
-        //get answer1
+        //get answer
         title2 = tbActivity.getTitle2();
         //get image
         path1 = tbActivity.getPath1();
+        //get music
+        path2 = tbActivity.getPath2();
         max = mPresenter.max_Activitynumber(idlesson);
 
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-        title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
-        answer2 = title2detailactivity;
+//        title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
+        count = tbActivityDetailList.size();
+
+        answer2 = title2;
 
         setupViews();
         after_setup();
@@ -100,7 +110,7 @@ public class A13 extends BaseActivity
         t2 = (TextView)findViewById(R.id.title2);
         img = (NetworkImageView) findViewById(R.id.img);
         txt1 = (TextView)findViewById(R.id.txt1);
-        txt2 = (TextView)findViewById(R.id.txt2);
+        editText = (EditText) findViewById(R.id.edittxt);
         txt3 = (TextView)findViewById(R.id.txt3);
         txt4 = (TextView) findViewById(R.id.txt4);
         txt5 = (TextView)findViewById(R.id.txt5);
@@ -108,6 +118,7 @@ public class A13 extends BaseActivity
         txt7 = (TextView)findViewById(R.id.txt7);
         txt8 = (TextView)findViewById(R.id.txt8);
         next = (Button)findViewById(R.id.next);
+        mp = new MediaPlayer();
     }
     private void after_setup() {
 
@@ -161,99 +172,128 @@ public class A13 extends BaseActivity
         getImage(path1);
 
         // set text for textbox
-        txt1.setText(title1);
-        txt2.setText(title2);
+        temp=getTextView(title1);
+        txt1.setText(temp[0]);
+       // editText.setText(temp[1]);
+        SetTextForTextViews();
 
-        temp=getTextView(title1detailactivity);
-        txt3.setText(temp[0]);
-        txt4.setText(temp[1]);
 
         //set OnClickListener
+        editText. addTextChangedListener(new CheckEdit());
         next.setOnClickListener(this);
 
+    }
+    public  void  SetTextForTextViews(){
+        TextView textArray[]=new TextView[count];
+        for(int i=0;i<count;i++){
+            textArray[i]=  new TextView(this);
+            textArray[i].setText(tbActivityDetailList.get(i).getTitle1().toString());
+        }
+        switch (count) {
+            case 0:
+            case 1:
+                txt3.setVisibility(View.VISIBLE);
+                txt3.setText(textArray[0].getText().toString());
+                break;
+            case 2:
+                txt3.setVisibility(View.VISIBLE);
+                txt4.setVisibility(View.VISIBLE);
+                txt3.setText(textArray[0].getText().toString());
+                txt4.setText(textArray[1].getText().toString());
+                break;
+            case 3:
+                txt3.setVisibility(View.VISIBLE);
+                txt4.setVisibility(View.VISIBLE);
+                txt5.setVisibility(View.VISIBLE);
+                txt3.setText(textArray[0].getText().toString());
+                txt4.setText(textArray[1].getText().toString());
+                txt5.setText(textArray[2].getText().toString());
+                break;
+            case 4:
+                txt3.setVisibility(View.VISIBLE);
+                txt4.setVisibility(View.VISIBLE);
+                txt5.setVisibility(View.VISIBLE);
+                txt6.setVisibility(View.VISIBLE);
+                txt3.setText(textArray[0].getText().toString());
+                txt4.setText(textArray[1].getText().toString());
+                txt5.setText(textArray[2].getText().toString());
+                txt6.setText(textArray[3].getText().toString());
+                break;
+            case 5:
+                txt3.setVisibility(View.VISIBLE);
+                txt4.setVisibility(View.VISIBLE);
+                txt5.setVisibility(View.VISIBLE);
+                txt6.setVisibility(View.VISIBLE);
+                txt7.setVisibility(View.VISIBLE);
+                txt3.setText(textArray[0].getText().toString());
+                txt4.setText(textArray[1].getText().toString());
+                txt5.setText(textArray[2].getText().toString());
+                txt6.setText(textArray[3].getText().toString());
+                txt7.setText(textArray[4].getText().toString());
+                break;
+            case 6:
+                txt3.setVisibility(View.VISIBLE);
+                txt4.setVisibility(View.VISIBLE);
+                txt5.setVisibility(View.VISIBLE);
+                txt6.setVisibility(View.VISIBLE);
+                txt7.setVisibility(View.VISIBLE);
+                txt8.setVisibility(View.VISIBLE);
+                txt3.setText(textArray[0].getText().toString());
+                txt4.setText(textArray[1].getText().toString());
+                txt5.setText(textArray[2].getText().toString());
+                txt6.setText(textArray[3].getText().toString());
+                txt7.setText(textArray[4].getText().toString());
+                txt8.setText(textArray[5].getText().toString());
+                break;
+        }
     }
     @Override
     public void onClick(View view) {
 
+        String h=userAnswer;
         if(view.getId() == R.id.next){
             switch (next.getText().toString()) {
                 case "check":
-                    //you_say != ""
-                    userAnswer2 = txt4.getText().toString();
-                    if( userAnswer2.equals(temp[1]) ) {
 
-                        //       true_txt =  title1 ;
-                        true_txt=title2detailactivity;
+                    //   true_txt =  title1 ;
+                    true_txt=title2;
 
-                        if (cheak(true_txt,userAnswer2)) {
+                    if (cheak(true_txt,userAnswer)) {
+                        //play sound
+                        if (haveNetworkConnection()) {
+                            try {
+                                String voice_url = url_download + path2;
+                                mp.setDataSource(voice_url);
+                                mp.prepare();
 
-                            // update - true
-                            mPresenter.update_activity(idactivity);
-
-                            // show passed activity
-                            List<Integer> passed1 = mPresenter.activity_true(idlesson);
-                            int passed2 = passed1.size();
-                            if(passed2 == 0){
-                                p.setProgress(0);
-                            }else{
-                                double d_number = (double) passed2/all;
-                                int i_number = (int) (d_number*100);
-                                p.setProgress(i_number);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
 
-                            // Clickable_false
-                            p.setClickable(false);
-                            t1.setClickable(false);
-                            t2.setClickable(false);
-                            img.setClickable(false);
-                            txt1.setClickable(false);
-                            txt2.setClickable(false);
-                            txt3.setClickable(false);
+                            mpLength = mp.getDuration();
+                            mp.start();
 
+                            //    SeekBarProgressUpdater();
 
-                            // Fragment_true
-                            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
-                            Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
-                            linearLayout.setAnimation(slide_down);
-                            linearLayout.setVisibility(View.VISIBLE);
-
-                            Fragment_True f1 = new Fragment_True();
-                            FragmentManager fragMan = getSupportFragmentManager();
-                            FragmentTransaction fragTransaction = fragMan.beginTransaction();
-                            fragTransaction.add(R.id.fragment1, f1);
-                            fragTransaction.commit();
-
-
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                         }
-                        else {
+                        mp.setOnBufferingUpdateListener(this);
+                        mp.setOnCompletionListener(this);
 
-                            // Clickable_false
-                            p.setClickable(false);
-                            t1.setClickable(false);
-                            t2.setClickable(false);
-                            img.setClickable(false);
-                            txt1.setClickable(false);
-                            txt2.setClickable(false);
-                            txt3.setClickable(false);
+                        // update - true
+                        mPresenter.update_activity(idactivity);
 
-                            // Fragment_false
-                            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
-                            Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
-                            linearLayout.setAnimation(slide_down);
-                            linearLayout.setVisibility(View.VISIBLE);
-
-                            Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(true_txt);
-                            FragmentManager fragMan = getSupportFragmentManager();
-                            FragmentTransaction fragTransaction = fragMan.beginTransaction();
-                            fragTransaction.add(R.id.fragment2, f2);
-                            fragTransaction.commit();
+                        // show passed activity
+                        List<Integer> passed1 = mPresenter.activity_true(idlesson);
+                        int passed2 = passed1.size();
+                        if(passed2 == 0){
+                            p.setProgress(0);
+                        }else{
+                            double d_number = (double) passed2/all;
+                            int i_number = (int) (d_number*100);
+                            p.setProgress(i_number);
                         }
-
-                        next.setTextColor(Color.WHITE);
-                        next.setBackgroundResource(R.drawable.btn_green);
-                        next.setText("countinue");
-                    }else {
 
                         // Clickable_false
                         p.setClickable(false);
@@ -261,8 +301,44 @@ public class A13 extends BaseActivity
                         t2.setClickable(false);
                         img.setClickable(false);
                         txt1.setClickable(false);
-                        txt2.setClickable(false);
+                        editText.setClickable(false);
                         txt3.setClickable(false);
+                        txt4.setClickable(false);
+                        txt5.setClickable(false);
+                        txt6.setClickable(false);
+                        txt7.setClickable(false);
+                        txt8.setClickable(false);
+
+                        // Fragment_true
+                        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
+                        Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                        linearLayout.setAnimation(slide_down);
+                        linearLayout.setVisibility(View.VISIBLE);
+
+                        Fragment_True f1 = new Fragment_True();
+                        FragmentManager fragMan = getSupportFragmentManager();
+                        FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                        fragTransaction.add(R.id.fragment1, f1);
+                        fragTransaction.commit();
+
+
+
+                    }
+                    else {
+
+                        // Clickable_false
+                        p.setClickable(false);
+                        t1.setClickable(false);
+                        t2.setClickable(false);
+                        img.setClickable(false);
+                        txt1.setClickable(false);
+                        editText.setClickable(false);
+                        txt3.setClickable(false);
+                        txt4.setClickable(false);
+                        txt5.setClickable(false);
+                        txt6.setClickable(false);
+                        txt7.setClickable(false);
+                        txt8.setClickable(false);
 
                         // Fragment_false
                         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
@@ -271,16 +347,18 @@ public class A13 extends BaseActivity
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_False f2 = new Fragment_False();
-                        f2.t.setText("جاهای خالی را پر کنید");
+                        f2.t.setText(true_txt);
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment2, f2);
                         fragTransaction.commit();
 
-                        next.setTextColor(Color.WHITE);
-                        next.setBackgroundResource(R.drawable.btn_green);
-                        next.setText("countinue");
                     }
+
+                    next.setTextColor(Color.WHITE);
+                    next.setBackgroundResource(R.drawable.btn_green);
+                    next.setText("countinue");
+
 
                     break;
 
@@ -442,19 +520,51 @@ public class A13 extends BaseActivity
                 if (str.charAt(j) == '.') {
                     break;
                 } else {
-                    if(str.charAt(j)==' '){
-
-                    }else
                         part[0] += str.charAt(j);
                 }
             }
             part[1] = "................";
         }
-        part[0]=nice_string1(part[0]);
+    //    part[0]=nice_string1(part[0]);
         part[0]=part[0].trim();
         return  part;
     }
+    public String[] getTextForTextViews(String str){
+        String part[]=null;
+        if (str.equals("null")) {
 
+        }else {
+            int have = 0;
+            for (int j = 0; j < str.length(); j++) {
+                if (str.charAt(j) == '/') {
+                    have = 1;
+                }
+            }
+            if (have == 1) {
+                part = str.split(Pattern.quote("/"));
+
+            }
+        }
+        return  part;
+    }
+    class CheckEdit implements TextWatcher {
+        public void afterTextChanged(Editable s) {
+            try {
+                if(s.toString().equals("")){
+                    next.setTextColor(Color.GRAY);
+                    next.setBackgroundResource(R.drawable.btn_gray);
+                }
+                else{
+                    userAnswer=s.toString();
+                    next.setTextColor(Color.WHITE);
+                    next.setBackgroundResource(R.drawable.btn_green);
+                }
+            }
+            catch(NumberFormatException nfe){}
+        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    }
     //Cheaking the userAnswer with the CorrectAnswer
     public boolean cheak(String correctAnswer, String userAnswer){
         boolean flag=false;
@@ -481,7 +591,18 @@ public class A13 extends BaseActivity
         return  flag;
     }
 
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+//        seekBar.setSecondaryProgress(percent);
+    }
 
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        end = true;
+//        play.setBackgroundResource(R.drawable.play);
+        next.setTextColor(Color.WHITE);
+        next.setBackgroundResource(R.drawable.btn_green);
+    }
     private void setupMVP(){
         if ( mStateMaintainer.firstTimeIn() ) {
             initialize();

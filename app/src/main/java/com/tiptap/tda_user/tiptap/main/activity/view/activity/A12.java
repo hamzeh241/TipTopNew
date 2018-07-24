@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -64,6 +65,8 @@ public class A12 extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a12);
+        // hide keyboard
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setupMVP();
         // first
         if (Act_Status.equals("first")) {
@@ -88,7 +91,7 @@ public class A12 extends BaseActivity
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-        title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
+       title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
         answer2 = title2detailactivity;
 
         setupViews();
@@ -167,7 +170,7 @@ public class A12 extends BaseActivity
       //  editText.setText(temp[1]);
       //  editText.setOnClickListener(this);
 
-        editText. addTextChangedListener(new CheckEdit());
+        editText.addTextChangedListener(new CheckEdit());
         //set OnClickListener
         next.setOnClickListener(this);
 
@@ -420,7 +423,7 @@ public class A12 extends BaseActivity
             }
             part[1] = "................";
         }
-        part[0]=nice_string1(part[0]);
+      //  part[0]=nice_string1(part[0]);
         part[0]=part[0].trim();
         return  part;
     }

@@ -47,7 +47,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
 
     LinearLayout l[];
     int added = 0;
-    TextView t[];
+   TextView t[];
     EditText e[];
    String ans[];
     String z[];
