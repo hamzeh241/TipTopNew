@@ -74,7 +74,7 @@ public class A7 extends BaseActivity
     private void setupViews() {
 
         img = (NetworkImageView) findViewById(R.id.img1);
-        txt = (TextView) findViewById(R.id.img1);
+        txt = (TextView) findViewById(R.id.txt);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();
@@ -132,6 +132,11 @@ public class A7 extends BaseActivity
                 break;
         }
 
+        //get image
+
+        getImage(path2);
+
+        //set text
         txt.setText(title1);
         txt.setTextColor(getResources().getColor(R.color.my_black));
 

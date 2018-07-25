@@ -137,9 +137,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
         }
 
         //get image
-
-        path1 = tbActivity.getPath1();
-        getImage(path1);
+        getImage(path2);
 
         txt.setText(title1);
         txt.setTextColor(getResources().getColor(R.color.my_black));
