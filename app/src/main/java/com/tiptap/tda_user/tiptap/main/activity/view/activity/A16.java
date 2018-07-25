@@ -108,6 +108,8 @@ public class A16 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         text = (TextView) findViewById(R.id.title);
         mp = new MediaPlayer();
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup() {
@@ -275,6 +277,9 @@ public class A16 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else {
 
                             // Clickable_false
@@ -299,6 +304,9 @@ public class A16 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         // change text color for button next when answer is true or false
