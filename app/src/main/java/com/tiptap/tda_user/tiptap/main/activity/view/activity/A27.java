@@ -74,8 +74,8 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
 
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView)findViewById(R.id.text);
-        img = (NetworkImageView) findViewById(R.id.text);
+        txt = (TextView)findViewById(R.id.txt);
+        img = (NetworkImageView) findViewById(R.id.img1);
         voice = (ImageView)findViewById(R.id.voice);
         next = (Button) findViewById(R.id.next);
         play = (Button)findViewById(R.id.play);
@@ -136,12 +136,15 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                 break;
         }
 
+        //get image
+
+        path1 = tbActivity.getPath1();
+        getImage(path1);
+
         txt.setText(title1);
         txt.setTextColor(getResources().getColor(R.color.my_black));
         txt.setTextSize(18);
 
-        String img_url = url_download+path1;
-        //Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         voice.setOnClickListener(this);
         next.setOnClickListener(this);

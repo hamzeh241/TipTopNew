@@ -103,7 +103,7 @@ public class A20 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar) findViewById(R.id.p);
         p.setMax(100);
-        img = (NetworkImageView) findViewById(R.id.text);
+        img = (NetworkImageView) findViewById(R.id.img1);
         linear = (LinearLayout) findViewById(R.id.linear);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);

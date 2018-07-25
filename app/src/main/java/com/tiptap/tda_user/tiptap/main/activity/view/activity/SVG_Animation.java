@@ -16,7 +16,7 @@ public class SVG_Animation extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.svg_animation, container, false);
-        img = (ImageView) view.findViewById(R.id.text);
+        img = (ImageView) view.findViewById(R.id.img1);
         return view;
     }
 }

@@ -102,7 +102,7 @@ public class A42 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
-        text=(TextView)findViewById(R.id.text);
+        text=(TextView)findViewById(R.id.img1);
         LinearLayout l4  = (LinearLayout)findViewById(R.id.l4);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);

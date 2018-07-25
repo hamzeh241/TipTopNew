@@ -89,7 +89,7 @@ public class A28 extends BaseActivity
         seekBar.setMax(99);
         play = (Button) findViewById(R.id.play);
         next = (Button) findViewById(R.id.next);
-        editText = (EditText) findViewById(R.id.text);
+        editText = (EditText) findViewById(R.id.img1);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
         mpt = MediaPlayer.create (this, R.raw.true_sound);

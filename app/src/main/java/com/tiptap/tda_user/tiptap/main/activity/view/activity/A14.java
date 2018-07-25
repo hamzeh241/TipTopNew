@@ -71,7 +71,7 @@ public class A14 extends BaseActivity
         tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         idactivity = tbActivity.get_id();
         title1activity = tbActivity.getTitle1();
-        //path1 = tbActivity.getPath1();
+        path1 = tbActivity.getPath1();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
@@ -102,7 +102,7 @@ public class A14 extends BaseActivity
       //set layout
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.text);
+        img = (NetworkImageView) findViewById(R.id.img1);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);

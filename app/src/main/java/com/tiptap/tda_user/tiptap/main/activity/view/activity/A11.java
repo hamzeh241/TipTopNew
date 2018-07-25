@@ -81,7 +81,7 @@ public class A11 extends BaseActivity
         //set view
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView) findViewById(R.id.text);
+        txt = (TextView) findViewById(R.id.img1);
         edt = (EditText) findViewById(R.id.edt);
         next = (Button)findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);

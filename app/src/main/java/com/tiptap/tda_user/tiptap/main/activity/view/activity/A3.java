@@ -68,7 +68,7 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
 
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView) findViewById(R.id.text);
+        txt = (TextView) findViewById(R.id.img1);
         mp = new MediaPlayer();
         seekBar = (SeekBar) findViewById(R.id.seekbar);
         play = (Button) findViewById(R.id.play);

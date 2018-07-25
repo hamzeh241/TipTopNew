@@ -54,7 +54,7 @@ public class A34 extends BaseActivity
     }
 
     private void setupViews() {
-        txt = (TextView)findViewById(R.id.text);
+        txt = (TextView)findViewById(R.id.img1);
         next = (Button)findViewById(R.id.next);
         voice = (ImageView) findViewById(R.id.voice);
 

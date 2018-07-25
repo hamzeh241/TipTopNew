@@ -85,7 +85,7 @@ public class A22 extends BaseActivity
         });
 
 
-        img = (NetworkImageView) findViewById(R.id.text);
+        img = (NetworkImageView) findViewById(R.id.img1);
        // img.setImageURI("");
 
         //String w = "... hello hi... how are you";

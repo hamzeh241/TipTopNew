@@ -91,7 +91,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
         TextView titleTextView = (TextView) view.findViewById(R.id.title);
         titleTextView.setText(item.getTitle());
 
-        ImageView img = (ImageView) view.findViewById(R.id.text);
+        ImageView img = (ImageView) view.findViewById(R.id.img1);
         final Button btn = (Button) view.findViewById(R.id.next);
 
         int id_lesson = item.getId();
