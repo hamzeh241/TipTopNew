@@ -136,7 +136,6 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                 BaseSetingApi baseSetingApi=new BaseSetingApi(_context,_activity);
                 if(btn.getText().equals("Redo")){
                     int id_activity_type = lesson_presenter.activity_Type(id_lesson);
-
                     baseSetingApi.go_activity(view, id_activity_type, id_lesson,func,_activity);
                 }
                else if(btn.getText().equals("Start")){
@@ -145,7 +144,4 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             }
         });
     }
-
-
-
 }

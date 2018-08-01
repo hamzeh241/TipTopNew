@@ -57,8 +57,8 @@ public class Get_Lesson extends BaseSetingApi {
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Lesson?Id="+_Fid+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson(), null, new Response.Listener<JSONArray>() {
-
+                    url+ "Lesson?Id="+_Fid+"&rowVersion=0x0", null, new Response.Listener<JSONArray>() {
+                //+lesson_presenter.getMaxRowV_Lesson()
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;

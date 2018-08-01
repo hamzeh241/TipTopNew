@@ -1,8 +1,9 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import com.tiptap.tda_user.tiptap.R;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 
 public class AA2 extends BaseActivity {
 

@@ -28,12 +28,13 @@ public class Get_Activity extends BaseSetingApi {
     MVP_Lesson.ProvidedPresenterOps lesson_presenter;
     Context _context;
     Activity mactivity;
-int func;
+    int func;
     int _id;
     ProgressDialog progressDialog;
     View _view;
-boolean IsNet;
-    public Get_Activity(int id,  MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, View view,int nid,boolean _isNet) {
+    boolean IsNet;
+
+    public Get_Activity(int id, MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity, View view, int nid, boolean _isNet) {
         lesson_presenter = ppo;
         mactivity = activity;
         _context = context;

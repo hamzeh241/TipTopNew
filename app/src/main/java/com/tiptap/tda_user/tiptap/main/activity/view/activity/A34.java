@@ -19,6 +19,7 @@ import com.tiptap.tda_user.tiptap.di.module.A34_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class A34 extends BaseActivity
     }
 
     private void setupViews() {
-        txt = (TextView)findViewById(R.id.img);
+        txt = (TextView)findViewById(R.id.txt);
         next = (Button)findViewById(R.id.next);
         voice = (ImageView) findViewById(R.id.voice);
 

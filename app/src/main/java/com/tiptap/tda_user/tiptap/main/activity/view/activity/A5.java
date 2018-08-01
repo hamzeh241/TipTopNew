@@ -27,6 +27,7 @@ import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.List;
 import java.util.Random;
@@ -77,7 +78,7 @@ public class A5 extends BaseActivity
 
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView) findViewById(R.id.img);
+        txt = (TextView) findViewById(R.id.txt);
         edt = (EditText) findViewById(R.id.edt);
         next = (Button)findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);

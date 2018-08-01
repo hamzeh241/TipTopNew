@@ -28,6 +28,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 
 import java.util.List;
@@ -97,7 +98,7 @@ public class A45 extends BaseActivity
       //set layout
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.txt);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -168,7 +169,7 @@ public class A45 extends BaseActivity
         //get image
 
        path1 = tbActivity.getPath1();
-        getImage(path1);
+       //getImage(path1);
 
 
 

@@ -91,7 +91,7 @@
                 android:weightSum="1">
 
                 <com.android.volley.toolbox.NetworkImageView
-                    android:id="@+id/img"
+                    android:id="@+id/txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

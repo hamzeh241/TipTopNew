@@ -20,6 +20,7 @@ import com.tiptap.tda_user.tiptap.di.module.A6_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 
 import java.util.List;
 import javax.inject.Inject;
@@ -53,8 +54,8 @@ public class A6 extends BaseActivity
 
     private void setupViews(){
 
-        img = (NetworkImageView) findViewById(R.id.img);
-        txt = (TextView)findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.txt);
+        txt = (TextView)findViewById(R.id.txt);
 
         //mp = MediaPlayer.create(A6.this, R.raw.music);
         mp.setVolume(100,100);

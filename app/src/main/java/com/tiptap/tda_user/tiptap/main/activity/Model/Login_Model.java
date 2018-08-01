@@ -38,7 +38,7 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
     @Override
     public List<TbLanguage> getLanguages() {
         try{
-            String q = "SELECT [_Id],[Language],[RowVersion] FROM [TbLanguage]";
+            String q = "SELECT [_id],[Language],[RowVersion] FROM [TbLanguage]";
             Cursor cursor = dbAdapter.ExecuteQ(q);
             int count=cursor.getCount();
             cursor.moveToFirst();

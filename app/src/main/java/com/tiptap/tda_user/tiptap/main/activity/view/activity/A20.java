@@ -29,6 +29,7 @@ import com.tiptap.tda_user.tiptap.di.module.A20_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 
 import java.util.List;
@@ -110,7 +111,7 @@ public class A20 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar) findViewById(R.id.p);
         p.setMax(100);
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.txt);
         linear = (LinearLayout) findViewById(R.id.linear);
     }
 
@@ -172,7 +173,7 @@ public class A20 extends BaseActivity
 
         //get image]
         path1 = tbActivity.getPath1();
-        getImage(path1);
+        //getImage(path1);
 
 
         next.setOnClickListener(this);

@@ -20,6 +20,7 @@ import com.tiptap.tda_user.tiptap.di.module.A29_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class A29 extends BaseActivity
 
     private void setupViews(){
 
-        textView = (TextView) findViewById(R.id.img);
+        textView = (TextView) findViewById(R.id.txt);
         editText = (EditText) findViewById(R.id.edt);
 
         //mp = MediaPlayer.create(A29.this, R.raw.music);

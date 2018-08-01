@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -32,6 +33,7 @@ import com.tiptap.tda_user.tiptap.di.module.A27_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +77,8 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
 
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView)findViewById(R.id.img);
-        img = (NetworkImageView) findViewById(R.id.img);
+        txt = (TextView)findViewById(R.id.txt);
+        img = (ImageView) findViewById(R.id.img);
         voice = (ImageView)findViewById(R.id.voice);
         next = (Button) findViewById(R.id.next);
         play = (Button)findViewById(R.id.play);
@@ -142,7 +144,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
         txt.setTextSize(18);
 
         String img_url = url_download+path1;
-        //Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
+        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         voice.setOnClickListener(this);
         next.setOnClickListener(this);
@@ -533,5 +535,4 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
         A27.this.finish();
         startActivity(new Intent(A27.this, Lesson.class));
     }
-
 }

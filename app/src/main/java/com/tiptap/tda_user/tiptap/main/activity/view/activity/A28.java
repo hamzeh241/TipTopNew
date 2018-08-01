@@ -28,6 +28,7 @@ import com.tiptap.tda_user.tiptap.di.module.A28_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.List;
 import java.util.Random;
@@ -89,7 +90,7 @@ public class A28 extends BaseActivity
         seekBar.setMax(99);
         play = (Button) findViewById(R.id.play);
         next = (Button) findViewById(R.id.next);
-        editText = (EditText) findViewById(R.id.img);
+        editText = (EditText) findViewById(R.id.txt);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
         mpt = MediaPlayer.create (this, R.raw.true_sound);

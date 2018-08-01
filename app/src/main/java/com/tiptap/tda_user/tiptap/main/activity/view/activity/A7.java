@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.tiptap.tda_user.tiptap.di.module.A7_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 
 import java.util.List;
@@ -73,8 +75,8 @@ public class A7 extends BaseActivity
 
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.img);
-        txt = (TextView) findViewById(R.id.img);
+        img = (ImageView) findViewById(R.id.img);
+        txt = (TextView) findViewById(R.id.txt);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();
@@ -136,9 +138,7 @@ public class A7 extends BaseActivity
         txt.setTextColor(getResources().getColor(R.color.my_black));
 
         String img_url = url_download+path1;
-        //GlideApp.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
-
-       Glide.with(this).load(img_url).into(img);
+        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         next.setOnClickListener(this);
 

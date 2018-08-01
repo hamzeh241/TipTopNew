@@ -127,7 +127,7 @@
                     android:scrollbars="vertical">
 
                     <EditText
-                        android:id="@+id/img"
+                        android:id="@+id/txt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="write that things you are hear"

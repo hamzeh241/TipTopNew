@@ -38,7 +38,7 @@ public class Function_Adapter extends RecyclerView.Adapter<Function_Adapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.img);
+            textView = (TextView) itemView.findViewById(R.id.txt);
             imageView = (ImageView) itemView.findViewById(R.id.img);
             button = (Button) itemView.findViewById(R.id.btn);
         }
@@ -59,22 +59,37 @@ public class Function_Adapter extends RecyclerView.Adapter<Function_Adapter.View
         int first = function_presenter.first();
 
         if(_id == 0){
+            // first function is ((Start))
             if(id_function == first){
                 function_presenter.update_idfunction(first);
                 holder.button.setBackgroundResource(R.drawable.btn_blue);
                 holder.button.setText("Start");
                 holder.button.setTextColor(Color.parseColor("#000000"));
+            }else{
+                // other function - Button color - disable
+                holder.button.setBackgroundResource(R.drawable.btn_gray);
+                holder.button.setTextColor(Color.parseColor("#919396"));
+                holder.button.setText("locked");
             }
         } else {
-            if(id_function < _id){
-                holder.button.setBackgroundResource(R.drawable.btn_green);
-                holder.button.setText("Redo");
-                holder.button.setTextColor(Color.parseColor("#000000"));
-            }
-            if(id_function == _id){
-                holder.button.setBackgroundResource(R.drawable.btn_blue);
-                holder.button.setText("Start");
-                holder.button.setTextColor(Color.parseColor("#000000"));
+            if(id_function <= _id){
+                // passed function is ((Redo))
+                if(id_function < _id){
+                    holder.button.setBackgroundResource(R.drawable.btn_green);
+                    holder.button.setText("Redo");
+                    holder.button.setTextColor(Color.parseColor("#000000"));
+                }
+                // now function is ((Start))
+                if(id_function == _id){
+                    holder.button.setBackgroundResource(R.drawable.btn_blue);
+                    holder.button.setText("Start");
+                    holder.button.setTextColor(Color.parseColor("#000000"));
+                }
+            }else{
+                // other function - Button color- disable
+                holder.button.setBackgroundResource(R.drawable.btn_gray);
+                holder.button.setTextColor(Color.parseColor("#919396"));
+                holder.button.setText("locked");
             }
         }
 

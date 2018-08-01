@@ -22,6 +22,7 @@ import com.tiptap.tda_user.tiptap.di.module.A22_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 
 import java.util.List;
 import android.widget.LinearLayout.LayoutParams;
@@ -88,7 +89,7 @@ public class A22 extends BaseActivity
         });
 
 
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (NetworkImageView) findViewById(R.id.txt);
        // img.setImageURI("");
 
         //String w = "... hello hi... how are you";

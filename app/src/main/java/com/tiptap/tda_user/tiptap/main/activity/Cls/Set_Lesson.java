@@ -3,7 +3,6 @@ package com.tiptap.tda_user.tiptap.main.activity.Cls;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
-
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardItem;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
@@ -30,7 +29,7 @@ public class Set_Lesson extends BaseSetingApi {
     }
 
     public void load() {
-       // Toast.makeText(_context, _nid+" : fid", Toast.LENGTH_LONG).show();
+        //Toast.makeText(_context, _nid+" : fid", Toast.LENGTH_LONG).show();
         if(lesson_presenter.getCount_Lesson(_nid) != 0){
             //Toast.makeText(_context, lesson_presenter.getCount_Lesson(_nid)+" : size fid", Toast.LENGTH_LONG).show();
             for (int i = 0; i < lesson_presenter.getCount_Lesson(_nid); i++) {

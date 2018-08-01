@@ -1,4 +1,4 @@
-package com.tiptap.tda_user.tiptap.main.activity.view.activity;
+package com.tiptap.tda_user.tiptap.main.activity.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,35 +22,70 @@ import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A18;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A19;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A20;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A22;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A24;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A25;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A27;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A28;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A29;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A3;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A30;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A31;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A32;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A33;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A34;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A35;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A37;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A38;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A39;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A4;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A40;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A41;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A42;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A43;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A44;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A46;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A5;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A6;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A8;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.A9;
+
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements MVP_Main.RequiredViewOps {
 
-   public final int REQ_CODE_SPEECH_INPUT = 100;
-   public String url_download = "http://tiptop.tdaapp.ir/image/";
+
+    public final int REQ_CODE_SPEECH_INPUT = 100;
+    public String url_download = "http://tiptop.tdaapp.ir/image/";
     public static int idlesson;
     public static int idfunction;
     public static int activitynumber;
     public static String Act_Status;
     public static int idactivity;
-    TbActivity tbActivity;
-    int max,now_less;
-    String title1, path1, path2,title2;
-    SeekBar seekBar;
+    public TbActivity tbActivity;
+    public int max,now_less;
+    public String title1, path1, path2,title2;
+    public SeekBar seekBar;
     public MediaPlayer mp, mpt, mpf;
-    int mpLength;
-    final Handler handler = new Handler();
-    Handler seekHandler = new Handler();
-    boolean end = false;
-    ProgressBar p;
-    int all;
-    TextView txt1,txt2,t1,t2,txt;
-    Button play,next;
-    List<TbActivityDetail> tbActivityDetailList;
-    NetworkImageView img;
-    String you_say = "";
-    ImageView voice;
-    ImageLoader imageLoader;
+    public int mpLength;
+    public final Handler handler = new Handler();
+    public Handler seekHandler = new Handler();
+    public boolean end = false;
+    public ProgressBar p;
+    public int all;
+    public TextView txt1,txt2,t1,t2,txt;
+    public Button play,next;
+    public List<TbActivityDetail> tbActivityDetailList;
+    public ImageView img;
+    public String you_say = "";
+    public ImageView voice;
+    public ImageLoader imageLoader;
 
     public boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
@@ -784,7 +819,7 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
         }
     }
-    public void getImage(String path){
+    /*public void getImage(String path){
         path1=path;
         String img_url = url_download + path1;
         RequestQueue newRequest= Volley.newRequestQueue(BaseActivity.this);
@@ -798,5 +833,5 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
             }
         });
         img.setImageUrl(img_url,imageLoader);
-    }
+    }*/
 }

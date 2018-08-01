@@ -55,7 +55,9 @@ public class Get_Function extends BaseSetingApi {
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Function?rowVersion="+function_presenter.getMaxRowV_Function(), null, new Response.Listener<JSONArray>() {
+                    url+ "Function?rowVersion=0x0", null, new Response.Listener<JSONArray>() {
+
+                //function_presenter.getMaxRowV_Function()
 
                 @Override
                 public void onResponse(JSONArray response) {

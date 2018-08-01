@@ -4,7 +4,7 @@ import com.tiptap.tda_user.tiptap.di.scope.ActivityScope;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Model.Main_Model;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.BaseActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 
 import dagger.Module;
 import dagger.Provides;

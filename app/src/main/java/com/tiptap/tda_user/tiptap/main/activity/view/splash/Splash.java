@@ -14,7 +14,6 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
 import javax.inject.Inject;
@@ -50,11 +49,8 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                 }else if (count == 1){
                     int fid = mPresenter.Id_Function();
                     Function.id_function = fid;
-
-                   // Splash.this.finish();
-                    //__________________________________
-
-
+                    Splash.this.finish();
+                    /*__________________________________
                     A26.idlesson = 24 ;
                     A26.idfunction =8;
                     A26.idactivity = 556;
@@ -62,15 +58,8 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                     A26.activitynumber=17;
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this,  A26.class));
-
-
-
-
-
-
-                    //_____________________________________
-                   // startActivity(new Intent(Splash.this, Function.class));
-
+                    */
+                    startActivity(new Intent(Splash.this, Function.class));
                 }
             }
         }, 3000);

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 
-
 android {
     compileSdkVersion 25
     buildToolsVersion '26.0.2'
@@ -26,7 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //noinspection GradleCompatible
-    compile 'com.android.support:appcompat-v7:25.4.0'
+    compile 'com.android.support:appcompat-v7:25.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     // Recycler View
@@ -40,7 +39,6 @@ dependencies {
     // Dagger
     compile 'com.google.dagger:dagger:2.4'
     annotationProcessor "com.google.dagger:dagger-compiler:2.4"
-
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile 'com.google.dagger:dagger:2.7'
     // Circular menu
@@ -50,8 +48,7 @@ dependencies {
     // glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
     // fragment
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:support-v4:25.+'
     //spinner
     compile 'com.jaredrummler:material-spinner:1.2.4'
 }
-

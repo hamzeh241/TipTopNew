@@ -28,6 +28,7 @@ import com.tiptap.tda_user.tiptap.di.module.A33_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class A33 extends BaseActivity
 
     private void setupViews() {
 
-        txt = (TextView) findViewById(R.id.img);
+        txt = (TextView) findViewById(R.id.txt);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();

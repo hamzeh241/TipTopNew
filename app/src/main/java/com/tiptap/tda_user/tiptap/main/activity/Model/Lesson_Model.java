@@ -48,16 +48,16 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
 
     @Override
     public String getMaxRowV_Lesson() {
-        String q="SELECT MAX(RowVersion) as RowVersion FROM TbLesson";
-        Cursor cursor=dbAdapter.ExecuteQ(q);
-        int count=cursor.getCount();
-        cursor.moveToFirst();
+       // String q="SELECT MAX(RowVersion) as RowVersion FROM TbLesson";
+        //Cursor cursor=dbAdapter.ExecuteQ(q);
+        //int count=cursor.getCount();
+        //cursor.moveToFirst();
         String id="0x0";
-        for (int i = 0; i < count; i++) {
-            id=cursor.getString(0);
-        }
-        if(null==id)
-            id="0x0";
+        //for (int i = 0; i < count; i++) {
+        //    id=cursor.getString(0);
+        //}
+        //if(null==id)
+        //    id="0x0";
         return id;
     }
 
@@ -388,7 +388,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
 
     @Override
     public String your_name() {
-        String q="SELECT [NameInApp] FROM [aspnet_Users]";
+        String q="SELECT [Name] FROM [aspnet_Users]";
         Cursor cursor=dbAdapter.ExecuteQ(q);
         int count=cursor.getCount();
         cursor.moveToFirst();

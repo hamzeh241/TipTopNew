@@ -22,6 +22,8 @@ import com.tiptap.tda_user.tiptap.di.module.A3_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
+
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -68,7 +70,7 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
 
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        txt = (TextView) findViewById(R.id.img);
+        txt = (TextView) findViewById(R.id.txt);
         mp = new MediaPlayer();
         seekBar = (SeekBar) findViewById(R.id.seekbar);
         play = (Button) findViewById(R.id.play);
