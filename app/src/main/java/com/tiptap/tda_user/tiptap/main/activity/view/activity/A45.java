@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,18 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A45_Module;
-
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
-
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 
 import java.util.List;
@@ -81,14 +78,14 @@ public class A45 extends BaseActivity
         title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
 
         // find answer
-        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
-            answer = title1;
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+            answer = tbActivityDetailList.get(0).getTitle1().toString();
         }
 
         //////////////
-        else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
+        else if (tbActivityDetailList.get(1).getIsAnswer().equals("1")) {
             // answer = title2;
-            answer=tbActivityDetailList.get(1).getTitle1();
+            answer=tbActivityDetailList.get(1).getTitle1().toString();
         }
 //answer=title2detailactivity;
 //String aa=answer;
@@ -98,7 +95,7 @@ public class A45 extends BaseActivity
       //set layout
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.txt);
+        img = (NetworkImageView) findViewById(R.id.img1);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -109,6 +106,8 @@ public class A45 extends BaseActivity
         p = (ProgressBar)findViewById(R.id.p);
         next = (Button) findViewById(R.id.next);
         text=(TextView)findViewById(R.id.title);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
 
     }
 
@@ -169,7 +168,7 @@ public class A45 extends BaseActivity
         //get image
 
        path1 = tbActivity.getPath1();
-       //getImage(path1);
+        getImage(path1);
 
 
 
@@ -270,6 +269,9 @@ public class A45 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
 
                         } else {
 
@@ -296,7 +298,8 @@ public class A45 extends BaseActivity
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
 
-
+                            // play sound
+                            mpf.start();
                         }
 
                         // change text color for button next when answer is true or false
@@ -484,7 +487,7 @@ public class A45 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA45Component(new A45_Module(this))
+                .getA45Component(new Main_Module(this))
                 .inject(this);
     }
 

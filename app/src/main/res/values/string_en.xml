@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="A38_EN">...</string>
+    <string name="A4_EN">...</string>
     <string name="A1_EN">...</string>
     <string name="A2_EN">...</string>
+    <string name="A6_EN">...</string>
+    <string name="A10_EN">...</string>
+    <string name="A11_EN">...</string>
+    <string name="A14_EN">...</string>
+    <string name="A16_EN">...</string>
     <string name="A18_EN">...</string>
+    <string name="A24_EN">...</string>
     <string name="A27_EN">Listen and repeat</string>
     <string name="A7_EN">Listening</string>
     <string name="A19_EN">Match the following words</string>
@@ -14,9 +21,15 @@
     <string name="A8_EN">Put the following words in correct place</string>
     <string name="A32_EN">Listen and Say</string>
     <string name="A28_EN">Write what you hear</string>
+    <string name="A42_EN">...</string>
     <string name="A45_EN">Reading Comprehension</string>
     <string name="A46_EN">Complete the conversation</string>
     <string name="A3_EN">Listen</string>
     <string name="A15_EN">Choose the correct answer</string>
     <string name="A26_EN">Order the conversation</string>
+    <string name="A48_EN">...</string>
+    <string name="A49_EN">...</string>
+    <string name="A47_EN">...</string>
+    <string name="A12_EN">...</string>
+    <string name="A13_EN">...</string>
 </resources>

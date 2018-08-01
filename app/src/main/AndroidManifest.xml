@@ -43,7 +43,21 @@
         <activity
             android:name=".main.activity.view.activity.A1"/>
         <activity
+            android:name=".main.activity.view.activity.A11"/>
+        <activity
+            android:name=".main.activity.view.activity.A14"/>
+        <activity
+            android:name=".main.activity.view.activity.A16"/>
+        <activity
+            android:name=".main.activity.view.activity.A10"/>
+        <activity
+            android:name=".main.activity.view.activity.A12"/>
+        <activity
+            android:name=".main.activity.view.activity.A13"/>
+        <activity
             android:name=".main.activity.view.activity.A1_"/>
+        <activity
+            android:name=".main.activity.view.activity.A6"/>
         <activity
             android:name=".main.activity.view.activity.End"/>
         <activity
@@ -62,8 +76,6 @@
             android:name=".main.activity.view.activity.A28"/>
         <activity
             android:name=".main.activity.view.activity.A4"/>
-        <activity
-            android:name=".main.activity.view.activity.A6"/>
         <activity
             android:name=".main.activity.view.activity.A30"/>
         <activity
@@ -116,5 +128,7 @@
             android:name=".main.activity.view.activity.A47"/>
         <activity
             android:name=".main.activity.view.activity.A48"/>
+        <activity
+            android:name=".main.activity.view.activity.A49"/>
     </application>
 </manifest>

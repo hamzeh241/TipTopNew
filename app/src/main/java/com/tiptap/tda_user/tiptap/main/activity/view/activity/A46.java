@@ -26,11 +26,10 @@ import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A46_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
-import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.List;
 import java.util.Random;
@@ -762,7 +761,7 @@ public class A46 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA46Component(new A46_Module(this))
+                .getA46Component(new Main_Module(this))
                 .inject(this);
     }
 

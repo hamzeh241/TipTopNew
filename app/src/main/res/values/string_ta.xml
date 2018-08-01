@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="A1_TA">...</string>
+    <string name="A4_TA">...</string>
     <string name="A2_TA">...</string>
+    <string name="A6_TA">...</string>
+    <string name="A10_TA">...</string>
+    <string name="A11_TA">...</string>
+    <string name="A14_TA">...</string>
+    <string name="A16_TA">...</string>
     <string name="A38_TA">...</string>
     <string name="A18_TA">...</string>
+    <string name="A24_TA">...</string>
     <string name="A27_TA">Qulaq asın və təkrar eləyin</string>
     <string name="A7_TA">Dinləyin</string>
     <string name="A19_TA">Aşağıdakı sözləri birlikdə birləşdirin</string>
@@ -14,9 +21,15 @@
     <string name="A8_TA">Aşağıdakı sözləri müvafiq yerə qoyun</string>
     <string name="A32_TA">Dinle ve söyle</string>
     <string name="A28_TA">Eşitdiyiniz şeyi yazın</string>
+    <string name="A42_TA">...</string>
     <string name="A45_TA">...</string>
     <string name="A46_TA">Diyaloğu tamamla</string>
     <string name="A3_TA">dinlemek</string>
     <string name="A15_TA">Doğru cevabı seç</string>
     <string name="A26_TA">Söhbəti tamamlamaq üçün aşağıdakı cümlələri sıralayın</string>
+    <string name="A48_TA">...</string>
+    <string name="A49_TA">...</string>
+    <string name="A47_TA">...</string>
+    <string name="A12_TA">...</string>
+    <string name="A13_TA">...</string>
 </resources>
