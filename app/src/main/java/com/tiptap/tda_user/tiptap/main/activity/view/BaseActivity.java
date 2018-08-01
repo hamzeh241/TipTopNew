@@ -2,23 +2,17 @@ package com.tiptap.tda_user.tiptap.main.activity.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.LruCache;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
@@ -55,7 +49,6 @@ import com.tiptap.tda_user.tiptap.main.activity.view.activity.A6;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A8;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.A9;
-
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements MVP_Main.RequiredViewOps {
@@ -79,7 +72,7 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
     public boolean end = false;
     public ProgressBar p;
     public int all;
-    public TextView txt1,txt2,t1,t2,txt;
+    public TextView txt1,txt2,t1,t2,txt,txt3;
     public Button play,next;
     public List<TbActivityDetail> tbActivityDetailList;
     public ImageView img;
@@ -322,9 +315,9 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 25:
-                //A25.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A25.idlesson = idlesson ;
+                A25 .idfunction = idfunction ;
+                A25.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A25.class));
                 break;
@@ -375,9 +368,9 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 31:
-                //A31.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A31.idlesson = idlesson ;
+                A31.idfunction = idfunction ;
+                A31.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A31.class));
                 break;

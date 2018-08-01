@@ -13,21 +13,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.android.volley.toolbox.NetworkImageView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A22_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
-
 import java.util.List;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
-
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
@@ -40,11 +37,8 @@ public class A22 extends BaseActivity
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
 
-
-
     TextView t[];
     EditText e[];
-
 
     boolean end = false;
 
@@ -486,9 +480,9 @@ public class A22 extends BaseActivity
                             case 23: break;
 
                             case 24:
-                                A24.idlesson = idlesson ;
-                                A24.idfunction = idfunction ;
-                                A24.activitynumber = activitynumber;
+                                //A24.idlesson = idlesson ;
+                                //A24.idfunction = idfunction ;
+                                //A24.activitynumber = activitynumber;
                                 A22.this.finish();
                                 startActivity(new Intent(A22.this,  A24.class));
                                 break;
@@ -691,7 +685,7 @@ public class A22 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA22Component(new A22_Module(this))
+                .getA22Component(new Main_Module(this))
                 .inject(this);
     }
 
