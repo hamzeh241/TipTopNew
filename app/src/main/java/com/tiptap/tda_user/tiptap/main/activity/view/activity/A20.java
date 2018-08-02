@@ -20,18 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A20_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -46,7 +45,6 @@ public class A20 extends BaseActivity
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
 
-
     LinearLayout linear;
     TextView t[];
     EditText e[];
@@ -55,7 +53,6 @@ public class A20 extends BaseActivity
     int xali = 0;
     TextView text;
     String title1detailactivity, title2detailactivity, title1activity;
-
     int fill = 0, count = 0;
 
     @Override
@@ -77,7 +74,6 @@ public class A20 extends BaseActivity
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
-
         // get tbactivity
         tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         idactivity = tbActivity.get_id();
@@ -85,25 +81,23 @@ public class A20 extends BaseActivity
         int idactivity = tbActivity.get_id();
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         count = tbActivityDetailList.size();
+        path1 = tbActivity.getPath1();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-
 
         // set title 1
         if (title1activity.equals("") || title1activity.equals("null")) {
             // nothing
         } else {
             // show title 1
-
         }
 
         after_setup();
     }
 
     private void setupViews() {
-
 
         t1 = (TextView) findViewById(R.id.title1);
         t2 = (TextView) findViewById(R.id.title2);
@@ -118,9 +112,7 @@ public class A20 extends BaseActivity
     private void after_setup() {
 
         if (title1activity.equals("null")) {
-
         } else {
-
             text.setText(title1activity);
         }
 
@@ -170,16 +162,12 @@ public class A20 extends BaseActivity
         }
 
         //get image
-
-        //get image]
-        path1 = tbActivity.getPath1();
-        //getImage(path1);
-
+        String img_url = url_download+path1;
+        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         next.setOnClickListener(this);
 
-
-        //.........................
+        //........................
 
         String temp = tbActivityDetailList.get(0).getTitle2();
         if (temp.equals("null")) {
@@ -199,13 +187,11 @@ public class A20 extends BaseActivity
             }
         }
 
-
         ans = new String[xali];
         int c = 0;
 
         String temp1 = tbActivityDetailList.get(0).getTitle2();
         if (temp.equals("null")) {
-
             // set have for some multiple answer
 
         } else {
@@ -312,7 +298,6 @@ public class A20 extends BaseActivity
                 linear.addView(t[id_t]);
 
             }
-
         }
 
         // have more than 1
@@ -416,20 +401,6 @@ public class A20 extends BaseActivity
         }
     }
 
-
-    //String w = "...te...";
-        /*String w = "te...";
-        String w = "...te...er";
-        String w = "...tor";
-        String w = "...si...r";
-        String w = "an...chi...";
-        String w = "...am a student.";
-        String w = "She ... a banker.";*/
-
-
-
-
-
     @Override
     public void onClick(View v) {
 
@@ -475,8 +446,6 @@ public class A20 extends BaseActivity
                                 e[i].setFocusable(false);
                             }
 
-
-
                             // Fragment_true
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
                             Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
@@ -489,8 +458,6 @@ public class A20 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
-
-
                         } else {
 
                             // Clickable_false
@@ -501,7 +468,6 @@ public class A20 extends BaseActivity
                                 e[i].setFocusable(false);
                             }
                             p.setClickable(false);
-
 
                             // Fragment_false
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
@@ -516,9 +482,6 @@ public class A20 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
-
-
-
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -656,7 +619,6 @@ public class A20 extends BaseActivity
                                 }
                                 A20.this.finish();
                                 startActivity(new Intent(A20.this, End.class));
-
                             }
 
                             // number != 0 and go on to Next
@@ -815,7 +777,7 @@ public class A20 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA20Component(new A20_Module(this))
+                .getA20Component(new Main_Module(this))
                 .inject(this);
     }
 

@@ -15,29 +15,25 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A2_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
-
 import java.util.List;
 import java.util.Random;
-
 import javax.inject.Inject;
-
 
 /**
  * Created by tafsiri on 6/25/2018.
@@ -45,7 +41,7 @@ import javax.inject.Inject;
 
 public class A2 extends BaseActivity
         implements MVP_Main.RequiredViewOps,
-        View.OnClickListener, View.OnTouchListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
+        View.OnClickListener, View.OnTouchListener{
 
     private static final String TAG = A2.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer(getFragmentManager(), A2.class.getName());
@@ -83,7 +79,6 @@ public class A2 extends BaseActivity
         path1 = tbActivity.getPath1();
         path2 = tbActivity.getPath2();
 
-
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
@@ -91,13 +86,9 @@ public class A2 extends BaseActivity
 
         //Find Answer
         if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
-            answer = title1;
-        }
-
-        //////////////
-       else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
-           // answer = title2;
-            answer=tbActivityDetailList.get(1).getTitle1();
+            answer = title1detailactivity;
+        } else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
+            answer=title2detailactivity;
         }
 
         after_setup();
@@ -105,7 +96,7 @@ public class A2 extends BaseActivity
 
     //set up graphic Elements
     private void setupViews() {
-        img = (NetworkImageView) findViewById(R.id.txt);
+        img = (ImageView) findViewById(R.id.img);
         t1 = (TextView) findViewById(R.id.title1);
         t2 = (TextView) findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -120,12 +111,11 @@ public class A2 extends BaseActivity
 
     private void after_setup() {
 
-        if (title1==null) {
-
+        if (title1.equals("") || title1.equals("null")) {
         } else {
-
             text.setText(title1);
         }
+
         all = mPresenter.countActivity(idlesson);
 
         // set all activity false in activitynumber = 1
@@ -174,8 +164,8 @@ public class A2 extends BaseActivity
                 break;
         }
 
-        //get image
-      //getImage(path1);
+        String img_url = url_download+path1;
+        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         // set text for checkbox
         txt1.setText(title1detailactivity);
@@ -185,7 +175,6 @@ public class A2 extends BaseActivity
         next.setOnClickListener(this);
         a.setOnClickListener(this);
         b.setOnClickListener(this);
-
     }
 
     @Override
@@ -232,7 +221,6 @@ public class A2 extends BaseActivity
                             }
                         }
                         if (ans) {
-
                             //play sound
                             if (haveNetworkConnection()) {
                                 try {
@@ -243,17 +231,14 @@ public class A2 extends BaseActivity
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
                                 mpLength = mp.getDuration();
                                 mp.start();
-
-                            //    SeekBarProgressUpdater();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                             }
-                            mp.setOnBufferingUpdateListener(this);
-                            mp.setOnCompletionListener(this);
+                            //mp.setOnBufferingUpdateListener(this);
+                            //mp.setOnCompletionListener(this);
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -398,7 +383,6 @@ public class A2 extends BaseActivity
 
                         // first
                         go_activity2(id_at_new, "first", activitynumber);
-
                     }
                 }
 
@@ -447,7 +431,6 @@ public class A2 extends BaseActivity
                         }
                         A2.this.finish();
                         startActivity(new Intent(A2.this, End.class));
-
                     }
 
                     // number != 0 and go on to Next
@@ -466,26 +449,21 @@ public class A2 extends BaseActivity
                         go_activity1(id_at_new_f, "second", id_act);
                     }
                 }
-
             }
-
             break;
-        }
+          }
         }
     }
 
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-//        seekBar.setSecondaryProgress(percent);
-    }
+   /* @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {}
 
     @Override
     public void onCompletion(MediaPlayer mp) {
         end = true;
-        play.setBackgroundResource(R.drawable.play);
         next.setTextColor(Color.WHITE);
         next.setBackgroundResource(R.drawable.btn_green);
-    }
+    }*/
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -526,7 +504,7 @@ public class A2 extends BaseActivity
 
         SampleApp.get(this)
                 .getAppComponent()
-                .getA2Component(new A2_Module(this))
+                .getA2Component(new Main_Module(this))
                 .inject(this);
     }
 

@@ -55,8 +55,6 @@
         <activity
             android:name=".main.activity.view.activity.A13"/>
         <activity
-            android:name=".main.activity.view.activity.A1_"/>
-        <activity
             android:name=".main.activity.view.activity.A6"/>
         <activity
             android:name=".main.activity.view.activity.End"/>

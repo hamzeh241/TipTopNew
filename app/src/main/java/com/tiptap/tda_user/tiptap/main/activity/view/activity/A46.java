@@ -96,8 +96,12 @@ public class A46 extends BaseActivity
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
         LinearLayout l3 = (LinearLayout)findViewById(R.id.l3);
         LinearLayout l4  = (LinearLayout)findViewById(R.id.l4);
+        LinearLayout l5  = (LinearLayout)findViewById(R.id.l5);
+        LinearLayout l6  = (LinearLayout)findViewById(R.id.l6);
+        LinearLayout l7  = (LinearLayout)findViewById(R.id.l7);
+        LinearLayout l8  = (LinearLayout)findViewById(R.id.l8);
 
-        l = new LinearLayout[]{l1, l2, l3, l4};
+        l = new LinearLayout[]{l1, l2, l3, l4, l5, l6, l7, l8};
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
@@ -642,7 +646,7 @@ public class A46 extends BaseActivity
             // yek javab
             int baxsh = 0;
             for(int j=0 ; j<ans[i].length() ; j++){
-                if(ans[i].charAt(j) == ','){
+                if(ans[i].charAt(j) == '^'){ // Replace , TO ^
                     baxsh++;
                 }
             }
@@ -656,7 +660,7 @@ public class A46 extends BaseActivity
 
                 // 2 baxsh
                 case 1:
-                    String[] s = ans[i].split(",");
+                    String[] s = ans[i].split("\\^"); // Replace , TO ^ // Pattern.quote("^")
                     String[] x = s[0].split("/");
                     String[] y = s[1].split("/");
 
@@ -672,7 +676,7 @@ public class A46 extends BaseActivity
 
                 // 3 baxsh
                 case 2:
-                    String[] a = ans[i].split(",");
+                    String[] a = ans[i].split("\\^");  // Replace , TO ^
                     String[] b = a[0].split("/");
                     String[] c = a[1].split("/");
                     String[] d = a[2].split("/");
@@ -693,8 +697,8 @@ public class A46 extends BaseActivity
             // moqayese ba javab
             result = result + " / "+ z[0] ;
             for(int j=0 ; j < z.length ; j++){
-                String a = nice_string1( e[i].getText().toString() );
-                String b = nice_string1( z[j].toString() );
+                String a = nice_string2( e[i].getText().toString() );
+                String b = nice_string2( z[j].toString() );
                 if(a.equals(b)){
                     answer[cc] = true;
                     cc++;

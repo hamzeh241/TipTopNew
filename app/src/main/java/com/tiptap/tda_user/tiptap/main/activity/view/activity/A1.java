@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A1_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -36,12 +36,12 @@ import java.util.Random;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
-public class A1_ extends BaseActivity
+public class A1 extends BaseActivity
                 implements MVP_Main.RequiredViewOps,
                 OnClickListener {
 
-    private static final String TAG = A1_.class.getSimpleName();
-    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A1_.class.getName());
+    private static final String TAG = A1.class.getSimpleName();
+    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A1.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
@@ -283,7 +283,7 @@ public class A1_ extends BaseActivity
                     e[id_e].setEms(12);
                     e[id_e].setTextSize(16);
                     e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                    e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                    e[id_e].addTextChangedListener(new A1.CheckEdit());
                     if(added<l.length)
                     l[added].addView(e[id_e]);
                     id_e++;
@@ -313,7 +313,7 @@ public class A1_ extends BaseActivity
                             e[id_e].setEms(5);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                            e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                            e[id_e].addTextChangedListener(new A1.CheckEdit());
                             if(added<l.length)
                             l[added].addView(e[id_e]);
                             id_e++;
@@ -353,7 +353,7 @@ public class A1_ extends BaseActivity
                                 e[id_e].setEms(5);
                                 e[id_e].setTextSize(16);
                                 e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                                e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                                e[id_e].addTextChangedListener(new A1.CheckEdit());
                                 if(added<l.length)
                                 l[added].addView(e[id_e]);
                                 now = "txt";
@@ -371,7 +371,7 @@ public class A1_ extends BaseActivity
                             e[id_e].setEms(5);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                            e[id_e].addTextChangedListener(new A1_.CheckEdit());
+                            e[id_e].addTextChangedListener(new A1.CheckEdit());
                             if(added<l.length)
                             l[added].addView(e[id_e]);
                             id_e++;
@@ -543,8 +543,8 @@ public class A1_ extends BaseActivity
                                         }
                                     }
 
-                                    A1_.this.finish();
-                                    startActivity(new Intent(A1_.this, End.class));
+                                    A1.this.finish();
+                                    startActivity(new Intent(A1.this, End.class));
                                 }
 
                                 // number != 0 and go on to Next
@@ -616,8 +616,8 @@ public class A1_ extends BaseActivity
                                         break;
                                     }
                                 }
-                                A1_.this.finish();
-                                startActivity(new Intent(A1_.this, End.class));
+                                A1.this.finish();
+                                startActivity(new Intent(A1.this, End.class));
 
                             }
 
@@ -776,7 +776,7 @@ public class A1_ extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA1Component(new A1_Module(this))
+                .getA1Component(new Main_Module(this))
                 .inject(this);
     }
 
@@ -797,7 +797,7 @@ public class A1_ extends BaseActivity
     }
 
     public void back(){
-        A1_.this.finish();
-        startActivity(new Intent(A1_.this, Lesson.class));
+        A1.this.finish();
+        startActivity(new Intent(A1.this, Lesson.class));
     }
 }

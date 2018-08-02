@@ -28,12 +28,12 @@ public class Login extends BaseActivity implements MVP_Login.RequiredViewOps {
 
     List<TbLanguage> lans;
     List<String> title_lans;
-    int Id_Language = 0;
+    int Id_Language = 1;
     EditText username, email, password, name, lastname, age, city, country;
     Spinner spinner;
     CheckBox woman, man;
     Button login;
-    String select_language, select_jen;
+    String select_jen;
     private static final String TAG = Login.class.getSimpleName();
 
     @Inject
@@ -137,7 +137,6 @@ public class Login extends BaseActivity implements MVP_Login.RequiredViewOps {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TbLanguage language = lans.get(position);
                 Id_Language = language.get_id();
-                select_language = language.getLanguage();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
@@ -152,7 +151,7 @@ public class Login extends BaseActivity implements MVP_Login.RequiredViewOps {
                 String a1 = username.getText().toString();
                 String a2 = email.getText().toString();
                 String a3 = password.getText().toString();
-                String a4 = select_language;
+                String a4 = Id_Language+"";
                 String a5 = select_jen;
                 String a6 = name.getText().toString();
                 String a7 = lastname.getText().toString();

@@ -454,7 +454,7 @@ public class A5 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getComponent(new Main_Module(this))
+                .getA5Component(new Main_Module(this))
                 .inject(this);
     }
 
@@ -472,8 +472,8 @@ public class A5 extends BaseActivity
         boolean result = false;
         String r = edt.getText().toString();
         for(int i=0 ; i<z.length ; i++){
-            String a = nice_string1( r );
-            String b = nice_string1( z[i] );
+            String a = nice_string2( r );
+            String b = nice_string2( z[i] );
             if(a.equals(b)){
                 result = true;
             }

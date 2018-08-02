@@ -39,7 +39,7 @@ public class Function_Adapter extends RecyclerView.Adapter<Function_Adapter.View
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.txt);
-            imageView = (ImageView) itemView.findViewById(R.id.img);
+            imageView = (ImageView) itemView.findViewById(R.id.img1);
             button = (Button) itemView.findViewById(R.id.btn);
         }
     }

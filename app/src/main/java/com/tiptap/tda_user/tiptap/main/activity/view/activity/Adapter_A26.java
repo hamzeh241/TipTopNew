@@ -26,7 +26,7 @@ public class Adapter_A26 extends RecyclerView.Adapter<Adapter_A26.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.txt);
-            imageView = (ImageView) itemView.findViewById(R.id.txt);
+            imageView = (ImageView) itemView.findViewById(R.id.img);
         }
     }
 

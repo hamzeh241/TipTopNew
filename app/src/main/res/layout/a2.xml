@@ -62,12 +62,6 @@
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
-                    <com.android.volley.toolbox.NetworkImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:srcCompat="@android:drawable/btn_star" />
-
                     <TextView
                         android:id="@+id/title2"
                         android:layout_width="match_parent"
@@ -90,8 +84,8 @@
                 android:gravity="center"
                 android:weightSum="1">
 
-                <com.android.volley.toolbox.NetworkImageView
-                    android:id="@+id/txt"
+                <ImageView
+                    android:id="@+id/img"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -104,10 +98,10 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.65"
-                android:weightSum="1"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.45"
+                android:weightSum="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -119,13 +113,13 @@
                         android:id="@+id/title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_marginTop="6dp"
                         android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:text=""
                         android:textColor="@color/black"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -153,8 +147,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="25dp">
+                        android:layout_marginTop="25dp"
+                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/b"

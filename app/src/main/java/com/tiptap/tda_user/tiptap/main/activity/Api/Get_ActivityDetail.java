@@ -99,7 +99,7 @@ int func;
                         }
                         progressDialog.dismiss();
                         int id_activity_type = lesson_presenter.activity_Type(_id);
-                       go_activity(_view, id_activity_type, _id,func,mactivity);
+                        go_activity(_view, id_activity_type, _id,func,mactivity);
 
                     } catch (JSONException e) {
                         Toast.makeText(_context, "JSONException : "+ e.getCause()+e.getMessage() , Toast.LENGTH_LONG).show();

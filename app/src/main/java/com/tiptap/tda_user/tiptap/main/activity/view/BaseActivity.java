@@ -16,39 +16,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A18;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A19;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A20;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A22;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A24;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A25;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A27;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A28;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A29;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A3;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A30;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A31;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A32;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A33;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A34;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A35;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A37;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A38;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A39;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A4;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A40;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A41;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A42;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A43;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A44;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A46;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A5;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A6;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A8;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A9;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.*;
 import java.util.List;
 
 public class BaseActivity extends AppCompatActivity implements MVP_Main.RequiredViewOps {
@@ -145,22 +113,9 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
         b = b.replace("\n", "");
         // lowerCase
         b = b.toLowerCase();
-        // apastrof
-        for(int i=0 ; i<b.length() ; i++){
-            if(b.charAt(i) == '’'){
-                if(b.charAt(i+1) == 's'){
-                    b = b.replace("’s", "is");
-                }
-                if(b.charAt(i+1) == 'm'){
-                    b = b.replace("’m", "am");
-                }
-                if(b.charAt(i+1) == 'r'){
-                    b = b.replace("’r", "are");
-                }
-            }
-        }
         return b;
     }
+
     public void SeekBarProgressUpdater() {
         seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
         if (mp.isPlaying()) {
@@ -172,17 +127,34 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
             handler.postDelayed(notification,1000);
         }
     }
+
     public Context getActivityContext() {
         return this;
     }
+
     public Context getAppContext() {  return getApplicationContext(); }
 
     public void go_activity1(int id_at,String Status,int id_act){
 
         switch (id_at) {
 
-            case 1: break;
-            case 2: break;
+            case 1:
+                A1.idlesson = idlesson ;
+                A1.idfunction = idfunction ;
+                A1.idactivity = id_act;
+                A1.Act_Status = Status;
+                startActivity(new Intent(getApplicationContext(),  A1.class));
+                this.finish();
+                break;
+
+            case 2:
+                A2.idlesson = idlesson ;
+                A2.idfunction = idfunction ;
+                A2.idactivity = id_act;
+                A2.Act_Status = Status;
+                startActivity(new Intent(getApplicationContext(),  A2.class));
+                this.finish();
+                break;
 
             case 3:
                 A3.idlesson = idlesson ;
@@ -247,11 +219,50 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A9.class));
                 break;
 
-            case 10: break;
-            case 11: break;
-            case 12: break;
-            case 13: break;
-            case 14: break;
+            case 10:
+                A10.idlesson = idlesson ;
+                A10.idfunction = idfunction ;
+                A10.idactivity = id_act;
+                A10.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A10.class));
+                break;
+
+            case 11:
+                A11.idlesson = idlesson ;
+                A11.idfunction = idfunction ;
+                A11.idactivity = id_act;
+                A11.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A11.class));
+                break;
+
+            case 12:
+                A12.idlesson = idlesson ;
+                A12.idfunction = idfunction ;
+                A12.idactivity = id_act;
+                A12.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A12.class));
+                break;
+
+            case 13:
+                A13.idlesson = idlesson ;
+                A13.idfunction = idfunction ;
+                A13.idactivity = id_act;
+                A13.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A13.class));
+                break;
+
+            case 14:
+                A14.idlesson = idlesson ;
+                A14.idfunction = idfunction ;
+                A14.idactivity = id_act;
+                A14.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A14.class));
+                break;
 
             case 15:
                 A15.idlesson = idlesson ;
@@ -262,8 +273,23 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A15.class));
                 break;
 
-            case 16: break;
-            case 17: break;
+            case 16:
+                A16.idlesson = idlesson ;
+                A16.idfunction = idfunction ;
+                A16.idactivity = id_act;
+                A16.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A16.class));
+                break;
+
+            case 17:
+                /*A17.idlesson = idlesson ;
+                A17.idfunction = idfunction ;
+                A17.idactivity = id_act;
+                A17.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A17.class));
+                break;*/
 
             case 18:
                 A18.idlesson = idlesson ;
@@ -292,7 +318,14 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A20.class));
                 break;
 
-            case 21: break;
+            case 21:
+                /*A21.idlesson = idlesson ;
+                A21.idfunction = idfunction ;
+                A21.idactivity = id_act;
+                A21.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A21.class));
+                break;*/
 
             case 22:
                 A22.idlesson = idlesson ;
@@ -303,7 +336,14 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A22.class));
                 break;
 
-            case 23: break;
+            case 23:
+               /* A23.idlesson = idlesson ;
+                A23.idfunction = idfunction ;
+                A23.idactivity = id_act;
+                A23.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A23.class));
+                break;*/
 
             case 24:
                 A24.idlesson = idlesson ;
@@ -411,7 +451,14 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A35.class));
                 break;
 
-            case 36: break;
+            case 36:
+                /*A36.idlesson = idlesson ;
+                A36.idfunction = idfunction ;
+                A36.idactivity = id_act;
+                A36.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A36.class));
+                break;*/
 
             case 37:
                 A37.idlesson = idlesson ;
@@ -423,9 +470,9 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 38:
-                //A38.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A38.idlesson = idlesson ;
+                A38.idfunction = idfunction ;
+                A38.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A38.class));
                 break;
@@ -437,47 +484,55 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 A39.Act_Status = Status;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A39.class));
-
                 break;
 
             case 40:
-                //A40.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A40.idlesson = idlesson ;
+                A40.idfunction = idfunction ;
+                A40.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A40.class));
                 break;
 
             case 41:
-                //A41.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A41.idlesson = idlesson ;
+                A41.idfunction = idfunction ;
+                A41.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A41.class));
                 break;
 
             case 42:
-                //A42.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A42.idlesson = idlesson ;
+                A42.idfunction = idfunction ;
+                A42.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A42.class));
                 break;
 
             case 43:
-                //A43.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A43.idlesson = idlesson ;
+                A43.idfunction = idfunction ;
+                A43.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A43.class));
                 break;
 
             case 44:
-                //A44.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A6.idactivity = id_act;
+                A44.idlesson = idlesson ;
+                A44.idfunction = idfunction ;
+                A44.idactivity = id_act;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A44.class));
+                break;
+
+            case 45:
+                A45.idlesson = idlesson ;
+                A45.idfunction = idfunction ;
+                A45.idactivity = id_act;
+                A45.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A45.class));
                 break;
 
             case 46:
@@ -495,8 +550,23 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
 
         switch (id_at){
 
-            case 1: break;
-            case 2: break;
+            case 1:
+                A1.idlesson = idlesson ;
+                A1.idfunction = idfunction ;
+                A1.activitynumber = activitynumber;
+                A1.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A1.class));
+                break;
+
+            case 2:
+                A2.idlesson = idlesson ;
+                A2.idfunction = idfunction ;
+                A2.activitynumber = activitynumber;
+                A2.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A2.class));
+                break;
 
             case 3:
                 A3.idlesson = idlesson ;
@@ -561,11 +631,50 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A9.class));
                 break;
 
-            case 10: break;
-            case 11: break;
-            case 12: break;
-            case 13: break;
-            case 14: break;
+            case 10:
+                A10.idlesson = idlesson ;
+                A10.idfunction = idfunction ;
+                A10.activitynumber = activitynumber;
+                A10.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A10.class));
+                break;
+
+            case 11:
+                A11.idlesson = idlesson ;
+                A11.idfunction = idfunction ;
+                A11.activitynumber = activitynumber;
+                A11.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A11.class));
+                break;
+
+            case 12:
+                A12.idlesson = idlesson ;
+                A12.idfunction = idfunction ;
+                A12.activitynumber = activitynumber;
+                A12.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A12.class));
+                break;
+
+            case 13:
+                A13.idlesson = idlesson ;
+                A13.idfunction = idfunction ;
+                A13.activitynumber = activitynumber;
+                A13.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A13.class));
+                break;
+
+            case 14:
+                A14.idlesson = idlesson ;
+                A14.idfunction = idfunction ;
+                A14.activitynumber = activitynumber;
+                A14.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A14.class));
+                break;
 
             case 15:
                 A15.idlesson = idlesson ;
@@ -576,8 +685,23 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A15.class));
                 break;
 
-            case 16: break;
-            case 17: break;
+            case 16:
+                A16.idlesson = idlesson ;
+                A16.idfunction = idfunction ;
+                A16.activitynumber = activitynumber;
+                A16.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A16.class));
+                break;
+
+            case 17:
+                /*A17.idlesson = idlesson ;
+                A17.idfunction = idfunction ;
+                A17.activitynumber = activitynumber;
+                A17.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A17.class));
+                break;*/
 
             case 18:
                 A18.idlesson = idlesson ;
@@ -606,7 +730,14 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A20.class));
                 break;
 
-            case 21: break;
+            case 21:
+                /*A21.idlesson = idlesson ;
+                A21.idfunction = idfunction ;
+                A21.activitynumber = activitynumber;
+                A21.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A21.class));
+                break;*/
 
             case 22:
                 A22.idlesson = idlesson ;
@@ -617,7 +748,14 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A22.class));
                 break;
 
-            case 23: break;
+            case 23:
+                /*A23.idlesson = idlesson ;
+                A23.idfunction = idfunction ;
+                A23.activitynumber = activitynumber;
+                A23.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A23.class));
+                break;*/
 
             case 24:
                 A24.idlesson = idlesson ;
@@ -629,9 +767,9 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 25:
-                //A25.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A25.activitynumber = activitynumber;
+                A25.idlesson = idlesson ;
+                A25.idfunction = idfunction ;
+                A25.activitynumber = activitynumber;
                 A25.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A25.class));
@@ -683,10 +821,10 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 31:
-                //A31.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A31.activitynumber = activitynumber;
-                //A31.Act_Status = "first";
+                A31.idlesson = idlesson ;
+                A31.idfunction = idfunction ;
+                A31.activitynumber = activitynumber;
+                A31.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A31.class));
                 break;
@@ -727,7 +865,14 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 startActivity(new Intent(getApplicationContext(),  A35.class));
                 break;
 
-            case 36: break;
+            case 36:
+                /*A36.idlesson = idlesson ;
+                A36.idfunction = idfunction ;
+                A36.activitynumber = activitynumber;
+                A36.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A36.class));
+                break;*/
 
             case 37:
                 A37.idlesson = idlesson ;
@@ -739,10 +884,10 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 38:
-                //A38.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A38.activitynumber = activitynumber;
-                //  A38.Act_Status = "first";
+                A38.idlesson = idlesson ;
+                A38.idfunction = idfunction ;
+                A38.activitynumber = activitynumber;
+                A38.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A38.class));
                 break;
@@ -754,52 +899,60 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 A39.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A39.class));
-
                 break;
 
             case 40:
-                //A40.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A40.activitynumber = activitynumber;
-                //  A40.Act_Status = "first";
+                A40.idlesson = idlesson ;
+                A40.idfunction = idfunction ;
+                A40.activitynumber = activitynumber;
+                A40.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A40.class));
                 break;
 
             case 41:
-                //A41.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A41.activitynumber = activitynumber;
-                //  A41.Act_Status = "first";
+                A41.idlesson = idlesson ;
+                A41.idfunction = idfunction ;
+                A41.activitynumber = activitynumber;
+                A41.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A41.class));
                 break;
 
             case 42:
-                //A42.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A42.activitynumber = activitynumber;
-                //  A42.Act_Status = "first";
+                A42.idlesson = idlesson ;
+                A42.idfunction = idfunction ;
+                A42.activitynumber = activitynumber;
+                A42.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A42.class));
                 break;
 
             case 43:
-                //A43.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A43.activitynumber = activitynumber;
-                //  A43.Act_Status = "first";
+                A43.idlesson = idlesson ;
+                A43.idfunction = idfunction ;
+                A43.activitynumber = activitynumber;
+                A43.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A43.class));
                 break;
 
             case 44:
-                //A44.idlesson = idlesson ;
-                // A.idfunction = idfunction ;
-                //A44.activitynumber = activitynumber;
-                //  A44.Act_Status = "first";
+                A44.idlesson = idlesson ;
+                A44.idfunction = idfunction ;
+                A44.activitynumber = activitynumber;
+                A44.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A44.class));
+                break;
+
+            case 45:
+                A45.idlesson = idlesson ;
+                A45.idfunction = idfunction ;
+                A45.activitynumber = activitynumber;
+                A45.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A45.class));
                 break;
 
             case 46:

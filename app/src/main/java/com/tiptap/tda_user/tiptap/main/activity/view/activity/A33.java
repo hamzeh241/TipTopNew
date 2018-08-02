@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A33_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -277,7 +277,6 @@ public class A33 extends BaseActivity
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
-
                     }
 
                     break;
@@ -488,7 +487,7 @@ public class A33 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA33Component(new A33_Module(this))
+                .getA33Component(new Main_Module(this))
                 .inject(this);
     }
 

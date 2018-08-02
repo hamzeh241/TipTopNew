@@ -23,7 +23,7 @@ import android.widget.Button;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
-import com.tiptap.tda_user.tiptap.di.module.A32_Module;
+import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -809,7 +809,7 @@ public class A32 extends BaseActivity
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
-                .getA32Component(new A32_Module(this))
+                .getA32Component(new Main_Module(this))
                 .inject(this);
     }
 
@@ -908,7 +908,7 @@ public class A32 extends BaseActivity
             // yek javab
             int baxsh = 0;
             for(int j=0 ; j<ans[i].length() ; j++){
-                if(ans[i].charAt(j) == ','){
+                if(ans[i].charAt(j) == '^'){ // Replace , TO ^
                     baxsh++;
                 }
             }
@@ -922,7 +922,7 @@ public class A32 extends BaseActivity
 
                 // 2 baxsh
                 case 1:
-                    String[] s = ans[i].split(",");
+                    String[] s = ans[i].split("\\^"); // Replace , TO ^
                     String[] x = s[0].split("/");
                     String[] y = s[1].split("/");
 
@@ -938,7 +938,7 @@ public class A32 extends BaseActivity
 
                 // 3 baxsh
                 case 2:
-                    String[] a = ans[i].split(",");
+                    String[] a = ans[i].split("\\^"); // Replace , TO ^
                     String[] b = a[0].split("/");
                     String[] c = a[1].split("/");
                     String[] d = a[2].split("/");
@@ -959,8 +959,8 @@ public class A32 extends BaseActivity
             // moqayese ba javab
             result = result + " / "+ z1[0] ;
             for(int j=0 ; j < z1.length ; j++){
-                String a = nice_string1( e[i].getText().toString() );
-                String b = nice_string1( z1[j].toString() );
+                String a = nice_string2( e[i].getText().toString() );
+                String b = nice_string2( z1[j].toString() );
                 if(a.equals(b)){
                     answer[cc] = true;
                     cc++;

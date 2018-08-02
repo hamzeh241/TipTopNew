@@ -7,41 +7,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.View;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RetryPolicy;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A15;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A18;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A19;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A20;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A22;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A24;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A25;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A26;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A27;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A28;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A29;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A3;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A30;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A31;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A32;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A33;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A34;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A35;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A37;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A38;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A39;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A4;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A40;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A41;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A42;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A43;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A44;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A5;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A6;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A7;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A8;
-import com.tiptap.tda_user.tiptap.main.activity.view.activity.A9;
+import com.tiptap.tda_user.tiptap.main.activity.view.activity.*;
 
 public class BaseSetingApi {
 
@@ -50,8 +18,10 @@ public class BaseSetingApi {
     protected RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
     private static ProgressDialog pDialog;
     private Context context;
-
     private Activity _activity;
+
+    public BaseSetingApi() {}
+
     public BaseSetingApi(Context _context,Activity activity) {
         context=_context;
         _activity=activity;
@@ -59,6 +29,7 @@ public class BaseSetingApi {
         pDialog.setMessage("درحال دریافت اطلاعات از سرور");
         pDialog.setCancelable(false);
     }
+
     public BaseSetingApi(Context _context) {
         context=_context;
 
@@ -66,12 +37,28 @@ public class BaseSetingApi {
         pDialog.setMessage("درحال دریافت اطلاعات از سرور");
         pDialog.setCancelable(false);
     }
+
     public void go_activity(View view, int id_at, int id_l,int func, Activity mactivity){
 
         switch (id_at){
 
-            case 1: break;
-            case 2: break;
+            case 1:
+                A1.idlesson = id_l;
+                A1.idfunction = func ;
+                A1.activitynumber = 1;
+                A1.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A1.class));
+                mactivity.finish();
+                break;
+
+            case 2:
+                A2.idlesson = id_l;
+                A2.idfunction = func ;
+                A2.activitynumber = 1;
+                A2.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A2.class));
+                mactivity.finish();
+                break;
 
             case 3:
                 A3.idlesson = id_l;
@@ -136,11 +123,50 @@ public class BaseSetingApi {
                 mactivity.finish();
                 break;
 
-            case 10: break;
-            case 11: break;
-            case 12: break;
-            case 13: break;
-            case 14: break;
+            case 10:
+                A10.idlesson = id_l;
+                A10.idfunction = func ;
+                A10.activitynumber = 1;
+                A10.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A10.class));
+                mactivity.finish();
+                break;
+
+            case 11:
+                A11.idlesson = id_l;
+                A11.idfunction = func ;
+                A11.activitynumber = 1;
+                A11.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A11.class));
+                mactivity.finish();
+                break;
+
+            case 12:
+                A12.idlesson = id_l;
+                A12.idfunction = func ;
+                A12.activitynumber = 1;
+                A12.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A12.class));
+                mactivity.finish();
+                break;
+
+            case 13:
+                A13.idlesson = id_l;
+                A13.idfunction = func ;
+                A13.activitynumber = 1;
+                A13.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A13.class));
+                mactivity.finish();
+                break;
+
+            case 14:
+                A14.idlesson = id_l;
+                A14.idfunction = func ;
+                A14.activitynumber = 1;
+                A14.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A14.class));
+                mactivity.finish();
+                break;
 
             case 15:
                 A15.idlesson = id_l;
@@ -151,8 +177,23 @@ public class BaseSetingApi {
                 mactivity.finish();
                 break;
 
-            case 16: break;
-            case 17: break;
+            case 16:
+                A16.idlesson = id_l;
+                A16.idfunction = func ;
+                A16.activitynumber = 1;
+                A16.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A16.class));
+                mactivity.finish();
+                break;
+
+            case 17:
+                /*A17.idlesson = id_l;
+                A17.idfunction = func ;
+                A17.activitynumber = 1;
+                A17.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A17.class));
+                mactivity.finish();
+                break;*/
 
             case 18:
                 A18.idlesson = id_l;
@@ -181,7 +222,14 @@ public class BaseSetingApi {
                 mactivity.finish();
                 break;
 
-            case 21: break;
+            case 21:
+               /* A21.idlesson = id_l;
+                A21.idfunction = func ;
+                A21.activitynumber = 1;
+                A21.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A21.class));
+                mactivity.finish();
+                break;*/
 
             case 22:
                 A22.idlesson = id_l;
@@ -192,7 +240,14 @@ public class BaseSetingApi {
                 mactivity.finish();
                 break;
 
-            case 23: break;
+            case 23:
+                /*A23.idlesson = id_l;
+                A23.idfunction = func ;
+                A23.activitynumber = 1;
+                A23.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A23.class));
+                mactivity.finish();
+                break;*/
 
             case 24:
                 A24.idlesson = id_l;
@@ -204,10 +259,10 @@ public class BaseSetingApi {
                 break;
 
             case 25:
-                //A25.idlesson = id_l;
-                //A25.idfunction = func ;
-                //A25.activitynumber = 1;
-                //A25.Act_Status = "first";
+                A25.idlesson = id_l;
+                A25.idfunction = func ;
+                A25.activitynumber = 1;
+                A25.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A25.class));
                 break;
 
@@ -225,7 +280,6 @@ public class BaseSetingApi {
                 A27.idfunction = func ;
                 A27.activitynumber = 1;
                 A27.Act_Status = "first";
-
                 view.getContext().startActivity(new Intent(view.getContext(), A27.class));
                 mactivity.finish();
                 break;
@@ -258,10 +312,10 @@ public class BaseSetingApi {
                 break;
 
             case 31:
-                //A31.idlesson = id_l;
-                //A.idfunction = idfunction ;
-                //A31.activitynumber = 1;
-                //A31.Act_Status = "first";
+                A31.idlesson = id_l;
+                A31.idfunction = func ;
+                A31.activitynumber = 1;
+                A31.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A31.class));
                 mactivity.finish();
                 break;
@@ -302,7 +356,14 @@ public class BaseSetingApi {
                 mactivity.finish();
                 break;
 
-            case 36: break;
+            case 36:
+                /*A36.idlesson = id_l;
+                A36.idfunction = func ;
+                A36.activitynumber = 1;
+                A36.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A36.class));
+                mactivity.finish();
+                break;*/
 
             case 37:
                 A37.idlesson = id_l;
@@ -314,10 +375,10 @@ public class BaseSetingApi {
                 break;
 
             case 38:
-                //A38.idlesson = id_l;
-                //A38.idfunction = idfunction ;
-                //A38.activitynumber = 1;
-                //A38.Act_Status = "first";
+                A38.idlesson = id_l;
+                A38.idfunction = func ;
+                A38.activitynumber = 1;
+                A38.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A38.class));
                 mactivity.finish();
                 break;
@@ -332,52 +393,72 @@ public class BaseSetingApi {
                 break;
 
             case 40:
-                //A40.idlesson = id_l;
-                //A.idfunction = idfunction ;
-                //A40.activitynumber = 1;
-                //    A15.Act_Status = "first";
+                A40.idlesson = id_l;
+                A40.idfunction = func;
+                A40.activitynumber = 1;
+                A40.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A40.class));
                 mactivity.finish();
                 break;
 
             case 41:
-                //A41.idlesson = id_l;
-                //A.idfunction = idfunction ;
-                //A41.activitynumber = 1;
-                //    A15.Act_Status = "first";
+                A41.idlesson = id_l;
+                A41.idfunction = func ;
+                A41.activitynumber = 1;
+                A41.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A41.class));
                 mactivity.finish();
                 break;
 
             case 42:
-                //A42.idlesson = id_l;
-                //A.idfunction = idfunction ;
-                //A42.activitynumber = 1;
-                //    A15.Act_Status = "first";
+                A42.idlesson = id_l;
+                A42.idfunction = func ;
+                A42.activitynumber = 1;
+                A42.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A42.class));
                 mactivity.finish();
                 break;
 
             case 43:
-                //A43.idlesson = id_l;
-                //A.idfunction = idfunction ;
-                //A43.activitynumber = 1;
-                //     A15.Act_Status = "first";
+                A43.idlesson = id_l;
+                A43.idfunction = func ;
+                A43.activitynumber = 1;
+                A43.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A43.class));
                 mactivity.finish();
                 break;
 
             case 44:
-                //A44.idlesson = id_l;
-                //A.idfunction = idfunction ;
-                //A44.activitynumber = 1;
-                //    A15.Act_Status = "first";
+                A44.idlesson = id_l;
+                A44.idfunction = func;
+                A44.activitynumber = 1;
+                A44.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A44.class));
+                mactivity.finish();
+                break;
+
+            case 45:
+                A45.idlesson = id_l;
+                A45.idfunction = func;
+                A45.activitynumber = 1;
+                A45.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A45.class));
+                mactivity.finish();
+                break;
+
+
+            case 46:
+                A46.idlesson = id_l;
+                A46.idfunction = func ;
+                A46.activitynumber = 1;
+                A46.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A46.class));
                 mactivity.finish();
                 break;
         }
     }
-        public boolean haveNetworkConnection() {
+
+    public boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -393,7 +474,6 @@ public class BaseSetingApi {
         }
         return haveConnectedWifi || haveConnectedMobile;
     }
-    public BaseSetingApi() {}
 
     public static void showpDialog() {
         if (!pDialog.isShowing())
