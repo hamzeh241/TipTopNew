@@ -14,11 +14,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -29,10 +29,8 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.List;
 import java.util.Random;
-
 import javax.inject.Inject;
 
 public class A45 extends BaseActivity
@@ -69,10 +67,9 @@ public class A45 extends BaseActivity
         }
 
         // get tbactivity
-        tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         idactivity = tbActivity.get_id();
         title1activity = tbActivity.getTitle1();
-        //path1 = tbActivity.getPath1();
+        path1 = tbActivity.getPath1();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
@@ -80,24 +77,19 @@ public class A45 extends BaseActivity
         title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
 
         // find answer
-        if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
             answer = tbActivityDetailList.get(0).getTitle1().toString();
         }
-
-        //////////////
-        else if (tbActivityDetailList.get(1).getIsAnswer().equals("1")) {
-            // answer = title2;
+        else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
             answer=tbActivityDetailList.get(1).getTitle1().toString();
         }
-//answer=title2detailactivity;
-//String aa=answer;
 
         after_setup();
     }
-      //set layout
+
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.img1);
+        img = (ImageView) findViewById(R.id.img);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -115,10 +107,9 @@ public class A45 extends BaseActivity
 
     private void after_setup(){
 
-        if (title1activity==null){
-
-        }else{
-
+        // show help (title1)
+        if (title1activity.equals("") || title1activity.equals("null")) {
+        } else {
             text.setText(title1activity);
         }
 
@@ -168,17 +159,13 @@ public class A45 extends BaseActivity
         }
 
         //get image
-
-       path1 = tbActivity.getPath1();
-        //getImage(path1);
         String img_url = url_download+path1;
         Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         // set text for checkbox
-
         txt1.setText(title1detailactivity);
         txt2.setText(title2detailactivity);
-         //
+
         next.setOnClickListener(this);
         a.setOnClickListener(this);
         b.setOnClickListener(this);
@@ -211,8 +198,6 @@ public class A45 extends BaseActivity
             }
         }
 
-
-        //
         if (v.getId() == R.id.next) {
 
             switch (next.getText().toString()) {
@@ -294,7 +279,7 @@ public class A45 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(title1);
+                            f2.t.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -305,7 +290,6 @@ public class A45 extends BaseActivity
                         }
 
                         // change text color for button next when answer is true or false
-
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");

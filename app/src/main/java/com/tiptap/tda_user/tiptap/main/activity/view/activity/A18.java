@@ -67,8 +67,10 @@ public class A18 extends BaseActivity
         }
 
         idactivity = tbActivity.get_id();
+
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         count = tbActivityDetailList.size();
+
         after_setup();
     }
 
@@ -152,7 +154,7 @@ public class A18 extends BaseActivity
         for(int i=0 ; i<count ; i++) {
             String temp = tbActivityDetailList.get(i).getTitle1();
             String r = tbActivityDetailList.get(i).getIsAnswer(); //============= 1 ???
-            if(r.equals("1")){
+            if(r.equals("true")){
                 true_ans = temp;
             }
         }

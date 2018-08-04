@@ -17,12 +17,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.toolbox.NetworkImageView;
+import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -55,8 +55,6 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
     Button next;
     public static int idactivity;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,9 +79,12 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
 
         // get tbactivity
         idactivity = tbActivity.get_id();
-        tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         path1 = tbActivity.getPath1();
+
+        // get activity_detail
+        tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         count = tbActivityDetailList.size();
+
         after_setup();
     }
     private void setupViews() {
@@ -91,11 +92,10 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
         p.setMax(100);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        img = (NetworkImageView) findViewById(R.id.txt);
+        img = (ImageView) findViewById(R.id.img);
         next = (Button) findViewById(R.id.next);
         LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
-
         l = new LinearLayout[]{l1, l2};
     }
     private void after_setup() {
@@ -146,12 +146,12 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
         }
 
         next.setOnClickListener(this);
-        //get image
-        //getImage(path1);
+
+        String img_url = url_download+path1;
+        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         /* ------------------------------------------------------------------------------------------------------ */
         // each row - title2
-
         for(int i=0 ; i<count ; i++) {
             String temp = tbActivityDetailList.get(i).getTitle2();
             if (temp.equals("null")) {
@@ -435,9 +435,6 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
-
-
-
                         } else {
 
                             // Clickable_false
@@ -650,7 +647,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                     break;
 
                 // 2 baxsh
-                case 1:
+               /* case 1:
                     String[] s = ans[i].split("^");
                     String[] x = s[0].split("/");
                     String[] y = s[1].split("/");
@@ -682,7 +679,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             }
                         }
                     }
-                    break;
+                    break;*/
             }
 
             // moqayese ba javab
@@ -695,7 +692,6 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                         answer[cc] = true;
                         cc++;
                     }
-
                 }
             }
         }

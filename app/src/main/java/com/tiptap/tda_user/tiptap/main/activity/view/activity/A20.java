@@ -16,11 +16,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -49,7 +49,6 @@ public class A20 extends BaseActivity
     TextView t[];
     EditText e[];
     String ans[];
-    String z[];
     int xali = 0;
     TextView text;
     String title1detailactivity, title2detailactivity, title1activity;
@@ -74,25 +73,15 @@ public class A20 extends BaseActivity
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
-        // get tbactivity
-        tbActivity = mPresenter.getActivity(idlesson, activitynumber);
+        // get ctivity
         idactivity = tbActivity.get_id();
+        path1 = tbActivity.getPath1();
         title1activity = tbActivity.getTitle1();
-        int idactivity = tbActivity.get_id();
+
+        // get ctivity_detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         count = tbActivityDetailList.size();
-        path1 = tbActivity.getPath1();
-
-        // get tbactvity detail
-        tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-
-        // set title 1
-        if (title1activity.equals("") || title1activity.equals("null")) {
-            // nothing
-        } else {
-            // show title 1
-        }
 
         after_setup();
     }
@@ -105,13 +94,14 @@ public class A20 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar) findViewById(R.id.p);
         p.setMax(100);
-        img = (NetworkImageView) findViewById(R.id.txt);
+        img = (ImageView) findViewById(R.id.img);
         linear = (LinearLayout) findViewById(R.id.linear);
     }
 
     private void after_setup() {
 
-        if (title1activity.equals("null")) {
+        // show help (title1)
+        if (title1activity.equals("") || title1activity.equals("null")) {
         } else {
             text.setText(title1activity);
         }
@@ -167,9 +157,8 @@ public class A20 extends BaseActivity
 
         next.setOnClickListener(this);
 
-        //........................
-
         String temp = tbActivityDetailList.get(0).getTitle2();
+        // find number of ... (xali)
         if (temp.equals("null")) {
 
         } else {
@@ -189,35 +178,30 @@ public class A20 extends BaseActivity
 
         ans = new String[xali];
         int c = 0;
-
-        String temp1 = tbActivityDetailList.get(0).getTitle2();
+        // set answers to array (ans)
         if (temp.equals("null")) {
-            // set have for some multiple answer
 
         } else {
             int have = 0;
-            for (int j = 0; j < temp1.length(); j++) {
-                if (temp1.charAt(j) == '_') {
+            for (int j = 0; j < temp.length(); j++) {
+                if (temp.charAt(j) == '_') {
                     have = 1;
                 }
             }
             if (have == 1) {
-                String z[] = temp1.split("_");
+                String z[] = temp.split("_");
                 for (int j = 0; j < z.length; j++) {
                     ans[c] = z[j];
                     c++;
                 }
             } else if (have == 0) {
-                ans[c] = temp1;
+                ans[c] = temp;
                 c++;
             }
         }
 
         e = new EditText[xali];
         int id_e = 0;
-
-        // ------------------------------------------------------------------------------------------------------
-        //  title1 in activityDetails for matne asli( matn ba jaye khali)
 
         // ------------------------------------------------------------------------------------------------------
         // splite textview & edittext
@@ -653,6 +637,7 @@ public class A20 extends BaseActivity
 
         for(int i=0 ; i < e.length ; i++){
 
+            /*
             // yek javab
             int baxsh = 0;
             for(int j=0 ; j<ans[i].length() ; j++){
@@ -704,11 +689,12 @@ public class A20 extends BaseActivity
                     break;
             }
 
+*/
             // moqayese ba javab
-            result = result + " / "+ z[0] ;
-            for(int j=0 ; j < z.length ; j++){
+            result = result + " / "+ ans[i] ;
+            for(int j=0 ; j < ans.length ; j++){
                 String a = nice_string1( e[i].getText().toString() );
-                String b = nice_string1( z[j].toString() );
+                String b = nice_string1( ans[j].toString() );
                 if(a.equals(b)){
                     answer[cc] = true;
                     cc++;
@@ -730,7 +716,6 @@ public class A20 extends BaseActivity
             return result;
         }
     }
-
 
     class CheckEdit implements TextWatcher {
         public void afterTextChanged(Editable s) {

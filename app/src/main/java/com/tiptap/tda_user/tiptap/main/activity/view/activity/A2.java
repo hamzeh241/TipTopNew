@@ -74,7 +74,6 @@ public class A2 extends BaseActivity
 
         // get tbactivity
         idactivity = tbActivity.get_id();
-
         title1 = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
         path2 = tbActivity.getPath2();
@@ -111,6 +110,7 @@ public class A2 extends BaseActivity
 
     private void after_setup() {
 
+        // show help (title1)
         if (title1.equals("") || title1.equals("null")) {
         } else {
             text.setText(title1);
