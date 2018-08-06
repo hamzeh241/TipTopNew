@@ -542,6 +542,15 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A46.class));
                 break;
+
+            case 47:
+                A47.idlesson = idlesson ;
+                A47.idfunction = idfunction ;
+                A47.idactivity = id_act;
+                A47.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A47.class));
+                break;
         }
     }
 
@@ -961,6 +970,15 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 A46.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A46.class));
+                break;
+
+            case 47:
+                A47.idlesson = idlesson ;
+                A47.idfunction = idfunction ;
+                A47.activitynumber = activitynumber;
+                A47.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A47.class));
                 break;
         }
     }

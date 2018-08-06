@@ -187,7 +187,7 @@ public class A19 extends BaseActivity
             s2[i][1] = i_s2;
         }
 
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         t1 = new TextView[count];
         t2 = new TextView[count];
@@ -200,7 +200,7 @@ public class A19 extends BaseActivity
             t1[i].setText(s1[i][0]);
             t1[i].setTextSize(16);
             t1[i].setTextColor(getResources().getColor(R.color.my_black));
-            t1[i].setGravity(Gravity.LEFT);
+            t1[i].setGravity(Gravity.CENTER);
             l[i][0].addView(t1[i]);
             final int finalI = i;
             t1[i].setOnClickListener(new View.OnClickListener() {
@@ -216,7 +216,7 @@ public class A19 extends BaseActivity
             t2[i].setText(s2[i][0]);
             t2[i].setTextSize(16);
             t2[i].setTextColor(getResources().getColor(R.color.my_black));
-            t2[i].setGravity(Gravity.RIGHT);
+            t2[i].setGravity(Gravity.CENTER);
             l[i][1].addView(t2[i]);
             t2[i].setOnClickListener(new View.OnClickListener() {
                 @Override

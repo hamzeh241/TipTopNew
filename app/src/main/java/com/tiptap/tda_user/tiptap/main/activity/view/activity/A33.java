@@ -49,7 +49,7 @@ public class A33 extends BaseActivity
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-    String you_say = "";
+    ArrayList<String> you_say = new ArrayList<>();
     ImageView voice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,13 +200,18 @@ public class A33 extends BaseActivity
 
                 case "check":
                     
-                    if( end && you_say != "" ){
+                    if( end && you_say.size()>1 ){
+
                         mp.stop();
 
-                        String a = nice_string1( you_say );
-                        String b = nice_string1( title1 );
+                        boolean result = false;
+                        for(int z=0 ; z < you_say.size() ; z++){
+                            String a = nice_string1( you_say.get(z) );
+                            String b = nice_string1( title1 );
+                            if (a.equals(b)) { result = true;}
+                        }
 
-                        if (a.equals(b)) {
+                        if (result) {
 
                             // update - true
                             mPresenter.update_activity(idactivity);
@@ -283,7 +288,7 @@ public class A33 extends BaseActivity
 
                 case "countinue":
                     
-                    if( end && you_say != "" ){
+                    if( end && you_say.size()>1 ){
                         
                         mp.stop();
 
@@ -448,7 +453,7 @@ public class A33 extends BaseActivity
     public void onCompletion(MediaPlayer mp) {
         end = true;
         play.setBackgroundResource(R.drawable.play);
-        if(you_say != ""){
+        if(you_say.size()>1){
             if(end){
                 next.setTextColor(Color.WHITE);
                 next.setBackgroundResource(R.drawable.btn_green);
@@ -520,9 +525,10 @@ public class A33 extends BaseActivity
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    you_say = result.get(0);
-                    Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
-                    if(you_say != ""){
+
+                    you_say = result;
+
+                    if(you_say.size()>1){
                         if(end){
                             next.setTextColor(Color.WHITE);
                             next.setBackgroundResource(R.drawable.btn_green);

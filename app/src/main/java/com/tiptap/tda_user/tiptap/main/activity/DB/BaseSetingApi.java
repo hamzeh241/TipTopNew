@@ -446,13 +446,21 @@ public class BaseSetingApi {
                 mactivity.finish();
                 break;
 
-
             case 46:
                 A46.idlesson = id_l;
                 A46.idfunction = func ;
                 A46.activitynumber = 1;
                 A46.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A46.class));
+                mactivity.finish();
+                break;
+
+            case 47:
+                A47.idlesson = id_l;
+                A47.idfunction = func ;
+                A47.activitynumber = 1;
+                A47.Act_Status = "first";
+                view.getContext().startActivity(new Intent(view.getContext(), A47.class));
                 mactivity.finish();
                 break;
         }
