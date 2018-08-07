@@ -28,6 +28,8 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -487,5 +489,16 @@ public class A24 extends BaseActivity
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+    }
+
+    public void back(){
+        A24.this.finish();
+        startActivity(new Intent(A24.this, Lesson.class));
     }
 }

@@ -42,8 +42,12 @@ import javax.inject.Inject;
 public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClickListener, OnCompletionListener, OnBufferingUpdateListener {
     private static final String TAG = A27.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A27.class.getName());
+
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
+
+    ArrayList<String> you_say = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -198,12 +202,16 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
 
                 case "check":
 
-                    if( end && you_say != "" ) {
+                    if( end && you_say.size()>=1) {
 
-                        String a = nice_string1( you_say );
-                        String b = nice_string1( title1 );
+                        boolean result = false;
+                        for(int z=0 ; z < you_say.size() ; z++){
+                            String a = nice_string1( you_say.get(z) );
+                            String b = nice_string1( title1 );
+                            if (a.equals(b)) { result = true;}
+                        }
 
-                        if (a.equals(b)) {
+                        if (result) {
 
                             // update - true
                             mPresenter.update_activity(idactivity);
@@ -281,7 +289,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
 
                 case "countinue":
 
-                    if( end && you_say != "") {
+                    if( end && you_say.size()>=1) {
 
                         // first
                         if(Act_Status.equals("first")){
@@ -431,7 +439,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
     public void onCompletion(MediaPlayer mp) {
         end = true;
         play.setBackgroundResource(R.drawable.play);
-        if(you_say != ""){
+        if(you_say.size()>=1){
             if(end){
                 next.setTextColor(Color.WHITE);
                 next.setBackgroundResource(R.drawable.btn_green);
@@ -503,9 +511,8 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    you_say = result.get(0);
-                    Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
-                    if(you_say != ""){
+                    you_say = result;
+                    if(you_say.size()>=1){
                         if(end){
                             next.setTextColor(Color.WHITE);
                             next.setBackgroundResource(R.drawable.btn_green);

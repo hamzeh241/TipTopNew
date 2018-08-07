@@ -200,7 +200,7 @@ public class A33 extends BaseActivity
 
                 case "check":
                     
-                    if( end && you_say.size()>1 ){
+                    if( end && you_say.size()>=1 ){
 
                         mp.stop();
 
@@ -288,7 +288,7 @@ public class A33 extends BaseActivity
 
                 case "countinue":
                     
-                    if( end && you_say.size()>1 ){
+                    if( end && you_say.size()>=1 ){
                         
                         mp.stop();
 
@@ -453,7 +453,7 @@ public class A33 extends BaseActivity
     public void onCompletion(MediaPlayer mp) {
         end = true;
         play.setBackgroundResource(R.drawable.play);
-        if(you_say.size()>1){
+        if(you_say.size()>=1){
             if(end){
                 next.setTextColor(Color.WHITE);
                 next.setBackgroundResource(R.drawable.btn_green);
@@ -528,7 +528,7 @@ public class A33 extends BaseActivity
 
                     you_say = result;
 
-                    if(you_say.size()>1){
+                    if(you_say.size()>=1){
                         if(end){
                             next.setTextColor(Color.WHITE);
                             next.setBackgroundResource(R.drawable.btn_green);

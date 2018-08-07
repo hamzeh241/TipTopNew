@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -84,21 +83,22 @@
                 android:gravity="center"
                 android:weightSum="1">
 
-                <com.android.volley.toolbox.NetworkImageView
+                <ImageView
                     android:id="@+id/img"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="160dp"
                     android:layout_gravity="center"
                     android:cropToPadding="false"
                     android:gravity="center"
                     android:src="@drawable/test"
-                    android:scaleType="fitXY"/>
+                    android:scaleType="fitXY"
+                    android:layout_weight="1"/>
 
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
@@ -108,38 +108,42 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/play"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:background="@drawable/play" />
 
                     <TextView
                         android:id="@+id/txt1"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
                         android:layout_marginTop="4dp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="hello , I am mark and go t "
+                        android:gravity="left"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
+                        android:textDirection="rtl"
                         android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/voice"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
                         android:src="@drawable/mic" />
+
                 </LinearLayout>
+
             </TableRow>
 
             <TableRow
@@ -154,35 +158,37 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/play1"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         android:layout_gravity="center"
                         android:layout_margin="5dp"
                         android:background="@drawable/play" />
 
                     <TextView
                         android:id="@+id/txt2"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
                         android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="hello , I am mark and "
+                        android:layout_gravity="center"
+                        android:gravity="left"
+                        android:textDirection="rtl"
+                        android:text=""
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="16sp" />
 
                     <ImageView
                         android:id="@+id/voice1"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
                         android:src="@drawable/mic" />
                 </LinearLayout>
             </TableRow>

@@ -32,6 +32,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -48,12 +49,8 @@ public class A47 extends BaseActivity
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
     String you_say = "",you_say1 = "";
-    //String true_txt="";
-    TextView text,txt4,txt5,txt6,txt7/*,txt8*/;
+    TextView text,txt4,txt5,txt6,txt7;
     Button voice,voice1;
-    //public MediaPlayer mp1;
-    //String userAnswer1,userAnswer2;
-    // String userAnswer;
     String answer, title1detailactivity, title2detailactivity,answer1,answer2;
     String temp[];
     int count;
@@ -630,7 +627,7 @@ public class A47 extends BaseActivity
             case 102: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    you_say1 = result.get(0);
+                    you_say = result.get(0);
                     txt4.setTextColor(getResources().getColor(R.color.red));
                     txt4.setText(you_say1);
                     // Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
@@ -646,5 +643,16 @@ public class A47 extends BaseActivity
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+    }
+
+    public void back(){
+        A47.this.finish();
+        startActivity(new Intent(A47.this, Lesson.class));
     }
 }

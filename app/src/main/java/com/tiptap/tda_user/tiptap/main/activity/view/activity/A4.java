@@ -695,8 +695,8 @@ public class A4 extends BaseActivity
             // moqayese ba javab
             result = result + " / "+ z[0] ;
             for(int j=0 ; j < z.length ; j++){
-                String a = nice_string1( e[i].getText().toString() );
-                String b = nice_string1( z[j].toString() );
+                String a = nice_string2( e[i].getText().toString() );
+                String b = nice_string2( z[j].toString() );
                 if(a.equals(b)){
                     answer[cc] = true;
                     cc++;

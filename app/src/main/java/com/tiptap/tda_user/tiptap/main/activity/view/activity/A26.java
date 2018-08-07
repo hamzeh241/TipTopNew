@@ -26,6 +26,8 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -499,5 +501,16 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
     @Override
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+    }
+
+    public void back(){
+        A26.this.finish();
+        startActivity(new Intent(A26.this, Lesson.class));
     }
 }

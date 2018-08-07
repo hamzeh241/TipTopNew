@@ -79,17 +79,13 @@ public class A42 extends BaseActivity
         }
 
         // get tbactivity
-        tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         idactivity = tbActivity.get_id();
         title1activity = tbActivity.getTitle1();
-        int idactivity = tbActivity.get_id();
-        tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
-        count = tbActivityDetailList.size();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
+        count = tbActivityDetailList.size();
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-
 
         after_setup();
     }
