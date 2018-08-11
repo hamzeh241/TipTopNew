@@ -179,7 +179,7 @@ public class A48 extends BaseActivity
 
         if(view.getId() == R.id.play){
 
-            //play sound 1
+            //play sound 1 - best way to play voice
             if(haveNetworkConnection()){
                 try {
                     String voice_url = null;

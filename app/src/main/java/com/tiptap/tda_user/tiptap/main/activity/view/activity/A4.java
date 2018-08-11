@@ -59,7 +59,7 @@ public class A4 extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.a46);
+        setContentView(R.layout.a4);
 
         setupViews();
         setupMVP();

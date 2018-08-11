@@ -8,6 +8,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -37,14 +38,11 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
-
-
 import javax.inject.Inject;
 
 public class A49 extends BaseActivity
@@ -59,16 +57,18 @@ public class A49 extends BaseActivity
     String true_txt="";
     ImageView voice,voice1;
     TextView text;
-    Button play1;
     public MediaPlayer mp1;
     String userAnswer;
-    String answer, title1detailactivity, title2detailactivity,a;
+    String answer, title1detailactivity,a;
     int count;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a49);
+
         setupMVP();
+
         // first
         if (Act_Status.equals("first")) {
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
@@ -87,11 +87,10 @@ public class A49 extends BaseActivity
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-        title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
-        path2 =  tbActivityDetailList.get(0).getPath1();
-        count =mPresenter.count_ActivityDetail(idactivity);
+        path2 = tbActivityDetailList.get(0).getPath1();
+        count = mPresenter.count_ActivityDetail(idactivity);
 
-        true_txt =  tbActivityDetailList.get(1).getTitle2().toString();
+        true_txt =  tbActivityDetailList.get(0).getTitle2().toString();
 
         setupViews();
         after_setup();
@@ -102,7 +101,7 @@ public class A49 extends BaseActivity
         p.setMax(100);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (ImageView) findViewById(R.id.img);
         play=(Button)findViewById(R.id.play);
         txt1 = (TextView)findViewById(R.id.txt1);
         voice = (ImageView) findViewById(R.id.voice);
@@ -158,14 +157,12 @@ public class A49 extends BaseActivity
                 break;
         }
 
-        //get image
-        //getImage(path1);
         String img_url = url_download+path1;
         Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         // set text for textbox
         txt1.setText(title1detailactivity);
-        txt2.setText(title2detailactivity);
+        txt2.setText(".............................");
         //set OnClickListener
         play.setOnClickListener(this);
         voice.setOnClickListener(this);
@@ -175,28 +172,30 @@ public class A49 extends BaseActivity
     @Override
     public void onClick(View view) {
         if(view.getId() == R.id.play){
-            //play sound 1
             if(haveNetworkConnection()){
                 try {
-                    String voice_url = url_download+path2;
+                    String voice_url = null;
+                    mp = new MediaPlayer();
+                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    voice_url = url_download + path2;
+                    mp.reset();
                     mp.setDataSource(voice_url);
                     mp.prepare();
-
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                mpLength = mp.getDuration();
-
-                if(!mp.isPlaying()){
+                    mpLength = mp.getDuration();
                     mp.start();
-                    play.setBackgroundResource(R.drawable.pause);
-                }else {
-                    mp.pause();
-                    play.setBackgroundResource(R.drawable.play);
-                }
+                    play.setBackgroundResource(R.drawable.pause1);
+                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            mp.stop();
+                            mp.release();
+                            play.setBackgroundResource(R.drawable.play1);
+                        }
+                    });
 
-            }else{
+                } catch (Exception e) {}
+
+            } else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
         }
@@ -215,10 +214,6 @@ public class A49 extends BaseActivity
                     //you_say != ""
 
                     if( you_say != "" ) {
-
-                         userAnswer = nice_string1( you_say );
-                        //       true_txt =  title1 ;
-                        true_txt=nice_string1(true_txt);
                         if (cheak()) {
                             a=you_say;
                             // update - true
@@ -439,23 +434,26 @@ public class A49 extends BaseActivity
     }
     public boolean cheak(){
         boolean flag=false;
-        if (true_txt.equals("null")) {
+        userAnswer = nice_string1( you_say );
+        String true_ans = nice_string1(true_txt);
+
+        if (true_ans.equals("null")) {
 
         }else {
             int have = 0;
-            for (int j = 0; j < true_txt.length(); j++) {
-                if (true_txt.charAt(j) == '/') {
+            for (int j = 0; j < true_ans.length(); j++) {
+                if (true_ans.charAt(j) == '/') {
                     have = 1;
                 }
             }
             if (have == 1) {
-                String part[] = true_txt.split(Pattern.quote("/"));
+                String part[] = true_ans.split(Pattern.quote("/"));
                 for (int i = 0; i < part.length; i++) {
                     if (userAnswer.equals(part[i]))
                         flag = true;
                 }
             } else {
-                if (userAnswer.equals(true_txt))
+                if (userAnswer.equals(true_ans))
                     flag = true;
             }
         }
