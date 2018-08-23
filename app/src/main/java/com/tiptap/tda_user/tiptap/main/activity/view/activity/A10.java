@@ -14,11 +14,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -29,15 +29,11 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.List;
 import java.util.Random;
-
 import javax.inject.Inject;
 
-public class A10 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,
-        OnClickListener {
+public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnClickListener {
 
     private static final String TAG = A10.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A10.class.getName());
@@ -49,7 +45,6 @@ public class A10 extends BaseActivity
     String title1detailactivity, title2detailactivity,title3detailactivity,title4detailactivity, title1activity;
     CheckBox a,b,c,d;
     TextView tex3,txt4;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +65,9 @@ public class A10 extends BaseActivity
         }
 
         // get tbactivity
-        tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         idactivity = tbActivity.get_id();
         title1activity = tbActivity.getTitle1();
-        //path1 = tbActivity.getPath1();
+        path1 = tbActivity.getPath1();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
@@ -83,19 +77,19 @@ public class A10 extends BaseActivity
         title4detailactivity = tbActivityDetailList.get(3).getTitle1().toString();
 
         // find answer
-        if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
             answer = title1detailactivity;
         }
 
-        else if (tbActivityDetailList.get(1).getIsAnswer().equals("1")) {
+        else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
             // answer = title2;
             answer=title2detailactivity;
         }
-        else if (tbActivityDetailList.get(2).getIsAnswer().equals("1")) {
+        else if (tbActivityDetailList.get(2).getIsAnswer().equals("true")) {
             // answer = title2;
             answer=title3detailactivity;
         }
-        else if (tbActivityDetailList.get(3).getIsAnswer().equals("1")) {
+        else if (tbActivityDetailList.get(3).getIsAnswer().equals("true")) {
             // answer = title2;
             answer=title4detailactivity;
         }
@@ -108,7 +102,7 @@ public class A10 extends BaseActivity
       //set layout
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.img1);
+        img = (ImageView) findViewById(R.id.img);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -124,8 +118,6 @@ public class A10 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
-
-
     }
 
     private void after_setup(){
@@ -176,28 +168,22 @@ public class A10 extends BaseActivity
         }
 
         //get image
-
-       path1 = tbActivity.getPath1();
        String img_url = url_download+path1;
        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         // set text for checkbox
-
         txt1.setText(title1detailactivity);
         txt2.setText(title2detailactivity);
         txt3.setText(title3detailactivity);
         txt4.setText(title4detailactivity);
-         //
         next.setOnClickListener(this);
         a.setOnClickListener(this);
         b.setOnClickListener(this);
         c.setOnClickListener(this);
         d.setOnClickListener(this);
-
     }
 
     @Override
-
      // check answer for checkbox and change text color for true answer
     public void onClick(View v) {
 
@@ -273,8 +259,6 @@ public class A10 extends BaseActivity
             }
         }
 
-
-        //
         if (v.getId() == R.id.next) {
 
             switch (next.getText().toString()) {
@@ -305,9 +289,8 @@ public class A10 extends BaseActivity
                                 ans = true;
                             }
                         }
+
                         if (ans) {
-
-
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -351,7 +334,6 @@ public class A10 extends BaseActivity
                             // play sound
                             mpt.start();
 
-
                         } else {
 
                             // Clickable_false
@@ -381,14 +363,11 @@ public class A10 extends BaseActivity
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
 
-
                             // play sound
                             mpf.start();
-
                         }
 
                         // change text color for button next when answer is true or false
-
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
@@ -396,7 +375,6 @@ public class A10 extends BaseActivity
                     break;
 
                 case "countinue":
-
 
                     if (a.isChecked() || b.isChecked() || c.isChecked() || d.isChecked()) {
 
@@ -519,7 +497,6 @@ public class A10 extends BaseActivity
                                 }
                                 A10.this.finish();
                                 startActivity(new Intent(A10.this, End.class));
-
                             }
 
                             // number != 0 and go on to Next
@@ -538,13 +515,12 @@ public class A10 extends BaseActivity
                                 go_activity1(id_at_new_f, "second", id_act);
                             }
                         }
-
                     }
 
                     break;
             }
-        }}
-
+        }
+    }
 
     private void setupMVP(){
         if ( mStateMaintainer.firstTimeIn() ) {

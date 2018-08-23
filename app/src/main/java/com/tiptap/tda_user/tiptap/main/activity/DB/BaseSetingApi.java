@@ -187,13 +187,13 @@ public class BaseSetingApi {
                 break;
 
             case 17:
-                /*A17.idlesson = id_l;
+                A17.idlesson = id_l;
                 A17.idfunction = func ;
                 A17.activitynumber = 1;
                 A17.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A17.class));
                 mactivity.finish();
-                break;*/
+                break;
 
             case 18:
                 A18.idlesson = id_l;
@@ -223,13 +223,13 @@ public class BaseSetingApi {
                 break;
 
             case 21:
-               /* A21.idlesson = id_l;
+                A21.idlesson = id_l;
                 A21.idfunction = func ;
                 A21.activitynumber = 1;
                 A21.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A21.class));
                 mactivity.finish();
-                break;*/
+                break;
 
             case 22:
                 A22.idlesson = id_l;

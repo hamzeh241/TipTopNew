@@ -455,16 +455,6 @@ public class A2 extends BaseActivity
         }
     }
 
-   /* @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {}
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-        next.setTextColor(Color.WHITE);
-        next.setBackgroundResource(R.drawable.btn_green);
-    }*/
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (v.getId() == R.id.seekbar) {

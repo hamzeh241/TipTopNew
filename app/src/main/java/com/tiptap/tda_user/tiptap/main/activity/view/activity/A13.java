@@ -39,6 +39,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +112,7 @@ public class A13 extends BaseActivity
         p.setMax(100);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (ImageView) findViewById(R.id.img);
         txt1 = (TextView)findViewById(R.id.txt1);
         editText = (EditText) findViewById(R.id.edittxt);
         txt3 = (TextView)findViewById(R.id.txt3);
@@ -651,5 +652,16 @@ public class A13 extends BaseActivity
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+    }
+
+    public void back(){
+        A13.this.finish();
+        startActivity(new Intent(A13.this, Lesson.class));
     }
 }

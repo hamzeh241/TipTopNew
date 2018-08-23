@@ -493,13 +493,14 @@ public class A28 extends BaseActivity
     }
 
     public boolean cheak(){
-        boolean answer;
-        String a = nice_string1( editText.getText().toString() );
-        String b = nice_string1( title1 );
-        if (a.equals(b)) {
-             answer = true;
-        } else {
-            answer = false;
+        boolean answer = false;
+        String z[] = title1.split("/");
+        for(int j=0 ; j < z.length ; j++){
+            String a = nice_string1( editText.getText().toString() );
+            String b = nice_string1( z[j].toString() );
+            if(a.equals(b)){
+                answer = true;
+            }
         }
         return answer;
     }

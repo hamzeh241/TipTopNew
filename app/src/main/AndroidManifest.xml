@@ -123,10 +123,14 @@
         <activity
             android:name=".main.activity.view.activity.A46"/>
         <activity
+            android:name=".main.activity.view.activity.A17"/>
+        <activity
             android:name=".main.activity.view.activity.A47"/>
         <activity
             android:name=".main.activity.view.activity.A48"/>
         <activity
             android:name=".main.activity.view.activity.A49"/>
+        <activity
+            android:name=".main.activity.view.activity.A21"/>
     </application>
 </manifest>

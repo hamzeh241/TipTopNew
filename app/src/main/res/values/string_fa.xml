@@ -33,4 +33,6 @@
     <string name="A47_FA">با توجه به کلمات داده شده یک جمله مثبت و یک جمله منفی برای هر عکس بگویید</string>
     <string name="A12_FA">فرم دیگر جواب را بنویسید</string>
     <string name="A13_FA">با توجه به تصویر و با کمک کلمات زیر پاسخ دهید</string>
+    <string name="A17_FA">با توجه به تصویر و با کمک کلمات زیر پاسخ دهید</string>
+    <string name="A21_FA">با کمک کلمات زیر پاسخ دهید</string>
 </resources>

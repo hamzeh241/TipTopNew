@@ -38,8 +38,7 @@ import javax.inject.Inject;
  */
 
 public class A16 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,
-        View.OnClickListener, View.OnTouchListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
+        implements MVP_Main.RequiredViewOps, View.OnClickListener/*, View.OnTouchListener*/{
 
     private static final String TAG = A16.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer(getFragmentManager(), A16.class.getName());
@@ -82,12 +81,12 @@ public class A16 extends BaseActivity
         title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
 
         //Find Answer
-        if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
             answer = tbActivityDetailList.get(0).getTitle1().toString();
         }
 
         //////////////
-       else if (tbActivityDetailList.get(1).getIsAnswer().equals("1")) {
+       else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
            // answer = title2;
             answer=tbActivityDetailList.get(1).getTitle1();
         }
@@ -222,24 +221,20 @@ public class A16 extends BaseActivity
                             //play sound
                             if (haveNetworkConnection()) {
                                 try {
-                                    String voice_url = url_download + path2;
+                                    String voice_url = url_download + path1;
                                     mp.setDataSource(voice_url);
                                     mp.prepare();
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
                                 mpLength = mp.getDuration();
                                 mp.start();
-
-                            //    SeekBarProgressUpdater();
 
                             } else {
                                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                             }
-                            mp.setOnBufferingUpdateListener(this);
-                            mp.setOnCompletionListener(this);
+
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -259,7 +254,6 @@ public class A16 extends BaseActivity
                             t2.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
-                            //img.setClickable(false);
                             a.setClickable(false);
                             b.setClickable(false);
                             p.setClickable(false);
@@ -286,7 +280,6 @@ public class A16 extends BaseActivity
                             t2.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
-                            //img.setClickable(false);
                             a.setClickable(false);
                             b.setClickable(false);
                             p.setClickable(false);
@@ -462,25 +455,12 @@ public class A16 extends BaseActivity
             }
 
             break;
+            }
         }
-        }
     }
 
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-//        seekBar.setSecondaryProgress(percent);
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-        play.setBackgroundResource(R.drawable.play);
-        next.setTextColor(Color.WHITE);
-        next.setBackgroundResource(R.drawable.btn_green);
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    /* @Override
+   public boolean onTouch(View v, MotionEvent event) {
         if (v.getId() == R.id.seekbar) {
             if (mp.isPlaying()) {
                 SeekBar sb = (SeekBar) v;
@@ -489,7 +469,7 @@ public class A16 extends BaseActivity
             }
         }
         return false;
-    }
+    }*/
 
     private void setupMVP() {
         if (mStateMaintainer.firstTimeIn()) {

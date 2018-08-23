@@ -1,5 +1,6 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -7,11 +8,15 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -19,10 +24,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -48,10 +55,72 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
 
     ArrayList<String> you_say = new ArrayList<>();
 
+    /*
+    private Uri mVideoUri;
+    private android.widget.VideoView mAndroidVideoView;
+    private VideoView mMpxVideoView;
+    private MediaPlayerMultiControl mMediaPlayerControl;
+    private MediaController mMediaController;
+    */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a27);
+
+
+        /*
+        Utils.setActionBarSubtitleEllipsizeMiddle(this);
+
+        mAndroidVideoView = (android.widget.VideoView) findViewById(R.id.androidvv);
+        mMpxVideoView = (VideoView) findViewById(R.id.mpxvv);
+
+        mMediaPlayerControl = new MediaPlayerMultiControl(mAndroidVideoView, mMpxVideoView);
+        mMediaController = new MediaController(this);
+        mMediaController.setAnchorView(findViewById(R.id.container));
+        mMediaController.setMediaPlayer(mMediaPlayerControl);
+        mMediaController.setEnabled(false);
+
+        mVideoUri = getIntent().getData();
+        getActionBar().setSubtitle(mVideoUri+"");
+
+        // HACK: this needs to be deferred, else it fails when setting video on both players (it works when doing it just on one)
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                final Runnable enableMediaController = new Runnable() {
+                    int preparedCount = 0;
+                    @Override
+                    public void run() {
+                        if(++preparedCount == mMediaPlayerControl.getControlsCount()) {
+                            // Enable controller when all players are initialized
+                            mMediaController.setEnabled(true);
+                        }
+                    }
+                };
+
+                mAndroidVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        mAndroidVideoView.seekTo(0); // display first frame
+                        enableMediaController.run();
+
+                    }
+                });
+                mMpxVideoView.setOnPreparedListener(new net.protyposis.android.mediaplayer.MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(net.protyposis.android.mediaplayer.MediaPlayer mp) {
+                        mMpxVideoView.seekTo(0); // display first frame
+                        enableMediaController.run();
+                    }
+                });
+
+                mAndroidVideoView.setVideoURI(mVideoUri);
+                mMpxVideoView.setVideoURI(mVideoUri);
+            }
+        }, 1000);
+        */
+
 
         setupViews();
         setupMVP();
@@ -540,4 +609,120 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
         A27.this.finish();
         startActivity(new Intent(A27.this, Lesson.class));
     }
+
+    /*
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        mMediaController.show();
+        return super.onTouchEvent(event);
+    }
+
+    @Override
+    protected void onStop() {
+        mMediaController.hide();
+        super.onStop();
+    }
+
+    private class MediaPlayerMultiControl implements MediaController.MediaPlayerControl {
+
+        private List<MediaController.MediaPlayerControl> mControls;
+
+        public MediaPlayerMultiControl(MediaController.MediaPlayerControl... controls) {
+            mControls = new ArrayList<>();
+            for (MediaController.MediaPlayerControl mpc : controls) {
+                mControls.add(mpc);
+            }
+        }
+
+        public int getControlsCount() {
+            return mControls.size();
+        }
+
+        @Override
+        public void start() {
+            for (MediaController.MediaPlayerControl mpc : mControls) {
+                mpc.start();
+            }
+        }
+
+        @Override
+        public void pause() {
+            for (MediaController.MediaPlayerControl mpc : mControls) {
+                mpc.pause();
+            }
+        }
+
+        @Override
+        public int getDuration() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).getDuration();
+            }
+            return 0;
+        }
+
+        @Override
+        public int getCurrentPosition() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).getCurrentPosition();
+            }
+            return 0;
+        }
+
+        @Override
+        public void seekTo(int pos) {
+            for (MediaController.MediaPlayerControl mpc : mControls) {
+                mpc.seekTo(pos);
+            }
+        }
+
+        @Override
+        public boolean isPlaying() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).isPlaying();
+            }
+            return false;
+        }
+
+        @Override
+        public int getBufferPercentage() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).getBufferPercentage();
+            }
+            return 0;
+        }
+
+        @Override
+        public boolean canPause() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).canPause();
+            }
+            return false;
+        }
+
+        @Override
+        public boolean canSeekBackward() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).canSeekBackward();
+            }
+            return false;
+        }
+
+        @Override
+        public boolean canSeekForward() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).canSeekForward();
+            }
+            return false;
+        }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
+        @Override
+        public int getAudioSessionId() {
+            if (!mControls.isEmpty()) {
+                return mControls.get(0).getAudioSessionId();
+            }
+            return 0;
+        }
+        */
+
 }

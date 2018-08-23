@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -67,7 +68,6 @@ public class A14 extends BaseActivity
         }
 
         // get tbactivity
-        tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         idactivity = tbActivity.get_id();
         title1activity = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
@@ -79,17 +79,17 @@ public class A14 extends BaseActivity
         title3detailactivity = tbActivityDetailList.get(2).getTitle1().toString();
 
         // find answer
-        if(tbActivityDetailList.get(0).getIsAnswer().equals("1")){
+        if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
             answer = tbActivityDetailList.get(0).getTitle1().toString();
         }
 
         //////////////
-        else if (tbActivityDetailList.get(1).getIsAnswer().equals("1")) {
+        else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
             // answer = title2;
             answer=tbActivityDetailList.get(1).getTitle1().toString();
         }
 
-        else if (tbActivityDetailList.get(2).getIsAnswer().equals("1")){
+        else if (tbActivityDetailList.get(2).getIsAnswer().equals("true")){
             //answer =title2;
             answer=tbActivityDetailList.get(2).getTitle1().toString();
         }
@@ -101,7 +101,7 @@ public class A14 extends BaseActivity
       //set layout
     private void setupViews() {
 
-        img = (NetworkImageView) findViewById(R.id.img1);
+        img = (ImageView) findViewById(R.id.img1);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         txt1 = (TextView) findViewById(R.id.txt1);
@@ -550,4 +550,5 @@ public class A14 extends BaseActivity
     public Context getAppContext() {
         return getApplicationContext();
     }
+
 }

@@ -282,13 +282,13 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 17:
-                /*A17.idlesson = idlesson ;
+                A17.idlesson = idlesson ;
                 A17.idfunction = idfunction ;
                 A17.idactivity = id_act;
                 A17.Act_Status = Status;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A17.class));
-                break;*/
+                break;
 
             case 18:
                 A18.idlesson = idlesson ;
@@ -318,13 +318,13 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 21:
-                /*A21.idlesson = idlesson ;
+                A21.idlesson = idlesson ;
                 A21.idfunction = idfunction ;
                 A21.idactivity = id_act;
                 A21.Act_Status = Status;
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A21.class));
-                break;*/
+                break;
 
             case 22:
                 A22.idlesson = idlesson ;
@@ -721,13 +721,13 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 17:
-                /*A17.idlesson = idlesson ;
+                A17.idlesson = idlesson ;
                 A17.idfunction = idfunction ;
                 A17.activitynumber = activitynumber;
                 A17.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A17.class));
-                break;*/
+                break;
 
             case 18:
                 A18.idlesson = idlesson ;
@@ -757,13 +757,13 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 21:
-                /*A21.idlesson = idlesson ;
+                A21.idlesson = idlesson ;
                 A21.idfunction = idfunction ;
                 A21.activitynumber = activitynumber;
                 A21.Act_Status = "first";
                 this.finish();
                 startActivity(new Intent(getApplicationContext(),  A21.class));
-                break;*/
+                break;
 
             case 22:
                 A22.idlesson = idlesson ;

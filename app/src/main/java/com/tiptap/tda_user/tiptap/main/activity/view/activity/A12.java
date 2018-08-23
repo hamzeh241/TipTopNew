@@ -38,6 +38,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class A12 extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a12);
+
         // hide keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setupMVP();
@@ -90,11 +92,10 @@ public class A12 extends BaseActivity
         path1 = tbActivity.getPath1();
         max = mPresenter.max_Activitynumber(idlesson);
 
-
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-       title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
+        title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
         answer2 = title2detailactivity;
 
         setupViews();
@@ -106,7 +107,7 @@ public class A12 extends BaseActivity
         p.setMax(100);
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
-        img = (NetworkImageView) findViewById(R.id.img);
+        img = (ImageView) findViewById(R.id.img);
         txt1 = (TextView)findViewById(R.id.txt1);
         txt2 = (TextView)findViewById(R.id.txt2);
         txt3 = (TextView)findViewById(R.id.txt3);
@@ -435,7 +436,9 @@ public class A12 extends BaseActivity
 
     //Cheaking the userAnswer with the CorrectAnswer
     public boolean cheak(String correctAnswer, String userAnswer){
-        boolean flag=false;
+        correctAnswer = nice_string1(correctAnswer);
+        userAnswer = nice_string1(userAnswer);
+        boolean flag = false;
         if (correctAnswer.equals("null")) {
 
         }else {
@@ -521,5 +524,16 @@ public class A12 extends BaseActivity
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        back();
+    }
+
+    public void back(){
+        A12.this.finish();
+        startActivity(new Intent(A12.this, Lesson.class));
     }
 }
