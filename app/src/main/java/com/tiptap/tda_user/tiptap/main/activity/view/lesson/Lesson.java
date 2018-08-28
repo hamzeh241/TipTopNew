@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,7 @@ public class Lesson
         extends Activity implements View.OnClickListener, MVP_Lesson.RequiredViewOps{
 
     int id_function;
-    public static int now_id_function;
+    public static int now_id_function, CurrentPosition;
     private ViewPager mViewPager;
     private CardPagerAdapter_L mCardAdapter;
     private ShadowTransformer mCardShadowTransformer;
@@ -47,6 +48,17 @@ public class Lesson
         id_function = mPresenter.Id_Function();
         new Get_Lesson(id_function, now_id_function, haveNetworkConnection(), mPresenter, getAppContext(),
                 Lesson.this, mViewPager, mCardAdapter, mCardShadowTransformer);
+
+        after_setup();
+    }
+
+    private void after_setup() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mViewPager.setCurrentItem(CurrentPosition);
+            }
+        }, 200);
     }
 
     @Override

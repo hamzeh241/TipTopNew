@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -14,17 +13,13 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
-import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Glossary extends BaseSetingApi {
 
@@ -94,7 +89,7 @@ public class Get_Glossary extends BaseSetingApi {
                     } catch (JSONException e) {
                         progressDialog.dismiss();
                         e.printStackTrace();
-                        new PostError(_context,e.getMessage(), getMethodName()).postError();
+                        new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                     }
 
                 }

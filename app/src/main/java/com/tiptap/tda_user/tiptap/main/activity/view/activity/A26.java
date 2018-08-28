@@ -35,6 +35,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnClickListener {
 
@@ -49,6 +50,7 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
     Adapter_A26 mAdapter;
     String part_id1 [][];
     String part_id2 [][];
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,6 +208,7 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_True f1 = new Fragment_True();
+                        f1.txt_true.setText("please put the Sentences in correct arrange");
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment1, f1);
@@ -225,7 +228,7 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_False f2 = new Fragment_False();
-                        f2.t.setText("please put the Sentences in correct arrange");
+                        f2.txt_false.setText("please put the Sentences in correct arrange");
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment2, f2);
@@ -505,12 +508,16 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A26.this.finish();
-        startActivity(new Intent(A26.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A26.this.finish();
+            startActivity(new Intent(A26.this, Lesson.class));
+        }
     }
 }

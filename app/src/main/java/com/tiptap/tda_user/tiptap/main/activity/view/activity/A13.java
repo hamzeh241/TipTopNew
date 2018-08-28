@@ -65,6 +65,8 @@ public class A13 extends BaseActivity
     String title1detailactivity, title2detailactivity,answer2;
     String temp[];
     int count;
+    int back_pressed = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -322,12 +324,11 @@ public class A13 extends BaseActivity
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_True f1 = new Fragment_True();
+                        f1.txt_true.setText(true_txt);
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment1, f1);
                         fragTransaction.commit();
-
-
 
                     }
                     else {
@@ -353,12 +354,11 @@ public class A13 extends BaseActivity
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_False f2 = new Fragment_False();
-                        f2.t.setText(true_txt);
+                        f2.txt_false.setText(true_txt);
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment2, f2);
                         fragTransaction.commit();
-
                     }
 
                     next.setTextColor(Color.WHITE);
@@ -656,12 +656,16 @@ public class A13 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A13.this.finish();
-        startActivity(new Intent(A13.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A13.this.finish();
+            startActivity(new Intent(A13.this, Lesson.class));
+        }
     }
 }

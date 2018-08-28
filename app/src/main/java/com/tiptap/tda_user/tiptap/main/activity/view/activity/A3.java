@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -36,6 +38,9 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
+
+    int back_pressed = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -385,12 +390,16 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A3.this.finish();
-        startActivity(new Intent(A3.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A3.this.finish();
+            startActivity(new Intent(A3.this, Lesson.class));
+        }
     }
 }

@@ -20,13 +20,6 @@ public class SampleApp extends Application {
         return (SampleApp) context.getApplicationContext();
     }
 
-    public static String getMethodName() {
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        String x = stackTraceElements[3].getMethodName();
-        String x1 = stackTraceElements[3].getClassName();
-        return x + "_" + x1;
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();

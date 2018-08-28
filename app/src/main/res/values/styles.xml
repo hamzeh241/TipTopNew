@@ -8,12 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!--ProgressBar Round Endless-->
-    <style name="progressbar_endless" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:visibility">gone</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:indeterminate">true</item>
-    </style>
+    <!--&lt;!&ndash;ProgressBar Round Endless&ndash;&gt;-->
+    <!--<style name="progressbar_endless" parent="Widget.AppCompat.ProgressBar">-->
+        <!--<item name="android:layout_centerInParent">true</item>-->
+        <!--<item name="android:visibility">gone</item>-->
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+        <!--<item name="android:indeterminate">true</item>-->
+    <!--</style>-->
 </resources>

@@ -3,7 +3,6 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,14 +29,15 @@ import java.util.Random;
 import javax.inject.Inject;
 
 public class A37 extends BaseActivity
-                 implements MVP_Main.RequiredViewOps,
-                 OnClickListener, OnPreparedListener {
+                 implements MVP_Main.RequiredViewOps, OnClickListener, OnPreparedListener{
 
+    VideoView videoView;
     private static final String TAG = A37.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A37.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
+    int back_pressed = 0;
 
     VideoView video_view;
     ProgressDialog pd;
@@ -49,6 +49,10 @@ public class A37 extends BaseActivity
 
         setupViews();
         setupMVP();
+        videoView =(VideoView)findViewById(R.id.videoView);
+        //Set MediaController  to enable play, pause, forward, etc options.
+        MediaController mediaController= new MediaController(this);
+        mediaController.setAnchorView(videoView);
 
         max = mPresenter.max_Activitynumber(idlesson);
 
@@ -72,15 +76,8 @@ public class A37 extends BaseActivity
 
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
-        
-        video_view = (VideoView) findViewById(R.id.video_player_view);
-        getWindow().setFormat(PixelFormat.TRANSLUCENT);
-        MediaController mediaController = new MediaController(A37.this);
-        mediaController.setAnchorView(video_view);
-        video_view.setMediaController(mediaController);
-
         next = (Button)findViewById(R.id.next);
-        pd = new ProgressDialog(this);
+        pd = new ProgressDialog(A37.this);
         pd.setMessage("در حال دریافت اطلاعات ...");
         pd.show();
     }
@@ -107,9 +104,19 @@ public class A37 extends BaseActivity
 
         if(haveNetworkConnection()) {
             Uri uri = Uri.parse(url_download+path1);
-            video_view.setVideoURI(uri);
-            video_view.requestFocus();
-            video_view.setOnPreparedListener(this);
+            MediaController mediaController= new MediaController(this);
+            mediaController.setAnchorView(videoView);
+            videoView.setMediaController(mediaController);
+            videoView.setVideoURI(uri);
+            videoView.requestFocus();
+            videoView.start();
+            videoView.setOnPreparedListener(new OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+                    pd.dismiss();
+                }
+            });
+
         }else {
             pd.dismiss();
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
@@ -328,12 +335,16 @@ public class A37 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A37.this.finish();
-        startActivity(new Intent(A37.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A37.this.finish();
+            startActivity(new Intent(A37.this, Lesson.class));
+        }
     }
 }

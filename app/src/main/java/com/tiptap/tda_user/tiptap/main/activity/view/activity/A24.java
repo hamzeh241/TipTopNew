@@ -44,12 +44,13 @@ public class A24 extends BaseActivity
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-    String you_say = "";
+    ArrayList<String> you_say = new ArrayList<>();
     String true_txt="";
     ImageView voice;
     TextView text;
     String answer, title1detailactivity, title2detailactivity,a,title3detailactivity;
     int count;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,15 +190,18 @@ public class A24 extends BaseActivity
         if(view.getId() == R.id.next){
             switch (next.getText().toString()) {
                 case "check":
-                    //you_say != ""
+                    if( you_say.size()>=1 ) {
 
-                    if( you_say != "" ) {
-
-                        String userAnswer = nice_string1( you_say );
                         String for_frag = true_txt;
-                        true_txt = nice_string1(true_txt);
-                        if (userAnswer.equals(true_txt)) {
-                            a=you_say;
+
+                        boolean result = false;
+                        for(int z=0 ; z < you_say.size() ; z++){
+                            String userAnswer = nice_string1( you_say.get(z) );
+                            true_txt = nice_string1( true_txt );
+                            if (userAnswer.equals(true_txt)) { result = true;}
+                        }
+
+                        if (result) {
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -229,11 +233,11 @@ public class A24 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(for_frag);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
-
 
                         } else {
 
@@ -247,7 +251,6 @@ public class A24 extends BaseActivity
                             img.setClickable(false);
                             p.setClickable(false);
 
-
                             // Fragment_false
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
                             Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
@@ -255,7 +258,7 @@ public class A24 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(for_frag);
+                            f2.txt_false.setText(for_frag);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -476,10 +479,11 @@ public class A24 extends BaseActivity
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    you_say = result.get(0);
-                    Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
-                    next.setTextColor(Color.WHITE);
-                    next.setBackgroundResource(R.drawable.btn_green);
+                    you_say = result;
+                    if(you_say.size()>=1){
+                        next.setTextColor(Color.WHITE);
+                        next.setBackgroundResource(R.drawable.btn_green);
+                    }
                 }
                 break;
             }
@@ -493,12 +497,16 @@ public class A24 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A24.this.finish();
-        startActivity(new Intent(A24.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A24.this.finish();
+            startActivity(new Intent(A24.this, Lesson.class));
+        }
     }
 }

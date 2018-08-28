@@ -2,6 +2,8 @@ package com.tiptap.tda_user.tiptap.main.activity.Model;
 
 import android.content.Context;
 import android.database.Cursor;
+
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -10,7 +12,6 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLesson;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import java.util.ArrayList;
 import java.util.List;
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
 
@@ -96,7 +97,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(), Utility.getMethodName()).postError();
 
         }
         return LList;
@@ -114,7 +115,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return idlesson;
     }
@@ -131,7 +132,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return idactivity;
     }
@@ -148,7 +149,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return idactivitydetail;
     }
@@ -237,7 +238,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 cursor.moveToNext();
             }}
         catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return AList;
     }
@@ -313,7 +314,7 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return ADList;
     }

@@ -37,8 +37,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A1 extends BaseActivity
-                implements MVP_Main.RequiredViewOps,
-                OnClickListener {
+                implements MVP_Main.RequiredViewOps, OnClickListener {
 
     private static final String TAG = A1.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A1.class.getName());
@@ -56,16 +55,17 @@ public class A1 extends BaseActivity
     int xali = 0;
     int fill=0, count=0;
     int layoutLength;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a1);
+
         setupMVP();
+
         // hide keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-
 
         // first
         if(Act_Status.equals("first")){
@@ -160,10 +160,8 @@ public class A1 extends BaseActivity
 
         next.setOnClickListener(this);
 
-
         /* ------------------------------------------------------------------------------------------------------ */
         // each row - title2
-
         for(int i=0 ; i<count ; i++) {
             String temp = tbActivityDetailList.get(i).getTitle2();
             if (temp.equals("null")) {
@@ -448,13 +446,11 @@ public class A1 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
-
-
-
 
                         } else {
 
@@ -475,8 +471,7 @@ public class A1 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
-
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -792,12 +787,16 @@ public class A1 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A1.this.finish();
-        startActivity(new Intent(A1.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A1.this.finish();
+            startActivity(new Intent(A1.this, Lesson.class));
+        }
     }
 }

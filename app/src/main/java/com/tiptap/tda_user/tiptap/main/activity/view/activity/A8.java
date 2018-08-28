@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.Toast;
 
 public class A8 extends BaseActivity
                 implements MVP_Main.RequiredViewOps, OnClickListener {
@@ -38,7 +39,7 @@ public class A8 extends BaseActivity
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-
+    int back_pressed = 0;
 
     TextView t1[],t2[],ti1,ti2;;
     String w [];
@@ -237,6 +238,7 @@ public class A8 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(title1);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -265,7 +267,7 @@ public class A8 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(title1);
+                            f2.txt_false.setText(title1);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -559,16 +561,20 @@ public class A8 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        mpt.stop();
-        mpt.release();
-        mpf.stop();
-        mpf.release();
-        A8.this.finish();
-        startActivity(new Intent(A8.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            mpt.stop();
+            mpt.release();
+            mpf.stop();
+            mpf.release();
+            A8.this.finish();
+            startActivity(new Intent(A8.this, Lesson.class));
+        }
     }
 }

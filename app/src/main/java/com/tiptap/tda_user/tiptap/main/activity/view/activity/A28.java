@@ -37,6 +37,7 @@ import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Toast;
 
 public class A28 extends BaseActivity
                  implements MVP_Main.RequiredViewOps,
@@ -51,6 +52,7 @@ public class A28 extends BaseActivity
     EditText editText;
     boolean end = false;
     int all;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +224,7 @@ public class A28 extends BaseActivity
                                 linearLayout.setVisibility(View.VISIBLE);
 
                                 Fragment_True f1 = new Fragment_True();
+                                f1.txt_true.setText(title1);
                                 FragmentManager fragMan = getSupportFragmentManager();
                                 FragmentTransaction fragTransaction = fragMan.beginTransaction();
                                 fragTransaction.add(R.id.fragment1, f1);
@@ -248,7 +251,7 @@ public class A28 extends BaseActivity
                                 linearLayout.setVisibility(View.VISIBLE);
 
                                 Fragment_False f2 = new Fragment_False();
-                                f2.t.setText(title1);
+                                f2.txt_false.setText(title1);
                                 FragmentManager fragMan = getSupportFragmentManager();
                                 FragmentTransaction fragTransaction = fragMan.beginTransaction();
                                 fragTransaction.add(R.id.fragment2, f2);
@@ -527,12 +530,16 @@ public class A28 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A28.this.finish();
-        startActivity(new Intent(A28.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A28.this.finish();
+            startActivity(new Intent(A28.this, Lesson.class));
+        }
     }
 }

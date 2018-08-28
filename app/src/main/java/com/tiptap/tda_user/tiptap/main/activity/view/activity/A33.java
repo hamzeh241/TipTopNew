@@ -51,6 +51,8 @@ public class A33 extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
     ArrayList<String> you_say = new ArrayList<>();
     ImageView voice;
+    int back_pressed = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -243,6 +245,7 @@ public class A33 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(title1);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -269,7 +272,7 @@ public class A33 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(title1);
+                            f2.txt_false.setText(title1);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -542,13 +545,17 @@ public class A33 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        mp.stop();
-        A33.this.finish();
-        startActivity(new Intent(A33.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            mp.stop();
+            A33.this.finish();
+            startActivity(new Intent(A33.this, Lesson.class));
+        }
     }
 }

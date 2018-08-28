@@ -10,6 +10,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.ShadowTransformer;
@@ -20,10 +21,7 @@ import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Lesson extends BaseSetingApi {
 
@@ -96,7 +94,7 @@ public class Get_Lesson extends BaseSetingApi {
                     } catch (JSONException e) {
                         progressDialog.dismiss();
                         e.printStackTrace();
-                        new PostError(_context,e.getMessage(), getMethodName()).postError();
+                        new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                     }
                 }
             }, new Response.ErrorListener() {

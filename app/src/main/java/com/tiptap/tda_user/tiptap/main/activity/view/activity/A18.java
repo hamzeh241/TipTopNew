@@ -43,6 +43,7 @@ public class A18 extends BaseActivity
     Button b[];
     String true_ans, my_ans="";
     int count=0;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,6 +237,7 @@ public class A18 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(true_ans);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -258,8 +260,7 @@ public class A18 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(true_ans);
-
+                            f2.txt_false.setText(true_ans);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -465,12 +466,16 @@ public class A18 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A18.this.finish();
-        startActivity(new Intent(A18.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A18.this.finish();
+            startActivity(new Intent(A18.this, Lesson.class));
+        }
     }
 }

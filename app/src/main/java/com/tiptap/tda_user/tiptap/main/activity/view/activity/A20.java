@@ -53,6 +53,7 @@ public class A20 extends BaseActivity
     TextView text;
     String title1detailactivity, title2detailactivity, title1activity;
     int fill = 0, count = 0;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -437,6 +438,7 @@ public class A20 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -460,8 +462,7 @@ public class A20 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
-
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -778,12 +779,16 @@ public class A20 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A20.this.finish();
-        startActivity(new Intent(A20.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A20.this.finish();
+            startActivity(new Intent(A20.this, Lesson.class));
+        }
     }
 }

@@ -50,6 +50,7 @@ public class A16 extends BaseActivity
     EditText editText;
     TextView text;
     String answer, title1detailactivity, title2detailactivity;
+    int back_pressed = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -265,6 +266,7 @@ public class A16 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -291,7 +293,7 @@ public class A16 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -513,14 +515,18 @@ public class A16 extends BaseActivity
     }
 
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back() {
-        mp.stop();
-        mp.release();
-        A16.this.finish();
-        startActivity(new Intent(A16.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            mp.stop();
+            mp.release();
+            A16.this.finish();
+            startActivity(new Intent(A16.this, Lesson.class));
+        }
     }
 }

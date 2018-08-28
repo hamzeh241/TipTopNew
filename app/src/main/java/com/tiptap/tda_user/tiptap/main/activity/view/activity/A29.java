@@ -52,7 +52,7 @@ public class A29 extends BaseActivity
     String z[];
     int xali = 0;
     int fill=0, count=0;
-    String txt;
+    String txt, for_frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -426,6 +426,7 @@ public class A29 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(for_frag);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -452,8 +453,7 @@ public class A29 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
-
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -461,8 +461,6 @@ public class A29 extends BaseActivity
 
                             // play sound
                             mpf.start();
-
-
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -705,6 +703,8 @@ public class A29 extends BaseActivity
                 final_answer = false;
             }
         }
+
+        for_frag = result;
 
         if(final_answer){
             return "";

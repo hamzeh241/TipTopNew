@@ -5,12 +5,12 @@ import android.database.Cursor;
 import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.ArrayList;
 import java.util.List;
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 /**
  * Created by tafsiri on 6/30/2018.
  */
@@ -70,7 +70,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }}
         catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(), Utility.getMethodName()).postError();
         }
         return act;
     }
@@ -87,7 +87,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context, ex.getMessage(), getMethodName()).postError();
+            new PostError(context, ex.getMessage(), Utility.getMethodName()).postError();
         }
         return count;
     }
@@ -115,7 +115,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context, ex.getMessage(), getMethodName()).postError();
+            new PostError(context, ex.getMessage(), Utility.getMethodName()).postError();
         }
         return act2;
     }
@@ -145,7 +145,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context, ex.getMessage(), getMethodName()).postError();
+            new PostError(context, ex.getMessage(), Utility.getMethodName()).postError();
         }
         return less;
     }
@@ -163,7 +163,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context, ex.getMessage(), getMethodName()).postError();
+            new PostError(context, ex.getMessage(), Utility.getMethodName()).postError();
         }
         return act_false;
     }
@@ -181,14 +181,14 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context, ex.getMessage(), getMethodName()).postError();
+            new PostError(context, ex.getMessage(), Utility.getMethodName()).postError();
         }
         return act_true;
     }
 
     @Override
     public void update_idlesson(int id_lesson) {
-        Toast.makeText(context, "update lesson"+id_lesson, Toast.LENGTH_LONG).show();
+       // Toast.makeText(context, "update lesson"+id_lesson, Toast.LENGTH_LONG).show();
         String q = "update [aspnet_Users] set [Id_Lesson] = "+id_lesson;
         Cursor cursor = dbAdapter.ExecuteQ(q);
         int count = cursor.getCount();
@@ -236,7 +236,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return ad_List;
     }
@@ -253,14 +253,14 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context, ex.getMessage(), getMethodName()).postError();
+            new PostError(context, ex.getMessage(),Utility.getMethodName()).postError();
         }
         return func;
     }
 
     @Override
     public void update_idfunction(int id_function) {
-        Toast.makeText(context, "update function"+id_function, Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, "update function"+id_function, Toast.LENGTH_LONG).show();
         String q = "update [aspnet_Users] set [Id_Function] = "+id_function;
         Cursor cursor = dbAdapter.ExecuteQ(q);
         int count = cursor.getCount();

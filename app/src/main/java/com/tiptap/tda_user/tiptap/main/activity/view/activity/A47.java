@@ -48,7 +48,8 @@ public class A47 extends BaseActivity
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-    String you_say = "",you_say1 = "";
+    ArrayList<String> you_say = new ArrayList<>();
+    ArrayList<String> you_say1 = new ArrayList<>();
     TextView text,txt4,txt5,txt6,txt7;
     Button voice,voice1;
     String answer, title1detailactivity, title2detailactivity,answer1,answer2;
@@ -56,6 +57,7 @@ public class A47 extends BaseActivity
     int count;
     String for_false="";
     String first;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,15 +205,13 @@ public class A47 extends BaseActivity
         if(view.getId() == R.id.next){
             switch (next.getText().toString()) {
                 case "check":
-                    //you_say != ""
+                    if( (you_say.size()>=1)&&(you_say1.size()>=1) ) {
 
-                    if( (you_say != "")&&(you_say1 != "") ) {
+                        boolean one = cheak(answer1,txt2.getText().toString());
+                        boolean two = cheak(answer2,txt4.getText().toString());
 
-                        boolean one = cheak(answer1,you_say);
-                        boolean two = cheak(answer2,you_say1);
-
-                        boolean one_with = cheak_with(answer1,you_say);
-                        boolean two_with = cheak_with(answer2,you_say1);
+                        boolean one_with = cheak_with(answer1,txt2.getText().toString());
+                        boolean two_with = cheak_with(answer2,txt4.getText().toString());
 
                         int count_true = 0;
                         if(one){count_true++;}
@@ -258,6 +258,7 @@ public class A47 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(for_false);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -287,7 +288,7 @@ public class A47 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(for_false);
+                            f2.txt_false.setText(for_false);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -614,10 +615,22 @@ public class A47 extends BaseActivity
             case 101: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    you_say = result.get(0);
-                    txt2.setTextColor(getResources().getColor(R.color.red));
-                    txt2.setText(you_say);
-                    // Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
+                    you_say = result;
+                    int have_result = 0;
+                    for(int z=0 ; z<you_say.size() ; z++){
+                        String a1 = nice_string1(you_say.get(z));
+                        String a2 = nice_string1(answer1);
+                        if(a1.equals(a2)){
+                            have_result = 1;
+                            txt2.setTextColor(getResources().getColor(R.color.red));
+                            txt2.setText(you_say.get(z));
+                        }
+                    }
+                    if(have_result == 0){
+                        txt2.setTextColor(getResources().getColor(R.color.red));
+                        txt2.setText(you_say.get(0));
+                    }
+
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                 }
@@ -627,10 +640,22 @@ public class A47 extends BaseActivity
             case 102: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    you_say = result.get(0);
-                    txt4.setTextColor(getResources().getColor(R.color.red));
-                    txt4.setText(you_say1);
-                    // Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
+                    you_say1 = result;
+                    int have_result = 0;
+                    for(int z=0 ; z<you_say1.size() ; z++){
+                        String a1 = nice_string1(you_say1.get(z));
+                        String a2 = nice_string1(answer2);
+                        if(a1.equals(a2)){
+                            have_result = 1;
+                            txt4.setTextColor(getResources().getColor(R.color.red));
+                            txt4.setText(you_say1.get(z));
+                        }
+                    }
+                    if(have_result == 0){
+                        txt4.setTextColor(getResources().getColor(R.color.red));
+                        txt4.setText(you_say1.get(0));
+                    }
+
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                 }
@@ -647,12 +672,16 @@ public class A47 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A47.this.finish();
-        startActivity(new Intent(A47.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A47.this.finish();
+            startActivity(new Intent(A47.this, Lesson.class));
+        }
     }
 }

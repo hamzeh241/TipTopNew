@@ -15,10 +15,11 @@ import org.json.JSONObject;
 
 public class PostError {
 
-    public String url = "http://tiptop.tdaapp.ir/api/";
+    public String url = "http://shahrvand.tdaapp.ir/api/";
     String MsgError;
     String FunName;
     Context context;
+
     public PostError(Context _context,String _MsgError,String _FunName) {
         context=_context;
         MsgError=_MsgError;
@@ -34,7 +35,7 @@ public class PostError {
             e.printStackTrace();
         }
         String versionName = pinfo.versionName;
-        url+="error?"+"Name="+FunName+"&MeesageError="+MsgError+"&AndroidVersion="+ Build.VERSION.RELEASE+"&AppVersion="+versionName+"&AppId=5";
+        url+="error?"+"Name="+FunName+"&MeesageError="+MsgError+"&AndroidVersion="+ Build.VERSION.RELEASE+"&AppVersion="+versionName+"&AppId=3";
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,url,null, new Response.Listener<JSONObject>() {
             @Override
@@ -45,9 +46,8 @@ public class PostError {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Shahed", "Error: " + error.getMessage());
-                new PostError(context,error.getMessage(),"ApiGetInfoApp+1").postError();
-
+                VolleyLog.d("TipTop", "Error: " + error.getMessage());
+               // new PostError(context,error.getMessage(),"ApiGetInfoApp+1").postError();
             }
         });
         SampleApp.getInstance().addToRequestQueue(jsonObjReq);

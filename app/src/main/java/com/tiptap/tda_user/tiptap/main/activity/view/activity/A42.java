@@ -55,6 +55,7 @@ public class A42 extends BaseActivity
     String title1activity,title1detailactivity;
     int xali = 0;
     int fill=0, count=0;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -438,6 +439,7 @@ public class A42 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -465,8 +467,7 @@ public class A42 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
-
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -474,8 +475,6 @@ public class A42 extends BaseActivity
 
                             // play sound
                             mpf.start();
-
-
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -787,12 +786,16 @@ public class A42 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A42.this.finish();
-        startActivity(new Intent(A42.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A42.this.finish();
+            startActivity(new Intent(A42.this, Lesson.class));
+        }
     }
 }

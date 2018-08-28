@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
+
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -43,6 +45,7 @@ public class A15 extends BaseActivity
     TextView txt3;
     int count;
     CheckBox a,b,c;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -315,6 +318,7 @@ public class A15 extends BaseActivity
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_True f1 = new Fragment_True();
+                        f1.txt_true.setText(answer);
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment1, f1);
@@ -344,7 +348,7 @@ public class A15 extends BaseActivity
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_False f2 = new Fragment_False();
-                        f2.t.setText(answer);
+                        f2.txt_false.setText(answer);
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment2, f2);
@@ -547,13 +551,17 @@ public class A15 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back() {
-        A15.this.finish();
-        startActivity(new Intent(A15.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A15.this.finish();
+            startActivity(new Intent(A15.this, Lesson.class));
+        }
     }
 
     @Override

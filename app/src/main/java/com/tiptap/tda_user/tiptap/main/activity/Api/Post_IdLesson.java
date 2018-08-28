@@ -14,6 +14,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
+import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
@@ -40,12 +43,15 @@ public class Post_IdLesson extends BaseSetingApi {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,url+"User", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                if(response.equals("200")) {
-                    Result = response;
-                }
-                else {
-                    Toast.makeText(_context,"اتمام این درس ذخیره نشد",Toast.LENGTH_LONG).show();
+                try{
+                    if(response.equals("200")) {
+                        Result = response;
+                    }
+                    else {
+                        Toast.makeText(_context,"اتمام این درس ذخیره نشد",Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                 }
             }
         },

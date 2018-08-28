@@ -54,6 +54,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
     int fill=0, count=0;
     Button next;
     public static int idactivity;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -430,6 +431,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -454,8 +456,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
-
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -772,12 +773,16 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A38.this.finish();
-        startActivity(new Intent(A38.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A38.this.finish();
+            startActivity(new Intent(A38.this, Lesson.class));
+        }
     }
 }

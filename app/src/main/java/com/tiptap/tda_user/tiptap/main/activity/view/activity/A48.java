@@ -55,6 +55,7 @@ public class A48 extends BaseActivity
     public MediaPlayer mp1;
     String answer, title1detailactivity, title2detailactivity,a, path3,answer1,answer2,userAnswer1,userAnswer2;
     int count;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,6 +311,7 @@ public class A48 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(tbActivityDetailList.get(0).getTitle1().toString()+"\n"+tbActivityDetailList.get(1).getTitle1().toString());
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -336,7 +338,7 @@ public class A48 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(tbActivityDetailList.get(0).getTitle1().toString()+"\n"+tbActivityDetailList.get(1).getTitle1().toString());
+                            f2.txt_false.setText(tbActivityDetailList.get(0).getTitle1().toString()+"\n"+tbActivityDetailList.get(1).getTitle1().toString());
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -607,18 +609,22 @@ public class A48 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        mp.stop();
-        mp.release();
-        mp.stop();
-        mp1.release();
-        mp1.stop();
-        mp1.release();
-        A48.this.finish();
-        startActivity(new Intent(A48.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            mp.stop();
+            mp.release();
+            mp.stop();
+            mp1.release();
+            mp1.stop();
+            mp1.release();
+            A48.this.finish();
+            startActivity(new Intent(A48.this, Lesson.class));
+        }
     }
 }

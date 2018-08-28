@@ -43,6 +43,7 @@ public class A7 extends BaseActivity
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -411,14 +412,18 @@ public class A7 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        mp.stop();
-        mp.release();
-        A7.this.finish();
-        startActivity(new Intent(A7.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            mp.stop();
+            mp.release();
+            A7.this.finish();
+            startActivity(new Intent(A7.this, Lesson.class));
+        }
     }
 }

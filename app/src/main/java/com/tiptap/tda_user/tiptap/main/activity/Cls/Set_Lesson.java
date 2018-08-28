@@ -35,7 +35,7 @@ public class Set_Lesson extends BaseSetingApi {
         if(lesson_presenter.getCount_Lesson(_nid) != 0){
             //Toast.makeText(_context, lesson_presenter.getCount_Lesson(_nid)+" : size fid", Toast.LENGTH_LONG).show();
             for (int i = 0; i < lesson_presenter.getCount_Lesson(_nid); i++) {
-                mCardAdapter.addCardItem(lesson_presenter, _nid, _context, _activity, new CardItem(lesson_presenter.getListLesson(_nid).get(i).get_id(),lesson_presenter.getListLesson(_nid).get(i).getLessonNumber()+""));
+                mCardAdapter.addCardItem(lesson_presenter, _nid, _context, _activity,new CardItem(lesson_presenter.getListLesson(_nid).get(i).get_id(),lesson_presenter.getListLesson(_nid).get(i).getLessonNumber()+""));
             }
             mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
             mCardShadowTransformer.enableScaling(true);

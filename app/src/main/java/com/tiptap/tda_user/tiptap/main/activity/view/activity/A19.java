@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class A19 extends BaseActivity
                  implements MVP_Main.RequiredViewOps,
@@ -37,16 +39,15 @@ public class A19 extends BaseActivity
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
 
+    int back_pressed = 0;
     int count;
     String w1[],w2[];
     String s1[][],s2[][];
     TextView t1[],t2[],ti1,ti2;
     static String aval_type = null;
     static int aval_int;
-
     static String aval_original;
     int correct=0;
-
     LinearLayout l [][];
 
     @Override
@@ -206,6 +207,8 @@ public class A19 extends BaseActivity
             t1[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MediaPlayer mp = MediaPlayer.create (A19.this, R.raw.tick);
+                    mp.start();
                     check("t1", finalI, t1[finalI], s1[finalI][1]);
                 }
             });
@@ -221,6 +224,8 @@ public class A19 extends BaseActivity
             t2[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    MediaPlayer mp = MediaPlayer.create (A19.this, R.raw.tick);
+                    mp.start();
                     check("t2", finalI, t2[finalI], s2[finalI][1]);
                 }
             });
@@ -529,12 +534,16 @@ public class A19 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A19.this.finish();
-        startActivity(new Intent(A19.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A19.this.finish();
+            startActivity(new Intent(A19.this, Lesson.class));
+        }
     }
 }

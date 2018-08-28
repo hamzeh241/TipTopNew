@@ -79,15 +79,19 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
         b = b.replace("\n", "");
         // apastrof
         for(int i=0 ; i<b.length() ; i++){
-            if(b.charAt(i) == '’'){
-                if(b.charAt(i+1) == 's'){
-                    b = b.replace("’s", "is");
-                }
-                if(b.charAt(i+1) == 'm'){
-                    b = b.replace("’m", "am");
-                }
-                if(b.charAt(i+1) == 'r'){
-                    b = b.replace("’r", "are");
+            // when the last charecter have '
+            if(i == b.length()-1){
+            }else{
+                if(b.charAt(i) == '’'){
+                    if(b.charAt(i+1) == 's'){
+                        b = b.replace("’s", "is");
+                    }
+                    if(b.charAt(i+1) == 'm'){
+                        b = b.replace("’m", "am");
+                    }
+                    if(b.charAt(i+1) == 'r'){
+                        b = b.replace("’r", "are");
+                    }
                 }
             }
         }
@@ -1018,19 +1022,4 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
         }
     }
-    /*public void getImage(String path){
-        path1=path;
-        String img_url = url_download + path1;
-        RequestQueue newRequest= Volley.newRequestQueue(BaseActivity.this);
-        imageLoader = new ImageLoader(newRequest, new ImageLoader.ImageCache() {
-            private final LruCache<String, Bitmap> mCache = new LruCache<String, Bitmap>(10);
-            public void putBitmap(String url, Bitmap bitmap) {
-                mCache.put(url, bitmap);
-            }
-            public Bitmap getBitmap(String url) {
-                return mCache.get(url);
-            }
-        });
-        img.setImageUrl(img_url,imageLoader);
-    }*/
 }

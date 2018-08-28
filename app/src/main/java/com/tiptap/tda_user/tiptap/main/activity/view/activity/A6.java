@@ -45,6 +45,7 @@ public class A6 extends BaseActivity
     String true_ans1, true_ans2, true_ans3, my_ans1="",my_ans2="",my_ans3="",title3,title4,title5,title6,title7,title8,title9;
     TextView txt3;
     int count=0;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -605,6 +606,23 @@ public class A6 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            if(count == 3){
+                                f1.txt_true.setText(true_ans1);
+                            }
+                            if(count == 6){
+                                if(title2==null){
+                                    f1.txt_true.setText(true_ans2);
+                                }else{
+                                    f1.txt_true.setText(true_ans1+" / "+true_ans2);
+                                }
+                            }
+                            if(count == 9){
+                                if(title2==null) {
+                                    f1.txt_true.setText(true_ans2+" / "+true_ans3);
+                                }else {
+                                    f1.txt_true.setText(true_ans1+" / "+true_ans2+" / "+true_ans3);
+                                }
+                            }
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -642,18 +660,18 @@ public class A6 extends BaseActivity
                             //check count for show false and true your answer
                             if(count == 3){
 
-                                f2.t.setText(true_ans1);
+                                f2.txt_false.setText(true_ans1);
                             }
 
                             if(count == 6){
 
                                 if(title2==null){
 
-                                    f2.t.setText(true_ans2);
+                                    f2.txt_false.setText(true_ans2);
 
                                 }else{
 
-                                    f2.t.setText(true_ans1+" / "+true_ans2);
+                                    f2.txt_false.setText(true_ans1+" / "+true_ans2);
                                 }
 
 
@@ -662,11 +680,11 @@ public class A6 extends BaseActivity
 
                                 if(title2==null) {
 
-                                    f2.t.setText(true_ans2+" / "+true_ans3);
+                                    f2.txt_false.setText(true_ans2+" / "+true_ans3);
 
                                 }else {
 
-                                    f2.t.setText(true_ans1+" / "+true_ans2+" / "+true_ans3);
+                                    f2.txt_false.setText(true_ans1+" / "+true_ans2+" / "+true_ans3);
                                 }
 
                             }
@@ -678,9 +696,6 @@ public class A6 extends BaseActivity
 
                             // play sound
                             mpf.start();
-
-
-
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -878,12 +893,16 @@ public class A6 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A6.this.finish();
-        startActivity(new Intent(A6.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A6.this.finish();
+            startActivity(new Intent(A6.this, Lesson.class));
+        }
     }
 }

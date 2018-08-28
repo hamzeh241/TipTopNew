@@ -10,12 +10,12 @@ import com.tiptap.tda_user.tiptap.R;
 
 public class Fragment_False extends Fragment {
 
-    public static TextView t;
+    public static TextView txt_false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_false, container, false);
-        t = (TextView)view.findViewById(R.id.answer);
+        txt_false = (TextView)view.findViewById(R.id.answer);
         return view;
     }
 }

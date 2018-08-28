@@ -11,13 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.main.activity.Api.Get_Activity;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,6 +105,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                     btn.setBackgroundResource(R.drawable.btn_blue);
                     btn.setText("Start");
                     btn.setTextColor(Color.parseColor("#000000"));
+                    Lesson.CurrentPosition = 0;
                 }
             }else if(luser != 0){
                 int nluser = lesson_presenter.lesson_number(luser);
@@ -115,11 +113,13 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                     btn.setBackgroundResource(R.drawable.btn_green);
                     btn.setText("Redo");
                     btn.setTextColor(Color.parseColor("#000000"));
+                    Lesson.CurrentPosition = 0;
                 }
                 if(number_lesson == nluser) {
                     btn.setBackgroundResource(R.drawable.btn_blue);
                     btn.setText("Start");
                     btn.setTextColor(Color.parseColor("#000000"));
+                    Lesson.CurrentPosition = number_lesson-1;
                 }
             }
         }
@@ -127,6 +127,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             btn.setBackgroundResource(R.drawable.btn_green);
             btn.setText("Redo");
             btn.setTextColor(Color.parseColor("#000000"));
+            Lesson.CurrentPosition = 0;
         }
 
         btn.setOnClickListener(new View.OnClickListener() {

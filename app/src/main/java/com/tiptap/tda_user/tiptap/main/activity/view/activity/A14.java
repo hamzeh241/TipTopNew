@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
@@ -35,8 +37,7 @@ import java.util.Random;
 import javax.inject.Inject;
 
 public class A14 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,
-        OnClickListener {
+        implements MVP_Main.RequiredViewOps, OnClickListener {
 
     private static final String TAG = A14.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A14.class.getName());
@@ -48,6 +49,7 @@ public class A14 extends BaseActivity
     String title1detailactivity, title2detailactivity, title1activity, title3detailactivity;
     CheckBox a,b,c;
     TextView text,txt3;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,6 +303,7 @@ public class A14 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -331,7 +334,7 @@ public class A14 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -532,13 +535,17 @@ public class A14 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A14.this.finish();
-        startActivity(new Intent(A14.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A14.this.finish();
+            startActivity(new Intent(A14.this, Lesson.class));
+        }
     }
 
     @Override

@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -45,6 +47,7 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
     String title1detailactivity, title2detailactivity,title3detailactivity,title4detailactivity, title1activity;
     CheckBox a,b,c,d;
     TextView tex3,txt4;
+    int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -326,6 +329,7 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -357,7 +361,7 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -554,13 +558,17 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A10.this.finish();
-        startActivity(new Intent(A10.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A10.this.finish();
+            startActivity(new Intent(A10.this, Lesson.class));
+        }
     }
 
     @Override

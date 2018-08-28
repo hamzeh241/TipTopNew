@@ -4,11 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbLanguage;
 import java.util.ArrayList;
 import java.util.List;
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Login_Model implements MVP_Login.ProvidedModelOps  {
 
@@ -52,7 +52,7 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
             }
         }
         catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(), Utility.getMethodName()).postError();
         }
         return LList;
     }
@@ -111,7 +111,7 @@ public class Login_Model implements MVP_Login.ProvidedModelOps  {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return idglossary;
     }

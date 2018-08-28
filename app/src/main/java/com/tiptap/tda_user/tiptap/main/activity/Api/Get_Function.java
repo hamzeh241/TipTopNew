@@ -11,6 +11,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.main.activity.Cls.Set_Function;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function_Adapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
@@ -21,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_Function extends BaseSetingApi {
 
@@ -96,7 +96,7 @@ public class Get_Function extends BaseSetingApi {
                     } catch (JSONException e) {
                         progressDialog.dismiss();
                         e.printStackTrace();
-                        new PostError(_context,e.getMessage(), getMethodName()).postError();
+                        new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                     }
 
                 }

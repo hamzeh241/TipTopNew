@@ -2,13 +2,13 @@ package com.tiptap.tda_user.tiptap.main.activity.Model;
 
 import android.content.Context;
 import android.database.Cursor;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbFunction;
 import java.util.ArrayList;
 import java.util.List;
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Function_Model implements MVP_Function.ProvidedModelOps {
 
@@ -83,7 +83,7 @@ public class Function_Model implements MVP_Function.ProvidedModelOps {
             }
         }
         catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(), Utility.getMethodName()).postError();
         }
         return FList;
     }
@@ -100,7 +100,7 @@ public class Function_Model implements MVP_Function.ProvidedModelOps {
                 cursor.moveToNext();
             }
         } catch (Exception ex) {
-            new PostError(context,ex.getMessage(),getMethodName()).postError();
+            new PostError(context,ex.getMessage(),Utility.getMethodName()).postError();
         }
         return idfunction;
     }

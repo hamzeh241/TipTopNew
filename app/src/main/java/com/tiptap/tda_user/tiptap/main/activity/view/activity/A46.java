@@ -54,6 +54,8 @@ public class A46 extends BaseActivity
     String z[];
     int xali = 0;
     int fill=0, count=0;
+    int back_pressed = 0;
+    String for_frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -435,6 +437,7 @@ public class A46 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(for_frag);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -461,8 +464,7 @@ public class A46 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.t.setText(answer);
-
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -714,6 +716,8 @@ public class A46 extends BaseActivity
             }
         }
 
+        for_frag = result;
+
         if(final_answer){
             return "";
         }else{
@@ -782,12 +786,16 @@ public class A46 extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        A46.this.finish();
-        startActivity(new Intent(A46.this, Lesson.class));
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            A46.this.finish();
+            startActivity(new Intent(A46.this, Lesson.class));
+        }
     }
 }

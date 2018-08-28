@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -15,16 +14,13 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
-
-import static com.tiptap.tda_user.tiptap.common.SampleApp.getMethodName;
 
 public class Get_ActivityDetail extends BaseSetingApi {
 
@@ -37,6 +33,7 @@ int func;
     ProgressDialog progressDialog;
     View _view;
     boolean IsNet;
+
     public Get_ActivityDetail(int id,  MVP_Lesson.ProvidedPresenterOps ppo, Context context, Activity activity,View view,int nid,boolean _isNet) {
         lesson_presenter = ppo;
         mactivity = activity;
@@ -49,8 +46,6 @@ int func;
         cl=new CardPagerAdapter_L();
         get();
     }
-
-
 
     public Get_ActivityDetail get() {
         if(IsNet){
@@ -105,7 +100,7 @@ int func;
                         Toast.makeText(_context, "JSONException : "+ e.getCause()+e.getMessage() , Toast.LENGTH_LONG).show();
                         progressDialog.dismiss();
                         e.printStackTrace();
-                        new PostError(_context,e.getMessage(), getMethodName()).postError();
+                        new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                     }
 
                 }

@@ -17,6 +17,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
+import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
+import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import org.json.JSONException;
@@ -37,6 +39,7 @@ public class Post_User extends BaseSetingApi {
     public Post_User(MVP_Login.ProvidedPresenterOps ppo, Context context, Activity activity, boolean net, String idlesson,
                      String username, String email, String password, String idlanguage, String sex,
                      String name, String lastname, String age, String city, String country) {
+
         login_presenter = ppo;
         choose = "login";
         _context = context;
@@ -78,26 +81,29 @@ public class Post_User extends BaseSetingApi {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,url+"User", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                if(response.equals("200")) {
-                    progressDialog.dismiss();
-                    Result = response;
-                    if(login_presenter.CountUser()==0) {
-                        String Q = "insert into aspnet_Users (Id_Lesson,UserName,Email,Password,Id_Language,Name,LastName,Age,City,Countery) values ('" +
-                                _idlesson + "','" + _username + "','" + _email + "','" + _password + "','" + _idlanguage + "','" + _name + "','" + _lastname + "','" + _age + "','" + _city + "','" + _country + "')";
-                        login_presenter.Insert_User(Q);
+                try{
+                    if(response.equals("200")) {
+                        progressDialog.dismiss();
+                        Result = response;
+                        if(login_presenter.CountUser()==0) {
+                            String Q = "insert into aspnet_Users (Id_Lesson,UserName,Email,Password,Id_Language,Name,LastName,Age,City,Countery) values ('" +
+                                    _idlesson + "','" + _username + "','" + _email + "','" + _password + "','" + _idlanguage + "','" + _name + "','" + _lastname + "','" + _age + "','" + _city + "','" + _country + "')";
+                            login_presenter.Insert_User(Q);
+                        }
+                        else {
+                            String Q2="update aspnet_Users set Id_Lesson='"+_idlesson+"',UserName='"+_username+"',Email='"+_email+"',Password='"+_password+"',Id_Language='"+_idlanguage+"',Name='"+_name+"',LastName='"+_lastname+"',Age='"+_age+"',City='"+_city+"',Countery='"+_country;
+                            login_presenter.Insert_User(Q2);
+                        }
+                        progressDialog.dismiss();
+                        _activity.finish();
+                        _activity.startActivity(new Intent(_activity, Function.class));
                     }
                     else {
-                        String Q2="update aspnet_Users set Id_Lesson='"+_idlesson+"',UserName='"+_username+"',Email='"+_email+"',Password='"+_password+"',Id_Language='"+_idlanguage+"',Name='"+_name+"',LastName='"+_lastname+"',Age='"+_age+"',City='"+_city+"',Countery='"+_country;
-                        login_presenter.Insert_User(Q2);
+                        progressDialog.dismiss();
+                        Toast.makeText(_context,"خطا در ارسال اطلاعات به سرور",Toast.LENGTH_LONG).show();
                     }
-                    progressDialog.dismiss();
-                    _activity.finish();
-                    _activity.startActivity(new Intent(_activity, Function.class));
-                }
-                else {
-                    progressDialog.dismiss();
-                    Toast.makeText(_context,"خطا در ارسال اطلاعات به سرور",Toast.LENGTH_LONG).show();
+                }catch (Exception e){
+                    new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                 }
             }
         },

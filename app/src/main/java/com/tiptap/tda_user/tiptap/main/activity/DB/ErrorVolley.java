@@ -18,15 +18,15 @@ public class ErrorVolley {
     public void Error(com.android.volley.VolleyError error,String MethodName) {
         String ErrorMsg="";
         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-            ErrorMsg="error_network_timeout";
+            ErrorMsg="error_network_timeout  /  "+error.getMessage()+"  /  "+_ctx.getClass();
         } else if (error instanceof AuthFailureError) {
-            ErrorMsg="AuthFailureError";
+            ErrorMsg="AuthFailureError  /  "+error.getMessage()+"  /  "+_ctx.getClass();
         } else if (error instanceof ServerError) {
-            ErrorMsg="ServerError";
+            ErrorMsg="ServerError  /  "+error.getMessage()+"  /  "+_ctx.getClass();
         } else if (error instanceof NetworkError) {
-            ErrorMsg="NetworkError";
+            ErrorMsg="NetworkError  /  "+error.getMessage()+"  /  "+_ctx.getClass();
         } else if (error instanceof ParseError) {
-            ErrorMsg="ParseError";
+            ErrorMsg="ParseError  /  "+error.getMessage()+"  /  "+_ctx.getClass();
         }
         new PostError(_ctx,ErrorMsg, MethodName+"___volleyError").postError();
     }
