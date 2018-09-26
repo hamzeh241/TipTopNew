@@ -10,6 +10,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -30,6 +32,7 @@ public class Function extends AppCompatActivity implements MVP_Function.Required
     ArrayList<String> Data;
     ArrayList<Integer> Id;
     Function_Adapter mAdapter;
+    int back_pressed = 0;
 
     @Inject
     public MVP_Function.ProvidedPresenterOps mPresenter;
@@ -113,13 +116,17 @@ public class Function extends AppCompatActivity implements MVP_Function.Required
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        back_pressed++;
         back();
     }
 
     public void back(){
-        Function.this.finish();
-        System.exit(0);
+        if(back_pressed == 1){
+            Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
+        }else{
+            Function.this.finish();
+            System.exit(0);
+        }
     }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {

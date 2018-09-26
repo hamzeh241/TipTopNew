@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -95,9 +96,11 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
         t2 = (TextView)findViewById(R.id.title2);
         img = (ImageView) findViewById(R.id.img);
         next = (Button) findViewById(R.id.next);
-        LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
+        LinearLayout l1 = (LinearLayout)findViewById(R.id.l1);
         LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
         l = new LinearLayout[]{l1, l2};
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
     private void after_setup() {
 
@@ -298,7 +301,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             e[id_e] = new EditText(this);
                             e[id_e].setLayoutParams(params);
                             e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                            e[id_e].setEms(5);
+                            e[id_e].setEms(7);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new CheckEdit());
@@ -336,7 +339,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                                 e[id_e] = new EditText(this);
                                 e[id_e].setLayoutParams(params);
                                 e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                                e[id_e].setEms(5);
+                                e[id_e].setEms(7);
                                 e[id_e].setTextSize(16);
                                 e[id_e].setTextColor(getResources().getColor(R.color.blue));
                                 e[id_e].addTextChangedListener(new CheckEdit());
@@ -353,7 +356,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             e[id_e] = new EditText(this);
                             e[id_e].setLayoutParams(params);
                             e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                            e[id_e].setEms(5);
+                            e[id_e].setEms(7);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new CheckEdit());
@@ -431,11 +434,14 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
-                            f1.txt_true.setText(answer);
+                            f1.txt_true.setText("Good");
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpt.start();
 
                         } else {
 
@@ -461,6 +467,9 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);

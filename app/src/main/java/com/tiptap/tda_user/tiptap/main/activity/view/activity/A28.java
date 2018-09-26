@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -33,15 +32,11 @@ import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
-import android.media.MediaPlayer.OnBufferingUpdateListener;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Toast;
 
 public class A28 extends BaseActivity
-                 implements MVP_Main.RequiredViewOps,
-                 OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener{
+                 implements MVP_Main.RequiredViewOps, OnClickListener{
 
     private static final String TAG = A28.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A28.class.getName());
@@ -88,9 +83,8 @@ public class A28 extends BaseActivity
         t1 = (TextView)findViewById(R.id.title1);
         t2 = (TextView)findViewById(R.id.title2);
         mp = new MediaPlayer();
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
-        seekBar.setMax(99);
         play = (Button) findViewById(R.id.play);
+        isplay = (Button) findViewById(R.id.isplay);
         next = (Button) findViewById(R.id.next);
         editText = (EditText) findViewById(R.id.txt);
         p = (ProgressBar)findViewById(R.id.p);
@@ -148,35 +142,61 @@ public class A28 extends BaseActivity
 
         next.setOnClickListener(this);
         play.setOnClickListener(this);
+        isplay.setOnClickListener(this);
         editText.addTextChangedListener(new CheckEdit());
-        seekBar.setOnTouchListener(this);
-        mp.setOnBufferingUpdateListener(this);
-        mp.setOnCompletionListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
         if (v.getId() == R.id.play) {
-            try {
-                String voice_url = url_download + path1;
-                mp.setDataSource(voice_url);
-                mp.prepare();
+            if(haveNetworkConnection()){
+                // change
+                play.setVisibility(View.GONE);
+                play.setClickable(false);
+                isplay.setVisibility(View.VISIBLE);
+                isplay.setClickable(true);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(url_download+path1);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepareAsync();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Log.e("MediaPlayerException", " message : "+e.getMessage());
+                }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    public void onPrepared(MediaPlayer mp) {
+                        if(!(mp.isPlaying())){
+                            mp.start();
+                        }
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        end = true;
+                        // change
+                        play.setVisibility(View.VISIBLE);
+                        play.setClickable(true);
+                        isplay.setVisibility(View.GONE);
+                        isplay.setClickable(false);
+                        // countinue
+                        if(editText.getText().toString().equals("")){
+                        }else{
+                            next.setTextColor(Color.WHITE);
+                            next.setBackgroundResource(R.drawable.btn_green);
+                        }
+                    }
+                });
+            }else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
+        }
 
-            mpLength = mp.getDuration();
-
-            if (!mp.isPlaying()) {
-                mp.start();
-                play.setBackgroundResource(R.drawable.pause);
-            } else {
-                mp.pause();
-                play.setBackgroundResource(R.drawable.play);
-            }
-            SeekBarProgressUpdater();
+        if (v.getId() == R.id.isplay) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
         }
 
         if (v.getId() == R.id.next) {
@@ -214,7 +234,6 @@ public class A28 extends BaseActivity
                                 editText.setClickable(false);
                                 editText.setFocusable(false);
                                 play.setClickable(false);
-                                seekBar.setClickable(false);
                                 p.setClickable(false);
 
                                 // Fragment_true
@@ -241,7 +260,6 @@ public class A28 extends BaseActivity
                                 editText.setClickable(false);
                                 editText.setFocusable(false);
                                 play.setClickable(false);
-                                seekBar.setClickable(false);
                                 p.setClickable(false);
 
                                 // Fragment_false
@@ -425,34 +443,6 @@ public class A28 extends BaseActivity
                 break;
             }
         }
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if(v.getId() == R.id.seekbar){
-            if(mp.isPlaying()){
-                SeekBar sb = (SeekBar)v;
-                int playPositionInMillisecconds = (mpLength / 100) * sb.getProgress();
-                mp.seekTo(playPositionInMillisecconds);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-        play.setBackgroundResource(R.drawable.play);
-        if(editText.getText().toString().equals("")){
-        }else{
-            next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn_green);
-        }
-    }
-
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        seekBar.setSecondaryProgress(percent);
     }
 
     private void setupMVP(){

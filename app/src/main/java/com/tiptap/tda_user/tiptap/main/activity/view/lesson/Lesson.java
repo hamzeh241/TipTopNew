@@ -8,9 +8,11 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 
+import com.tiptap.tda_user.tiptap.main.activity.Cls.Set_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -48,17 +50,6 @@ public class Lesson
         id_function = mPresenter.Id_Function();
         new Get_Lesson(id_function, now_id_function, haveNetworkConnection(), mPresenter, getAppContext(),
                 Lesson.this, mViewPager, mCardAdapter, mCardShadowTransformer);
-
-        after_setup();
-    }
-
-    private void after_setup() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mViewPager.setCurrentItem(CurrentPosition);
-            }
-        }, 200);
     }
 
     @Override

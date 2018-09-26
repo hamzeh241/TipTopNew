@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -84,6 +85,8 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mDataList = new ArrayList<String>();
         next = (Button) findViewById(R.id.next);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
     private void after_setup(){
 
@@ -208,11 +211,14 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_True f1 = new Fragment_True();
-                        f1.txt_true.setText("please put the Sentences in correct arrange");
+                        f1.txt_true.setText("Arranged");
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment1, f1);
                         fragTransaction.commit();
+
+                        // play sound
+                        mpt.start();
 
                     }else if (answer == 2) {
 
@@ -228,11 +234,14 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_False f2 = new Fragment_False();
-                        f2.txt_false.setText("please put the Sentences in correct arrange");
+                        f2.txt_false.setText("Not Arranged");
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment2, f2);
                         fragTransaction.commit();
+
+                        // play sound
+                        mpf.start();
                     }
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);

@@ -2,12 +2,14 @@ package com.tiptap.tda_user.tiptap.main.activity.Cls;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
+import android.support.v7.widget.CardView;
 
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardItem;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
+import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.ShadowTransformer;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 
@@ -42,6 +44,17 @@ public class Set_Lesson extends BaseSetingApi {
             mViewPager.setAdapter(mCardAdapter);
             mViewPager.setPageTransformer(false, mCardShadowTransformer);
             mViewPager.setOffscreenPageLimit(3);
+
+            // go to start lesson
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mViewPager.setCurrentItem(Lesson.CurrentPosition);
+                    CardView currentCard = mCardAdapter.getCardViewAt(mViewPager.getCurrentItem());
+                    currentCard.animate().scaleY(1.15f);
+                    currentCard.animate().scaleX(1.15f);
+                }
+            }, 200);
         }
     }
 }

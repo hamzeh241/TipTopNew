@@ -105,6 +105,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                     btn.setBackgroundResource(R.drawable.btn_blue);
                     btn.setText("Start");
                     btn.setTextColor(Color.parseColor("#000000"));
+                    // save lesson current position
                     Lesson.CurrentPosition = 0;
                 }
             }else if(luser != 0){
@@ -113,12 +114,14 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                     btn.setBackgroundResource(R.drawable.btn_green);
                     btn.setText("Redo");
                     btn.setTextColor(Color.parseColor("#000000"));
+                    // save lesson current position
                     Lesson.CurrentPosition = 0;
                 }
                 if(number_lesson == nluser) {
                     btn.setBackgroundResource(R.drawable.btn_blue);
                     btn.setText("Start");
                     btn.setTextColor(Color.parseColor("#000000"));
+                    // save lesson current position
                     Lesson.CurrentPosition = number_lesson-1;
                 }
             }
@@ -127,6 +130,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
             btn.setBackgroundResource(R.drawable.btn_green);
             btn.setText("Redo");
             btn.setTextColor(Color.parseColor("#000000"));
+            // save lesson current position
             Lesson.CurrentPosition = 0;
         }
 
@@ -139,7 +143,7 @@ public class CardPagerAdapter_L extends PagerAdapter implements CardAdapter {
                     int id_activity_type = lesson_presenter.activity_Type(id_lesson);
                     baseSetingApi.go_activity(view, id_activity_type, id_lesson,func,_activity);
                 }
-               else if(btn.getText().equals("Start")){
+                else if(btn.getText().equals("Start")){
                     new Get_Activity(id_lesson, lesson_presenter,_context,_activity,view,func,baseSetingApi.haveNetworkConnection());
                 }
             }

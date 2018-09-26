@@ -3,12 +3,12 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -40,8 +39,7 @@ import javax.inject.Inject;
  */
 
 public class A2 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,
-        View.OnClickListener, View.OnTouchListener{
+        implements MVP_Main.RequiredViewOps, View.OnClickListener{
 
     private static final String TAG = A2.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer(getFragmentManager(), A2.class.getName());
@@ -223,23 +221,31 @@ public class A2 extends BaseActivity
                         }
                         if (ans) {
                             //play sound
-                            if (haveNetworkConnection()) {
+                            if(haveNetworkConnection()){
+                                MediaPlayer mediaPlayer = new MediaPlayer();
                                 try {
-                                    String voice_url = url_download + path2;
-                                    mp.setDataSource(voice_url);
-                                    mp.prepare();
-
+                                    mediaPlayer.setDataSource(url_download+path2);
+                                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                                    mediaPlayer.prepareAsync();
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    Log.e("MediaPlayerException", " message : "+e.getMessage());
                                 }
-                                mpLength = mp.getDuration();
-                                mp.start();
-
-                            } else {
+                                mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                                    public boolean onError(MediaPlayer mp, int what, int extra) {
+                                        mp.release();
+                                        mp.reset();
+                                        return false;
+                                    }
+                                });
+                                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                    public void onPrepared(MediaPlayer mp) {
+                                        mp.start();
+                                        play.setBackgroundResource(R.drawable.pause);
+                                    }
+                                });
+                            }else{
                                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                             }
-                            //mp.setOnBufferingUpdateListener(this);
-                            //mp.setOnCompletionListener(this);
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -455,18 +461,6 @@ public class A2 extends BaseActivity
             break;
           }
         }
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if (v.getId() == R.id.seekbar) {
-            if (mp.isPlaying()) {
-                SeekBar sb = (SeekBar) v;
-                int playPositionInMillisecconds = (mpLength / 100) * sb.getProgress();
-                mp.seekTo(playPositionInMillisecconds);
-            }
-        }
-        return false;
     }
 
     private void setupMVP() {

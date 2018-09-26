@@ -91,22 +91,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/play"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:background="@drawable/play" />
+                        android:background="@drawable/play"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="visible"/>
 
-                    <SeekBar
-                        android:id="@+id/seekbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <Button
+                        android:id="@+id/isplay"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp" />
+                        android:background="@drawable/play_ispaly"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
 

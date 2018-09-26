@@ -10,10 +10,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -21,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -141,6 +143,24 @@ public class A5 extends BaseActivity
         txt.setTextColor(getResources().getColor(R.color.my_black));
 
         edt.addTextChangedListener(new CheckEdit());
+
+        // tick icon on keyboard
+        edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_DONE) {
+                    edt.clearFocus();
+                    InputMethodManager in = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(edt.getWindowToken(), 0);
+
+                    // do thing
+                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
+
+                    return true;
+                }
+                return false;
+            }
+        });
 
         next.setOnClickListener(this);
 
@@ -521,4 +541,20 @@ public class A5 extends BaseActivity
             startActivity(new Intent(A5.this, Lesson.class));
         }
     }
+
+    /* edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            edt.clearFocus();
+            InputMethodManager in = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            in.hideSoftInputFromWindow(edt.getWindowToken(), 0);
+
+            // do thing
+
+            return true;
+        }
+        return false;
+    }
+});*/
 }

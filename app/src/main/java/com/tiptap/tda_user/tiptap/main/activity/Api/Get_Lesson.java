@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -12,6 +14,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
+import com.tiptap.tda_user.tiptap.main.activity.view.Dialog_Error;
+import com.tiptap.tda_user.tiptap.main.activity.view.Dialog_TimeOut;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.ShadowTransformer;
 import com.tiptap.tda_user.tiptap.main.activity.Cls.Set_Lesson;
@@ -93,7 +97,9 @@ public class Get_Lesson extends BaseSetingApi {
 
                     } catch (JSONException e) {
                         progressDialog.dismiss();
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        Dialog_Error de = new Dialog_Error(mactivity);
+                        de.show();
                         new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                     }
                 }
@@ -104,8 +110,11 @@ public class Get_Lesson extends BaseSetingApi {
                     new ErrorVolley(_context).Error(volleyError,"get");
                     if (volleyError.networkResponse == null) {
                         if (volleyError.getClass().equals(TimeoutError.class)) {
-                            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
-                            set_lesson.load();
+                            progressDialog.dismiss();
+                            Dialog_TimeOut dr = new Dialog_TimeOut(mactivity);
+                            dr.show();
+                           // Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
+                           // set_lesson.load();
                         }
                     }
                 }
@@ -113,8 +122,10 @@ public class Get_Lesson extends BaseSetingApi {
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{
-            Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
-            set_lesson.load();
+           // Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
+           // set_lesson.load();
+            // no internet connection
+            Toast.makeText(_context, "دسترسی به اینترنت امکان پذیر نیست", Toast.LENGTH_LONG).show();
         }
         return null;
     }

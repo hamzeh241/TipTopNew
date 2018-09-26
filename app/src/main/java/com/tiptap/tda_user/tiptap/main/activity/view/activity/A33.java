@@ -4,13 +4,13 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
@@ -35,14 +34,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import javax.inject.Inject;
-import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 
 public class A33 extends BaseActivity
-                 implements MVP_Main.RequiredViewOps,
-                 OnClickListener, OnTouchListener, OnCompletionListener, OnBufferingUpdateListener {
+                 implements MVP_Main.RequiredViewOps, OnClickListener{
 
     private static final String TAG = A33.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A33.class.getName());
@@ -52,6 +48,7 @@ public class A33 extends BaseActivity
     ArrayList<String> you_say = new ArrayList<>();
     ImageView voice;
     int back_pressed = 0;
+    boolean mic_status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +84,8 @@ public class A33 extends BaseActivity
         mp = new MediaPlayer();
         next = (Button) findViewById(R.id.next);
         voice = (ImageView) findViewById(R.id.voice);
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
-        seekBar.setMax(99);
         play = (Button) findViewById(R.id.play);
+        isplay = (Button) findViewById(R.id.isplay);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
@@ -149,51 +145,75 @@ public class A33 extends BaseActivity
         next.setOnClickListener(this);
         voice.setOnClickListener(this);
         play.setOnClickListener(this);
-
-        seekBar.setOnTouchListener(this);
-
-        mp.setOnBufferingUpdateListener(this);
-        mp.setOnCompletionListener(this);
+        isplay.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
         if(v.getId() == R.id.voice){
+            if(mic_status){
+                if(haveNetworkConnection()){
+                    promptSpeechInput();
+                }else{
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        if (v.getId() == R.id.play) {
             if(haveNetworkConnection()){
-                promptSpeechInput();
+                // change
+                play.setVisibility(View.GONE);
+                play.setClickable(false);
+                isplay.setVisibility(View.VISIBLE);
+                isplay.setClickable(true);
+                // mic
+                mic_status = false;
+
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(url_download+path1);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepareAsync();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Log.e("MediaPlayerException", " message : "+e.getMessage());
+                }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    public void onPrepared(MediaPlayer mp) {
+                        if(!(mp.isPlaying())){
+                            mp.start();
+                        }
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        end = true;
+                        // change
+                        play.setVisibility(View.VISIBLE);
+                        play.setClickable(true);
+                        isplay.setVisibility(View.GONE);
+                        isplay.setClickable(false);
+                        // mic
+                        mic_status = true;
+                        // countinue
+                        if(you_say.size()>=1){
+                            if(end){
+                                next.setTextColor(Color.WHITE);
+                                next.setBackgroundResource(R.drawable.btn_green);
+                            }
+                        }
+                    }
+                });
             }else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
         }
 
-        if (v.getId() == R.id.play) {
-
-            if(haveNetworkConnection()){
-                try {
-                    mp.reset();
-                    String voice_url = url_download + path1;
-                    mp.setDataSource(voice_url);
-                    mp.prepare();
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                mpLength = mp.getDuration();
-
-                if (!mp.isPlaying()) {
-                    mp.start();
-                    play.setBackgroundResource(R.drawable.pause);
-                } else {
-                    mp.pause();
-                    play.setBackgroundResource(R.drawable.play);
-                }
-                SeekBarProgressUpdater();
-
-            }else{
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
-            }
+        if (v.getId() == R.id.isplay) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
         }
 
         if (v.getId() == R.id.next) {
@@ -235,7 +255,6 @@ public class A33 extends BaseActivity
                             txt.setClickable(false);
                             voice.setClickable(false);
                             play.setClickable(false);
-                            seekBar.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_true
@@ -262,7 +281,6 @@ public class A33 extends BaseActivity
                             txt.setClickable(false);
                             voice.setClickable(false);
                             play.setClickable(false);
-                            seekBar.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_false
@@ -438,35 +456,6 @@ public class A33 extends BaseActivity
                     break;
             }
         }
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        if(v.getId() == R.id.seekbar){
-            if(mp.isPlaying()){
-                SeekBar sb = (SeekBar)v;
-                int playPositionInMillisecconds = (mpLength / 100) * sb.getProgress();
-                mp.seekTo(playPositionInMillisecconds);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-        play.setBackgroundResource(R.drawable.play);
-        if(you_say.size()>=1){
-            if(end){
-                next.setTextColor(Color.WHITE);
-                next.setBackgroundResource(R.drawable.btn_green);
-            }
-        }
-    }
-
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        seekBar.setSecondaryProgress(percent);
     }
 
     private void setupMVP(){

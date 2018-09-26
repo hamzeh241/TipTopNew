@@ -38,9 +38,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
     }
 
     @Override
-    public void transformPage(View page, float position) {
-
-    }
+    public void transformPage(View page, float position) {}
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -98,12 +96,8 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
     }
 
     @Override
-    public void onPageSelected(int position) {
-
-    }
+    public void onPageSelected(int position) {}
 
     @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
+    public void onPageScrollStateChanged(int state) {}
 }

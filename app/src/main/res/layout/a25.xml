@@ -106,8 +106,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="15dp">
 
                     <TextView
                         android:id="@+id/txt1"
@@ -115,11 +115,11 @@
                         android:layout_height="match_parent"
                         android:gravity="left|center_vertical"
                         android:textDirection="ltr"
-                        android:text="hello , I amle ?"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
                         android:layout_weight="1"
-                        android:layout_marginLeft="6dp"/>
+                        android:layout_marginLeft="6dp"
+                        android:text="wrrrrrrrrrrrrrr$AVB3yv4"/>
 
                 </LinearLayout>
 
@@ -133,21 +133,11 @@
                 android:layout_marginTop="10dp">
 
                 <LinearLayout
+                    android:id="@+id/l1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/txt2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="16sp"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginRight="6dp"/>
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="15dp">
 
                 </LinearLayout>
 
@@ -176,6 +166,7 @@
             </TableRow>
 
         </TableLayout>
+
     </LinearLayout>
 
     <LinearLayout

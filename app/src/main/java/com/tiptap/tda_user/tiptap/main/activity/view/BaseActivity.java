@@ -40,7 +40,7 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
     public ProgressBar p;
     public int all;
     public TextView txt1,txt2,t1,t2,txt,txt3;
-    public Button play,next;
+    public Button next, play, isplay;
     public List<TbActivityDetail> tbActivityDetailList;
     public ImageView img;
     public String you_say = "";
@@ -119,7 +119,7 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
         return b;
     }
 
-    public void SeekBarProgressUpdater() {
+    /*public void SeekBarProgressUpdater() {
         seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
         if (mp.isPlaying()) {
             Runnable notification = new Runnable() {
@@ -129,7 +129,7 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
             };
             handler.postDelayed(notification,1000);
         }
-    }
+    }*/
 
     public Context getActivityContext() {
         return this;

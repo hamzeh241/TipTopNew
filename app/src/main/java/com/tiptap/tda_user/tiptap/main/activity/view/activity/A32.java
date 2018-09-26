@@ -10,9 +10,6 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,30 +40,29 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A32 extends BaseActivity
-        implements MVP_Main.RequiredViewOps, OnClickListener{
+        implements MVP_Main.RequiredViewOps, OnClickListener {
 
     private static final String TAG = A32.class.getSimpleName();
-    private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A32.class.getName());
+    private final StateMaintainer mStateMaintainer = new StateMaintainer(getFragmentManager(), A32.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
     LinearLayout l[];
     int added = 0;
-    ImageView b_mic[],b_play[];
-    int id_bplay = 0;
-    TextView t1,t2;
+    ImageView b_mic[], b_play[];
+    int id_bplay = 0, id_bmic = 0;
+    TextView t1, t2;
     TextView t[];
     TextView e[];
-    String tohi1 = "----------------", tohi2 = "----------------------------------------";
-    String ans[];
+    String tohi1 = "--------------", tohi2 = "----------------------------------------";
     int xali = 0;
     String path1[];
-    int count=0;
-    boolean end = false;
-    TextView now_say;
+    int count = 0;
+    int now_say;
     String z1[];
-    int fill = 0;
     int back_pressed = 0;
+    String[] all_answer;
+    int[] position_answer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +78,11 @@ public class A32 extends BaseActivity
         max = mPresenter.max_Activitynumber(idlesson);
 
         // first
-        if(Act_Status.equals("first")){
+        if (Act_Status.equals("first")) {
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
         }
         // second
-        if(Act_Status.equals("second")) {
+        if (Act_Status.equals("second")) {
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
@@ -98,45 +94,45 @@ public class A32 extends BaseActivity
 
     private void setupViews() {
 
-        t1 = (TextView)findViewById(R.id.title1);
-        t2 = (TextView)findViewById(R.id.title2);
+        t1 = (TextView) findViewById(R.id.title1);
+        t2 = (TextView) findViewById(R.id.title2);
 
-        p = (ProgressBar)findViewById(R.id.p);
+        p = (ProgressBar) findViewById(R.id.p);
         p.setMax(100);
 
-        LinearLayout l1= (LinearLayout)findViewById(R.id.l1);
-        LinearLayout l2 = (LinearLayout)findViewById(R.id.l2);
-        LinearLayout l3 = (LinearLayout)findViewById(R.id.l3);
-        LinearLayout l4  = (LinearLayout)findViewById(R.id.l4);
-        LinearLayout l5 = (LinearLayout)findViewById(R.id.l5);
-        LinearLayout l6 = (LinearLayout)findViewById(R.id.l6);
-        LinearLayout l7 = (LinearLayout)findViewById(R.id.l7);
-        LinearLayout l8 = (LinearLayout)findViewById(R.id.l8);
+        LinearLayout l1 = (LinearLayout) findViewById(R.id.l1);
+        LinearLayout l2 = (LinearLayout) findViewById(R.id.l2);
+        LinearLayout l3 = (LinearLayout) findViewById(R.id.l3);
+        LinearLayout l4 = (LinearLayout) findViewById(R.id.l4);
+        LinearLayout l5 = (LinearLayout) findViewById(R.id.l5);
+        LinearLayout l6 = (LinearLayout) findViewById(R.id.l6);
+        LinearLayout l7 = (LinearLayout) findViewById(R.id.l7);
+        LinearLayout l8 = (LinearLayout) findViewById(R.id.l8);
 
         l = new LinearLayout[]{l1, l2, l3, l4, l5, l6, l7, l8};
         next = (Button) findViewById(R.id.next);
         mp = new MediaPlayer();
-        mpt = MediaPlayer.create (this, R.raw.true_sound);
-        mpf =  MediaPlayer.create (this, R.raw.false_sound);
+        mpt = MediaPlayer.create(this, R.raw.true_sound);
+        mpf = MediaPlayer.create(this, R.raw.false_sound);
     }
 
-    private void after_setup(){
+    private void after_setup() {
 
         all = mPresenter.countActivity(idlesson);
 
         // set all activity false in activitynumber = 1
-        if(activitynumber == 1 && Act_Status.equals("first")){
+        if (activitynumber == 1 && Act_Status.equals("first")) {
             mPresenter.false_activitys(idlesson);
         }
 
         // show passed activity
         List<Integer> p1 = mPresenter.activity_true(idlesson);
         int p2 = p1.size();
-        if(p2 == 0){
+        if (p2 == 0) {
             p.setProgress(0);
-        }else{
-            double d_number = (double) p2/all;
-            int i_number = (int) (d_number*100);
+        } else {
+            double d_number = (double) p2 / all;
+            int i_number = (int) (d_number * 100);
             p.setProgress(i_number);
         }
 
@@ -144,7 +140,7 @@ public class A32 extends BaseActivity
         t1.setTextColor(getResources().getColor(R.color.my_black));
 
         int lang_id = mPresenter.getlanguage();
-        switch (lang_id){
+        switch (lang_id) {
             // فارسی
             case 1:
                 t2.setText(R.string.A32_FA);
@@ -172,87 +168,61 @@ public class A32 extends BaseActivity
         /* ------------------------------------------------------------------------------------------------------ */
         // each row - title2
 
-        for(int i=0 ; i<count ; i++) {
+        // find count answer
+        int count_answer = 0;
+        for (int i = 0; i < count; i++) {
             String temp = tbActivityDetailList.get(i).getTitle2();
             if (temp.equals("null")) {
-
-            }else{
-                int have = 0;
-                for(int j=0 ; j<temp.length() ; j++){
-                    if(temp.charAt(j) == '_'){
-                        have = 1;
-                    }
-                }
-                if(have == 1){
-                    String z[] = temp.split("_");
-                    xali = xali + (z.length);
-                }
-                else if(have == 0){
-                    xali = xali + 1;
-                }
+            } else {
+                count_answer++;
             }
         }
 
-        ans = new String[xali];
-        int c = 0;
-        for(int i=0 ; i<count ; i++) {
+        // get answer
+        all_answer = new String[count_answer];
+        position_answer = new int[count_answer];
+        int c_ans = 0;
+        for (int i = 0; i < count; i++) {
             String temp = tbActivityDetailList.get(i).getTitle2();
             if (temp.equals("null")) {
-
-            }else{
-                int have = 0;
-                for(int j=0 ; j<temp.length() ; j++){
-                    if(temp.charAt(j) == '_'){
-                        have = 1;
-                    }
-                }
-                if(have == 1){
-                    String z[] = temp.split("_");
-                    for(int j=0 ; j<z.length ; j++){
-                        ans[c] = z[j];
-                        c++;
-                    }
-                }
-                else if(have == 0){
-                    ans[c] = temp;
-                    c++;
-                }
+            } else {
+                all_answer[c_ans] = temp;
+                position_answer[c_ans] = i;
+                c_ans++;
             }
         }
 
-        e = new TextView[xali];
-        int id_e = 0;
-
-        // all voice in path1[]
-        int cpath = 0;
-        for(int p=0 ; p<count ; p++){
+        // find count path1
+        int count_path1 = 0;
+        for (int p = 0; p < count; p++) {
             String temp = tbActivityDetailList.get(p).getPath1();
-            if(temp.equals("null")){
+            if (temp.equals("null")) {
 
-            }else{
-                cpath++;
+            } else {
+                count_path1++;
             }
         }
 
-        path1 = new String[cpath];
-        int pcount = 0;
-        for(int p=0 ; p<count ; p++){
+        // get path1
+        path1 = new String[count_path1];
+        int c_pth = 0;
+        for (int p = 0; p < count; p++) {
             String temp = tbActivityDetailList.get(p).getPath1();
-            if(temp.equals("null")){
+            if (temp.equals("null")) {
 
-            }else{
-               path1[pcount] = temp;
-               pcount++;
+            } else {
+                path1[c_pth] = temp;
+                c_pth++;
             }
         }
 
-        b_mic = new ImageView[xali];
+        // count of elements
         b_play = new ImageView[path1.length];
+        b_mic = new ImageView[count_answer];
 
         // ------------------------------------------------------------------------------------------------------
         // each row - title1
-        for(int i=0 ; i<count ; i++) {
-
+        for (int i = 0; i < count; i++) {
             // ------------------------------------------------------------------------------------------------------
             // splite textview & edittext
 
@@ -264,9 +234,9 @@ public class A32 extends BaseActivity
             int end = 0;
 
             // only ...
-            if(w.equals("...")){
+            if (w.equals("...")) {
                 start = 1;
-            }else{
+            } else {
                 String s_s = w.substring(0, 3);
                 if (s_s.equals("...")) {
                     start = 1;
@@ -280,9 +250,9 @@ public class A32 extends BaseActivity
             int t_number = 0;
             int id_w = 0;
 
-            if(w.equals("...")){
+            if (w.equals("...")) {
                 t_number = 0;
-            }else{
+            } else {
                 if (list_w[0].equals("")) {
                     id_w = 1;
                     t_number = list_w.length - 1;
@@ -300,48 +270,48 @@ public class A32 extends BaseActivity
 
             int total = t_number + e_number;
             t = new TextView[t_number];
+            e = new TextView[e_number];
             int id_t = 0;
+            int id_e = 0;
 
             // ------------------------------------------------------------------------------------------------------
-            // add to view
+            // add to view - each row of activity details
             String now = "txt";
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(10,6,6,6);
+            params.setMargins(10, 6, 6, 6);
 
-            if(total == 1){
+            if (total == 1) {
                 // only ...
-                if(w.equals("...")) {
-                    b_mic[id_e] = new ImageView(this);
-                    b_mic[id_e].setBackgroundResource(R.drawable.mic1);
-                    b_mic[id_e].setPadding(12,12,12,12);
-                    l[added].addView(b_mic[id_e]);
+                if (w.equals("...")) {
+                    b_mic[id_bmic] = new ImageView(this);
+                    b_mic[id_bmic].setBackgroundResource(R.drawable.mic1);
+                    b_mic[id_bmic].setPadding(12, 12, 12, 12);
+                    l[added].addView(b_mic[id_bmic]);
 
                     e[id_e] = new TextView(this);
                     e[id_e].setLayoutParams(params);
-                    e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
                     e[id_e].setText(tohi2);
                     e[id_e].setTextSize(16);
                     e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                    e[id_e].addTextChangedListener(new CheckEdit());
                     l[added].addView(e[id_e]);
-
-                    final int finalId_e1 = id_e;
-                    b_mic[id_e].setOnClickListener(new OnClickListener() {
+                    final int x = added;
+                    b_mic[id_bmic].setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            now_say = e[finalId_e1];
+                            now_say = x;
                             promptSpeechInput();
                         }
                     });
 
+                    id_bmic++;
                     id_e++;
                     added++;
                 }
                 // only text without ...
-                else{
+                else {
                     b_play[id_bplay] = new ImageView(this);
                     b_play[id_bplay].setBackgroundResource(R.drawable.play1);
-                    b_play[id_bplay].setPadding(12,12,12,12);
+                    b_play[id_bplay].setPadding(12, 12, 12, 12);
                     l[added].addView(b_play[id_bplay]);
 
                     t[id_t] = new TextView(this);
@@ -362,41 +332,44 @@ public class A32 extends BaseActivity
                     added++;
                 }
 
-            }else{
-                for(int xi=0 ; xi<total ; xi++){
+            } else {
 
-                    final int finalId_e = id_e;
+                int add_mic = 0;
+
+                // show mic
+                if(add_mic == 0) {
+                    b_mic[id_bmic] = new ImageView(this);
+                    b_mic[id_bmic].setBackgroundResource(R.drawable.mic1);
+                    b_mic[id_bmic].setPadding(12, 12, 12, 12);
+                    l[added].addView(b_mic[id_bmic]);
+                    final int x = added;
+                    b_mic[id_bmic].setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            now_say = x;
+                            promptSpeechInput();
+                        }
+                    });
+                    id_bmic++;
+                    add_mic++;
+                }
+
+                for (int xi = 0; xi < total; xi++) {
 
                     // start
-                    if(xi == 0){
-                        if(start == 1){
-                            b_mic[id_e] = new ImageView(this);
-                            b_mic[id_e].setBackgroundResource(R.drawable.mic1);
-                            b_mic[id_e].setPadding(12,12,12,12);
-                            l[added].addView(b_mic[id_e]);
-
+                    if (xi == 0) {
+                        if (start == 1) {
                             e[id_e] = new TextView(this);
                             e[id_e].setLayoutParams(params);
-                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
                             e[id_e].setText(tohi1);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                            e[id_e].addTextChangedListener(new CheckEdit());
                             l[added].addView(e[id_e]);
-
-                            final int finalId_e1 = id_e;
-                            b_mic[id_e].setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    now_say = e[finalId_e1];
-                                    promptSpeechInput();
-                                }
-                            });
 
                             id_e++;
                         }
 
-                        if(start == 0){
+                        if (start == 0) {
                             t[id_t] = new TextView(this);
                             t[id_t].setLayoutParams(params);
                             t[id_t].setText(list_w[id_w]);
@@ -409,7 +382,7 @@ public class A32 extends BaseActivity
                         }
                     }
 
-                    if(xi!=0 && xi!=total-1){
+                    if (xi != 0 && xi != total - 1) {
                         // textview
                         switch (now) {
                             case "txt":
@@ -425,28 +398,12 @@ public class A32 extends BaseActivity
                                 break;
 
                             case "edt":
-                                b_mic[id_e] = new ImageView(this);
-                                b_mic[id_e].setBackgroundResource(R.drawable.mic1);
-                                b_mic[id_e].setPadding(12,12,12,12);
-                                l[added].addView(b_mic[id_e]);
-
                                 e[id_e] = new TextView(this);
                                 e[id_e].setLayoutParams(params);
-                                e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
                                 e[id_e].setText(tohi1);
                                 e[id_e].setTextSize(16);
                                 e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                                e[id_e].addTextChangedListener(new CheckEdit());
                                 l[added].addView(e[id_e]);
-
-                                final int finalId_e1 = id_e;
-                                b_mic[id_e].setOnClickListener(new OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        now_say = e[finalId_e1];
-                                        promptSpeechInput();
-                                    }
-                                });
 
                                 now = "txt";
                                 id_e++;
@@ -455,35 +412,19 @@ public class A32 extends BaseActivity
                     }
 
                     // end
-                    if(xi == total-1){
-                        if(end == 1){
-                            b_mic[id_e] = new ImageView(this);
-                            b_mic[id_e].setBackgroundResource(R.drawable.mic1);
-                            b_mic[id_e].setPadding(12,12,12,12);
-                            l[added].addView(b_mic[id_e]);
-
+                    if (xi == total - 1) {
+                        if (end == 1) {
                             e[id_e] = new TextView(this);
                             e[id_e].setLayoutParams(params);
-                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
                             e[id_e].setText(tohi1);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
-                            e[id_e].addTextChangedListener(new CheckEdit());
                             l[added].addView(e[id_e]);
-
-                            final int finalId_e1 = id_e;
-                            b_mic[id_e].setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    now_say = e[finalId_e1];
-                                    promptSpeechInput();
-                                }
-                            });
 
                             id_e++;
                         }
 
-                        if(end == 0){
+                        if (end == 0) {
                             t[id_t] = new TextView(this);
                             t[id_t].setLayoutParams(params);
                             t[id_t].setText(list_w[id_w]);
@@ -504,28 +445,27 @@ public class A32 extends BaseActivity
     @Override
     public void onClick(View v) {
 
-        if(v.getId() == R.id.voice){
+        if (v.getId() == R.id.voice) {
             promptSpeechInput();
         }
 
         if (v.getId() == R.id.next) {
 
             mp.stop();
+            int have_ans = 1;
+
             switch (next.getText().toString()) {
 
                 case "check":
 
-                    fill = 0;
-                    for(int i=0 ; i<e.length ; i++){
-                        if (e[i].getText().toString().equals(tohi1) || e[i].getText().toString().equals(tohi2)) {
-                            // nothing
-                        }else {
-                            fill++;
+                    for (int i = 0; i < position_answer.length; i++) {
+                        if (getLinearData(l[position_answer[i]]).equals(tohi1) || getLinearData(l[position_answer[i]]).equals(tohi2)) {
+                            have_ans = 0;
                         }
                     }
 
-                    if(fill == e.length){
-                        if(end){
+                    if (have_ans == 1) {
+                        if (end) {
 
                             String answer = cheak();
                             if (answer.equals("")) {
@@ -536,21 +476,21 @@ public class A32 extends BaseActivity
                                 // show passed activity
                                 List<Integer> passed1 = mPresenter.activity_true(idlesson);
                                 int passed2 = passed1.size();
-                                if(passed2 == 0){
+                                if (passed2 == 0) {
                                     p.setProgress(0);
-                                }else{
-                                    double d_number = (double) passed2/all;
-                                    int i_number = (int) (d_number*100);
+                                } else {
+                                    double d_number = (double) passed2 / all;
+                                    int i_number = (int) (d_number * 100);
                                     p.setProgress(i_number);
                                 }
 
                                 // Clickable_false
                                 t1.setClickable(false);
                                 t2.setClickable(false);
-                                for(int i=0 ; i<b_mic.length ; i++){
+                                for (int i = 0; i < b_mic.length; i++) {
                                     b_mic[i].setClickable(false);
                                 }
-                                for(int i=0 ; i<b_play.length ; i++){
+                                for (int i = 0; i < b_play.length; i++) {
                                     b_play[i].setClickable(false);
                                 }
                                 p.setClickable(false);
@@ -562,7 +502,7 @@ public class A32 extends BaseActivity
                                 linearLayout.setVisibility(View.VISIBLE);
 
                                 Fragment_True f1 = new Fragment_True();
-                                f1.txt_true.setText(answer);
+                                f1.txt_true.setText("Good");
                                 FragmentManager fragMan = getSupportFragmentManager();
                                 FragmentTransaction fragTransaction = fragMan.beginTransaction();
                                 fragTransaction.add(R.id.fragment1, f1);
@@ -576,10 +516,10 @@ public class A32 extends BaseActivity
                                 // Clickable_false
                                 t1.setClickable(false);
                                 t2.setClickable(false);
-                                for(int i=0 ; i<b_mic.length ; i++){
+                                for (int i = 0; i < b_mic.length; i++) {
                                     b_mic[i].setClickable(false);
                                 }
-                                for(int i=0 ; i<b_play.length ; i++){
+                                for (int i = 0; i < b_play.length; i++) {
                                     b_play[i].setClickable(false);
                                 }
                                 p.setClickable(false);
@@ -605,10 +545,10 @@ public class A32 extends BaseActivity
                             next.setBackgroundResource(R.drawable.btn_green);
                             next.setText("countinue");
 
-                        }else{
+                        } else {
                             Toast.makeText(getApplicationContext(), "به فایل های صوتی گوش دهید", Toast.LENGTH_LONG).show();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "جاهای خالی را پر کنید", Toast.LENGTH_LONG).show();
                     }
 
@@ -616,13 +556,13 @@ public class A32 extends BaseActivity
 
                 case "countinue":
 
-                    if(fill == e.length && end){
+                    if (have_ans == 1 && end) {
 
                         // first
-                        if(Act_Status.equals("first")){
+                        if (Act_Status.equals("first")) {
 
                             // max - end of lesson
-                            if(activitynumber == max) {
+                            if (activitynumber == max) {
 
                                 // list of false answer
                                 List<Integer> id_act_false = mPresenter.activity_false(idlesson);
@@ -672,7 +612,7 @@ public class A32 extends BaseActivity
                                 else {
 
                                     // next is random
-                                    int max_range = (id_act_false.size())-1;
+                                    int max_range = (id_act_false.size()) - 1;
                                     int min_range = 0;
                                     int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
                                     int id_act = id_act_false.get(rnd);
@@ -695,14 +635,14 @@ public class A32 extends BaseActivity
                         }
 
                         // second
-                        if(Act_Status.equals("second")){
+                        if (Act_Status.equals("second")) {
 
                             // list of false answer
                             List<Integer> id_act_f = mPresenter.activity_false(idlesson);
                             int number = id_act_f.size();
 
                             // number = 0 and update
-                            if(number == 0){
+                            if (number == 0) {
 
                                 // get now lesson
                                 now_less = mPresenter.now_IdLesson();
@@ -744,10 +684,10 @@ public class A32 extends BaseActivity
                             }
 
                             // number != 0 and go on to Next
-                            else{
+                            else {
 
                                 // next is random
-                                int max_range = (id_act_f.size())-1;
+                                int max_range = (id_act_f.size()) - 1;
                                 int min_range = 0;
                                 int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
                                 int id_act = id_act_f.get(rnd);
@@ -766,34 +706,15 @@ public class A32 extends BaseActivity
         }
     }
 
-    class CheckEdit implements TextWatcher {
-        public void afterTextChanged(Editable s) {
-            try {
-                if(s.toString().equals("")){ // && fill == 0
-                    next.setTextColor(Color.GRAY);
-                    next.setBackgroundResource(R.drawable.btn_gray);
-                }
-                else{
-                    //fill++;
-                    next.setTextColor(Color.WHITE);
-                    next.setBackgroundResource(R.drawable.btn_green);
-                }
-            }
-            catch(NumberFormatException nfe){}
-        }
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-    }
-
-    private void setupMVP(){
-        if ( mStateMaintainer.firstTimeIn() ) {
+    private void setupMVP() {
+        if (mStateMaintainer.firstTimeIn()) {
             initialize();
         } else {
             reinitialize();
         }
     }
 
-    private void initialize(){
+    private void initialize() {
         Log.d(TAG, "initialize");
         setupComponent();
         mStateMaintainer.put(Main_Presenter.class.getSimpleName(), mPresenter);
@@ -803,11 +724,11 @@ public class A32 extends BaseActivity
         Log.d(TAG, "reinitialize");
         mPresenter = mStateMaintainer.get(Main_Presenter.class.getSimpleName());
         mPresenter.setView(this);
-        if ( mPresenter == null )
+        if (mPresenter == null)
             setupComponent();
     }
 
-    private void setupComponent(){
+    private void setupComponent() {
         Log.d(TAG, "setupComponent");
         SampleApp.get(this)
                 .getAppComponent()
@@ -844,21 +765,38 @@ public class A32 extends BaseActivity
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    now_say.setTextSize(16);
-                    now_say.setPadding(10,0,0,0);
-                    now_say.setText(result.get(0));
-                    now_say.setTextColor(getResources().getColor(R.color.blue));
 
+                    if(result.size()>=1){
+
+                        int xx = l[now_say].getChildCount();
+                        while (xx > 1) {
+                            View v = l[now_say].getChildAt(l[now_say].getChildCount()-1);
+                            if(v instanceof TextView){
+                                l[now_say].removeView(v);
+                                xx--;
+                            }
+                            // not remove
+                            if(v instanceof ImageView){}
+                        }
+                        TextView tx = new TextView(this);
+                        tx.setText(result.get(0));
+                        tx.setTextSize(16);
+                        tx.setPadding(10, 0, 0, 0);
+                        tx.setTextColor(getResources().getColor(R.color.blue));
+                        l[now_say].addView(tx);
+                    }
+
+                    // change color of check button
                     int fill = 0;
-                    for(int i=0 ; i<e.length ; i++) {
-                        if (e[i].getText().toString().equals("")) {
+                    for (int i = 0; i < position_answer.length; i++) {
+                        if (getLinearData(l[position_answer[i]]).equals(tohi1) || getLinearData(l[position_answer[i]]).equals(tohi2)) {
 
                         } else {
                             fill++;
                         }
                     }
-                    if(e.length == fill){
-                        if(end){
+                    if (position_answer.length == fill) {
+                        if (end) {
                             next.setTextColor(Color.WHITE);
                             next.setBackgroundResource(R.drawable.btn_green);
                         }
@@ -869,9 +807,9 @@ public class A32 extends BaseActivity
         }
     }
 
-    public void play(final int i){
+    public void play(final int i) {
 
-        if(haveNetworkConnection()){
+        if (haveNetworkConnection()) {
             try {
                 String voice_url = null;
                 mp = new MediaPlayer();
@@ -885,46 +823,60 @@ public class A32 extends BaseActivity
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
-                        end=true;
+                        end = true;
                         b_play[i].setBackgroundResource(R.drawable.play1);
+
+                        // change color of check button
+                        int fill = 0;
+                        for (int i = 0; i < position_answer.length; i++) {
+                            if (getLinearData(l[position_answer[i]]).equals(tohi1) || getLinearData(l[position_answer[i]]).equals(tohi2)) {
+
+                            } else {
+                                fill++;
+                            }
+                        }
+                        if (position_answer.length == fill) {
+                            next.setTextColor(Color.WHITE);
+                            next.setBackgroundResource(R.drawable.btn_green);
+                        }
                     }
                 });
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else{
+        } else {
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
         }
     }
 
-    public String cheak(){
+    public String cheak() {
 
         String result = "";
         boolean final_answer = true;
-        boolean answer[] = new boolean[xali];
+        boolean answer[] = new boolean[position_answer.length];
         int cc = 0;
 
-        for(int i=0 ; i < e.length ; i++){
+        for (int i = 0; i < all_answer.length; i++) {
 
             // yek javab
             int baxsh = 0;
-            for(int j=0 ; j<ans[i].length() ; j++){
-                if(ans[i].charAt(j) == '^'){ // Replace , TO ^
+            for (int j = 0; j < all_answer[i].length(); j++) {
+                if (all_answer[i].charAt(j) == '^') { // Replace , TO ^
                     baxsh++;
                 }
             }
 
             z1 = null;
-            switch (baxsh){
+            switch (baxsh) {
                 // 1 baxsh
                 case 0:
-                    z1 = ans[i].split("/");
+                    z1 = all_answer[i].split("/");
                     break;
 
                 // 2 baxsh
                 case 1:
-                    String[] s = ans[i].split("\\^"); // Replace , TO ^
+                    String[] s = all_answer[i].split("\\^"); // Replace , TO ^
                     String[] x = s[0].split("/");
                     String[] y = s[1].split("/");
 
@@ -940,18 +892,40 @@ public class A32 extends BaseActivity
 
                 // 3 baxsh
                 case 2:
-                    String[] a = ans[i].split("\\^"); // Replace , TO ^
+                    String[] a = all_answer[i].split("\\^"); // Replace , TO ^
                     String[] b = a[0].split("/");
                     String[] c = a[1].split("/");
                     String[] d = a[2].split("/");
 
-                    z1 = new String[b.length * c.length* d.length];
+                    z1 = new String[b.length * c.length * d.length];
                     int count3 = 0;
-                    for (int ii = 0; ii < b.length ; ii++) {
-                        for (int jj = 0; jj < c.length ; jj++) {
-                            for(int k = 0 ; k < d.length ; k++){
+                    for (int ii = 0; ii < b.length; ii++) {
+                        for (int jj = 0; jj < c.length; jj++) {
+                            for (int k = 0; k < d.length; k++) {
                                 z1[count3] = b[ii] + " " + c[jj] + " " + d[k];
                                 count3++;
+                            }
+                        }
+                    }
+                    break;
+
+                // 4 baxsh
+                case 3:
+                    String[] all = all_answer[i].split("\\^"); // Replace , TO ^
+                    String[] a1 = all[0].split("/");
+                    String[] a2 = all[1].split("/");
+                    String[] a3 = all[2].split("/");
+                    String[] a4 = all[3].split("/");
+
+                    z1 = new String[a1.length * a2.length * a3.length* a4.length];
+                    int count4 = 0;
+                    for (int ii = 0; ii < a1.length; ii++) {
+                        for (int jj = 0; jj < a2.length; jj++) {
+                            for (int k = 0; k < a3.length; k++) {
+                                for (int kk = 0; kk < a4.length; kk++) {
+                                    z1[count4] = a1[ii] + " " + a2[jj] + " " + a3[k]+ " " + a4[kk];
+                                    count4++;
+                                }
                             }
                         }
                     }
@@ -959,28 +933,28 @@ public class A32 extends BaseActivity
             }
 
             // moqayese ba javab
-            result = result + " / "+ z1[0] ;
-            for(int j=0 ; j < z1.length ; j++){
-                String a = nice_string2( e[i].getText().toString() );
-                String b = nice_string2( z1[j].toString() );
-                if(a.equals(b)){
+            result = result + " / " + z1[0];
+            for (int j = 0; j < z1.length; j++) {
+                String a = nice_string2(getLinearData(l[position_answer[i]]));
+                String b = nice_string2(z1[j].toString());
+                if (a.equals(b)) {
                     answer[cc] = true;
                     cc++;
                 }
             }
         }
 
-        for(int x=0 ; x<answer.length ; x++){
-            if(answer[x]){
+        for (int x = 0; x < answer.length; x++) {
+            if (answer[x]) {
 
-            }else{
+            } else {
                 final_answer = false;
             }
         }
 
-        if(final_answer){
+        if (final_answer) {
             return "";
-        }else{
+        } else {
             return result;
         }
     }
@@ -991,13 +965,24 @@ public class A32 extends BaseActivity
         back();
     }
 
-    public void back(){
-        if(back_pressed == 1){
+    public void back() {
+        if (back_pressed == 1) {
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
-        }else{
+        } else {
             mp.stop();
             A32.this.finish();
             startActivity(new Intent(A32.this, Lesson.class));
         }
+    }
+
+    public String getLinearData(LinearLayout l){
+        String result="";
+        for(int i=0 ; i<l.getChildCount() ; i++){
+            View v = l.getChildAt(i);
+            if(v instanceof TextView){
+                result = result + ((TextView) v).getText().toString();
+            }
+        }
+        return result;
     }
 }

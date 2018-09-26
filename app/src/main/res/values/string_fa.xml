@@ -13,7 +13,7 @@
     <string name="A24_FA">گزینه صحیح را تکرار کنید.</string>
     <string name="A27_FA">گوش کنید و تکرار کنید</string>
     <string name="A7_FA">گوش دهید</string>
-    <string name="A19_FA">کلمات زیر را به هم وصل کنید</string>
+    <string name="A19_FA">کلمات مرتبط را انتخاب کنید</string>
     <string name="A20_FA">املای کلمات را کامل کنید.</string>
     <string name="A37_FA"></string>
     <string name="A33_FA">گوش دهید و تکرار کنید</string>
@@ -28,7 +28,7 @@
     <string name="A3_FA">گوش دهید</string>
     <string name="A15_FA">گزینه صحیح را انتخاب کنید</string>
     <string name="A26_FA">جملات زیر را مرتب کنید تا مکالمە کامل شود</string>
-    <string name="A48_FA">گوش دهید و پاسخ دهید</string>
+    <string name="A48_FA">گوش دهید و تکرار کنید</string>
     <string name="A49_FA">گوش دهید و پاسخ دهید</string>
     <string name="A47_FA">با توجه به کلمات داده شده یک جمله مثبت و یک جمله منفی برای هر عکس بگویید</string>
     <string name="A12_FA">فرم دیگر جواب را بنویسید</string>
@@ -36,4 +36,6 @@
     <string name="A17_FA">با توجه به تصویر و با کمک کلمات زیر پاسخ دهید</string>
     <string name="A21_FA">با کمک کلمات زیر پاسخ دهید</string>
     <string name="A25_FA">با توجه به تصویر به سوال زیر پاسخ دهید</string>
+    <string name="A39_FA">آنچه را که میشنوید انتخاب کنید</string>
+    <string name="A22_FA">مکالمه زیر را کامل کنید</string>
 </resources>

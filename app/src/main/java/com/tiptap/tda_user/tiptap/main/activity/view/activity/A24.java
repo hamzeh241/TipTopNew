@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
@@ -108,6 +109,8 @@ public class A24 extends BaseActivity
         txt1 = (TextView)findViewById(R.id.txt1);
         txt2 = (TextView)findViewById(R.id.txt2);
         txt3 = (TextView)findViewById(R.id.txt3);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
 
         if(count==3)
             txt3.setVisibility(View.VISIBLE);
@@ -239,6 +242,9 @@ public class A24 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else {
 
                             // Clickable_false
@@ -263,6 +269,9 @@ public class A24 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);

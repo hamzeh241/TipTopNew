@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -13,6 +15,8 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.main.activity.Cls.Set_Function;
 import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Function;
+import com.tiptap.tda_user.tiptap.main.activity.view.Dialog_Error;
+import com.tiptap.tda_user.tiptap.main.activity.view.Dialog_TimeOut;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function_Adapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
 import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
@@ -54,11 +58,9 @@ public class Get_Function extends BaseSetingApi {
         if(mnet){
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
-            JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Function?rowVersion=0x0", null, new Response.Listener<JSONArray>() {
-
-                //function_presenter.getMaxRowV_Function()
-
+            JsonArrayRequest jsonObjReq = new JsonArrayRequest(
+                    Request.Method.GET, url+ "Function?rowVersion=0x0", null,
+                    new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
                     boolean insert = false;
@@ -95,7 +97,9 @@ public class Get_Function extends BaseSetingApi {
 
                     } catch (JSONException e) {
                         progressDialog.dismiss();
-                        e.printStackTrace();
+                        //e.printStackTrace();
+                        Dialog_Error de = new Dialog_Error(mactivity);
+                        de.show();
                         new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                     }
 
@@ -107,8 +111,11 @@ public class Get_Function extends BaseSetingApi {
                     new ErrorVolley(_context).Error(volleyError,"get");
                     if (volleyError.networkResponse == null) {
                         if (volleyError.getClass().equals(TimeoutError.class)) {
-                            Set_Function set_function = new Set_Function(function_presenter,mactivity,_id_function,mRecyclerView,mAdapter,Data,Id);
-                            set_function.load();
+                            progressDialog.dismiss();
+                            Dialog_TimeOut dr = new Dialog_TimeOut(mactivity);
+                            dr.show();
+                            //Set_Function set_function = new Set_Function(function_presenter,mactivity,_id_function,mRecyclerView,mAdapter,Data,Id);
+                            //set_function.load();
                         }
                     }
                 }
@@ -116,8 +123,10 @@ public class Get_Function extends BaseSetingApi {
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{
-            Set_Function set_function = new Set_Function(function_presenter,mactivity,_id_function,mRecyclerView,mAdapter,Data,Id);
-            set_function.load();
+           // Set_Function set_function = new Set_Function(function_presenter,mactivity,_id_function,mRecyclerView,mAdapter,Data,Id);
+           // set_function.load();
+            // no internet connection
+            Toast.makeText(_context, "دسترسی به اینترنت امکان پذیر نیست", Toast.LENGTH_LONG).show();
         }
         return null;
     }

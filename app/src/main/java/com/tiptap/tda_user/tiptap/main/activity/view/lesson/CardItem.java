@@ -8,7 +8,6 @@ public class CardItem {
         Id = id;
         Title = title;
     }
-
     public String getTitle() {
         return Title;
     }

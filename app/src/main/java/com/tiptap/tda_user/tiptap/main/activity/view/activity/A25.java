@@ -1,21 +1,21 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,9 +31,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
@@ -46,13 +44,17 @@ public class A25 extends BaseActivity
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-    String you_say = "";
     String true_txt="";
     TextView text;
-    String userAnswer;
-    String answer, title1detailactivity,a;
+    String answer, title1detailactivity;
     int count;
     int back_pressed = 0;
+    TextView t[];
+    EditText e[];
+    int xali = 0;
+    String ans[];
+    LinearLayout l1;
+    String for_frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,6 @@ public class A25 extends BaseActivity
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-        path2 = tbActivityDetailList.get(0).getPath1();
         count = mPresenter.count_ActivityDetail(idactivity);
 
         true_txt =  tbActivityDetailList.get(0).getTitle2().toString();
@@ -95,9 +96,8 @@ public class A25 extends BaseActivity
         t2 = (TextView)findViewById(R.id.title2);
         img = (ImageView) findViewById(R.id.img);
         txt1 = (TextView)findViewById(R.id.txt1);
-        txt2 = (TextView)findViewById(R.id.txt2);
         next = (Button)findViewById(R.id.next);
-        mp = new MediaPlayer();
+        l1 = (LinearLayout)findViewById(R.id.l1);
     }
     private void after_setup() {
 
@@ -150,62 +150,251 @@ public class A25 extends BaseActivity
         String img_url = url_download+path1;
         Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
-        // set text for textbox
-        txt1.setText(title1detailactivity);
-        txt2.setText(".............................");
-        //set OnClickListener
-        play.setOnClickListener(this);
-        voice.setOnClickListener(this);
+        txt1.setText(title1);
         next.setOnClickListener(this);
 
+         /* ------------------------------------------------------------------------------------------------------ */
+        // each row - title2
+
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
+
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
+                    }
+                }
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    xali = xali + (z.length);
+                }
+                else if(have == 0){
+                    xali = xali + 1;
+                }
+            }
+        }
+
+        ans = new String[xali];
+        int c = 0;
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
+
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
+                    }
+                }
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    for(int j=0 ; j<z.length ; j++){
+                        ans[c] = z[j];
+                        c++;
+                    }
+                }
+                else if(have == 0){
+                    ans[c] = temp;
+                    c++;
+                }
+            }
+        }
+
+        e = new EditText[xali];
+        int id_e = 0;
+
+        // ------------------------------------------------------------------------------------------------------
+        // each row - title1
+        for(int i=0 ; i<count ; i++) {
+
+            // ------------------------------------------------------------------------------------------------------
+            // splite textview & edittext
+
+            String w = tbActivityDetailList.get(i).getTitle1();
+            w = w.replace("…", "...");
+            String[] list_w = w.split(Pattern.quote("..."));
+
+            int start = 0;
+            int end = 0;
+
+            // only ...
+            if(w.equals("...")){
+                start = 1;
+            }else{
+                String s_s = w.substring(0, 3);
+                if (s_s.equals("...")) {
+                    start = 1;
+                }
+                String s_e = w.substring(w.length() - 3, w.length());
+                if (s_e.equals("...")) {
+                    end = 1;
+                }
+            }
+
+            int t_number = 0;
+            int id_w = 0;
+
+            if(w.equals("...")){
+                t_number = 0;
+            }else{
+                if (list_w[0].equals("")) {
+                    id_w = 1;
+                    t_number = list_w.length - 1;
+                } else {
+                    t_number = list_w.length;
+                }
+            }
+
+            int e_number = 0;
+            if (t_number > 1) {
+                e_number = (t_number - 1) + (start) + (end);
+            } else {
+                e_number = (start) + (end);
+            }
+
+            int total = t_number + e_number;
+            t = new TextView[t_number];
+            int id_t = 0;
+
+            // ------------------------------------------------------------------------------------------------------
+            // add to view
+            String now = "txt";
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            if(total == 1){
+                // only ...
+                if(w.equals("...")) {
+                    e[id_e] = new EditText(this);
+                    e[id_e].setLayoutParams(params);
+                    //e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                    e[id_e].setEms(12);
+                    e[id_e].setTextSize(16);
+                    e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                    e[id_e].addTextChangedListener(new A25.CheckEdit());
+                    l1.addView(e[id_e]);
+                    id_e++;
+                }
+                // only text without ...
+                else{
+                    t[id_t] = new TextView(this);
+                    t[id_t].setLayoutParams(params);
+                    t[id_t].setText(list_w[0]);
+                    t[id_t].setTextSize(16);
+                    l1.addView(t[id_t]);
+                }
+
+            }else{
+                for(int xi=0 ; xi<total ; xi++){
+
+                    final int finalId_e = id_e;
+
+                    // start
+                    if(xi == 0){
+                        if(start == 1){
+                            e[id_e] = new EditText(this);
+                            e[id_e].setLayoutParams(params);
+                            //e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setEms(3);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new A25.CheckEdit());
+                            l1.addView(e[id_e]);
+                            id_e++;
+                        }
+
+                        if(start == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            l1.addView(t[id_t]);
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+
+                    if(xi!=0 && xi!=total-1){
+                        // textview
+                        switch (now) {
+                            case "txt":
+                                t[id_t] = new TextView(this);
+                                t[id_t].setLayoutParams(params);
+                                t[id_t].setText(list_w[id_w]);
+                                t[id_t].setTextSize(16);
+                                l1.addView(t[id_t]);
+                                now = "edt";
+                                id_w++;
+                                id_t++;
+                                break;
+
+                            case "edt":
+                                e[id_e] = new EditText(this);
+                                e[id_e].setLayoutParams(params);
+                                //e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                                e[id_e].setEms(3);
+                                e[id_e].setTextSize(16);
+                                e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                                e[id_e].addTextChangedListener(new A25.CheckEdit());
+                                l1.addView(e[id_e]);
+                                now = "txt";
+                                id_e++;
+                                break;
+                        }
+                    }
+
+                    // end
+                    if(xi == total-1){
+                        if(end == 1){
+                            e[id_e] = new EditText(this);
+                            e[id_e].setLayoutParams(params);
+                            //e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setEms(3);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new A25.CheckEdit());
+                            l1.addView(e[id_e]);
+                            id_e++;
+                        }
+
+                        if(end == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            l1.addView(t[id_t]);
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+                }
+            }
+        }
     }
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.play){
-            if(haveNetworkConnection()){
-                try {
-                    String voice_url = null;
-                    mp = new MediaPlayer();
-                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    voice_url = url_download + path2;
-                    mp.reset();
-                    mp.setDataSource(voice_url);
-                    mp.prepare();
-                    mpLength = mp.getDuration();
-                    mp.start();
-                    play.setBackgroundResource(R.drawable.pause1);
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mediaPlayer) {
-                            mp.stop();
-                            mp.release();
-                            play.setBackgroundResource(R.drawable.play1);
-                        }
-                    });
-
-                } catch (Exception e) {}
-
-            } else{
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
-            }
-        }
-        if (view.getId() == R.id.voice) {
-            if (haveNetworkConnection()) {
-                promptSpeechInput();
-
-            } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
-            }
-
-        }
         if(view.getId() == R.id.next){
             switch (next.getText().toString()) {
                 case "check":
-                    //you_say != ""
 
-                    if( you_say != "" ) {
-                        if (cheak()) {
-                            a=you_say;
+                    int fill = 0;
+                    for(int i=0 ; i<e.length ; i++){
+                        if(e[i].getText().toString().equals("")){
+
+                        }else{
+                            fill++;
+                        }
+                    }
+                    if( fill == e.length ) {
+
+                        boolean final_answer = cheak();
+
+                        if (final_answer) {
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -224,11 +413,8 @@ public class A25 extends BaseActivity
                             t1.setClickable(false);
                             t2.setClickable(false);
                             txt1.setClickable(false);
-                            txt2.setClickable(false);
-                            voice.setClickable(false);
                             img.setClickable(false);
                             p.setClickable(false);
-                            play.setClickable(false);
 
                             // Fragment_true
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
@@ -237,7 +423,7 @@ public class A25 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
-                            f1.txt_true.setText(true_txt);
+                            f1.txt_true.setText(for_frag);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -250,12 +436,8 @@ public class A25 extends BaseActivity
                             t1.setClickable(false);
                             t2.setClickable(false);
                             txt1.setClickable(false);
-                            txt2.setClickable(false);
-                            voice.setClickable(false);
                             img.setClickable(false);
                             p.setClickable(false);
-                            play.setClickable(false);
-
 
                             // Fragment_false
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
@@ -264,7 +446,7 @@ public class A25 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.txt_false.setText(true_txt);
+                            f2.txt_false.setText(for_frag);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -424,33 +606,48 @@ public class A25 extends BaseActivity
         }
     }
     public boolean cheak(){
-        boolean flag=false;
-        userAnswer = nice_string1( you_say );
-        String true_ans = nice_string1(true_txt);
+        boolean result = true;
+        boolean flag[] = new boolean[e.length];
 
-        if (true_ans.equals("null")) {
+        for(int x=0 ; x<e.length ; x++){
 
-        }else {
-            int have = 0;
-            for (int j = 0; j < true_ans.length(); j++) {
-                if (true_ans.charAt(j) == '/') {
-                    have = 1;
+            String userAnswer = nice_string1( e[x].getText().toString() );
+            String true_ans = true_txt;
+
+            if (true_ans.equals("null")) {
+
+            }else {
+                int have = 0;
+                for (int j = 0; j < true_ans.length(); j++) {
+                    if (true_ans.charAt(j) == '/') {
+                        have = 1;
+                    }
                 }
-            }
-            if (have == 1) {
-                String part[] = true_ans.split(Pattern.quote("/"));
-                for (int i = 0; i < part.length; i++) {
-                    if (userAnswer.equals(part[i]))
-                        flag = true;
+                if (have == 1) {
+                    String part[] = true_ans.split(Pattern.quote("/"));
+                    for_frag = part[0];
+                    for (int i = 0; i < part.length; i++) {
+                        if (userAnswer.equals(nice_string1(part[i])))
+                            flag[x] = true;
+                    }
+                } else {
+                    for_frag = true_ans;
+                    if (userAnswer.equals(nice_string1(true_ans)))
+                        flag[x] = true;
                 }
-            } else {
-                if (userAnswer.equals(true_ans))
-                    flag = true;
             }
         }
-        return  flag;
-    }
 
+        for(int z=0 ; z<flag.length ; z++){
+            if(flag[z]){
+
+            }else{
+                result = false;
+            }
+        }
+
+        return result;
+    }
 
     private void setupMVP(){
         if ( mStateMaintainer.firstTimeIn() ) {
@@ -492,35 +689,22 @@ public class A25 extends BaseActivity
         return getApplicationContext();
     }
 
-    private void promptSpeechInput() {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt));
-        try {
-            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
-        } catch (ActivityNotFoundException a) {
-            Toast.makeText(getApplicationContext(), getString(R.string.speech_not_supported), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQ_CODE_SPEECH_INPUT: {
-                if (resultCode == RESULT_OK && null != data) {
-                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    you_say = result.get(0);
-                    txt2.setTextColor(getResources().getColor(R.color.red));
-                    txt2.setText(you_say);
-                    // Toast.makeText(getApplicationContext(), you_say , Toast.LENGTH_SHORT).show();
+    class CheckEdit implements TextWatcher {
+        public void afterTextChanged(Editable s) {
+            try {
+                if(s.toString().equals("")){
+                    next.setTextColor(Color.GRAY);
+                    next.setBackgroundResource(R.drawable.btn_gray);
+                }
+                else{
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                 }
-                break;
             }
+            catch(NumberFormatException nfe){}
         }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        public void onTextChanged(CharSequence s, int start, int before, int count) {}
     }
 
     @Override

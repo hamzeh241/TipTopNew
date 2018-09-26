@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -97,6 +98,8 @@ public class A20 extends BaseActivity
         p.setMax(100);
         img = (ImageView) findViewById(R.id.img);
         linear = (LinearLayout) findViewById(R.id.linear);
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup() {
@@ -299,7 +302,7 @@ public class A20 extends BaseActivity
                         e[id_e] = new EditText(this);
                         e[id_e].setLayoutParams(params);
                         e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                        e[id_e].setEms(5);
+                        e[id_e].setEms(3);
                         e[id_e].setTextSize(16);
                         e[id_e].setTextColor(getResources().getColor(R.color.blue));
                         e[id_e].addTextChangedListener(new A20.CheckEdit());
@@ -342,7 +345,7 @@ public class A20 extends BaseActivity
                             e[id_e] = new EditText(this);
                             e[id_e].setLayoutParams(params);
                             e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                            e[id_e].setEms(5);
+                            e[id_e].setEms(3);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new A20.CheckEdit());
@@ -361,7 +364,7 @@ public class A20 extends BaseActivity
                         e[id_e] = new EditText(this);
                         e[id_e].setLayoutParams(params);
                         e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                        e[id_e].setEms(5);
+                        e[id_e].setEms(3);
                         e[id_e].setTextSize(16);
                         e[id_e].setTextColor(getResources().getColor(R.color.blue));
                         e[id_e].addTextChangedListener(new A20.CheckEdit());
@@ -438,11 +441,14 @@ public class A20 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
-                            f1.txt_true.setText(answer);
+                            f1.txt_true.setText("Good");
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpt.start();
 
                         } else {
 
@@ -467,6 +473,9 @@ public class A20 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);

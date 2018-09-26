@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -21,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -40,7 +38,7 @@ import java.util.Locale;
 import java.util.Random;
 import javax.inject.Inject;
 
-public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClickListener, OnCompletionListener, OnBufferingUpdateListener {
+public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClickListener{
     private static final String TAG = A27.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A27.class.getName());
 
@@ -49,6 +47,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
 
     ArrayList<String> you_say = new ArrayList<>();
     int back_pressed = 0;
+    boolean mic_status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +85,8 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
         voice = (ImageView)findViewById(R.id.voice);
         next = (Button) findViewById(R.id.next);
         play = (Button)findViewById(R.id.play);
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
         p = (ProgressBar)findViewById(R.id.p);
+        isplay = (Button) findViewById(R.id.isplay);
         p.setMax(100);
         mp = new MediaPlayer();
         mpt = MediaPlayer.create (this, R.raw.true_sound);
@@ -153,47 +152,74 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
         voice.setOnClickListener(this);
         next.setOnClickListener(this);
         play.setOnClickListener(this);
-        mp.setOnBufferingUpdateListener(this);
-        mp.setOnCompletionListener(this);
+        isplay.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.voice){
+            if(mic_status){
+                if(haveNetworkConnection()){
+                    promptSpeechInput();
+                } else{
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        if (v.getId() == R.id.play) {
             if(haveNetworkConnection()){
-                promptSpeechInput();
-            } else{
+                // change
+                play.setVisibility(View.GONE);
+                play.setClickable(false);
+                isplay.setVisibility(View.VISIBLE);
+                isplay.setClickable(true);
+                // mic
+                mic_status = false;
+
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(url_download+path2);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepareAsync();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Log.e("MediaPlayerException", " message : "+e.getMessage());
+                }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    public void onPrepared(MediaPlayer mp) {
+                        if(!(mp.isPlaying())){
+                            mp.start();
+                        }
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        end = true;
+                        // change
+                        play.setVisibility(View.VISIBLE);
+                        play.setClickable(true);
+                        isplay.setVisibility(View.GONE);
+                        isplay.setClickable(false);
+                        // mic
+                        mic_status = true;
+                        // countinue
+                        if(you_say.size()>=1){
+                            if(end){
+                                next.setTextColor(Color.WHITE);
+                                next.setBackgroundResource(R.drawable.btn_green);
+                            }
+                        }
+                    }
+                });
+            }else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
         }
 
-        if(v.getId() == R.id.play){
-
-            if(haveNetworkConnection()){
-                try {
-                    String voice_url = url_download+path2;
-                    mp.setDataSource(voice_url);
-                    mp.prepare();
-
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-
-                mpLength = mp.getDuration();
-
-                if(!mp.isPlaying()){
-                    mp.start();
-                    play.setBackgroundResource(R.drawable.pause);
-                }else {
-                    mp.pause();
-                    play.setBackgroundResource(R.drawable.play);
-                }
-                SeekBarProgressUpdater();
-
-            }else{
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
-            }
+        if (v.getId() == R.id.isplay) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
         }
 
         if(v.getId() == R.id.next){
@@ -214,7 +240,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                         }
 
                         if (result) {
-
+                            /*
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -236,7 +262,6 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                             voice.setClickable(false);
                             play.setClickable(false);
                             img.setClickable(false);
-                            seekBar.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_true
@@ -253,7 +278,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                             fragTransaction.commit();
 
                             // play sound
-                            mpt.start();
+                            mpt.start();*/
 
                         } else {
 
@@ -264,7 +289,6 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                             voice.setClickable(false);
                             play.setClickable(false);
                             img.setClickable(false);
-                            seekBar.setClickable(false);
                             p.setClickable(false);
 
                             // Fragment_false
@@ -438,23 +462,6 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
         }
     }
 
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-        play.setBackgroundResource(R.drawable.play);
-        if(you_say.size()>=1){
-            if(end){
-                next.setTextColor(Color.WHITE);
-                next.setBackgroundResource(R.drawable.btn_green);
-            }
-        }
-    }
-
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        seekBar.setSecondaryProgress(percent);
-    }
-
     private void setupMVP(){
         if ( mStateMaintainer.firstTimeIn() ) {
             initialize();
@@ -517,8 +524,61 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                     you_say = result;
                     if(you_say.size()>=1){
                         if(end){
-                            next.setTextColor(Color.WHITE);
-                            next.setBackgroundResource(R.drawable.btn_green);
+                            boolean r = false;
+                            for(int z=0 ; z < you_say.size() ; z++){
+                                String a = nice_string1( you_say.get(z) );
+                                String b = nice_string1( title1 );
+                                if (a.equals(b)) { r = true;}
+                            }
+                            if (r) {
+                                // update - true
+                                mPresenter.update_activity(idactivity);
+
+                                // show passed activity
+                                List<Integer> passed1 = mPresenter.activity_true(idlesson);
+                                int passed2 = passed1.size();
+                                if(passed2 == 0){
+                                    p.setProgress(0);
+                                }else{
+                                    double d_number = (double) passed2/all;
+                                    int i_number = (int) (d_number*100);
+                                    p.setProgress(i_number);
+                                }
+
+                                // Clickable_false
+                                t1.setClickable(false);
+                                t2.setClickable(false);
+                                txt.setClickable(false);
+                                voice.setClickable(false);
+                                play.setClickable(false);
+                                img.setClickable(false);
+                                p.setClickable(false);
+
+                                // Fragment_true
+                                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
+                                Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                                linearLayout.setAnimation(slide_down);
+                                linearLayout.setVisibility(View.VISIBLE);
+
+                                Fragment_True f1 = new Fragment_True();
+                                f1.txt_true.setText(title1);
+                                FragmentManager fragMan = getSupportFragmentManager();
+                                FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                                fragTransaction.add(R.id.fragment1, f1);
+                                fragTransaction.commit();
+
+                                // play sound
+                                mpt.start();
+
+                                // countinue
+                                next.setTextColor(Color.WHITE);
+                                next.setBackgroundResource(R.drawable.btn_green);
+                                next.setText("countinue");
+                            }
+                            else{
+                                next.setTextColor(Color.WHITE);
+                                next.setBackgroundResource(R.drawable.btn_green);
+                            }
                         }
                     }
                 }
