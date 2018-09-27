@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -31,8 +32,7 @@ import java.util.Random;
 import javax.inject.Inject;
 
 public class A39 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,
-        View.OnClickListener, MediaPlayer.OnCompletionListener{
+        implements MVP_Main.RequiredViewOps,View.OnClickListener{
 
     private static final String TAG = A39.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer(getFragmentManager(), A39.class.getName());
@@ -93,7 +93,10 @@ public class A39 extends BaseActivity
         p = (ProgressBar) findViewById(R.id.p);
         next = (Button) findViewById(R.id.next);
         play = (Button)findViewById(R.id.play);
+        isplay = (Button) findViewById(R.id.isplay);
         mp = new MediaPlayer();
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
 
     private void after_setup() {
@@ -155,7 +158,7 @@ public class A39 extends BaseActivity
         a.setOnClickListener(this);
         b.setOnClickListener(this);
         play.setOnClickListener(this);
-        mp.setOnCompletionListener(this);
+        isplay.setOnClickListener(this);
     }
 
     @Override
@@ -188,32 +191,52 @@ public class A39 extends BaseActivity
             }
         }
 
-        if(v.getId() == R.id.play){
-
+        if (v.getId() == R.id.play) {
             if(haveNetworkConnection()){
+                // change
+                play.setVisibility(View.GONE);
+                play.setClickable(false);
+                isplay.setVisibility(View.VISIBLE);
+                isplay.setClickable(true);
+
+                MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
-                    String voice_url = url_download+path1;
-                    mp.setDataSource(voice_url);
-                    mp.prepare();
-
+                    mediaPlayer.setDataSource(url_download+path1);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepareAsync();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Log.e("MediaPlayerException", " message : "+e.getMessage());
                 }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    public void onPrepared(MediaPlayer mp) {
+                        if(!(mp.isPlaying())){
+                            mp.start();
+                        }
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        end = true;
+                        // change
+                        play.setVisibility(View.VISIBLE);
+                        play.setClickable(true);
+                        isplay.setVisibility(View.GONE);
+                        isplay.setClickable(false);
 
-                mpLength = mp.getDuration();
-
-                if(!mp.isPlaying()){
-                    mp.start();
-                    play.setBackgroundResource(R.drawable.pause);
-                }else {
-                    mp.pause();
-                    play.setBackgroundResource(R.drawable.play);
-                }
-
+                        // countinue
+                        next.setTextColor(Color.WHITE);
+                        next.setBackgroundResource(R.drawable.btn_green);
+                    }
+                });
             }else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
+        }
+
+        if (v.getId() == R.id.isplay) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
         }
 
         //handeling the next
@@ -289,6 +312,9 @@ public class A39 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else {
 
                             // Clickable_false
@@ -312,6 +338,9 @@ public class A39 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         // change text color for button next when answer is true or false
@@ -466,14 +495,6 @@ public class A39 extends BaseActivity
                     break;
             }
         }
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-        play.setBackgroundResource(R.drawable.play);
-        next.setTextColor(Color.WHITE);
-        next.setBackgroundResource(R.drawable.btn_green);
     }
 
     private void setupMVP() {

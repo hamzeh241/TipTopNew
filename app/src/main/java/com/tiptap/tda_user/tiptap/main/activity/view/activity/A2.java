@@ -34,10 +34,6 @@ import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
 
-/**
- * Created by tafsiri on 6/25/2018.
- */
-
 public class A2 extends BaseActivity
         implements MVP_Main.RequiredViewOps, View.OnClickListener{
 

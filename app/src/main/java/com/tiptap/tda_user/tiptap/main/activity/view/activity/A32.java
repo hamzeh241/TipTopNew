@@ -63,6 +63,8 @@ public class A32 extends BaseActivity
     int back_pressed = 0;
     String[] all_answer;
     int[] position_answer;
+    boolean can_play = true;
+    boolean mic_status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,7 +301,9 @@ public class A32 extends BaseActivity
                         @Override
                         public void onClick(View view) {
                             now_say = x;
-                            promptSpeechInput();
+                            if(mic_status){
+                                promptSpeechInput();
+                            }
                         }
                     });
 
@@ -347,7 +351,9 @@ public class A32 extends BaseActivity
                         @Override
                         public void onClick(View view) {
                             now_say = x;
-                            promptSpeechInput();
+                            if(mic_status){
+                                promptSpeechInput();
+                            }
                         }
                     });
                     id_bmic++;
@@ -444,10 +450,6 @@ public class A32 extends BaseActivity
 
     @Override
     public void onClick(View v) {
-
-        if (v.getId() == R.id.voice) {
-            promptSpeechInput();
-        }
 
         if (v.getId() == R.id.next) {
 
@@ -808,44 +810,43 @@ public class A32 extends BaseActivity
     }
 
     public void play(final int i) {
+        if(haveNetworkConnection()){
+            if(can_play){
+                // mic
+                mic_status = false;
+                // play
+                can_play = false;
 
-        if (haveNetworkConnection()) {
-            try {
-                String voice_url = null;
-                mp = new MediaPlayer();
-                mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                voice_url = url_download + path1[i];
-                mp.setDataSource(voice_url);
-                mp.prepare();
-                mpLength = mp.getDuration();
-                mp.start();
-                b_play[i].setBackgroundResource(R.drawable.pause1);
-                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mediaPlayer) {
-                        end = true;
-                        b_play[i].setBackgroundResource(R.drawable.play1);
-
-                        // change color of check button
-                        int fill = 0;
-                        for (int i = 0; i < position_answer.length; i++) {
-                            if (getLinearData(l[position_answer[i]]).equals(tohi1) || getLinearData(l[position_answer[i]]).equals(tohi2)) {
-
-                            } else {
-                                fill++;
-                            }
-                        }
-                        if (position_answer.length == fill) {
-                            next.setTextColor(Color.WHITE);
-                            next.setBackgroundResource(R.drawable.btn_green);
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(url_download+path1[i]);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepareAsync();
+                } catch (Exception e) {
+                    Log.e("MediaPlayerException", " message : "+e.getMessage());
+                }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    public void onPrepared(MediaPlayer mp) {
+                        if(!(mp.isPlaying())){
+                            mp.start();
                         }
                     }
                 });
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        end = true;
+                        // mic
+                        mic_status = true;
+                        // play
+                        can_play = true;
+                        // countinue
+                        next.setTextColor(Color.WHITE);
+                        next.setBackgroundResource(R.drawable.btn_green);
+                    }
+                });
             }
-        } else {
+        }else{
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
         }
     }
@@ -969,7 +970,6 @@ public class A32 extends BaseActivity
         if (back_pressed == 1) {
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         } else {
-            mp.stop();
             A32.this.finish();
             startActivity(new Intent(A32.this, Lesson.class));
         }

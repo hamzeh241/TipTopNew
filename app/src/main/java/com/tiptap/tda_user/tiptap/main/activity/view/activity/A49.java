@@ -1,9 +1,5 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
-/**
- * Created by tafsiri on 7/14/2018.
- */
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -14,10 +10,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -46,7 +38,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A49 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,View.OnClickListener, View.OnTouchListener {
+        implements MVP_Main.RequiredViewOps,View.OnClickListener {
 
     private static final String TAG = A49.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A49.class.getName());
@@ -55,13 +47,13 @@ public class A49 extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
     String you_say = "";
     String true_txt="";
-    ImageView voice,voice1;
+    ImageView voice;
     TextView text;
-    public MediaPlayer mp1;
     String userAnswer;
     String answer, title1detailactivity,a;
     int count;
     int back_pressed = 0;
+    boolean mic_status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +96,13 @@ public class A49 extends BaseActivity
         t2 = (TextView)findViewById(R.id.title2);
         img = (ImageView) findViewById(R.id.img);
         play=(Button)findViewById(R.id.play);
+        isplay = (Button) findViewById(R.id.isplay);
         txt1 = (TextView)findViewById(R.id.txt1);
         voice = (ImageView) findViewById(R.id.voice);
         txt2 = (TextView)findViewById(R.id.txt2);
         next = (Button)findViewById(R.id.next);
-        mp = new MediaPlayer();
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
     private void after_setup() {
 
@@ -166,53 +160,78 @@ public class A49 extends BaseActivity
         txt2.setText(".............................");
         //set OnClickListener
         play.setOnClickListener(this);
+        isplay.setOnClickListener(this);
         voice.setOnClickListener(this);
         next.setOnClickListener(this);
 
     }
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.play){
+
+        if (view.getId() == R.id.play) {
             if(haveNetworkConnection()){
+                // change
+                play.setVisibility(View.GONE);
+                play.setClickable(false);
+                isplay.setVisibility(View.VISIBLE);
+                isplay.setClickable(true);
+                // mic
+                mic_status = false;
+
+                MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
-                    String voice_url = null;
-                    mp = new MediaPlayer();
-                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    voice_url = url_download + path2;
-                    mp.reset();
-                    mp.setDataSource(voice_url);
-                    mp.prepare();
-                    mpLength = mp.getDuration();
-                    mp.start();
-                    play.setBackgroundResource(R.drawable.pause1);
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mediaPlayer) {
-                            mp.stop();
-                            mp.release();
-                            play.setBackgroundResource(R.drawable.play1);
+                    mediaPlayer.setDataSource(url_download+path2);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepareAsync();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                    Log.e("MediaPlayerException", " message : "+e.getMessage());
+                }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    public void onPrepared(MediaPlayer mp) {
+                        if(!(mp.isPlaying())){
+                            mp.start();
                         }
-                    });
-
-                } catch (Exception e) {}
-
-            } else{
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        end = true;
+                        // change
+                        play.setVisibility(View.VISIBLE);
+                        play.setClickable(true);
+                        isplay.setVisibility(View.GONE);
+                        isplay.setClickable(false);
+                        // mic
+                        mic_status = true;
+                        // countinue
+                        next.setTextColor(Color.WHITE);
+                        next.setBackgroundResource(R.drawable.btn_green);
+                    }
+                });
+            }else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
         }
+
+        if (view.getId() == R.id.isplay) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
+        }
+
         if (view.getId() == R.id.voice) {
-            if (haveNetworkConnection()) {
-                promptSpeechInput();
+            if(mic_status){
+                if (haveNetworkConnection()) {
+                    promptSpeechInput();
 
-            } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
             }
-
         }
         if(view.getId() == R.id.next){
             switch (next.getText().toString()) {
                 case "check":
-                    //you_say != ""
 
                     if( you_say != "" ) {
                         if (cheak()) {
@@ -254,6 +273,8 @@ public class A49 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
 
                         } else {
 
@@ -280,6 +301,9 @@ public class A49 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -532,11 +556,6 @@ public class A49 extends BaseActivity
                 break;
             }
         }
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
     }
 
     @Override

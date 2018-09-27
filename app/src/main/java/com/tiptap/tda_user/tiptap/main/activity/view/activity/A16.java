@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.R;
@@ -31,11 +29,7 @@ import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import java.util.List;
 import java.util.Random;
-
 import javax.inject.Inject;
-/**
- * Created by tafsiri on 6/25/2018.
- */
 
 public class A16 extends BaseActivity
         implements MVP_Main.RequiredViewOps, View.OnClickListener/*, View.OnTouchListener*/{

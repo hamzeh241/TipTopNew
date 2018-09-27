@@ -1,9 +1,5 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
-/**
- * Created by tafsiri on 7/14/2018.
- */
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;

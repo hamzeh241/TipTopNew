@@ -11,7 +11,6 @@ import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -31,7 +30,6 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +38,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A48 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,View.OnClickListener, View.OnTouchListener{
+        implements MVP_Main.RequiredViewOps,View.OnClickListener{
 
     private static final String TAG = A48.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A48.class.getName());
@@ -51,11 +49,13 @@ public class A48 extends BaseActivity
     ArrayList<String> you_say1 = new ArrayList<>();
     ImageView voice,voice1;
     TextView text;
-    Button play1;
+    Button play1, isplay1;
     public MediaPlayer mp1;
     String answer, title1detailactivity, title2detailactivity,a, path3,answer1,answer2,userAnswer1,userAnswer2;
     int count;
     int back_pressed = 0;
+    boolean mic_status = true;
+    boolean can_play = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +103,18 @@ public class A48 extends BaseActivity
         t2 = (TextView)findViewById(R.id.title2);
         img = (ImageView) findViewById(R.id.img);
         play=(Button)findViewById(R.id.play);
+        isplay = (Button) findViewById(R.id.isplay);
         txt1 = (TextView)findViewById(R.id.txt1);
         voice = (ImageView) findViewById(R.id.voice);
         play1=(Button)findViewById(R.id.play1);
+        isplay1 = (Button) findViewById(R.id.isplay1);
         txt2 = (TextView)findViewById(R.id.txt2);
         voice1 = (ImageView) findViewById(R.id.voice1);
         next = (Button)findViewById(R.id.next);
         mp = new MediaPlayer();
         mp1 = new MediaPlayer();
+        mpt = MediaPlayer.create (this, R.raw.true_sound);
+        mpf =  MediaPlayer.create (this, R.raw.false_sound);
     }
     private void after_setup() {
 
@@ -170,6 +174,8 @@ public class A48 extends BaseActivity
         //set OnClickListener
         play.setOnClickListener(this);
         play1.setOnClickListener(this);
+        isplay.setOnClickListener(this);
+        isplay1.setOnClickListener(this);
         voice.setOnClickListener(this);
         voice1.setOnClickListener(this);
         next.setOnClickListener(this);
@@ -179,80 +185,138 @@ public class A48 extends BaseActivity
     public void onClick(View view) {
 
         if(view.getId() == R.id.play){
-
-            //play sound 1 - best way to play voice
             if(haveNetworkConnection()){
-                try {
-                    String voice_url = null;
-                    mp = new MediaPlayer();
-                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    voice_url = url_download + path2;
-                    mp.reset();
-                    mp.setDataSource(voice_url);
-                    mp.prepare();
-                    mpLength = mp.getDuration();
-                    mp.start();
-                    play.setBackgroundResource(R.drawable.pause1);
-                    mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mediaPlayer) {
-                            mp.stop();
-                            mp.release();
-                            play.setBackgroundResource(R.drawable.play1);
+                if(can_play){
+                    // change
+                    play.setVisibility(View.GONE);
+                    play.setClickable(false);
+                    isplay.setVisibility(View.VISIBLE);
+                    isplay.setClickable(true);
+                    // mic
+                    mic_status = false;
+                    // play1
+                    can_play = false;
+
+                    MediaPlayer mediaPlayer = new MediaPlayer();
+                    try {
+                        mediaPlayer.setDataSource(url_download+path2);
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mediaPlayer.prepareAsync();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                        Log.e("MediaPlayerException", " message : "+e.getMessage());
+                    }
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        public void onPrepared(MediaPlayer mp) {
+                            if(!(mp.isPlaying())){
+                                mp.start();
+                            }
                         }
                     });
-
-                } catch (Exception e) {}
-
-            } else{
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            end = true;
+                            // change
+                            play.setVisibility(View.VISIBLE);
+                            play.setClickable(true);
+                            isplay.setVisibility(View.GONE);
+                            isplay.setClickable(false);
+                            // mic
+                            mic_status = true;
+                            // play1
+                            can_play = true;
+                            // countinue
+                            next.setTextColor(Color.WHITE);
+                            next.setBackgroundResource(R.drawable.btn_green);
+                        }
+                    });
+                }
+            }else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
         }
+
+        if (view.getId() == R.id.isplay) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
+        }
+
         if(view.getId() == R.id.play1){
             //play sound 2
             if(haveNetworkConnection()){
-                try {
-                    String voice_url = null;
-                    mp1 = new MediaPlayer();
-                    mp1.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    voice_url = url_download + path3;
-                    mp1.reset();
-                    mp1.setDataSource(voice_url);
-                    mp1.prepare();
-                    mpLength = mp1.getDuration();
-                    mp1.start();
-                    play1.setBackgroundResource(R.drawable.pause1);
-                    mp1.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                        @Override
-                        public void onCompletion(MediaPlayer mediaPlayer) {
-                            mp1.stop();
-                            mp1.release();
-                            play1.setBackgroundResource(R.drawable.play1);
+                if(can_play){
+                    // change
+                    play1.setVisibility(View.GONE);
+                    play1.setClickable(false);
+                    isplay1.setVisibility(View.VISIBLE);
+                    isplay1.setClickable(true);
+                    // mic
+                    mic_status = false;
+                    // play
+                    can_play = false;
+
+                    MediaPlayer mediaPlayer = new MediaPlayer();
+                    try {
+                        mediaPlayer.setDataSource(url_download+path3);
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mediaPlayer.prepareAsync();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                        Log.e("MediaPlayerException", " message : "+e.getMessage());
+                    }
+                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        public void onPrepared(MediaPlayer mp) {
+                            if(!(mp.isPlaying())){
+                                mp.start();
+                            }
                         }
                     });
-
-                } catch (Exception e) {}
-
-            } else{
+                    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            end = true;
+                            // change
+                            play1.setVisibility(View.VISIBLE);
+                            play1.setClickable(true);
+                            isplay1.setVisibility(View.GONE);
+                            isplay1.setClickable(false);
+                            // mic
+                            mic_status = true;
+                            // play
+                            can_play = true;
+                            // countinue
+                            next.setTextColor(Color.WHITE);
+                            next.setBackgroundResource(R.drawable.btn_green);
+                        }
+                    });
+                }
+            }else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
             }
         }
+
+        if (view.getId() == R.id.isplay1) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
+        }
+
         if (view.getId() == R.id.voice) {
-            if (haveNetworkConnection()) {
-                promptSpeechInput(101);
+            if(mic_status){
+                if (haveNetworkConnection()) {
+                    promptSpeechInput(101);
 
-            } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
             }
-
         } if (view.getId() == R.id.voice1) {
-            if (haveNetworkConnection()) {
-                promptSpeechInput(102);
+            if(mic_status){
+                if (haveNetworkConnection()) {
+                    promptSpeechInput(102);
 
-            } else {
-                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                }
             }
-
         }
         if(view.getId() == R.id.next){
             switch (next.getText().toString()) {
@@ -317,6 +381,9 @@ public class A48 extends BaseActivity
                             fragTransaction.add(R.id.fragment1, f1);
                             fragTransaction.commit();
 
+                            // play sound
+                            mpt.start();
+
                         } else {
 
                             // Clickable_false
@@ -343,6 +410,9 @@ public class A48 extends BaseActivity
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
                             fragTransaction.commit();
+
+                            // play sound
+                            mpf.start();
                         }
 
                         next.setTextColor(Color.WHITE);
@@ -603,11 +673,6 @@ public class A48 extends BaseActivity
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
-    }
-
-    @Override
     public void onBackPressed() {
         back_pressed++;
         back();
@@ -617,12 +682,6 @@ public class A48 extends BaseActivity
         if(back_pressed == 1){
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
-            mp.stop();
-            mp.release();
-            mp.stop();
-            mp1.release();
-            mp1.stop();
-            mp1.release();
             A48.this.finish();
             startActivity(new Intent(A48.this, Lesson.class));
         }

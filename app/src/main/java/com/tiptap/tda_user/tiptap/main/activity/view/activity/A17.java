@@ -1,9 +1,5 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
-/**
- * Created by tafsiri on 7/23/2018.
- */
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,7 +24,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.text.InputType;
-import com.android.volley.toolbox.NetworkImageView;
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
@@ -39,7 +34,6 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
