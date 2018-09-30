@@ -98,7 +98,7 @@ public class A42 extends BaseActivity
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
-        text=(TextView)findViewById(R.id.img1);
+        text=(TextView)findViewById(R.id.txt1);
         LinearLayout l4  = (LinearLayout)findViewById(R.id.l4);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
@@ -184,30 +184,28 @@ public class A42 extends BaseActivity
         ans = new String[xali];
         int c = 0;
 
+        String temp1 = tbActivityDetailList.get(0).getTitle2();
+        if (temp1.equals("null")) {
 
-            String temp1 = tbActivityDetailList.get(0).getTitle2();
-            if (temp1.equals("null")) {
-
-            }else{
-                int have = 0;
-                for(int j=0 ; j<temp1.length() ; j++){
-                    if(temp1.charAt(j) == '_'){
-                        have = 1;
-                    }
+        }else{
+            int have = 0;
+            for(int j=0 ; j<temp1.length() ; j++){
+                if(temp1.charAt(j) == '_'){
+                    have = 1;
                 }
-                if(have == 1){
-                    String z[] = temp1.split("_");
-                    for(int j=0 ; j<z.length ; j++){
-                        ans[c] = z[j];
-                        c++;
-                    }
-                }
-                else if(have == 0){
-                    ans[c] = temp1;
+            }
+            if(have == 1){
+                String z[] = temp1.split("_");
+                for(int j=0 ; j<z.length ; j++){
+                    ans[c] = z[j];
                     c++;
                 }
             }
-
+            else if(have == 0){
+                ans[c] = temp1;
+                c++;
+            }
+        }
 
         e = new EditText[xali];
         int id_e = 0;
@@ -269,7 +267,7 @@ public class A42 extends BaseActivity
             // add to view
             String now = "txt";
             LinearLayout.LayoutParams params_txt = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            LinearLayout.LayoutParams params_edt = new LinearLayout.LayoutParams(300, ViewGroup.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams params_edt = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
             if(total == 1){
                 // only ...

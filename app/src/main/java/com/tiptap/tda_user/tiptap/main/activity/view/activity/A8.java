@@ -143,7 +143,7 @@ public class A8 extends BaseActivity
         next.setOnClickListener(this);
 
         w = title1.split(" ");
-        String s [] = title2.split(" ");
+        String s [] = title2.split("/");
         /*int max_range = s2.length-1;
         int min_range = 0;
         for(int i=0 ; i<s2.length ;  i++) {
@@ -547,8 +547,8 @@ public class A8 extends BaseActivity
                 answer = false;
                 break;
             }else{
-                String a = nice_string1( t2[i].getText().toString() );
-                String b = nice_string1( w[i] );
+                String a = nice_string_A8( t2[i].getText().toString() );
+                String b = nice_string_A8( w[i] );
                 if (a.equals(b)) {
                     // answer = true;
                 } else {
@@ -569,10 +569,6 @@ public class A8 extends BaseActivity
         if(back_pressed == 1){
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
-            mpt.stop();
-            mpt.release();
-            mpf.stop();
-            mpf.release();
             A8.this.finish();
             startActivity(new Intent(A8.this, Lesson.class));
         }

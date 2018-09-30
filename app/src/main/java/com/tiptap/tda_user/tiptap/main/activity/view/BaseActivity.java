@@ -100,6 +100,43 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
         return b;
     }
 
+    public String nice_string_A8 (String a){
+        // space in first or end
+        String b = a.trim();
+        // other space
+        b = b.replace(" ", "");
+        // other
+        b = b.replace(".", "");
+        b = b.replace("!", "");
+        b = b.replace("?", "?");
+        b = b.replace("؟", "?");
+        b = b.replace(",", "");
+        b = b.replace("’", "’");
+        b = b.replace("'", "’");
+        b = b.replace("\n", "");
+        // apastrof
+        for(int i=0 ; i<b.length() ; i++){
+            // when the last charecter have '
+            if(i == b.length()-1){
+            }else{
+                if(b.charAt(i) == '’'){
+                    if(b.charAt(i+1) == 's'){
+                        b = b.replace("’s", "is");
+                    }
+                    if(b.charAt(i+1) == 'm'){
+                        b = b.replace("’m", "am");
+                    }
+                    if(b.charAt(i+1) == 'r'){
+                        b = b.replace("’r", "are");
+                    }
+                }
+            }
+        }
+        // lowerCase
+        b = b.toLowerCase();
+        return b;
+    }
+
     public String nice_string2 (String a){
         // space in first or end
         String b = a.trim();

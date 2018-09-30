@@ -53,7 +53,7 @@ public class A4 extends BaseActivity
     String ans[];
     String z[];
     int xali = 0;
-    int fill=0, count=0;
+    int fill = 0, count = 0;
     int back_pressed = 0;
     String for_frag;
 
@@ -643,7 +643,7 @@ public class A4 extends BaseActivity
             // yek javab
             int baxsh = 0;
             for(int j=0 ; j<ans[i].length() ; j++){
-                if(ans[i].charAt(j) == ','){
+                if(ans[i].charAt(j) == '^'){
                     baxsh++;
                 }
             }
@@ -657,7 +657,7 @@ public class A4 extends BaseActivity
 
                 // 2 baxsh
                 case 1:
-                    String[] s = ans[i].split(",");
+                    String[] s = ans[i].split("\\^");
                     String[] x = s[0].split("/");
                     String[] y = s[1].split("/");
 
@@ -673,7 +673,7 @@ public class A4 extends BaseActivity
 
                 // 3 baxsh
                 case 2:
-                    String[] a = ans[i].split(",");
+                    String[] a = ans[i].split("\\^");
                     String[] b = a[0].split("/");
                     String[] c = a[1].split("/");
                     String[] d = a[2].split("/");

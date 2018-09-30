@@ -533,28 +533,8 @@ public class A5 extends BaseActivity
         if(back_pressed == 1){
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
-            mpt.stop();
-            mpt.release();
-            mpf.stop();
-            mpf.release();
             A5.this.finish();
             startActivity(new Intent(A5.this, Lesson.class));
         }
     }
-
-    /* edt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            edt.clearFocus();
-            InputMethodManager in = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            in.hideSoftInputFromWindow(edt.getWindowToken(), 0);
-
-            // do thing
-
-            return true;
-        }
-        return false;
-    }
-});*/
 }

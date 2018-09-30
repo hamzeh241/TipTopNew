@@ -152,24 +152,34 @@ public class A28 extends BaseActivity
         if (v.getId() == R.id.play) {
             if(haveNetworkConnection()){
                 // change
-                play.setVisibility(View.GONE);
                 play.setClickable(false);
-                isplay.setVisibility(View.VISIBLE);
-                isplay.setClickable(true);
 
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
                     mediaPlayer.setDataSource(url_download+path1);
                     mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    mediaPlayer.prepareAsync();
+                    mediaPlayer.prepare();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-                    Log.e("MediaPlayerException", " message : "+e.getMessage());
+                    Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
+                    play.setClickable(true);
                 }
                 mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     public void onPrepared(MediaPlayer mp) {
-                        if(!(mp.isPlaying())){
-                            mp.start();
+                        try{
+                            // change
+                            play.setVisibility(View.GONE);
+                            isplay.setVisibility(View.VISIBLE);
+                            isplay.setClickable(true);
+
+                            if(!(mp.isPlaying())){
+                                mp.start();
+                            }
+                        }catch (Exception e){
+                            Toast.makeText(getApplicationContext(), "Error_Play", Toast.LENGTH_LONG).show();
+                            play.setVisibility(View.VISIBLE);
+                            play.setClickable(true);
+                            isplay.setVisibility(View.GONE);
+                            isplay.setClickable(false);
                         }
                     }
                 });

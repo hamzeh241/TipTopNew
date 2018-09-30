@@ -517,10 +517,6 @@ public class A11 extends BaseActivity
         if(back_pressed == 1){
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
-            mpt.stop();
-            mpt.release();
-            mpf.stop();
-            mpf.release();
             A11.this.finish();
             startActivity(new Intent(A11.this, Lesson.class));
         }
