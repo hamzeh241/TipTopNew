@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.TimeoutError;
@@ -97,7 +96,6 @@ public class Get_Lesson extends BaseSetingApi {
 
                     } catch (JSONException e) {
                         progressDialog.dismiss();
-                        //e.printStackTrace();
                         Dialog_Error de = new Dialog_Error(mactivity);
                         de.show();
                         new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();

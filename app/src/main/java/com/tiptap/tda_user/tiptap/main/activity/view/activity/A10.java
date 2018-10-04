@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -17,20 +18,20 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
+import com.tiptap.tda_user.tiptap.main.activity.Api.Post_UpdateUser;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+import org.json.JSONException;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -46,12 +47,16 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
     String answer;
     String title1detailactivity, title2detailactivity,title3detailactivity,title4detailactivity, title1activity;
     CheckBox a,b,c,d;
-    TextView tex3,txt4;
+    TextView txt4;
     int back_pressed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.a10);
 
         setupViews();
@@ -116,7 +121,6 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
         b = (CheckBox)findViewById(R.id.b);
         c = (CheckBox)findViewById(R.id.c);
         d = (CheckBox)findViewById(R.id.d);
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
         p = (ProgressBar)findViewById(R.id.p);
         next = (Button) findViewById(R.id.next);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
@@ -398,8 +402,6 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                     // get now lesson
                                     now_less = mPresenter.now_IdLesson();
 
-                                    // post
-
                                     // update
                                     List<Integer> id_less = mPresenter.lesson(idfunction);
                                     List<Integer> id_func = mPresenter.function();
@@ -414,6 +416,10 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                                             int next_func = j + 1;
                                                             mPresenter.update_idfunction(id_func.get(next_func));
                                                             mPresenter.update_idlesson(0);
+
+                                                            // update server - next function
+                                                            List<Integer> id_less_new = mPresenter.lesson(id_func.get(next_func));
+                                                            update_server(id_less_new.get(0));
                                                         }
                                                         break;
                                                     }
@@ -423,6 +429,9 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                                 if (now_less == idlesson) {
                                                     int next_less = i + 1;
                                                     mPresenter.update_idlesson(id_less.get(next_less));
+
+                                                    // update server - next lesson
+                                                    update_server(id_less.get(next_less));
                                                 }
                                             }
                                             break;
@@ -452,7 +461,6 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
                                 // first
                                 go_activity2(id_at_new, "first", activitynumber);
-
                             }
                         }
 
@@ -469,8 +477,6 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                 // get now lesson
                                 now_less = mPresenter.now_IdLesson();
 
-                                // post
-
                                 // update
                                 List<Integer> id_less = mPresenter.lesson(idfunction);
                                 List<Integer> id_func = mPresenter.function();
@@ -485,6 +491,10 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                                         int next_func = j + 1;
                                                         mPresenter.update_idfunction(id_func.get(next_func));
                                                         mPresenter.update_idlesson(0);
+
+                                                        // update server - next function
+                                                        List<Integer> id_less_new = mPresenter.lesson(id_func.get(next_func));
+                                                        update_server(id_less_new.get(0));
                                                     }
                                                     break;
                                                 }
@@ -494,6 +504,9 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                             if (now_less == idlesson) {
                                                 int next_less = i + 1;
                                                 mPresenter.update_idlesson(id_less.get(next_less));
+
+                                                // update server - next lesson
+                                                update_server(id_less.get(next_less));
                                             }
                                         }
                                         break;
@@ -579,5 +592,12 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
     @Override
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    public void update_server(int idL) {
+        try {
+            String UserName = mPresenter.get_UserName();
+            new Post_UpdateUser(getApplicationContext(), A10.this, haveNetworkConnection(), UserName, idL).post();
+        } catch (JSONException e) {}
     }
 }

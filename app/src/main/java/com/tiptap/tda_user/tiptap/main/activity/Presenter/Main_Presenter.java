@@ -9,10 +9,6 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-/**
- * Created by tafsiri on 7/1/2018.
- */
-
 public class Main_Presenter implements MVP_Main.ProvidedPresenterOps, MVP_Main.RequiredPresenterOps {
     private WeakReference<MVP_Main.RequiredViewOps> mView;
     private MVP_Main.ProvidedModelOps mModel;
@@ -107,6 +103,11 @@ public class Main_Presenter implements MVP_Main.ProvidedPresenterOps, MVP_Main.R
     @Override
     public int getlanguage() {
         return mModel.getlanguage();
+    }
+
+    @Override
+    public String get_UserName() {
+        return mModel.get_UserName();
     }
 
     @Override

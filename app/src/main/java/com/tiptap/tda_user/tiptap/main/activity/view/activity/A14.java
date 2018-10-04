@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -27,11 +28,15 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
+import com.tiptap.tda_user.tiptap.main.activity.Api.Post_UpdateUser;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
+
+import org.json.JSONException;
+
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -54,6 +59,10 @@ public class A14 extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.a14);
 
         setupViews();
@@ -112,7 +121,6 @@ public class A14 extends BaseActivity
         a = (CheckBox)findViewById(R.id.a);
         b = (CheckBox)findViewById(R.id.b);
         c=(CheckBox)findViewById(R.id.c);
-        seekBar = (SeekBar) findViewById(R.id.seekbar);
         p = (ProgressBar)findViewById(R.id.p);
         next = (Button) findViewById(R.id.next);
         text=(TextView)findViewById(R.id.title);
@@ -172,17 +180,14 @@ public class A14 extends BaseActivity
         }
 
         //get image
-
-       path1 = tbActivity.getPath1();
+        path1 = tbActivity.getPath1();
         //getImage(path1);
         String img_url = url_download+path1;
         Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
         // set text for checkbox
-
         txt1.setText(title1detailactivity);
         txt2.setText(title2detailactivity);
         txt3.setText(title3detailactivity);
-         //
         next.setOnClickListener(this);
         a.setOnClickListener(this);
         b.setOnClickListener(this);
@@ -206,7 +211,6 @@ public class A14 extends BaseActivity
             if( c.isChecked() ){
                 c.setChecked(false);
             }
-
         }
 
         if (v.getId() == R.id.b) {
@@ -222,7 +226,6 @@ public class A14 extends BaseActivity
             if( c.isChecked() ){
                 c.setChecked(false);
             }
-
         }
 
         if (v.getId() == R.id.c) {
@@ -237,11 +240,8 @@ public class A14 extends BaseActivity
             if( b.isChecked() ){
                 b.setChecked(false);
             }
-
         }
 
-
-        //
         if (v.getId() == R.id.next) {
 
             switch (next.getText().toString()) {
@@ -268,8 +268,6 @@ public class A14 extends BaseActivity
                             }
                         }
                         if (ans) {
-
-
                             // update - true
                             mPresenter.update_activity(idactivity);
 
@@ -312,7 +310,6 @@ public class A14 extends BaseActivity
                             // play sound
                             mpt.start();
 
-
                         } else {
 
                             // Clickable_false
@@ -345,7 +342,6 @@ public class A14 extends BaseActivity
                         }
 
                         // change text color for button next when answer is true or false
-
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
@@ -353,10 +349,7 @@ public class A14 extends BaseActivity
                     break;
 
                 case "countinue":
-
-
                     if (a.isChecked() || b.isChecked() || c.isChecked()) {
-
                         // first
                         if (Act_Status.equals("first")) {
 
@@ -373,8 +366,6 @@ public class A14 extends BaseActivity
                                     // get now lesson
                                     now_less = mPresenter.now_IdLesson();
 
-                                    // post
-
                                     // update
                                     List<Integer> id_less = mPresenter.lesson(idfunction);
                                     List<Integer> id_func = mPresenter.function();
@@ -389,6 +380,10 @@ public class A14 extends BaseActivity
                                                             int next_func = j + 1;
                                                             mPresenter.update_idfunction(id_func.get(next_func));
                                                             mPresenter.update_idlesson(0);
+
+                                                            // update server - next function
+                                                            List<Integer> id_less_new = mPresenter.lesson(id_func.get(next_func));
+                                                            update_server(id_less_new.get(0));
                                                         }
                                                         break;
                                                     }
@@ -398,6 +393,9 @@ public class A14 extends BaseActivity
                                                 if (now_less == idlesson) {
                                                     int next_less = i + 1;
                                                     mPresenter.update_idlesson(id_less.get(next_less));
+
+                                                    // update server - next lesson
+                                                    update_server(id_less.get(next_less));
                                                 }
                                             }
                                             break;
@@ -444,8 +442,6 @@ public class A14 extends BaseActivity
                                 // get now lesson
                                 now_less = mPresenter.now_IdLesson();
 
-                                // post
-
                                 // update
                                 List<Integer> id_less = mPresenter.lesson(idfunction);
                                 List<Integer> id_func = mPresenter.function();
@@ -460,6 +456,10 @@ public class A14 extends BaseActivity
                                                         int next_func = j + 1;
                                                         mPresenter.update_idfunction(id_func.get(next_func));
                                                         mPresenter.update_idlesson(0);
+
+                                                        // update server - next function
+                                                        List<Integer> id_less_new = mPresenter.lesson(id_func.get(next_func));
+                                                        update_server(id_less_new.get(0));
                                                     }
                                                     break;
                                                 }
@@ -469,6 +469,9 @@ public class A14 extends BaseActivity
                                             if (now_less == idlesson) {
                                                 int next_less = i + 1;
                                                 mPresenter.update_idlesson(id_less.get(next_less));
+
+                                                // update server - next lesson
+                                                update_server(id_less.get(next_less));
                                             }
                                         }
                                         break;
@@ -556,6 +559,13 @@ public class A14 extends BaseActivity
     @Override
     public Context getAppContext() {
         return getApplicationContext();
+    }
+
+    public void update_server(int idL) {
+        try {
+            String UserName = mPresenter.get_UserName();
+            new Post_UpdateUser(getApplicationContext(), A14.this, haveNetworkConnection(), UserName, idL).post();
+        } catch (JSONException e) {}
     }
 
 }

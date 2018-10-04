@@ -43,6 +43,10 @@ public class Login extends BaseActivity implements MVP_Login.RequiredViewOps {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.login);
 
         // hide keyboard

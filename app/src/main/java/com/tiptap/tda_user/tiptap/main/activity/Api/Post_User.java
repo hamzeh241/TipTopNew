@@ -5,14 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.BaseSetingApi;
@@ -22,8 +18,8 @@ import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Login;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import org.json.JSONException;
-import org.json.JSONObject;
-import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Post_User extends BaseSetingApi {
 
@@ -31,7 +27,6 @@ public class Post_User extends BaseSetingApi {
     String choose;
     Context _context;
     Activity _activity;
-    String Result = "";
     String _username, _password, _email, _idlesson, _idlanguage, _name, _lastname, _age, _city, _country, _sex;
     boolean mnet;
     ProgressDialog progressDialog;
@@ -59,32 +54,22 @@ public class Post_User extends BaseSetingApi {
         progressDialog = new ProgressDialog(_activity);
     }
 
-    public String post() throws JSONException {
+    public void post() throws JSONException {
 
         progressDialog.setMessage("لطفا صبر کنید ...");
         progressDialog.show();
 
-        JSONObject _jsonBody=new JSONObject();
-        _jsonBody.put("Id_Lesson",_idlesson);
-        _jsonBody.put("UserName",_username);
-        _jsonBody.put("Email",_email);
-        _jsonBody.put("Password",_password);
-        _jsonBody.put("Id_Language",_idlanguage);
-        _jsonBody.put("Name",_name);
-        _jsonBody.put("LastName",_lastname);
-        _jsonBody.put("Age",_age);
-        _jsonBody.put("City",_city);
-        _jsonBody.put("Countery",_country);
-
+        // create RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(_context);
-        final String requestBody = _jsonBody.toString();
+        // create StringRequest
         StringRequest stringRequest = new StringRequest(Request.Method.POST,url+"User", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                // delete double "
+                String result = response.substring(1,response.length()-1);
                 try{
-                    if(response.equals("200")) {
+                    if(result.equals("ok")) {
                         progressDialog.dismiss();
-                        Result = response;
                         if(login_presenter.CountUser()==0) {
                             String Q = "insert into aspnet_Users (Id_Lesson,UserName,Email,Password,Id_Language,Name,LastName,Age,City,Countery) values ('" +
                                     _idlesson + "','" + _username + "','" + _email + "','" + _password + "','" + _idlanguage + "','" + _name + "','" + _lastname + "','" + _age + "','" + _city + "','" + _country + "')";
@@ -98,11 +83,12 @@ public class Post_User extends BaseSetingApi {
                         _activity.finish();
                         _activity.startActivity(new Intent(_activity, Function.class));
                     }
-                    else {
+                    else if(result.equals("نام کاربری تکراری است.")){
                         progressDialog.dismiss();
-                        Toast.makeText(_context,"خطا در ارسال اطلاعات به سرور",Toast.LENGTH_LONG).show();
+                        Toast.makeText(_context,"نام کاربری تکراری است.",Toast.LENGTH_LONG).show();
                     }
                 }catch (Exception e){
+                    progressDialog.dismiss();
                     new PostError(_context,e.getMessage(), Utility.getMethodName()).postError();
                 }
             }
@@ -112,37 +98,28 @@ public class Post_User extends BaseSetingApi {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         new ErrorVolley(_context).Error(error, "post");
-                        Result = error.toString();
                     }
                 })
         {
             @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
-                }
-            }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                String responseString = "";
-                if (response != null) {
-                    responseString = String.valueOf(response.statusCode);
-                    // can get more details such as response.headers
-                }
-                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            protected Map<String, String> getParams() {
+                Map<String, String> json = new HashMap<String, String>();
+                json.put("Id_Lesson", _idlesson);
+                json.put("UserName",_username);
+                json.put("Email",_email);
+                json.put("Password",_password);
+                json.put("Id_Language",_idlanguage);
+                json.put("Name",_name);
+                json.put("LastName",_lastname);
+                json.put("Age",_age);
+                json.put("City",_city);
+                json.put("Countery",_country);
+                return json;
             }
         };
+
+        // add Policy and add StringRequest to RequestQueue
         stringRequest.setRetryPolicy(policy);
         requestQueue.add(stringRequest);
-
-        return Result;
     }
 }

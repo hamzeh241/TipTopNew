@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
+import com.tiptap.tda_user.tiptap.main.activity.Api.Post_UpdateUser;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
@@ -30,6 +32,8 @@ import java.util.Random;
 import javax.inject.Inject;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
+
+import org.json.JSONException;
 
 public class A8 extends BaseActivity
                 implements MVP_Main.RequiredViewOps, OnClickListener {
@@ -54,6 +58,10 @@ public class A8 extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.a8);
 
         setupViews();
@@ -304,8 +312,6 @@ public class A8 extends BaseActivity
                                     // get now lesson
                                     now_less = mPresenter.now_IdLesson();
 
-                                    // post
-
                                     // update
                                     List<Integer> id_less = mPresenter.lesson(idfunction);
                                     List<Integer> id_func = mPresenter.function();
@@ -320,6 +326,10 @@ public class A8 extends BaseActivity
                                                             int next_func = j + 1;
                                                             mPresenter.update_idfunction(id_func.get(next_func));
                                                             mPresenter.update_idlesson(0);
+
+                                                            // update server - next function
+                                                            List<Integer> id_less_new = mPresenter.lesson(id_func.get(next_func));
+                                                            update_server(id_less_new.get(0));
                                                         }
                                                         break;
                                                     }
@@ -329,6 +339,9 @@ public class A8 extends BaseActivity
                                                 if (now_less == idlesson) {
                                                     int next_less = i + 1;
                                                     mPresenter.update_idlesson(id_less.get(next_less));
+
+                                                    // update server - next lesson
+                                                    update_server(id_less.get(next_less));
                                                 }
                                             }
                                             break;
@@ -377,8 +390,6 @@ public class A8 extends BaseActivity
                                 // get now lesson
                                 now_less = mPresenter.now_IdLesson();
 
-                                // post
-
                                 // update
                                 List<Integer> id_less = mPresenter.lesson(idfunction);
                                 List<Integer> id_func = mPresenter.function();
@@ -393,6 +404,10 @@ public class A8 extends BaseActivity
                                                         int next_func = j + 1;
                                                         mPresenter.update_idfunction(id_func.get(next_func));
                                                         mPresenter.update_idlesson(0);
+
+                                                        // update server - next function
+                                                        List<Integer> id_less_new = mPresenter.lesson(id_func.get(next_func));
+                                                        update_server(id_less_new.get(0));
                                                     }
                                                     break;
                                                 }
@@ -402,6 +417,9 @@ public class A8 extends BaseActivity
                                             if (now_less == idlesson) {
                                                 int next_less = i + 1;
                                                 mPresenter.update_idlesson(id_less.get(next_less));
+
+                                                // update server - next lesson
+                                                update_server(id_less.get(next_less));
                                             }
                                         }
                                         break;
@@ -572,5 +590,12 @@ public class A8 extends BaseActivity
             A8.this.finish();
             startActivity(new Intent(A8.this, Lesson.class));
         }
+    }
+
+    public void update_server(int idL) {
+        try {
+            String UserName = mPresenter.get_UserName();
+            new Post_UpdateUser(getApplicationContext(), A8.this, haveNetworkConnection(), UserName, idL).post();
+        } catch (JSONException e) {}
     }
 }

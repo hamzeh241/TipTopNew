@@ -13,7 +13,7 @@ import com.tiptap.tda_user.tiptap.main.activity.view.activity.*;
 
 public class BaseSetingApi {
 
-    public String url = "http://tiptop.tdaapp.ir/api/";
+    public String url = "http://testweb.tdaapp.ir/api/";
     private int socketTimeout = 30000;
     protected RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
     private static ProgressDialog pDialog;
@@ -115,12 +115,6 @@ public class BaseSetingApi {
                 break;
 
             case 9:
-                A9.idlesson = id_l;
-                A9.idfunction = func;
-                A9.activitynumber = 1;
-                A9.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A9.class));
-                mactivity.finish();
                 break;
 
             case 10:
@@ -241,13 +235,7 @@ public class BaseSetingApi {
                 break;
 
             case 23:
-                /*A23.idlesson = id_l;
-                A23.idfunction = func ;
-                A23.activitynumber = 1;
-                A23.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A23.class));
-                mactivity.finish();
-                break;*/
+                break;
 
             case 24:
                 A24.idlesson = id_l;
@@ -303,21 +291,9 @@ public class BaseSetingApi {
                 break;
 
             case 30:
-                A30.idlesson = id_l;
-                A30.idfunction = func;
-                A30.activitynumber = 1;
-                A30.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A30.class));
-                mactivity.finish();
                 break;
 
             case 31:
-                A31.idlesson = id_l;
-                A31.idfunction = func ;
-                A31.activitynumber = 1;
-                A31.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A31.class));
-                mactivity.finish();
                 break;
 
             case 32:
@@ -339,31 +315,13 @@ public class BaseSetingApi {
                 break;
 
             case 34:
-                A34.idlesson = id_l;
-                A34.idfunction = func;
-                A34.activitynumber = 1;
-                A34.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A34.class));
-                mactivity.finish();
                 break;
 
             case 35:
-                A35.idlesson = id_l;
-                A35.idfunction = func;
-                A35.activitynumber = 1;
-                A35.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A35.class));
-                mactivity.finish();
                 break;
 
             case 36:
-                /*A36.idlesson = id_l;
-                A36.idfunction = func ;
-                A36.activitynumber = 1;
-                A36.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A36.class));
-                mactivity.finish();
-                break;*/
+                break;
 
             case 37:
                 A37.idlesson = id_l;
@@ -393,21 +351,9 @@ public class BaseSetingApi {
                 break;
 
             case 40:
-                A40.idlesson = id_l;
-                A40.idfunction = func;
-                A40.activitynumber = 1;
-                A40.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A40.class));
-                mactivity.finish();
                 break;
 
             case 41:
-                A41.idlesson = id_l;
-                A41.idfunction = func ;
-                A41.activitynumber = 1;
-                A41.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A41.class));
-                mactivity.finish();
                 break;
 
             case 42:
@@ -420,21 +366,9 @@ public class BaseSetingApi {
                 break;
 
             case 43:
-                A43.idlesson = id_l;
-                A43.idfunction = func ;
-                A43.activitynumber = 1;
-                A43.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A43.class));
-                mactivity.finish();
                 break;
 
             case 44:
-                A44.idlesson = id_l;
-                A44.idfunction = func;
-                A44.activitynumber = 1;
-                A44.Act_Status = "first";
-                view.getContext().startActivity(new Intent(view.getContext(), A44.class));
-                mactivity.finish();
                 break;
 
             case 45:

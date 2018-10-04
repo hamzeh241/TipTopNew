@@ -33,10 +33,6 @@
         <activity
             android:name=".main.activity.view.lesson.Lesson"/>
         <activity
-            android:name=".main.activity.view.activity.Act_1"/>
-        <activity
-            android:name=".main.activity.view.activity.A34"/>
-        <activity
             android:name=".main.activity.view.activity.A27"/>
         <activity
             android:name=".main.activity.view.activity.A19"/>
@@ -75,8 +71,6 @@
         <activity
             android:name=".main.activity.view.activity.A4"/>
         <activity
-            android:name=".main.activity.view.activity.A30"/>
-        <activity
             android:name=".main.activity.view.activity.A29"/>
         <activity
             android:name=".main.activity.view.activity.A20"/>
@@ -89,19 +83,11 @@
         <activity
             android:name=".main.activity.view.activity.A15"/>
         <activity
-            android:name=".main.activity.view.activity.A35"/>
-        <activity
-            android:name=".main.activity.view.activity.A31"/>
-        <activity
             android:name=".main.activity.view.activity.A32"/>
         <activity
             android:name=".main.activity.view.activity.A22"/>
         <activity
-            android:name=".main.activity.view.activity.A41"/>
-        <activity
             android:name=".main.activity.view.activity.A25"/>
-        <activity
-            android:name=".main.activity.view.activity.A40"/>
         <activity
             android:name=".main.activity.view.activity.A33"/>
         <activity
@@ -109,15 +95,7 @@
         <activity
             android:name=".main.activity.view.activity.A42"/>
         <activity
-            android:name=".main.activity.view.activity.A43"/>
-        <activity
-            android:name=".main.activity.view.activity.Act_32"/>
-        <activity
-            android:name=".main.activity.view.activity.A44"/>
-        <activity
             android:name=".main.activity.view.activity.A3"/>
-        <activity
-            android:name=".main.activity.view.activity.A9"/>
         <activity
             android:name=".main.activity.view.activity.A45"/>
         <activity

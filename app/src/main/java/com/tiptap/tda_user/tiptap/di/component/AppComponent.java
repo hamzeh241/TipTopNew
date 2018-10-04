@@ -31,7 +31,6 @@ public interface AppComponent {
     A6_Component getA6Component(Main_Module module);
     A7_Component getA7Component(Main_Module module);
     A8_Component getA8Component(Main_Module module);
-    A9_Component getA9Component(Main_Module module);
     A10_Component getA10Component(Main_Module module);
     A11_Component getA11Component(Main_Module module);
     A14_Component getA14Component(Main_Module module);
@@ -49,12 +48,8 @@ public interface AppComponent {
     A27_Component getA27Component(Main_Module module);
     A28_Component getA28Component(Main_Module module);
     A29_Component getA29Component(Main_Module module);
-    A30_Component getA30Component(Main_Module module);
-    A31_Component getA31Component(Main_Module module);
     A32_Component getA32Component(Main_Module module);
     A33_Component getA33Component(Main_Module module);
-    A34_Component getA34Component(Main_Module module);
-    A35_Component getA35Component(Main_Module module);
     A37_Component getA37Component(Main_Module module);
     A38_Component getA38Component(Main_Module module);
     A39_Component getA39Component(Main_Module module);
@@ -66,5 +61,4 @@ public interface AppComponent {
     A49_Component getA49Component(Main_Module module);
     A12_Component getA12Component(Main_Module module);
     A13_Component getA13Component(Main_Module module);
-    Main_Component getComponent(Main_Module module);
 }

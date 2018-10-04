@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.tiptap.tda_user.tiptap.main.activity.Cls.Set_Lesson;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
@@ -42,6 +43,10 @@ public class Lesson
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hide status bar
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.lesson);
 
         setupViews();

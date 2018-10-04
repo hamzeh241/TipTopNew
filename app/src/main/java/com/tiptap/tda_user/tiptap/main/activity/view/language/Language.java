@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.tiptap.tda_user.tiptap.R;
 
-public class Language extends AppCompatActivity {//implements MVP_Language
-       // .RequiredViewOps {
+public class Language extends AppCompatActivity {/*implements MVP_Language
+       .RequiredViewOps {
 
-  /*  private CircleMenu circleMenu;
+    private CircleMenu circleMenu;
     String menu;
 
     @Inject
@@ -16,13 +16,12 @@ public class Language extends AppCompatActivity {//implements MVP_Language
 
     private static final String TAG = Language.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), Language.class.getName());
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.language);
     }
-/*
         setupViews();
         setupMVP();
 

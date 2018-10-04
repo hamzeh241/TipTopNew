@@ -2,7 +2,6 @@ package com.tiptap.tda_user.tiptap.main.activity.Model;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.widget.Toast;
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
@@ -11,9 +10,6 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.ArrayList;
 import java.util.List;
-/**
- * Created by tafsiri on 6/30/2018.
- */
 
 public class Main_Model implements MVP_Main.ProvidedModelOps  {
     private MVP_Main.RequiredPresenterOps mPresenter;
@@ -295,6 +291,16 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
         }
         return id;
     }
+
+    @Override
+    public String get_UserName() {
+        String q="SELECT [UserName] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        cursor.moveToFirst();
+        String name=cursor.getString(0);
+        return name;
+    }
+
     public int count_ActivityDetail(int id_activity) {
         String q="SELECT Count([_id]) as x FROM TbActivityDetail where Id_Activity = " + id_activity;
         Cursor cursor=dbAdapter.ExecuteQ(q);

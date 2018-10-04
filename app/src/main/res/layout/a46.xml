@@ -103,7 +103,7 @@
                         android:layout_marginRight="7dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:weightSum="8"
+                        android:weightSum="9"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp">
 
@@ -186,6 +186,17 @@
 
                         <LinearLayout
                             android:id="@+id/l8"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/l9"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"

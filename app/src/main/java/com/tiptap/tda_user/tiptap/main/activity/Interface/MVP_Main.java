@@ -5,10 +5,6 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import java.util.List;
 
-/**
- * Created by tafsiri on 7/1/2018.
- */
-
 public interface MVP_Main {
         interface RequiredViewOps {
             Context getAppContext();
@@ -33,6 +29,7 @@ public interface MVP_Main {
             void update_activity(int id_activity);
             void false_activitys(int id_lesson);
             int getlanguage();
+            String get_UserName();
 
             // user
             int now_IdLesson();
@@ -65,6 +62,7 @@ public interface MVP_Main {
             void update_activity(int id_activity);
             void false_activitys(int id_lesson);
             int getlanguage();
+            String get_UserName();
 
             // user
             int now_IdLesson();
