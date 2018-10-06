@@ -30,6 +30,12 @@ public interface MVP_Main {
             void false_activitys(int id_lesson);
             int getlanguage();
             String get_UserName();
+            // user info
+            String getFirstName();
+            String getLastName();
+            String getAge();
+            String getCity();
+            String getCountry();
 
             // user
             int now_IdLesson();
@@ -63,6 +69,12 @@ public interface MVP_Main {
             void false_activitys(int id_lesson);
             int getlanguage();
             String get_UserName();
+            // user info
+            String getFirstName();
+            String getLastName();
+            String getAge();
+            String getCity();
+            String getCountry();
 
             // user
             int now_IdLesson();

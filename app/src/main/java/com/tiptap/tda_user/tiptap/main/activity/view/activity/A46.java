@@ -18,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class A46 extends BaseActivity
     int fill=0, count=0;
     int back_pressed = 0;
     String for_frag;
+    ImageView person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,10 +114,12 @@ public class A46 extends BaseActivity
         l = new LinearLayout[]{l1, l2, l3, l4, l5, l6, l7, l8, l9};
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
+        person = (ImageView)findViewById(R.id.person);
     }
 
     private void after_setup() {
 
+        person.setOnClickListener(this);
         all = mPresenter.countActivity(idlesson);
 
         // set all activity false in activitynumber = 1
@@ -392,6 +396,10 @@ public class A46 extends BaseActivity
 
     @Override
     public void onClick(View v) {
+
+        if (v.getId() == R.id.person) {
+            UserInfo();
+        }
 
         if (v.getId() == R.id.next) {
 
@@ -820,5 +828,16 @@ public class A46 extends BaseActivity
             String UserName = mPresenter.get_UserName();
             new Post_UpdateUser(getApplicationContext(), A46.this, haveNetworkConnection(), UserName, idL).post();
         } catch (JSONException e) {}
+    }
+
+    private void UserInfo(){
+        String a = mPresenter.getFirstName();
+        String b = mPresenter.getLastName();
+        String c = mPresenter.getAge();
+        String d = mPresenter.getCity();
+        String e = mPresenter.getCountry();
+
+        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e);
+        di.show();
     }
 }

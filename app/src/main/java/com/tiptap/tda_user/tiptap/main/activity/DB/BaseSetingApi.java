@@ -13,7 +13,7 @@ import com.tiptap.tda_user.tiptap.main.activity.view.activity.*;
 
 public class BaseSetingApi {
 
-    public String url = "http://testweb.tdaapp.ir/api/";
+    public String url = "http://tiptop.tdaapp.ir/api/";
     private int socketTimeout = 30000;
     protected RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
     private static ProgressDialog pDialog;

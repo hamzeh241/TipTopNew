@@ -301,6 +301,51 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
         return name;
     }
 
+    @Override
+    public String getFirstName() {
+        String q="SELECT [Name] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        cursor.moveToFirst();
+        String name=cursor.getString(0);
+        return name;
+    }
+
+    @Override
+    public String getLastName() {
+        String q="SELECT [LastName] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        cursor.moveToFirst();
+        String name=cursor.getString(0);
+        return name;
+    }
+
+    @Override
+    public String getAge() {
+        String q="SELECT [Age] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        cursor.moveToFirst();
+        String name=cursor.getString(0);
+        return name;
+    }
+
+    @Override
+    public String getCity() {
+        String q="SELECT [City] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        cursor.moveToFirst();
+        String name=cursor.getString(0);
+        return name;
+    }
+
+    @Override
+    public String getCountry() {
+        String q="SELECT [Countery] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        cursor.moveToFirst();
+        String name=cursor.getString(0);
+        return name;
+    }
+
     public int count_ActivityDetail(int id_activity) {
         String q="SELECT Count([_id]) as x FROM TbActivityDetail where Id_Activity = " + id_activity;
         Cursor cursor=dbAdapter.ExecuteQ(q);

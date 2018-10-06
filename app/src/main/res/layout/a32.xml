@@ -26,13 +26,32 @@
                 android:gravity="center"
                 android:weightSum="1">
 
-                <ProgressBar
-                    android:id="@+id/p"
-                    style="?android:attr/progressBarStyleHorizontal"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="7dp"
-                    android:layout_weight="1" />
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/person"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight="0.88"
+                        android:src="@drawable/person" />
+
+                    <ProgressBar
+                        android:id="@+id/p"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.12"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginBottom="7dp" />
+
+                </LinearLayout>
 
             </TableRow>
 

@@ -111,6 +111,31 @@ public class Main_Presenter implements MVP_Main.ProvidedPresenterOps, MVP_Main.R
     }
 
     @Override
+    public String getFirstName() {
+        return mModel.getFirstName();
+    }
+
+    @Override
+    public String getLastName() {
+        return mModel.getLastName();
+    }
+
+    @Override
+    public String getAge() {
+        return mModel.getAge();
+    }
+
+    @Override
+    public String getCity() {
+        return mModel.getCity();
+    }
+
+    @Override
+    public String getCountry() {
+        return mModel.getCountry();
+    }
+
+    @Override
     public int now_IdLesson() {
         return mModel.now_IdLesson();
     }

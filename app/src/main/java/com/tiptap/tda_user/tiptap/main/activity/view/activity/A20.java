@@ -11,8 +11,10 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -60,6 +62,7 @@ public class A20 extends BaseActivity
     String title1detailactivity, title2detailactivity, title1activity;
     int fill = 0, count = 0;
     int back_pressed = 0;
+    ImageView person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +112,12 @@ public class A20 extends BaseActivity
         linear = (LinearLayout) findViewById(R.id.linear);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
+        person = (ImageView)findViewById(R.id.person);
     }
 
     private void after_setup() {
+
+        person.setOnClickListener(this);
 
         // show help (title1)
         if (title1activity.equals("") || title1activity.equals("null")) {
@@ -398,6 +404,10 @@ public class A20 extends BaseActivity
 
     @Override
     public void onClick(View v) {
+
+        if (v.getId() == R.id.person) {
+            UserInfo();
+        }
 
         if (v.getId() == R.id.next) {
 
@@ -823,5 +833,16 @@ public class A20 extends BaseActivity
             String UserName = mPresenter.get_UserName();
             new Post_UpdateUser(getApplicationContext(), A20.this, haveNetworkConnection(), UserName, idL).post();
         } catch (JSONException e) {}
+    }
+
+    private void UserInfo(){
+        String a = mPresenter.getFirstName();
+        String b = mPresenter.getLastName();
+        String c = mPresenter.getAge();
+        String d = mPresenter.getCity();
+        String e = mPresenter.getCountry();
+
+        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e);
+        di.show();
     }
 }
