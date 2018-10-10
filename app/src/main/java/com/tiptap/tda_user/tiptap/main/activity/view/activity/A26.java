@@ -80,6 +80,7 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
             tbActivity = mPresenter.getActivity2(idactivity);
         }
 
+        idactivity = tbActivity.get_id();
         title1 = tbActivity.getTitle1();
         after_setup();
     }

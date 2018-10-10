@@ -78,7 +78,7 @@ public class A6 extends BaseActivity
         }
 
         // get tbactivity for get idlesson and activitynumber
-        int idactivity = tbActivity.get_id();
+        idactivity = tbActivity.get_id();
 
         // get tbactvity detail for find answer and size of count for find structure that is 1 or 2 or 3 question
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);

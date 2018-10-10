@@ -32,7 +32,6 @@ import java.util.Random;
 import javax.inject.Inject;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
-
 import org.json.JSONException;
 
 public class A8 extends BaseActivity
@@ -45,13 +44,13 @@ public class A8 extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
     int back_pressed = 0;
 
-    TextView t1[],t2[],ti1,ti2;;
-    String w [];
+    TextView t1[],t2[],ti1,ti2;
+    String w1[] , w2[];
 
     String tohi = "-------";
     static int position = 0;
 
-    LinearLayout t, a;
+    LinearLayout tt1, tt2, aa1, aa2;
     MediaPlayer mpt, mpf;
     int all;
 
@@ -92,8 +91,10 @@ public class A8 extends BaseActivity
         position = 0;
         ti1 = (TextView)findViewById(R.id.title1);
         ti2 = (TextView)findViewById(R.id.title2);
-        t = (LinearLayout) findViewById(R.id.t);
-        a = (LinearLayout) findViewById(R.id.a);
+        tt1 = (LinearLayout) findViewById(R.id.tt1);
+        tt2 = (LinearLayout) findViewById(R.id.tt2);
+        aa1 = (LinearLayout) findViewById(R.id.aa1);
+        aa2 = (LinearLayout) findViewById(R.id.aa2);
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
@@ -150,7 +151,25 @@ public class A8 extends BaseActivity
 
         next.setOnClickListener(this);
 
-        w = title1.split(" ");
+        // answer
+        int have = 0;
+        for(int j=0 ; j<title1.length() ; j++){
+            if(title1.charAt(j) == '/'){
+                have = 1;
+            }
+        }
+        // two correct answer
+        if(have == 1){
+            String part[] = title1.split("/");
+            w1 = part[0].split(" ");
+            w2 = part[1].split(" ");
+        }
+        // one correct answer
+        else if(have == 0){
+            w1 = title1.split(" ");
+        }
+
+        // words
         String s [] = title2.split("/");
         /*int max_range = s2.length-1;
         int min_range = 0;
@@ -162,10 +181,11 @@ public class A8 extends BaseActivity
         }*/
 
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params.setMargins(10,10,10,10);
+        params.setMargins(4,0,4,0);
 
         t1 = new TextView[s.length];
         t2 = new TextView[s.length];
+        int count = 0;
 
         for(int i = 0; i < s.length ; i++){
 
@@ -174,9 +194,13 @@ public class A8 extends BaseActivity
             t1[i].setTextColor(getResources().getColor(R.color.black));
             t1[i].setText(s[i]);
             t1[i].setTextColor(getResources().getColor(R.color.my_black));
-            t1[i].setTextSize(22);
+            t1[i].setTextSize(18);
             t1[i].setBackgroundDrawable(getResources().getDrawable(R.drawable.border));
-            t.addView(t1[i]);
+            if(count <= 4){
+                tt1.addView(t1[i]);
+            }if(count > 4){
+                tt2.addView(t1[i]);
+            }
             final int finalI = i;
             t1[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -189,14 +213,19 @@ public class A8 extends BaseActivity
             t2[i].setLayoutParams(params);
             t2[i].setText(tohi);
             t2[i].setTextColor(getResources().getColor(R.color.my_black));
-            t2[i].setTextSize(22);
-            a.addView(t2[i]);
+            t2[i].setTextSize(18);
+            if(count <= 4){
+                aa1.addView(t2[i]);
+            }if(count > 4){
+                aa2.addView(t2[i]);
+            }
             t2[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     unset_data(t2[finalI],finalI);
                 }
             });
+            count++;
         }
     }
 
@@ -499,7 +528,7 @@ public class A8 extends BaseActivity
                 // set
                 t2[j].setText(t.getText());
                 t2[j].setTextColor(getResources().getColor(R.color.my_black));
-                t2[j].setTextSize(22);
+                t2[j].setTextSize(18);
                 // disable
                 //t.setTextColor(getResources().getColor(R.color.gray));
                 //t.setBackgroundColor(getResources().getColor(R.color.gray));
@@ -560,19 +589,54 @@ public class A8 extends BaseActivity
 
     public boolean check(){
         boolean answer = true;
+        boolean answer1 = true;
+        boolean answer2 = true;
+        // ? answer
+        int have = 0;
+        for(int j=0 ; j<title1.length() ; j++){
+            if(title1.charAt(j) == '/'){
+                have = 1;
+            }
+        }
+        // word to word
         for (int i = 0; i < t2.length; i++) {
+            // empty word
             if(t2[i].getText().toString().equals(tohi)){
                 answer = false;
                 break;
             }else{
-                String a = nice_string_A8( t2[i].getText().toString() );
-                String b = nice_string_A8( w[i] );
-                if (a.equals(b)) {
-                    // answer = true;
-                } else {
-                    answer = false;
+                //  2 answer
+                if(have == 1){
+                    // cheak w1
+                    String a = nice_string_A8( t2[i].getText().toString() );
+                    String b = nice_string_A8( w1[i] );
+                    if (a.equals(b)) {
+                    } else {
+                        answer1 = false;
+                    }
+                    // cheak w2
+                    String c = nice_string_A8( t2[i].getText().toString() );
+                    String d = nice_string_A8( w2[i] );
+                    if (c.equals(d)) {
+                    } else {
+                        answer2 = false;
+                    }
+                }
+                // 1 answer
+                else if(have == 0){
+                    String a = nice_string_A8( t2[i].getText().toString() );
+                    String b = nice_string_A8( w1[i] );
+                    if (a.equals(b)) {
+                    } else {
+                        answer = false;
+                    }
                 }
             }
+        }
+        // final answer
+        if(answer1 || answer2){
+        }else{
+            answer = false;
         }
         return answer;
     }

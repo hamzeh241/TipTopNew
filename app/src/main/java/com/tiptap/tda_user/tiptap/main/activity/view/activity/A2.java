@@ -15,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -32,9 +31,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -49,7 +46,6 @@ public class A2 extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
 
     CheckBox a, b;
-    EditText editText;
     TextView text;
     String answer, title1detailactivity, title2detailactivity;
     int back_pressed = 0;
@@ -231,26 +227,25 @@ public class A2 extends BaseActivity
                                 try {
                                     mediaPlayer.setDataSource(url_download+path2);
                                     mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                                    mediaPlayer.prepareAsync();
+                                    mediaPlayer.prepare();
                                 } catch (Exception e) {
-                                    Log.e("MediaPlayerException", " message : "+e.getMessage());
+                                    Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
                                 }
-                                mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-                                    public boolean onError(MediaPlayer mp, int what, int extra) {
-                                        mp.release();
-                                        mp.reset();
-                                        return false;
-                                    }
-                                });
                                 mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                                     public void onPrepared(MediaPlayer mp) {
-                                        mp.start();
-                                        play.setBackgroundResource(R.drawable.pause);
+                                        try{
+                                            if(!(mp.isPlaying())){
+                                                mp.start();
+                                            }
+                                        }catch (Exception e){
+                                            Toast.makeText(getApplicationContext(), "Error_Play", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 });
                             }else{
                                 Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                             }
+
                             // update - true
                             mPresenter.update_activity(idactivity);
 

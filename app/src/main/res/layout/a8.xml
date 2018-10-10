@@ -86,13 +86,34 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:id="@+id/a"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:layout_weight="1.5"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/aa1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layoutDirection="ltr"
+                        android:textDirection="ltr"/>
+
+                    <LinearLayout
+                        android:id="@+id/aa2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center|top"
+                        android:orientation="horizontal"
+                        android:layoutDirection="ltr"
+                        android:textDirection="ltr"/>
 
                 </LinearLayout>
 
@@ -106,13 +127,35 @@
                 android:weightSum="1">
 
                 <LinearLayout
-                    android:id="@+id/t"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:layout_weight="1.5"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:id="@+id/tt1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layoutDirection="ltr"
+                        android:textDirection="ltr" />
+
+                    <LinearLayout
+                        android:id="@+id/tt2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center|top"
+                        android:orientation="horizontal"
+                        android:layoutDirection="ltr"
+                        android:textDirection="ltr"/>
 
                 </LinearLayout>
 

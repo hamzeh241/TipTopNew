@@ -133,6 +133,7 @@ public class A14 extends BaseActivity
 
         text.setText(title1activity);
 
+        all = mPresenter.countActivity(idlesson);
 
         // set all activity false in activitynumber = 1
         if(activitynumber == 1 && Act_Status.equals("first")){

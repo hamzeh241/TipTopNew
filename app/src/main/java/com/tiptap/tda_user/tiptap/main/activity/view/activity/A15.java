@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
-
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -30,9 +29,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -76,12 +73,11 @@ public class A15 extends BaseActivity
         }
 
         // get tbactivity
-        int idactivity = tbActivity.get_id();
+        idactivity = tbActivity.get_id();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         count =mPresenter.count_ActivityDetail(idactivity);
-        //count=tbActivityDetailList.size();
 
         if(count==2) {
             // cheak box title
@@ -130,7 +126,7 @@ public class A15 extends BaseActivity
         t2 = (TextView)findViewById(R.id.title2);
         a = (CheckBox)findViewById(R.id.a);
         b = (CheckBox)findViewById(R.id.b);
-        c=(CheckBox)findViewById(R.id.c);
+        c =(CheckBox)findViewById(R.id.c);
         next = (Button) findViewById(R.id.next);
         p = (ProgressBar)findViewById(R.id.p);
         p.setMax(100);
@@ -291,7 +287,6 @@ public class A15 extends BaseActivity
 
                     if (ans) {
 
-
                         // update - true
                         mPresenter.update_activity(idactivity);
 
@@ -370,9 +365,6 @@ public class A15 extends BaseActivity
                     break;
 
                 case "countinue":
-
-
-                    if (a.isChecked() || b.isChecked() || c.isChecked()) {
 
                         // first
                         if (Act_Status.equals("first")) {
@@ -520,7 +512,6 @@ public class A15 extends BaseActivity
                                 go_activity1(id_at_new_f, "second", id_act);
                             }
                         }
-                    }
                     break;
             }
         }

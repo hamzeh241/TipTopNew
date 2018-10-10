@@ -272,28 +272,45 @@ public class A48 extends BaseActivity
             if(haveNetworkConnection()){
                 if(can_play){
                     // change
-                    play1.setVisibility(View.GONE);
                     play1.setClickable(false);
-                    isplay1.setVisibility(View.VISIBLE);
-                    isplay1.setClickable(true);
                     // mic
                     mic_status = false;
-                    // play
+                    // play1
                     can_play = false;
 
                     MediaPlayer mediaPlayer = new MediaPlayer();
                     try {
                         mediaPlayer.setDataSource(url_download+path3);
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.prepareAsync();
+                        mediaPlayer.prepare();
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
-                        Log.e("MediaPlayerException", " message : "+e.getMessage());
+                        Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
+                        play1.setClickable(true);
+                        can_play = true;
+                        mic_status = true;
                     }
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         public void onPrepared(MediaPlayer mp) {
-                            if(!(mp.isPlaying())){
-                                mp.start();
+                            try {
+                                // change
+                                play1.setVisibility(View.GONE);
+                                isplay1.setVisibility(View.VISIBLE);
+                                isplay1.setClickable(true);
+
+                                if (!(mp.isPlaying())) {
+                                    mp.start();
+                                }
+                            }catch (Exception e){
+                                Toast.makeText(getApplicationContext(), "Error_Play", Toast.LENGTH_LONG).show();
+                                // change
+                                play1.setVisibility(View.VISIBLE);
+                                play1.setClickable(true);
+                                isplay1.setVisibility(View.GONE);
+                                isplay1.setClickable(false);
+                                // mic
+                                mic_status = true;
+                                // play1
+                                can_play = true;
                             }
                         }
                     });
@@ -308,7 +325,7 @@ public class A48 extends BaseActivity
                             isplay1.setClickable(false);
                             // mic
                             mic_status = true;
-                            // play
+                            // play1
                             can_play = true;
                             // countinue
                             next.setTextColor(Color.WHITE);

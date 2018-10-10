@@ -129,6 +129,8 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
     private void after_setup(){
 
+        all = mPresenter.countActivity(idlesson);
+
         // set all activity false in activitynumber = 1
         if(activitynumber == 1 && Act_Status.equals("first")){
             mPresenter.false_activitys(idlesson);

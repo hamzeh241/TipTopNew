@@ -59,6 +59,7 @@ public class A49 extends BaseActivity
     int count;
     int back_pressed = 0;
     boolean mic_status = true;
+    ImageView person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +113,7 @@ public class A49 extends BaseActivity
         next = (Button)findViewById(R.id.next);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
+        person = (ImageView)findViewById(R.id.person);
     }
     private void after_setup() {
 
@@ -172,10 +174,15 @@ public class A49 extends BaseActivity
         isplay.setOnClickListener(this);
         voice.setOnClickListener(this);
         next.setOnClickListener(this);
+        person.setOnClickListener(this);
 
     }
     @Override
     public void onClick(View view) {
+
+        if (view.getId() == R.id.person) {
+            UserInfo();
+        }
 
         if (view.getId() == R.id.play) {
             if(haveNetworkConnection()){
@@ -610,5 +617,17 @@ public class A49 extends BaseActivity
             String UserName = mPresenter.get_UserName();
             new Post_UpdateUser(getApplicationContext(), A49.this, haveNetworkConnection(), UserName, idL).post();
         } catch (JSONException e) {}
+    }
+
+    private void UserInfo(){
+        String a = mPresenter.getFirstName();
+        String b = mPresenter.getLastName();
+        String c = mPresenter.getAge();
+        String d = mPresenter.getCity();
+        String e = mPresenter.getCountry();
+        //String f = mPresenter.getJob();
+
+        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e);
+        di.show();
     }
 }

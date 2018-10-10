@@ -11,10 +11,8 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -36,9 +34,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -841,6 +837,7 @@ public class A20 extends BaseActivity
         String c = mPresenter.getAge();
         String d = mPresenter.getCity();
         String e = mPresenter.getCountry();
+        //String f = mPresenter.getJob();
 
         Dialog_Info di = new Dialog_Info(this, a, b, c, d, e);
         di.show();

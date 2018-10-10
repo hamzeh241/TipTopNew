@@ -113,6 +113,8 @@ public class A45 extends BaseActivity
 
     private void after_setup(){
 
+        all = mPresenter.countActivity(idlesson);
+
         // show help (title1)
         if (title1activity.equals("") || title1activity.equals("null")) {
         } else {
