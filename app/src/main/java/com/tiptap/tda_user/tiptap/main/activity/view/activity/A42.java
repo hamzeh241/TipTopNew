@@ -32,9 +32,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -167,7 +165,6 @@ public class A42 extends BaseActivity
 
         /* ------------------------------------------------------------------------------------------------------ */
         // each row - title2
-
 
             String temp = tbActivityDetailList.get(0).getTitle2();
             if (temp.equals("null")) {
@@ -312,7 +309,7 @@ public class A42 extends BaseActivity
                             e[id_e] = new EditText(this);
                             e[id_e].setLayoutParams(params_edt);
                             e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                            e[id_e].setEms(5);
+                            e[id_e].setEms(8);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new A42.CheckEdit());
@@ -350,7 +347,7 @@ public class A42 extends BaseActivity
                                 e[id_e] = new EditText(this);
                                 e[id_e].setLayoutParams(params_edt);
                                 e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                                e[id_e].setEms(5);
+                                e[id_e].setEms(8);
                                 e[id_e].setTextSize(16);
                                 e[id_e].setTextColor(getResources().getColor(R.color.blue));
                                 e[id_e].addTextChangedListener(new A42.CheckEdit());
@@ -367,7 +364,7 @@ public class A42 extends BaseActivity
                             e[id_e] = new EditText(this);
                             e[id_e].setLayoutParams(params_edt);
                             e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                            e[id_e].setEms(5);
+                            e[id_e].setEms(8);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new A42.CheckEdit());
@@ -445,7 +442,7 @@ public class A42 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
-                            f1.txt_true.setText(answer);
+                            f1.txt_true.setText("Good");
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -453,7 +450,6 @@ public class A42 extends BaseActivity
 
                             // play sound
                             mpt.start();
-
 
                         } else {
 
@@ -628,7 +624,6 @@ public class A42 extends BaseActivity
                                 }
                                 A42.this.finish();
                                 startActivity(new Intent(A42.this, End.class));
-
                             }
 
                             // number != 0 and go on to Next
@@ -648,7 +643,6 @@ public class A42 extends BaseActivity
                             }
                         }
                     }
-
                     break;
             }
         }
@@ -717,8 +711,8 @@ public class A42 extends BaseActivity
             // moqayese ba javab
             result = result + " / "+ z[0] ;
             for(int j=0 ; j < z.length ; j++){
-                String a = nice_string1( e[i].getText().toString() );
-                String b = nice_string1( z[j].toString() );
+                String a = nice_string_A42( e[i].getText().toString() );
+                String b = nice_string_A42( z[j].toString() );
                 if(a.equals(b)){
                     answer[cc] = true;
                     cc++;

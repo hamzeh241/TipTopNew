@@ -32,9 +32,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -42,7 +40,6 @@ import javax.inject.Inject;
 
 public class A4 extends BaseActivity
         implements MVP_Main.RequiredViewOps,View.OnClickListener {
-
 
     private static final String TAG = A4.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A4.class.getName());
@@ -166,7 +163,7 @@ public class A4 extends BaseActivity
 
         for(int i=0 ; i<count ; i++) {
             String temp = tbActivityDetailList.get(i).getTitle2();
-            if (temp.equals("null")) {
+            if (temp.equals("null") || temp.equals("")) {
 
             }else{
                 int have = 0;
@@ -189,7 +186,7 @@ public class A4 extends BaseActivity
         int c = 0;
         for(int i=0 ; i<count ; i++) {
             String temp = tbActivityDetailList.get(i).getTitle2();
-            if (temp.equals("null")) {
+            if (temp.equals("null")|| temp.equals("")) {
 
             }else{
                 int have = 0;

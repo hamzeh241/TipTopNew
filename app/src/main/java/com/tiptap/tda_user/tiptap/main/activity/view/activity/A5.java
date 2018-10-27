@@ -162,7 +162,7 @@ public class A5 extends BaseActivity
                     in.hideSoftInputFromWindow(edt.getWindowToken(), 0);
 
                     // do thing
-                    Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG).show();
 
                     return true;
                 }

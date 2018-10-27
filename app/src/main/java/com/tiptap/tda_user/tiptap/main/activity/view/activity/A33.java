@@ -249,8 +249,8 @@ public class A33 extends BaseActivity
 
                         boolean result = false;
                         for(int z=0 ; z < you_say.size() ; z++){
-                            String a = nice_string1( you_say.get(z) );
-                            String b = nice_string1( title1 );
+                            String a = nice_string_A33( you_say.get(z) );
+                            String b = nice_string_A33( title1 );
                             if (a.equals(b)) { result = true;}
                         }
 

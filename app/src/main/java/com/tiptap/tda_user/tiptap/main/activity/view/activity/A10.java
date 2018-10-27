@@ -49,6 +49,7 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
     CheckBox a,b,c,d;
     TextView txt4;
     int back_pressed = 0;
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,31 +80,31 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
+        count = tbActivityDetailList.size();
+
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
         title2detailactivity = tbActivityDetailList.get(1).getTitle1().toString();
         title3detailactivity = tbActivityDetailList.get(2).getTitle1().toString();
-        title4detailactivity = tbActivityDetailList.get(3).getTitle1().toString();
+        if(count == 4){
+            title4detailactivity = tbActivityDetailList.get(3).getTitle1().toString();
+        }
 
         // find answer
         if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
             answer = title1detailactivity;
         }
-
-        else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
-            // answer = title2;
+        if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
             answer=title2detailactivity;
         }
-        else if (tbActivityDetailList.get(2).getIsAnswer().equals("true")) {
-            // answer = title2;
+        if (tbActivityDetailList.get(2).getIsAnswer().equals("true")) {
             answer=title3detailactivity;
         }
-        else if (tbActivityDetailList.get(3).getIsAnswer().equals("true")) {
-            // answer = title2;
-            answer=title4detailactivity;
-        }
 
-//answer=title2detailactivity;
-//String aa=answer;
+        if(count == 4){
+            if (tbActivityDetailList.get(3).getIsAnswer().equals("true")) {
+                answer=title4detailactivity;
+            }
+        }
 
         after_setup();
     }
@@ -184,12 +185,18 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
         txt1.setText(title1detailactivity);
         txt2.setText(title2detailactivity);
         txt3.setText(title3detailactivity);
-        txt4.setText(title4detailactivity);
-        next.setOnClickListener(this);
         a.setOnClickListener(this);
         b.setOnClickListener(this);
         c.setOnClickListener(this);
-        d.setOnClickListener(this);
+
+        if(count ==4){
+            txt4.setVisibility(View.VISIBLE);
+            txt4.setText(title4detailactivity);
+            d.setVisibility(View.VISIBLE);
+            d.setOnClickListener(this);
+        }
+
+        next.setOnClickListener(this);
     }
 
     @Override
@@ -208,8 +215,10 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
             if( c.isChecked() ){
                 c.setChecked(false);
             }
-            if( d.isChecked() ){
-                d.setChecked(false);
+            if(count == 4) {
+                if (d.isChecked()) {
+                    d.setChecked(false);
+                }
             }
         }
 
@@ -227,8 +236,10 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                 c.setChecked(false);
             }
 
-            if( d.isChecked() ){
-                d.setChecked(false);
+            if(count == 4){
+                if( d.isChecked() ){
+                    d.setChecked(false);
+                }
             }
         }
 
@@ -244,9 +255,10 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
             if( b.isChecked() ){
                 b.setChecked(false);
             }
-
-            if( d.isChecked() ){
-                d.setChecked(false);
+            if(count == 4){
+                if( d.isChecked() ){
+                    d.setChecked(false);
+                }
             }
         }
 
@@ -293,9 +305,11 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                 ans = true;
                             }
                         }
-                        if (d.isChecked()) {
-                            if (txt4.getText().equals(answer)) {
-                                ans = true;
+                        if(count == 4){
+                            if (d.isChecked()) {
+                                if (txt4.getText().equals(answer)) {
+                                    ans = true;
+                                }
                             }
                         }
 

@@ -101,8 +101,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.65"
         android:weightSum="1"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,17 +131,17 @@
                     android:id="@+id/a"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp" />
 
                 <TextView
                     android:id="@+id/txt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:text="hello , I am mark and go to the school with my bycycle"
+                    android:layout_marginRight="5dp"
+                    android:text="hellthe my bycycle"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -155,17 +155,17 @@
                     android:id="@+id/b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp" />
 
                 <TextView
                     android:id="@+id/txt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="hello , I am mark and go to the school with my bycycle"
+                    android:text="hello ,cycle"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

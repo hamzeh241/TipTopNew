@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,9 +36,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -53,7 +52,7 @@ public class A17 extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
     TextView text,txt4;
     String userAnswer;
-    String title1detailactivity, title2detailactivity,answer;
+    String title1detailactivity, title2detailactivity;
     String temp[];
     LinearLayout l[];
     TextView t[];
@@ -76,7 +75,9 @@ public class A17 extends BaseActivity
 
         // hide keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         setupMVP();
+
         // first
         if (Act_Status.equals("first")) {
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
@@ -98,14 +99,11 @@ public class A17 extends BaseActivity
         path2 = tbActivity.getPath2();
         max = mPresenter.max_Activitynumber(idlesson);
 
-
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-        // title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
-        count = tbActivityDetailList.size();
 
-        answer = title2;
+        count = tbActivityDetailList.size();
 
         setupViews();
         after_setup();
@@ -296,6 +294,7 @@ public class A17 extends BaseActivity
                     e[id_e] = new EditText(this);
                     e[id_e].setLayoutParams(params);
                     e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                    e[id_e].setGravity(Gravity.CENTER);
                     e[id_e].setEms(12);
                     e[id_e].setTextSize(16);
                     e[id_e].setTextColor(getResources().getColor(R.color.blue));
@@ -479,7 +478,7 @@ public class A17 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
-                            f1.txt_true.setText(answer);
+                            f1.txt_true.setText(title2);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -509,7 +508,7 @@ public class A17 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.txt_false.setText(answer);
+                            f2.txt_false.setText(title2);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);

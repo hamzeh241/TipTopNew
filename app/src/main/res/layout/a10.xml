@@ -133,7 +133,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="hello , I am mark and go to the school with my bycycle"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp" />
 
@@ -156,7 +155,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="hello , I am mark and go to the school with my bycycle"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp" />
 
@@ -179,7 +177,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="....."
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp" />
 
@@ -195,16 +192,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp" />
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/txt4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
-                    android:text="..."
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

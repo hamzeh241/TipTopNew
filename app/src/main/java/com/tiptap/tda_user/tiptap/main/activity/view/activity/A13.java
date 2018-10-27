@@ -1,19 +1,16 @@
 package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.opengl.Visibility;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -36,27 +33,22 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A13 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,View.OnClickListener, View.OnTouchListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener {
+        implements MVP_Main.RequiredViewOps, View.OnClickListener{
 
     private static final String TAG = A13.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A13.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-    String true_txt="";
     TextView text,txt4,txt5,txt6,txt7,txt8;
     EditText editText;
-     String userAnswer;
-    String title1detailactivity, title2detailactivity,answer2;
+    String title1detailactivity, title2detailactivity;
     String temp[];
     int count;
     int back_pressed = 0;
@@ -73,6 +65,7 @@ public class A13 extends BaseActivity
         // hide keyboard
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setupMVP();
+
         // first
         if (Act_Status.equals("first")) {
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
@@ -94,14 +87,10 @@ public class A13 extends BaseActivity
         path2 = tbActivity.getPath2();
         max = mPresenter.max_Activitynumber(idlesson);
 
-
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
         title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-//        title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
         count = tbActivityDetailList.size();
-
-        answer2 = title2;
 
         setupViews();
         after_setup();
@@ -122,8 +111,8 @@ public class A13 extends BaseActivity
         txt7 = (TextView)findViewById(R.id.txt7);
         txt8 = (TextView)findViewById(R.id.txt8);
         next = (Button)findViewById(R.id.next);
-        mp = new MediaPlayer();
     }
+
     private void after_setup() {
 
         all = mPresenter.countActivity(idlesson);
@@ -173,22 +162,20 @@ public class A13 extends BaseActivity
         }
 
         //get image
-       // getImage(path1);
         String img_url = url_download+path1;
         Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         // set text for textbox
         temp=getTextView(title1);
         txt1.setText(temp[0]);
-       // editText.setText(temp[1]);
         SetTextForTextViews();
 
-
         //set OnClickListener
-        editText. addTextChangedListener(new CheckEdit());
+        editText.addTextChangedListener(new CheckEdit());
         next.setOnClickListener(this);
 
     }
+
     public  void  SetTextForTextViews(){
         TextView textArray[]=new TextView[count];
         for(int i=0;i<count;i++){
@@ -256,36 +243,36 @@ public class A13 extends BaseActivity
     @Override
     public void onClick(View view) {
 
-        String h=userAnswer;
         if(view.getId() == R.id.next){
             switch (next.getText().toString()) {
                 case "check":
+                    boolean answer = cheak(title2,editText.getText().toString());
+                    if (answer) {
 
-                    //   true_txt =  title1 ;
-                    true_txt=title2;
-
-                    if (cheak(true_txt,userAnswer)) {
                         //play sound
-                        if (haveNetworkConnection()) {
+                        if(haveNetworkConnection()){
+                            MediaPlayer mediaPlayer = new MediaPlayer();
                             try {
-                                String voice_url = url_download + path2;
-                                mp.setDataSource(voice_url);
-                                mp.prepare();
-
+                                mediaPlayer.setDataSource(url_download+path2);
+                                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                                mediaPlayer.prepare();
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
                             }
-
-                            mpLength = mp.getDuration();
-                            mp.start();
-
-                            //    SeekBarProgressUpdater();
-
-                        } else {
+                            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                public void onPrepared(MediaPlayer mp) {
+                                    try{
+                                        if(!(mp.isPlaying())){
+                                            mp.start();
+                                        }
+                                    }catch (Exception e){
+                                        Toast.makeText(getApplicationContext(), "Error_Play", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                        }else{
                             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
                         }
-                        mp.setOnBufferingUpdateListener(this);
-                        mp.setOnCompletionListener(this);
 
                         // update - true
                         mPresenter.update_activity(idactivity);
@@ -322,7 +309,7 @@ public class A13 extends BaseActivity
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_True f1 = new Fragment_True();
-                        f1.txt_true.setText(true_txt);
+                        f1.txt_true.setText(title2);
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment1, f1);
@@ -352,7 +339,7 @@ public class A13 extends BaseActivity
                         linearLayout.setVisibility(View.VISIBLE);
 
                         Fragment_False f2 = new Fragment_False();
-                        f2.txt_false.setText(true_txt);
+                        f2.txt_false.setText(title2);
                         FragmentManager fragMan = getSupportFragmentManager();
                         FragmentTransaction fragTransaction = fragMan.beginTransaction();
                         fragTransaction.add(R.id.fragment2, f2);
@@ -362,7 +349,6 @@ public class A13 extends BaseActivity
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                     next.setText("countinue");
-
 
                     break;
 
@@ -515,11 +501,11 @@ public class A13 extends BaseActivity
                             go_activity1(id_at_new_f, "second", id_act);
                         }
                     }
-
                     break;
             }
         }
     }
+
     // get text from data base to show in textviews
     public String[] getTextView(String str){
 
@@ -531,35 +517,19 @@ public class A13 extends BaseActivity
 
             for (int j = 0; j < str.length(); j++) {
                 if (str.charAt(j) == '.') {
-                    break;
+                    if(str.charAt(j+1) == '.'){
+                        break;
+                    }
                 } else {
-                        part[0] += str.charAt(j);
+                    part[0] += str.charAt(j);
                 }
             }
             part[1] = "................";
         }
-    //    part[0]=nice_string1(part[0]);
         part[0]=part[0].trim();
-        return  part;
+        return part;
     }
-    public String[] getTextForTextViews(String str){
-        String part[]=null;
-        if (str.equals("null")) {
 
-        }else {
-            int have = 0;
-            for (int j = 0; j < str.length(); j++) {
-                if (str.charAt(j) == '/') {
-                    have = 1;
-                }
-            }
-            if (have == 1) {
-                part = str.split(Pattern.quote("/"));
-
-            }
-        }
-        return  part;
-    }
     class CheckEdit implements TextWatcher {
         public void afterTextChanged(Editable s) {
             try {
@@ -568,7 +538,6 @@ public class A13 extends BaseActivity
                     next.setBackgroundResource(R.drawable.btn_gray);
                 }
                 else{
-                    userAnswer=s.toString();
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                 }
@@ -578,44 +547,18 @@ public class A13 extends BaseActivity
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         public void onTextChanged(CharSequence s, int start, int before, int count) {}
     }
+
     //Cheaking the userAnswer with the CorrectAnswer
     public boolean cheak(String correctAnswer, String userAnswer){
         boolean flag=false;
         if (correctAnswer.equals("null")) {
-
         }else {
-            int have = 0;
-            for (int j = 0; j < correctAnswer.length(); j++) {
-                if (correctAnswer.charAt(j) == '/') {
-                    have = 1;
-                }
-            }
-            if (have == 1) {
-                String part[] = correctAnswer.split(Pattern.quote("/"));
-                for (int i = 0; i < part.length; i++) {
-                    if (userAnswer.equals(part[i]))
-                        flag = true;
-                }
-            } else {
-                if (userAnswer.equals(correctAnswer))
-                    flag = true;
-            }
-        }
+            if (nice_string2(userAnswer).equals(nice_string2(correctAnswer)))
+                flag = true;
+         }
         return  flag;
     }
 
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, int percent) {
-//        seekBar.setSecondaryProgress(percent);
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        end = true;
-//        play.setBackgroundResource(R.drawable.play);
-        next.setTextColor(Color.WHITE);
-        next.setBackgroundResource(R.drawable.btn_green);
-    }
     private void setupMVP(){
         if ( mStateMaintainer.firstTimeIn() ) {
             initialize();
@@ -654,11 +597,6 @@ public class A13 extends BaseActivity
     @Override
     public Context getAppContext() {
         return getApplicationContext();
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
     }
 
     @Override

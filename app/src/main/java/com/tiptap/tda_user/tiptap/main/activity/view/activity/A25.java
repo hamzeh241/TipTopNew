@@ -307,7 +307,7 @@ public class A25 extends BaseActivity
                             e[id_e] = new EditText(this);
                             e[id_e].setLayoutParams(params);
                             //e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                            e[id_e].setEms(3);
+                            e[id_e].setEms(5);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new A25.CheckEdit());
@@ -345,7 +345,7 @@ public class A25 extends BaseActivity
                                 e[id_e] = new EditText(this);
                                 e[id_e].setLayoutParams(params);
                                 //e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                                e[id_e].setEms(3);
+                                e[id_e].setEms(5);
                                 e[id_e].setTextSize(16);
                                 e[id_e].setTextColor(getResources().getColor(R.color.blue));
                                 e[id_e].addTextChangedListener(new A25.CheckEdit());
@@ -362,7 +362,7 @@ public class A25 extends BaseActivity
                             e[id_e] = new EditText(this);
                             e[id_e].setLayoutParams(params);
                             //e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
-                            e[id_e].setEms(3);
+                            e[id_e].setEms(5);
                             e[id_e].setTextSize(16);
                             e[id_e].setTextColor(getResources().getColor(R.color.blue));
                             e[id_e].addTextChangedListener(new A25.CheckEdit());

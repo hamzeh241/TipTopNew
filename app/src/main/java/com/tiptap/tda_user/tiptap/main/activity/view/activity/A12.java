@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -32,31 +33,30 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 public class A12 extends BaseActivity
-        implements MVP_Main.RequiredViewOps,View.OnClickListener, View.OnTouchListener {
+        implements MVP_Main.RequiredViewOps,View.OnClickListener {
 
     private static final String TAG = A12.class.getSimpleName();
     private final StateMaintainer mStateMaintainer = new StateMaintainer( getFragmentManager(), A12.class.getName());
 
     @Inject
     public MVP_Main.ProvidedPresenterOps mPresenter;
-    String true_txt="";
-    TextView tex;
-    EditText editText;
-    String userAnswer2;
-    // String userAnswer;
-    String title1detailactivity, title2detailactivity,answer2;
-    String temp[];
-    int count;
+    int fill=0, count=0;
     int back_pressed = 0;
+    int xali = 0;
+    String ans[];
+    TextView t[];
+    EditText e[];
+    LinearLayout line;
+    String AD_txt1, AD_txt2;
+    String z[];
+    String for_frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +91,9 @@ public class A12 extends BaseActivity
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
-        title1detailactivity = tbActivityDetailList.get(0).getTitle1().toString();
-        title2detailactivity = tbActivityDetailList.get(0).getTitle2().toString();
-        answer2 = title2detailactivity;
+        count = tbActivityDetailList.size();
+        AD_txt1 = tbActivityDetailList.get(0).getTitle1().toString();
+        AD_txt2 = tbActivityDetailList.get(0).getTitle2().toString();
 
         setupViews();
         after_setup();
@@ -107,9 +107,8 @@ public class A12 extends BaseActivity
         img = (ImageView) findViewById(R.id.img);
         txt1 = (TextView)findViewById(R.id.txt1);
         txt2 = (TextView)findViewById(R.id.txt2);
-        txt3 = (TextView)findViewById(R.id.txt3);
-        editText = (EditText) findViewById(R.id.edittxt4);
         next = (Button)findViewById(R.id.next);
+        line = (LinearLayout)findViewById(R.id.line);
     }
     private void after_setup() {
 
@@ -160,36 +159,263 @@ public class A12 extends BaseActivity
         }
 
         //get image
-        //getImage(path1);
         String img_url = url_download+path1;
         Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
-        // set text for textbox
+        // set text for question & answer1
         txt1.setText(title1);
         txt2.setText(title2);
 
-        temp=getTextView(title1detailactivity);
-        txt3.setText(temp[0]);
-      //  editText.setText(temp[1]);
-      //  editText.setOnClickListener(this);
-
-        editText.addTextChangedListener(new CheckEdit());
-        //set OnClickListener
         next.setOnClickListener(this);
 
+        /* ------------------------------------------------------------------------------------------------------ */
+        // each row - title2
+
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
+
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
+                    }
+                }
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    xali = xali + (z.length);
+                }
+                else if(have == 0){
+                    xali = xali + 1;
+                }
+            }
+        }
+
+        ans = new String[xali];
+        int c = 0;
+        for(int i=0 ; i<count ; i++) {
+            String temp = tbActivityDetailList.get(i).getTitle2();
+            if (temp.equals("null")) {
+
+            }else{
+                int have = 0;
+                for(int j=0 ; j<temp.length() ; j++){
+                    if(temp.charAt(j) == '_'){
+                        have = 1;
+                    }
+                }
+                if(have == 1){
+                    String z[] = temp.split("_");
+                    for(int j=0 ; j<z.length ; j++){
+                        ans[c] = z[j];
+                        c++;
+                    }
+                }
+                else if(have == 0){
+                    ans[c] = temp;
+                    c++;
+                }
+            }
+        }
+
+        e = new EditText[xali];
+        int id_e = 0;
+
+        // ------------------------------------------------------------------------------------------------------
+        // each row - title1
+        for(int i=0 ; i<count ; i++) {
+
+            // ------------------------------------------------------------------------------------------------------
+            // splite textview & edittext
+
+            String w = tbActivityDetailList.get(i).getTitle1();
+            w = w.replace("…", "...");
+            String[] list_w = w.split(Pattern.quote("..."));
+
+            int start = 0;
+            int end = 0;
+
+            // only ...
+            if(w.equals("...")){
+                start = 1;
+            }else{
+                String s_s = w.substring(0, 3);
+                if (s_s.equals("...")) {
+                    start = 1;
+                }
+                String s_e = w.substring(w.length() - 3, w.length());
+                if (s_e.equals("...")) {
+                    end = 1;
+                }
+            }
+
+            int t_number = 0;
+            int id_w = 0;
+
+            if(w.equals("...")){
+                t_number = 0;
+            }else{
+                if (list_w[0].equals("")) {
+                    id_w = 1;
+                    t_number = list_w.length - 1;
+                } else {
+                    t_number = list_w.length;
+                }
+            }
+
+            int e_number = 0;
+            if (t_number > 1) {
+                e_number = (t_number - 1) + (start) + (end);
+            } else {
+                e_number = (start) + (end);
+            }
+
+            int total = t_number + e_number;
+            t = new TextView[t_number];
+            int id_t = 0;
+
+            // ------------------------------------------------------------------------------------------------------
+            // add to view
+            String now = "txt";
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            if(total == 1){
+                // only ...
+                if(w.equals("...")) {
+                    e[id_e] = new EditText(this);
+                    e[id_e].setLayoutParams(params);
+                    e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                    e[id_e].setEms(12);
+                    e[id_e].setTextSize(16);
+                    e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                    e[id_e].addTextChangedListener(new CheckEdit());
+                    line.addView(e[id_e]);
+                    id_e++;
+                }
+                // only text without ...
+                else{
+                    t[id_t] = new TextView(this);
+                    t[id_t].setLayoutParams(params);
+                    t[id_t].setText(list_w[0]);
+                    t[id_t].setTextColor(getResources().getColor(R.color.black));
+                    t[id_t].setTextSize(16);
+                    line.addView(t[id_t]);
+                }
+
+            }else{
+                for(int xi=0 ; xi<total ; xi++){
+
+                    final int finalId_e = id_e;
+
+                    // start
+                    if(xi == 0){
+                        if(start == 1){
+                            e[id_e] = new EditText(this);
+                            e[id_e].setLayoutParams(params);
+                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setEms(5);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new CheckEdit());
+                            line.addView(e[id_e]);
+                            id_e++;
+                        }
+
+                        if(start == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            t[id_t].setTextColor(getResources().getColor(R.color.black));
+                            line.addView(t[id_t]);
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+
+                    if(xi!=0 && xi!=total-1){
+                        // textview
+                        switch (now) {
+                            case "txt":
+                                t[id_t] = new TextView(this);
+                                t[id_t].setLayoutParams(params);
+                                t[id_t].setText(list_w[id_w]);
+                                t[id_t].setTextSize(16);
+                                t[id_t].setTextColor(getResources().getColor(R.color.black));
+                                line.addView(t[id_t]);
+                                now = "edt";
+                                id_w++;
+                                id_t++;
+                                break;
+
+                            case "edt":
+                                e[id_e] = new EditText(this);
+                                e[id_e].setLayoutParams(params);
+                                e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                                e[id_e].setEms(5);
+                                e[id_e].setTextSize(16);
+                                e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                                e[id_e].addTextChangedListener(new CheckEdit());
+                                line.addView(e[id_e]);
+                                now = "txt";
+                                id_e++;
+                                break;
+                        }
+                    }
+
+                    // end
+                    if(xi == total-1){
+                        if(end == 1){
+                            e[id_e] = new EditText(this);
+                            e[id_e].setLayoutParams(params);
+                            e[id_e].setInputType(InputType.TYPE_CLASS_TEXT);
+                            e[id_e].setEms(5);
+                            e[id_e].setTextSize(16);
+                            e[id_e].setTextColor(getResources().getColor(R.color.blue));
+                            e[id_e].addTextChangedListener(new CheckEdit());
+                            line.addView(e[id_e]);
+                            id_e++;
+                        }
+
+                        if(end == 0){
+                            t[id_t] = new TextView(this);
+                            t[id_t].setLayoutParams(params);
+                            t[id_t].setText(list_w[id_w]);
+                            t[id_t].setTextSize(16);
+                            t[id_t].setTextColor(getResources().getColor(R.color.black));
+                            line.addView(t[id_t]);
+                            now = "edt";
+                            id_w++;
+                            id_t++;
+                        }
+                    }
+                }
+            }
+        }
     }
     @Override
     public void onClick(View view) {
-
-        String h=userAnswer2;
         if(view.getId() == R.id.next){
+
             switch (next.getText().toString()) {
+
                 case "check":
 
-                        //   true_txt =  title1 ;
-                      true_txt=title2detailactivity;
+                    fill = 0;
+                    for(int i=0 ; i<e.length ; i++){
+                        if (e[i].getText().toString().equals("")) {
+                            // nothing
+                        }else {
+                            fill++;
+                        }
+                    }
 
-                        if (cheak(true_txt,userAnswer2)) {
+                    if( fill == xali ) {
+
+                        String answer = cheak();
+                        if (answer.equals("")) {
 
                             // update - true
                             mPresenter.update_activity(idactivity);
@@ -212,8 +438,10 @@ public class A12 extends BaseActivity
                             img.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
-                            txt3.setClickable(false);
-                            editText.setClickable(false);
+                            for(int i=0 ; i<e.length ; i++){
+                                e[i].setClickable(false);
+                                e[i].setFocusable(false);
+                            }
 
                             // Fragment_true
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
@@ -222,7 +450,7 @@ public class A12 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
-                            f1.txt_true.setText(true_txt);
+                            f1.txt_true.setText("Good");
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -237,8 +465,11 @@ public class A12 extends BaseActivity
                             img.setClickable(false);
                             txt1.setClickable(false);
                             txt2.setClickable(false);
-                            txt3.setClickable(false);
-                            editText.setClickable(false);
+                            for(int i=0 ; i<e.length ; i++){
+                                e[i].setClickable(false);
+                                e[i].setFocusable(false);
+                            }
+
                             // Fragment_false
                             LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder2);
                             Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
@@ -246,7 +477,7 @@ public class A12 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.txt_false.setText(true_txt);
+                            f2.txt_false.setText(answer);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -258,6 +489,9 @@ public class A12 extends BaseActivity
                         next.setBackgroundResource(R.drawable.btn_green);
                         next.setText("countinue");
 
+                    }else{
+                        Toast.makeText(getApplicationContext(), "جاهای خالی را پر کنید", Toast.LENGTH_LONG).show();
+                    }
 
                     break;
 
@@ -414,55 +648,94 @@ public class A12 extends BaseActivity
             }
         }
     }
-    // get text from data base to show in textviews
-    public String[] getTextView(String str){
 
-        String[] part=new String[2];
-        part[0]=" ";
-        if (str.equals("null")) {
+    public String cheak(){
 
-        }else if (str.contains("...")) {
+        String result = "";
+        boolean final_answer = true;
+        boolean answer[] = new boolean[xali];
+        int cc = 0;
 
-            for (int j = 0; j < str.length(); j++) {
-                if (str.charAt(j) == '.') {
+        for(int i=0 ; i < e.length ; i++){
+
+            // yek javab
+            int baxsh = 0;
+            for(int j=0 ; j<ans[i].length() ; j++){
+                if(ans[i].charAt(j) == '^'){ // Replace , TO ^
+                    baxsh++;
+                }
+            }
+
+            z = null;
+            switch (baxsh){
+                // 1 baxsh
+                case 0:
+                    z = ans[i].split("/");
                     break;
-                } else {
-                        part[0] += str.charAt(j);
-                }
-            }
-            part[1] = "................";
-        }
-      //  part[0]=nice_string1(part[0]);
-        part[0]=part[0].trim();
-        return  part;
-    }
 
-    //Cheaking the userAnswer with the CorrectAnswer
-    public boolean cheak(String correctAnswer, String userAnswer){
-        correctAnswer = nice_string1(correctAnswer);
-        userAnswer = nice_string1(userAnswer);
-        boolean flag = false;
-        if (correctAnswer.equals("null")) {
+                // 2 baxsh
+                case 1:
+                    String[] s = ans[i].split("\\^"); // Replace , TO ^ // Pattern.quote("^")
+                    String[] x = s[0].split("/");
+                    String[] y = s[1].split("/");
 
-        }else {
-            int have = 0;
-            for (int j = 0; j < correctAnswer.length(); j++) {
-                if (correctAnswer.charAt(j) == '/') {
-                    have = 1;
-                }
+                    z = new String[x.length * y.length];
+                    int count2 = 0;
+                    for (int ii = 0; ii < x.length; ii++) {
+                        for (int jj = 0; jj < y.length; jj++) {
+                            z[count2] = x[ii] + " " + y[jj];
+                            count2++;
+                        }
+                    }
+                    break;
+
+                // 3 baxsh
+                case 2:
+                    String[] a = ans[i].split("\\^");  // Replace , TO ^
+                    String[] b = a[0].split("/");
+                    String[] c = a[1].split("/");
+                    String[] d = a[2].split("/");
+
+                    z = new String[b.length * c.length* d.length];
+                    int count3 = 0;
+                    for (int ii = 0; ii < b.length ; ii++) {
+                        for (int jj = 0; jj < c.length ; jj++) {
+                            for(int k = 0 ; k < d.length ; k++){
+                                z[count3] = b[ii] + " " + c[jj] + " " + d[k];
+                                count3++;
+                            }
+                        }
+                    }
+                    break;
             }
-            if (have == 1) {
-                String part[] = correctAnswer.split(Pattern.quote("/"));
-                for (int i = 0; i < part.length; i++) {
-                    if (userAnswer.equals(part[i]))
-                        flag = true;
+
+            // moqayese ba javab
+            result = result + " / "+ z[0] ;
+            for(int j=0 ; j < z.length ; j++){
+                String a = nice_string2( e[i].getText().toString() );
+                String b = nice_string2( z[j].toString() );
+                if(a.equals(b)){
+                    answer[cc] = true;
+                    cc++;
                 }
-            } else {
-                if (userAnswer.equals(correctAnswer))
-                    flag = true;
             }
         }
-        return  flag;
+
+        for(int x=0 ; x<answer.length ; x++){
+            if(answer[x]){
+
+            }else{
+                final_answer = false;
+            }
+        }
+
+        for_frag = result;
+
+        if(final_answer){
+            return "";
+        }else{
+            return result;
+        }
     }
 
     class CheckEdit implements TextWatcher {
@@ -473,7 +746,6 @@ public class A12 extends BaseActivity
                     next.setBackgroundResource(R.drawable.btn_gray);
                 }
                 else{
-                    userAnswer2=s.toString();
                     next.setTextColor(Color.WHITE);
                     next.setBackgroundResource(R.drawable.btn_green);
                 }
@@ -483,6 +755,7 @@ public class A12 extends BaseActivity
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         public void onTextChanged(CharSequence s, int start, int before, int count) {}
     }
+
     private void setupMVP(){
         if ( mStateMaintainer.firstTimeIn() ) {
             initialize();
@@ -521,12 +794,6 @@ public class A12 extends BaseActivity
     @Override
     public Context getAppContext() {
         return getApplicationContext();
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-
-        return false;
     }
 
     @Override
