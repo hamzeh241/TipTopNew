@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- LR -->
+    <string name="lr_1_CH">CHورود</string>
+    <string name="lr_2_CH">CHایجاد حساب کاربری</string>
+
+    <!-- Login -->
+    <string name="login_1_CH">CHنام کاربری</string>
+    <string name="login_2_CH">CHکلمه عبور</string>
+    <string name="login_3_CH">ورودCH</string>
+    <string name="login_4_CH">CHایجاد حساب کاربری</string>
+
+    <!-- Enter -->
+    <string name="enter_1_CH">نام کاربریCH</string>
+    <string name="enter_2_CH">CHایمیل</string>
+    <string name="enter_3_CH">رمز عبورCH</string>
+    <string name="enter_4_CH">زبان انتخابی شما : CH</string>
+    <string name="enter_5_CH">CHمرد</string>
+    <string name="enter_6_CH">CHزن</string>
+    <string name="enter_7_CH">نامCH</string>
+    <string name="enter_8_CH">CHنام خانوادگی</string>
+    <string name="enter_9_CH">CHسن</string>
+    <string name="enter_10_CH">CHشهر</string>
+    <string name="enter_11_CH">CHکشور</string>
+    <string name="enter_12_CH">CHتاریخ تولد</string>
+    <string name="enter_13_CH">CHثبت</string>
+    <string name="enter_14_CH">CHورود به حساب کاربری</string>
+
+    <!-- Activity Title -->
     <string name="A1_CH">...</string>
     <string name="A4_CH">...</string>
     <string name="A2_CH">...</string>
@@ -38,4 +66,6 @@
     <string name="A25_CH">...</string>
     <string name="A39_CH">...</string>
     <string name="A22_CH">...</string>
+    <string name="A40_CH">...</string>
+    <string name="A41_CH">...</string>
 </resources>

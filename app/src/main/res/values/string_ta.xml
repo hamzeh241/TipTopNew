@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- LR -->
+    <string name="lr_1_TA">TAورود</string>
+    <string name="lr_2_TA">ایجاد حساب کاربریTA</string>
+
+    <!-- Login -->
+    <string name="login_1_TA">TAنام کاربری</string>
+    <string name="login_2_TA">TAکلمه عبور</string>
+    <string name="login_3_TA">TAورود</string>
+    <string name="login_4_TA">TAایجاد حساب کاربری</string>
+
+    <!-- Enter -->
+    <string name="enter_1_TA">نام کاربریTA</string>
+    <string name="enter_2_TA">TAایمیل</string>
+    <string name="enter_3_TA">TAرمز عبور</string>
+    <string name="enter_4_TA">زبان انتخابی شما :TA</string>
+    <string name="enter_5_TA">TAمرد</string>
+    <string name="enter_6_TA">TAزن</string>
+    <string name="enter_7_TA">TAنام</string>
+    <string name="enter_8_TA">TAنام خانوادگی</string>
+    <string name="enter_9_TA">TAسن</string>
+    <string name="enter_10_TA">شهرTA</string>
+    <string name="enter_11_TA">TAکشور</string>
+    <string name="enter_12_TA">TAتاریخ تولد</string>
+    <string name="enter_13_TA">TAثبت</string>
+    <string name="enter_14_TA">TAورود به حساب کاربری</string>
+
+    <!-- Activity Title -->
     <string name="A1_TA">...</string>
     <string name="A4_TA">...</string>
     <string name="A2_TA">...</string>
@@ -38,4 +66,6 @@
     <string name="A25_TA">...</string>
     <string name="A39_TA">...</string>
     <string name="A22_TA">...</string>
+    <string name="A40_TA">...</string>
+    <string name="A41_TA">...</string>
 </resources>

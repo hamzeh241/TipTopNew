@@ -57,8 +57,9 @@ public class Get_Lesson extends BaseSetingApi {
         if(mnet){
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
+            //_Fid
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Lesson?Id="+_Fid+"&rowVersion=0x0", null, new Response.Listener<JSONArray>() {
+                    url+ "Lesson?Id="+now_fid+"&rowVersion=0x0", null, new Response.Listener<JSONArray>() {
                 //+lesson_presenter.getMaxRowV_Lesson()
                 @Override
                 public void onResponse(JSONArray response) {
@@ -111,8 +112,8 @@ public class Get_Lesson extends BaseSetingApi {
                             progressDialog.dismiss();
                             Dialog_TimeOut dr = new Dialog_TimeOut(mactivity);
                             dr.show();
-                           // Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
-                           // set_lesson.load();
+                            // Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
+                            // set_lesson.load();
                         }
                     }
                 }
@@ -120,8 +121,6 @@ public class Get_Lesson extends BaseSetingApi {
             SampleApp.getInstance().addToRequestQueue(jsonObjReq);
 
         }else{
-           // Set_Lesson set_lesson = new Set_Lesson(lesson_presenter,_context,mactivity,now_fid,mViewPager,mCardAdapter,mCardShadowTransformer);
-           // set_lesson.load();
             // no internet connection
             Toast.makeText(_context, "دسترسی به اینترنت امکان پذیر نیست", Toast.LENGTH_LONG).show();
         }

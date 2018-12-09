@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- LR -->
+    <string name="lr_1_KU">ورودKU</string>
+    <string name="lr_2_KU">ایجاد حساب کاربریKU</string>
+
+    <!-- Login -->
+    <string name="login_1_KU">KUنام کاربری</string>
+    <string name="login_2_KU">KUکلمه عبور</string>
+    <string name="login_3_KU">KUورود</string>
+    <string name="login_4_KU">ایجاد حساب کاربریKU</string>
+
+    <!-- Enter -->
+    <string name="enter_1_KU">نام کاربریKU</string>
+    <string name="enter_2_KU">KUایمیل</string>
+    <string name="enter_3_KU">KUرمز عبور</string>
+    <string name="enter_4_KU">KUزبان انتخابی شما : </string>
+    <string name="enter_5_KU">KUمرد</string>
+    <string name="enter_6_KU">KUزن</string>
+    <string name="enter_7_KU">نامKU</string>
+    <string name="enter_8_KU">KUنام خانوادگی</string>
+    <string name="enter_9_KU">KUسن</string>
+    <string name="enter_10_KU">KUشهر</string>
+    <string name="enter_11_KU">KUکشور</string>
+    <string name="enter_12_KU">تاریخ تولدKU</string>
+    <string name="enter_13_KU">KUثبت</string>
+    <string name="enter_14_KU">KUورود به حساب کاربری</string>
+
+    <!-- Activity Title -->
     <string name="A2_KU">...</string>
     <string name="A4_KU">...</string>
     <string name="A1_KU">...</string>
@@ -38,4 +66,6 @@
     <string name="A25_KU">...</string>
     <string name="A39_KU">...</string>
     <string name="A22_KU">...</string>
+    <string name="A40_KU">...</string>
+    <string name="A41_KU">...</string>
 </resources>

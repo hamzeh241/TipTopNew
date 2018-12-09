@@ -15,6 +15,9 @@ import com.tiptap.tda_user.tiptap.main.activity.DB.ErrorVolley;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
 import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 

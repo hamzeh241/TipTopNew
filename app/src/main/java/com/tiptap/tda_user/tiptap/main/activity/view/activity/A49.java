@@ -297,7 +297,7 @@ public class A49 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_True f1 = new Fragment_True();
-                            f1.txt_true.setText(true_txt);
+                            f1.txt_true.setText("Good");
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment1, f1);
@@ -625,9 +625,9 @@ public class A49 extends BaseActivity
         String c = mPresenter.getAge();
         String d = mPresenter.getCity();
         String e = mPresenter.getCountry();
-        //String f = mPresenter.getJob();
+        String f = mPresenter.getBirthday();
 
-        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e);
+        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e, f);
         di.show();
     }
 }

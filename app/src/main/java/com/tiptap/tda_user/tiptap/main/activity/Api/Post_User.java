@@ -27,13 +27,13 @@ public class Post_User extends BaseSetingApi {
     String choose;
     Context _context;
     Activity _activity;
-    String _username, _password, _email, _idlesson, _idlanguage, _name, _lastname, _age, _city, _country, _sex;
+    String _username, _password, _email, _idlesson, _idlanguage, _name, _lastname, _age, _city, _country, _birthday;
     boolean mnet;
     ProgressDialog progressDialog;
 
     public Post_User(MVP_Login.ProvidedPresenterOps ppo, Context context, Activity activity, boolean net, String idlesson,
-                     String username, String email, String password, String idlanguage, String sex,
-                     String name, String lastname, String age, String city, String country) {
+                     String username, String email, String password, String idlanguage,
+                     String name, String lastname, String age, String city, String country,String birthday) {
 
         login_presenter = ppo;
         choose = "login";
@@ -48,7 +48,7 @@ public class Post_User extends BaseSetingApi {
         _name = name;
         _lastname = lastname;
         _age = age;
-        _sex = sex;
+        _birthday = birthday;
         _city = city;
         _country = country;
         progressDialog = new ProgressDialog(_activity);
@@ -71,12 +71,12 @@ public class Post_User extends BaseSetingApi {
                     if(result.equals("ok")) {
                         progressDialog.dismiss();
                         if(login_presenter.CountUser()==0) {
-                            String Q = "insert into aspnet_Users (Id_Lesson,UserName,Email,Password,Id_Language,Name,LastName,Age,City,Countery) values ('" +
-                                    _idlesson + "','" + _username + "','" + _email + "','" + _password + "','" + _idlanguage + "','" + _name + "','" + _lastname + "','" + _age + "','" + _city + "','" + _country + "')";
+                            String Q = "insert into aspnet_Users (Id_Lesson,UserName,Email,Password,Id_Language,Name,LastName,Age,City,Countery,birthday) values ('" +
+                                    _idlesson + "','" + _username + "','" + _email + "','" + _password + "','" + _idlanguage + "','" + _name + "','" + _lastname + "','" + _age + "','" + _city + "','" + _country + "','" + _birthday + "')";
                             login_presenter.Insert_User(Q);
                         }
                         else {
-                            String Q2="update aspnet_Users set Id_Lesson='"+_idlesson+"',UserName='"+_username+"',Email='"+_email+"',Password='"+_password+"',Id_Language='"+_idlanguage+"',Name='"+_name+"',LastName='"+_lastname+"',Age='"+_age+"',City='"+_city+"',Countery='"+_country;
+                            String Q2="update aspnet_Users set Id_Lesson='"+_idlesson+"',UserName='"+_username+"',Email='"+_email+"',Password='"+_password+"',Id_Language='"+_idlanguage+"',Name='"+_name+"',LastName='"+_lastname+"',Age='"+_age+"',City='"+_city+"',Countery='"+_country+"',birthday='"+_birthday;
                             login_presenter.Insert_User(Q2);
                         }
                         progressDialog.dismiss();
@@ -104,7 +104,7 @@ public class Post_User extends BaseSetingApi {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> json = new HashMap<String, String>();
-                json.put("Id_Lesson", _idlesson);
+                json.put("Id_Lesson", "1");
                 json.put("UserName",_username);
                 json.put("Email",_email);
                 json.put("Password",_password);
@@ -114,6 +114,7 @@ public class Post_User extends BaseSetingApi {
                 json.put("Age",_age);
                 json.put("City",_city);
                 json.put("Countery",_country);
+                json.put("Birthday",_birthday);
                 return json;
             }
         };

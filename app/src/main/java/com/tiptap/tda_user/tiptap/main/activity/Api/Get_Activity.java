@@ -18,6 +18,9 @@ import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Lesson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class Get_Activity extends BaseSetingApi {
@@ -47,9 +50,17 @@ public class Get_Activity extends BaseSetingApi {
         if(IsNet){
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
-            String your_name = lesson_presenter.your_name();
+            String username = lesson_presenter.userName();
+            String encodedString = null;
+            try {
+                encodedString = URLEncoder.encode(username, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            String u = url+ "Activity?id="+_id+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson()+"&userName="+encodedString;
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "Activity?id="+_id+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson()+"&name="+your_name, null, new Response.Listener<JSONArray>() {
+                    u, null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {
@@ -103,6 +114,7 @@ public class Get_Activity extends BaseSetingApi {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     progressDialog.dismiss();
+                    String x = volleyError.getMessage();
                     new ErrorVolley(_context).Error(volleyError,"get");
                     if (volleyError.networkResponse == null) {
                         if (volleyError.getClass().equals(TimeoutError.class)) {}

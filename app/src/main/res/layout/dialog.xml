@@ -166,15 +166,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Job : "
+            android:text="Birthday : "
             android:textColor="@color/black" />
 
         <TextView
-            android:id="@+id/job"
+            android:id="@+id/birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#0c732d"
-            tools:text="student" />
+            tools:text="1998/01/02" />
 
     </LinearLayout>
 

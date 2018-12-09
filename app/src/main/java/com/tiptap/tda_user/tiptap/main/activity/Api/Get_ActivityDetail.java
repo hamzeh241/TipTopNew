@@ -20,6 +20,9 @@ import com.tiptap.tda_user.tiptap.main.activity.view.lesson.CardPagerAdapter_L;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class Get_ActivityDetail extends BaseSetingApi {
@@ -51,9 +54,16 @@ int func;
         if(IsNet){
             progressDialog.setMessage("در حال دریافت اطلاعات از سرور ...");
             progressDialog.show();
-            String your_name = lesson_presenter.your_name();
+            String userName = lesson_presenter.userName();
+            String encodedString = null;
+            try {
+                encodedString = URLEncoder.encode(userName, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
             JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
-                    url+ "ActivityDetail?id="+_id+"&rowVersion="+lesson_presenter.getMaxRowV_Lesson()+"&name="+your_name, null, new Response.Listener<JSONArray>() {
+                    url+ "ActivityDetail?id="+_id+"&userName="+encodedString, null, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray response) {

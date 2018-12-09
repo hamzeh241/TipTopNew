@@ -5,11 +5,14 @@ import android.app.Application;
 
 
 import com.tiptap.tda_user.tiptap.di.module.AppModule;
+import com.tiptap.tda_user.tiptap.di.module.Enter_Module;
 import com.tiptap.tda_user.tiptap.di.module.Function_Module;
+import com.tiptap.tda_user.tiptap.di.module.Language_Module;
 import com.tiptap.tda_user.tiptap.di.module.Lesson_Module;
 import com.tiptap.tda_user.tiptap.di.module.Login_Module;
 import com.tiptap.tda_user.tiptap.di.module.Main_Module;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
+
 import javax.inject.Singleton;
 import dagger.Component;
 
@@ -20,8 +23,10 @@ public interface AppComponent {
 
     Function_Component getFunctionComponent(Function_Module module);
     Lesson_Component getLessonComponent(Lesson_Module module);
+    Enter_Component getEnterComponent(Enter_Module module);
     Splash_Component getSplashComponent(Splash_Module module);
     Login_Component getLoginComponent(Login_Module module);
+    Language_Component getLanguageComponent(Language_Module module);
 
     A1_Component getA1Component(Main_Module module);
     A2_Component getA2Component(Main_Module module);
@@ -53,6 +58,8 @@ public interface AppComponent {
     A37_Component getA37Component(Main_Module module);
     A38_Component getA38Component(Main_Module module);
     A39_Component getA39Component(Main_Module module);
+    A40_Component getA40Component(Main_Module module);
+    A41_Component getA41Component(Main_Module module);
     A42_Component getA42Component(Main_Module module);
     A45_Component getA45Component(Main_Module module);
     A46_Component getA46Component(Main_Module module);

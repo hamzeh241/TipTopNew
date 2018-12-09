@@ -211,6 +211,25 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
         return b;
     }
 
+    public String nice_string_A46 (String a){
+        // space in first or end
+        String b = a.trim();
+        // other space
+        b = b.replace(" ", "");
+        // other
+        b = b.replace(".", "");
+        b = b.replace("!", "");
+        b = b.replace("?", "");
+        b = b.replace("؟", "");
+        b = b.replace(",", "");
+        b = b.replace("’", "’");
+        b = b.replace("'", "’");
+        b = b.replace("\n", "");
+        // lowerCase
+        b = b.toLowerCase();
+        return b;
+    }
+
     /*public void SeekBarProgressUpdater() {
         seekBar.setProgress((int)(((float)mp.getCurrentPosition()/mpLength)*100));
         if (mp.isPlaying()) {
@@ -541,9 +560,21 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 40:
+                A40.idlesson = idlesson ;
+                A40.idfunction = idfunction ;
+                A40.idactivity = id_act;
+                A40.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A40.class));
                 break;
 
             case 41:
+                A41.idlesson = idlesson ;
+                A41.idfunction = idfunction ;
+                A41.idactivity = id_act;
+                A41.Act_Status = Status;
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A41.class));
                 break;
 
             case 42:
@@ -921,9 +952,21 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
 
             case 40:
+                A40.idlesson = idlesson ;
+                A40.idfunction = idfunction ;
+                A40.activitynumber = activitynumber;
+                A40.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A40.class));
                 break;
 
             case 41:
+                A41.idlesson = idlesson ;
+                A41.idfunction = idfunction ;
+                A41.activitynumber = activitynumber;
+                A41.Act_Status = "first";
+                this.finish();
+                startActivity(new Intent(getApplicationContext(),  A41.class));
                 break;
 
             case 42:

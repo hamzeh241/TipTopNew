@@ -136,6 +136,11 @@ public class Main_Presenter implements MVP_Main.ProvidedPresenterOps, MVP_Main.R
     }
 
     @Override
+    public String getBirthday() {
+        return mModel.getBirthday();
+    }
+
+    @Override
     public int now_IdLesson() {
         return mModel.now_IdLesson();
     }

@@ -56,6 +56,7 @@ public class A24 extends BaseActivity
     String answer, title1detailactivity, title2detailactivity,a,title3detailactivity;
     int count;
     int back_pressed = 0;
+    int count_true_answer=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,12 +96,16 @@ public class A24 extends BaseActivity
         }
         if(tbActivityDetailList.get(0).getIsAnswer().equals("true")){
             true_txt =  title1detailactivity ;
-        }else if(tbActivityDetailList.get(1).getIsAnswer().equals("true")){
-            true_txt =  title2detailactivity ;
+            count_true_answer++;
         }
-        else if(count==3) {
+        if(tbActivityDetailList.get(1).getIsAnswer().equals("true")){
+            true_txt =  title2detailactivity ;
+            count_true_answer++;
+        }
+        if(count==3) {
             if (tbActivityDetailList.get(2).getIsAnswer().equals("true")) {
                 true_txt = title3detailactivity;
+                count_true_answer++;
             }
         }
 
@@ -204,12 +209,33 @@ public class A24 extends BaseActivity
                     if( you_say.size()>=1 ) {
 
                         String for_frag = true_txt;
-
                         boolean result = false;
-                        for(int z=0 ; z < you_say.size() ; z++){
-                            String userAnswer = nice_string1( you_say.get(z) );
-                            true_txt = nice_string1( true_txt );
-                            if (userAnswer.equals(true_txt)) { result = true;}
+
+                        if(count_true_answer == 1){
+                            for(int z=0 ; z < you_say.size() ; z++){
+                                String userAnswer = nice_string2( you_say.get(z) );
+                                true_txt = nice_string2( true_txt );
+                                if (userAnswer.equals(true_txt)) {
+                                    result = true;
+                                }
+                            }
+                        }
+
+                        if(count_true_answer >1){
+                            for(int a=0 ; a < you_say.size() ; a++){
+                                String userAnswer = nice_string2(you_say.get(a));
+                                for(int b=0 ; b<count ; b++){
+                                    String ok_answer = nice_string2(tbActivityDetailList.get(b).getTitle1().toString());
+                                    if(userAnswer.equals(ok_answer)){
+                                        result = true;
+                                    }
+                                }
+                            }
+                            if(result){
+                                for_frag = "Good";
+                            }else{
+                                for_frag = "Wrong";
+                            }
                         }
 
                         if (result) {

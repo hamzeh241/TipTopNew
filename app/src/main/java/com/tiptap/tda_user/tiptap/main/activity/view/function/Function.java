@@ -148,8 +148,8 @@ public class Function extends AppCompatActivity implements MVP_Function.Required
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
+            int position = parent.getChildAdapterPosition(view); // item_A26 position
+            int column = position % spanCount; // item_A26 column
 
             if (includeEdge) {
                 outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
@@ -158,12 +158,12 @@ public class Function extends AppCompatActivity implements MVP_Function.Required
                 if (position < spanCount) { // top edge
                     outRect.top = spacing;
                 }
-                outRect.bottom = spacing; // item bottom
+                outRect.bottom = spacing; // item_A26 bottom
             } else {
                 outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
                 outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
                 if (position >= spanCount) {
-                    outRect.top = spacing; // item top
+                    outRect.top = spacing; // item_A26 top
                 }
             }
         }

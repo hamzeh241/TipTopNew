@@ -1023,8 +1023,9 @@ public class A32 extends BaseActivity
         String c = mPresenter.getAge();
         String d = mPresenter.getCity();
         String e = mPresenter.getCountry();
+        String f = mPresenter.getBirthday();
 
-        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e);
+        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e, f);
         di.show();
     }
 }

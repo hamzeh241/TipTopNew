@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,6 +52,9 @@ public class A37 extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // oriention
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         // Hide status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -83,8 +87,8 @@ public class A37 extends BaseActivity
 
     private void setupViews() {
 
-        p = (ProgressBar)findViewById(R.id.p);
-        p.setMax(100);
+        //p = (ProgressBar)findViewById(R.id.p);
+       // p.setMax(100);
         next = (Button)findViewById(R.id.next);
         pd = new ProgressDialog(A37.this);
         pd.setMessage("در حال دریافت اطلاعات ...");
@@ -101,7 +105,7 @@ public class A37 extends BaseActivity
         }
 
         // show passed activity
-        List<Integer> p1 = mPresenter.activity_true(idlesson);
+        /*List<Integer> p1 = mPresenter.activity_true(idlesson);
         int p2 = p1.size();
         if(p2 == 0){
             p.setProgress(0);
@@ -109,12 +113,13 @@ public class A37 extends BaseActivity
             double d_number = (double) p2/all;
             int i_number = (int) (d_number*100);
             p.setProgress(i_number);
-        }
+        }*/
 
         if(haveNetworkConnection()) {
             Uri uri = Uri.parse(url_download+path1);
             MediaController mediaController= new MediaController(this);
             mediaController.setAnchorView(videoView);
+            videoView.setMinimumWidth(WindowManager.LayoutParams.MATCH_PARENT);
             videoView.setMediaController(mediaController);
             videoView.setVideoURI(uri);
             videoView.requestFocus();

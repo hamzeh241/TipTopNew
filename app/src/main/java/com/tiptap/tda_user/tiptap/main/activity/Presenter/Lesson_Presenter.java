@@ -131,8 +131,8 @@ public class Lesson_Presenter
     }
 
     @Override
-    public String your_name() {
-        return mModel.your_name();
+    public String userName() {
+        return mModel.userName();
     }
 
     @Override

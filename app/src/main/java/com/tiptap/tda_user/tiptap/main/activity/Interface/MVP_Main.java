@@ -36,6 +36,7 @@ public interface MVP_Main {
             String getAge();
             String getCity();
             String getCountry();
+            String getBirthday();
 
             // user
             int now_IdLesson();
@@ -75,6 +76,7 @@ public interface MVP_Main {
             String getAge();
             String getCity();
             String getCountry();
+            String getBirthday();
 
             // user
             int now_IdLesson();

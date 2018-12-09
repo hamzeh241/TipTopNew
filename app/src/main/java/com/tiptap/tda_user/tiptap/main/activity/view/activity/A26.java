@@ -162,17 +162,22 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 
                 int start = viewHolder.getAdapterPosition();
-                int end = target.getAdapterPosition();
-                String temp0 = part_id2[start][0];
-                String temp1 = part_id2[start][1];
-                part_id2[start][0] = part_id2[end][0];
-                part_id2[start][1] = part_id2[end][1];
-                part_id2[end][0] = temp0;
-                part_id2[end][1] = temp1;
+                if(start == 0){
+                    // cant move
+                    return false;
+                }else{
+                    int end = target.getAdapterPosition();
+                    String temp0 = part_id2[start][0];
+                    String temp1 = part_id2[start][1];
+                    part_id2[start][0] = part_id2[end][0];
+                    part_id2[start][1] = part_id2[end][1];
+                    part_id2[end][0] = temp0;
+                    part_id2[end][1] = temp1;
 
-                Collections.swap(mDataList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                mAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                return true;
+                    Collections.swap(mDataList, viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                    mAdapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                    return true;
+                }
             }
 
             @Override
@@ -430,8 +435,8 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
         }
 
         int max_range = part.length-1;
-        int min_range = 0;
-        for(int i=0 ; i<part.length ;  i++) {
+        int min_range = 1;
+        for(int i=1 ; i<part.length ;  i++) {
             int rnd = new Random().nextInt(max_range - min_range + 1) + min_range;
             String rnd0 = part_id2[rnd][0];
             String rnd1 = part_id2[rnd][1];
@@ -472,8 +477,8 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
 
         @Override
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
+            int position = parent.getChildAdapterPosition(view); // item_A26 position
+            int column = position % spanCount; // item_A26 column
 
             if (includeEdge) {
                 outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
@@ -482,12 +487,12 @@ public class A26 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                 if (position < spanCount) { // top edge
                     outRect.top = spacing;
                 }
-                outRect.bottom = spacing; // item bottom
+                outRect.bottom = spacing; // item_A26 bottom
             } else {
                 outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
                 outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
                 if (position >= spanCount) {
-                    outRect.top = spacing; // item top
+                    outRect.top = spacing; // item_A26 top
                 }
             }
         }

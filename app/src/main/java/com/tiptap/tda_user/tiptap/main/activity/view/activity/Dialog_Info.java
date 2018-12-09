@@ -10,10 +10,10 @@ import com.tiptap.tda_user.tiptap.R;
 public class Dialog_Info extends Dialog{
 
     Activity c;
-    String fname, lname, age, city, country;
-    TextView txt_fname, txt_lname, txt_age, txt_city, txt_country;
+    String fname, lname, age, city, country, birthday;
+    TextView txt_fname, txt_lname, txt_age, txt_city, txt_country, txt_birthday;
 
-    public Dialog_Info(Activity a, String a1, String a2, String a3, String a4, String a5) {
+    public Dialog_Info(Activity a, String a1, String a2, String a3, String a4, String a5, String a6) {
         super(a);
         this.c = a;
         fname = a1;
@@ -21,6 +21,7 @@ public class Dialog_Info extends Dialog{
         age = a3;
         city = a4;
         country = a5;
+        birthday = a6;
     }
 
     @Override
@@ -35,12 +36,14 @@ public class Dialog_Info extends Dialog{
         txt_age = (TextView)findViewById(R.id.age);
         txt_city = (TextView)findViewById(R.id.city);
         txt_country = (TextView)findViewById(R.id.country);
+        txt_birthday = (TextView)findViewById(R.id.birthday);
 
         txt_fname.setText(fname);
         txt_lname.setText(lname);
         txt_age.setText(age);
         txt_city.setText(city);
         txt_country.setText(country);
+        txt_birthday.setText(birthday);
     }
 
     @Override

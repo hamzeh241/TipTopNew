@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tiptap.tda_user.tiptap">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,97 +19,154 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.activity.view.splash.Splash">
+        <activity
+            android:name=".main.activity.view.splash.Splash"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.activity.view.login.Login"/>
+            android:name=".main.activity.view.LR.LR"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.language.Language"/>
+            android:name=".main.activity.view.LR.Enter"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.function.Function"/>
+            android:name=".main.activity.view.login.Login"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.lesson.Lesson"/>
+            android:name=".main.activity.view.language.Language"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A27"/>
+            android:name=".main.activity.view.function.Function"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A19"/>
+            android:name=".main.activity.view.lesson.Lesson"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A1"/>
+            android:name=".main.activity.view.activity.A27"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A11"/>
+            android:name=".main.activity.view.activity.A19"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A14"/>
+            android:name=".main.activity.view.activity.A1"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A16"/>
+            android:name=".main.activity.view.activity.A11"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A10"/>
+            android:name=".main.activity.view.activity.A14"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A12"/>
+            android:name=".main.activity.view.activity.A16"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A13"/>
+            android:name=".main.activity.view.activity.A10"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A6"/>
+            android:name=".main.activity.view.activity.A12"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.End"/>
+            android:name=".main.activity.view.activity.A13"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A7"/>
+            android:name=".main.activity.view.activity.A6"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A2"/>
+            android:name=".main.activity.view.activity.End"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A37"/>
+            android:name=".main.activity.view.activity.A7"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A38"/>
+            android:name=".main.activity.view.activity.A2"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A8"/>
+            android:name=".main.activity.view.activity.A37"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A39"/>
+            android:name=".main.activity.view.activity.A38"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A28"/>
+            android:name=".main.activity.view.activity.A8"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A4"/>
+            android:name=".main.activity.view.activity.A39"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A29"/>
+            android:name=".main.activity.view.activity.A28"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A20"/>
+            android:name=".main.activity.view.activity.A4"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A24"/>
+            android:name=".main.activity.view.activity.A29"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A18"/>
+            android:name=".main.activity.view.activity.A20"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A26"/>
+            android:name=".main.activity.view.activity.A24"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A15"/>
+            android:name=".main.activity.view.activity.A18"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A32"/>
+            android:name=".main.activity.view.activity.A26"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A22"/>
+            android:name=".main.activity.view.activity.A15"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A25"/>
+            android:name=".main.activity.view.activity.A32"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A33"/>
+            android:name=".main.activity.view.activity.A22"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A5"/>
+            android:name=".main.activity.view.activity.A25"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A42"/>
+            android:name=".main.activity.view.activity.A33"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A3"/>
+            android:name=".main.activity.view.activity.A5"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A45"/>
+            android:name=".main.activity.view.activity.A42"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A46"/>
+            android:name=".main.activity.view.activity.A3"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A17"/>
+            android:name=".main.activity.view.activity.A40"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A47"/>
+            android:name=".main.activity.view.activity.A41"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A48"/>
+            android:name=".main.activity.view.activity.A45"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A49"/>
+            android:name=".main.activity.view.activity.A46"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".main.activity.view.activity.A21"/>
+            android:name=".main.activity.view.activity.A17"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.activity.view.activity.A47"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.activity.view.activity.A48"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.activity.view.activity.A49"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".main.activity.view.activity.A21"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

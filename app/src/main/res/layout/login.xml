@@ -1,250 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:gravity="center">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/logologin" />
+
+    <EditText
+        android:id="@+id/edt_username"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_gravity="right"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/ic_input_text"
+        android:drawablePadding="5dp"
+        android:gravity="right"
+        tools:hint="نام کاربری"
+        android:inputType="text"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:padding="7dp"
+        android:textDirection="rtl" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edt_username"
+        android:layout_gravity="right"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_input_text"
+        android:drawablePadding="5dp"
+        android:gravity="right"
+        tools:hint="کلمه عبور"
+        android:inputType="textEmailAddress"
+        android:padding="7dp"
+        android:textDirection="rtl" />
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:src="@drawable/logologin" />
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_password"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/selector_btn_login"
+        tools:text="ورود"
+        android:textColor="@color/withe"
+        android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/edt_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/edt_email"
-                android:layout_alignLeft="@+id/edt_email"
-                android:layout_alignRight="@+id/edt_email"
-                android:layout_alignStart="@+id/edt_email"
-                android:layout_below="@+id/logo"
-                android:layout_gravity="right"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/ic_input_text"
-                android:drawablePadding="5dp"
-                android:gravity="right"
-                android:hint="نام کاربری"
-                android:inputType="text"
-                android:padding="7dp"
-                android:textDirection="rtl" />
-
-            <EditText
-                android:id="@+id/edt_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edt_username"
-                android:layout_gravity="right"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/ic_input_text"
-                android:drawablePadding="5dp"
-                android:gravity="right"
-                android:hint="ایمیل"
-                android:inputType="textEmailAddress"
-                android:padding="7dp"
-                android:textDirection="rtl" />
-
-            <EditText
-                android:id="@+id/edt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edt_email"
-                android:layout_gravity="right"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/ic_input_text"
-                android:drawablePadding="5dp"
-                android:gravity="right"
-                android:hint="رمز عبور"
-                android:inputType="text"
-                android:padding="7dp"
-                android:textDirection="rtl" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_below="@+id/edt_password"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_input_text"
-                android:gravity="end"
-                android:layoutDirection="rtl"
-                android:minHeight="50dp"
-                android:spinnerMode="dialog"
-                android:textAlignment="gravity"
-                android:textDirection="rtl" />
-
-            <LinearLayout
-                android:id="@+id/checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/spinner"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <CheckBox
-                    android:id="@+id/woman"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="زن"
-                    android:layoutDirection="rtl"
-                    android:textSize="16sp"/>
-
-                <CheckBox
-                    android:id="@+id/man"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="مرد"
-                    android:layoutDirection="rtl"
-                    android:textSize="16sp"/>
-
-            </LinearLayout>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/avatar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/checkbox"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:elevation="10dp"
-                app:cardBackgroundColor="#4d6953"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/edt_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/logo"
-                        android:layout_gravity="right"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/ic_input_text"
-                        android:drawablePadding="5dp"
-                        android:gravity="right"
-                        android:hint="نام"
-                        android:inputType="text"
-                        android:padding="7dp"
-                        android:textDirection="rtl" />
-
-                    <EditText
-                        android:id="@+id/edt_lastname"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/logo"
-                        android:layout_gravity="right"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/ic_input_text"
-                        android:drawablePadding="5dp"
-                        android:gravity="right"
-                        android:hint="نام خانوادگی"
-                        android:inputType="text"
-                        android:padding="7dp"
-                        android:textDirection="rtl" />
-
-                    <EditText
-                        android:id="@+id/edt_age"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/logo"
-                        android:layout_gravity="right"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/ic_input_text"
-                        android:drawablePadding="5dp"
-                        android:gravity="right"
-                        android:hint="سن"
-                        android:inputType="number"
-                        android:padding="7dp"
-                        android:textDirection="rtl" />
-
-                    <EditText
-                        android:id="@+id/edt_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/logo"
-                        android:layout_gravity="right"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/ic_input_text"
-                        android:drawablePadding="5dp"
-                        android:gravity="right"
-                        android:hint="شهر"
-                        android:inputType="text"
-                        android:padding="7dp"
-                        android:textDirection="rtl" />
-
-                    <EditText
-                        android:id="@+id/edt_country"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/logo"
-                        android:layout_gravity="right"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="6dp"
-                        android:background="@drawable/ic_input_text"
-                        android:drawablePadding="5dp"
-                        android:gravity="right"
-                        android:hint="کشور"
-                        android:inputType="text"
-                        android:padding="7dp"
-                        android:textDirection="rtl" />
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <Button
-                android:id="@+id/login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/avatar"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/selector_btn_login"
-                android:text="ورود"
-                android:textColor="@color/withe"
-                android:textSize="15sp" />
-
-        </RelativeLayout>
-
-    </ScrollView>
+    <TextView
+        android:id="@+id/gologin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="ایجاد حساب کاربری"
+        android:layout_below="@id/login"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

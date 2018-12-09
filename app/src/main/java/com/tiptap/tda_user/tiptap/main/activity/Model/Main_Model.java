@@ -2,6 +2,8 @@ package com.tiptap.tda_user.tiptap.main.activity.Model;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Patterns;
+
 import com.tiptap.tda_user.tiptap.main.activity.DB.DBAdapter;
 import com.tiptap.tda_user.tiptap.main.activity.DB.PostError;
 import com.tiptap.tda_user.tiptap.main.activity.DB.Utility;
@@ -345,6 +347,17 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
         String name=cursor.getString(0);
         return name;
     }
+
+    @Override
+    public String getBirthday() {
+        String q="SELECT [Birthday] FROM [aspnet_Users]";
+        Cursor cursor=dbAdapter.ExecuteQ(q);
+        cursor.moveToFirst();
+        String temp=cursor.getString(0);
+        String b[] = temp.split("T");
+        return b[0];
+    }
+
 
     public int count_ActivityDetail(int id_activity) {
         String q="SELECT Count([_id]) as x FROM TbActivityDetail where Id_Activity = " + id_activity;

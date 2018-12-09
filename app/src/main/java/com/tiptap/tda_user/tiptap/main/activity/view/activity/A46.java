@@ -723,8 +723,8 @@ public class A46 extends BaseActivity
             // moqayese ba javab
             result = result + " / "+ z[0] ;
             for(int j=0 ; j < z.length ; j++){
-                String a = nice_string2( e[i].getText().toString() );
-                String b = nice_string2( z[j].toString() );
+                String a = nice_string_A46( e[i].getText().toString() );
+                String b = nice_string_A46( z[j].toString() );
                 if(a.equals(b)){
                     answer[cc] = true;
                     cc++;
@@ -836,8 +836,9 @@ public class A46 extends BaseActivity
         String c = mPresenter.getAge();
         String d = mPresenter.getCity();
         String e = mPresenter.getCountry();
+        String f = mPresenter.getBirthday();
 
-        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e);
+        Dialog_Info di = new Dialog_Info(this, a, b, c, d, e, f);
         di.show();
     }
 }

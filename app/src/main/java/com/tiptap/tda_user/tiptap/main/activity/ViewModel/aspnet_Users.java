@@ -2,17 +2,19 @@ package com.tiptap.tda_user.tiptap.main.activity.ViewModel;
 
 public class aspnet_Users {
 
-    private int Id_Function;
-    private int Id_Lesson;
     private String UserName;
-    private String Email;
     private String Password;
+    private String Email;
+    private int Id_Lesson;
+    private int Id_Function;
     private int Id_Language;
     private String Name;
     private String LastName;
     private String Age;
+    private String Address;
     private String City;
     private String Countery;
+    private String Birthday;
 
     public aspnet_Users() {}
 
@@ -102,5 +104,21 @@ public class aspnet_Users {
 
     public void setCountery(String countery) {
         Countery = countery;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
+    public String getBirthday() {
+        return Birthday;
+    }
+
+    public void setBirthday(String Birthday) {
+        this.Birthday = Birthday;
     }
 }

@@ -15,8 +15,10 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
+import com.tiptap.tda_user.tiptap.main.activity.view.LR.LR;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
-import com.tiptap.tda_user.tiptap.main.activity.view.login.Login;
+import com.tiptap.tda_user.tiptap.main.activity.view.language.Language;
+
 import javax.inject.Inject;
 
 public class Splash extends AppCompatActivity implements MVP_Splash.RequiredViewOps {
@@ -48,7 +50,7 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
 
                 if (count == 0){
                     Splash.this.finish();
-                    startActivity(new Intent(Splash.this, Login.class));
+                    startActivity(new Intent(Splash.this, Language.class));
 
                 }else if (count == 1){
                     int fid = mPresenter.Id_Function();

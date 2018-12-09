@@ -388,8 +388,8 @@ public class Lesson_Model implements MVP_Lesson.ProvidedModelOps{
     }
 
     @Override
-    public String your_name() {
-        String q="SELECT [Name] FROM [aspnet_Users]";
+    public String userName() {
+        String q="SELECT [UserName] FROM [aspnet_Users]";
         Cursor cursor=dbAdapter.ExecuteQ(q);
         int count=cursor.getCount();
         cursor.moveToFirst();
