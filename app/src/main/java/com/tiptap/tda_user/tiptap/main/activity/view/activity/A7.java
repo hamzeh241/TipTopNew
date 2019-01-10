@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,9 +26,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -185,7 +182,7 @@ public class A7 extends BaseActivity
                         }
                     }
                 });
-                mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         end = true;
@@ -205,7 +202,7 @@ public class A7 extends BaseActivity
         }
 
         if (v.getId() == R.id.isplay) {
-           // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
         }
 
         if (v.getId() == R.id.next) {

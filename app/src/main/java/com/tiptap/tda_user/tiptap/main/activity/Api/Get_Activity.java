@@ -67,7 +67,7 @@ public class Get_Activity extends BaseSetingApi {
                     boolean insert = false;
                     List<Integer> listActivity = lesson_presenter.ListActivity();
                     try {
-                        String Q1 = "insert into TbActivity (_id, Id_Lesson, ActivityNumber, Id_ActivityType, Title1, Title2, Path1, Path2, IsNote, RowVersion, Status) values ";
+                        String Q1 = "insert into TbActivity (_id, Id_Lesson, ActivityNumber, Id_ActivityType, Title1, Title2, Path1, Path2, IsNote, RowVersion, Status, HelpTitle1) values ";
                         for (int i=0; i<response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
                             String id = jsonObject.getString("C_id");
@@ -79,6 +79,7 @@ public class Get_Activity extends BaseSetingApi {
                             String path1 = jsonObject.getString("Path1");
                             String path2 = jsonObject.getString("Path2");
                             String isnote = jsonObject.getString("IsNote");
+                            String help1 = jsonObject.getString("HelpTitle1");
                             String rowversion = "1";
                             int status = 0;
 
@@ -88,11 +89,11 @@ public class Get_Activity extends BaseSetingApi {
                             // insert
                             if(type == 1){
                                 insert = true;
-                                Q1 = Q1.concat("('" + id + "','" + idlesson + "','" + activitynumber + "','" + idactivitytype + "','" + title1 + "','" + title2 + "','" + path1 + "','" + path2 + "','" + isnote + "','" + rowversion + "','" + status + "')," );
+                                Q1 = Q1.concat("('" + id + "','" + idlesson + "','" + activitynumber + "','" + idactivitytype + "','" + title1 + "','" + title2 + "','" + path1 + "','" + path2 + "','" + isnote + "','" + rowversion + "','" + status + "','" + help1 + "')," );
                             }
                             // update
                             if(type == 2){
-                                String Q2="update TbActivity set Id_Lesson='"+idlesson+"',ActivityNumber='"+activitynumber+"',Id_ActivityType='"+idactivitytype+"',Title1='"+title1+"',Title2='"+title2+"',Path1='"+path1+"',Path2='"+path2+"',IsNote='"+isnote+"',RowVersion='"+rowversion+"',Status='"+status+"' where _id="+Id;
+                                String Q2="update TbActivity set Id_Lesson='"+idlesson+"',ActivityNumber='"+activitynumber+"',Id_ActivityType='"+idactivitytype+"',Title1='"+title1+"',Title2='"+title2+"',Path1='"+path1+"',Path2='"+path2+"',IsNote='"+isnote+"',RowVersion='"+rowversion+"',Status='"+status+"',HelpTitle1='"+help1+"' where _id="+Id;
                                 lesson_presenter.Insert_Activity(Q2);
                             }
                         }

@@ -124,6 +124,7 @@ public class A24 extends BaseActivity
         txt3 = (TextView)findViewById(R.id.txt3);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
+        text = (TextView) findViewById(R.id.title);
 
         if(count==3)
             txt3.setVisibility(View.VISIBLE);
@@ -132,6 +133,12 @@ public class A24 extends BaseActivity
         next = (Button)findViewById(R.id.next);
     }
     private void after_setup() {
+
+        // show help (title1)
+        if (title1.equals("") || title1.equals("null")) {
+        } else {
+            text.setText(title1);
+        }
 
         all = mPresenter.countActivity(idlesson);
 
@@ -515,7 +522,8 @@ public class A24 extends BaseActivity
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+        //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt));
         try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
@@ -532,10 +540,89 @@ public class A24 extends BaseActivity
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     you_say = result;
-                    if(you_say.size()>=1){
+                    /*if(you_say.size()>=1){
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
+                    }*/
+                    //////////////////////
+                    if( you_say.size()>=1 ) {
+
+                        String for_frag = true_txt;
+                        boolean result1 = false;
+
+                        if(count_true_answer == 1){
+                            for(int z=0 ; z < you_say.size() ; z++){
+                                String userAnswer = nice_string2( you_say.get(z) );
+                                true_txt = nice_string2( true_txt );
+                                if (userAnswer.equals(true_txt)) {
+                                    result1 = true;
+                                }
+                            }
+                        }
+
+                        if(count_true_answer >1){
+                            for(int a=0 ; a < you_say.size() ; a++){
+                                String userAnswer = nice_string2(you_say.get(a));
+                                for(int b=0 ; b<count ; b++){
+                                    String ok_answer = nice_string2(tbActivityDetailList.get(b).getTitle1().toString());
+                                    if(userAnswer.equals(ok_answer)){
+                                        result1 = true;
+                                    }
+                                }
+                            }
+                            if(result1){
+                                for_frag = "Good";
+                            }else{
+                                for_frag = "Wrong";
+                            }
+                        }
+
+                        if (result1) {
+                            // update - true
+                            mPresenter.update_activity(idactivity);
+
+                            // show passed activity
+                            List<Integer> passed1 = mPresenter.activity_true(idlesson);
+                            int passed2 = passed1.size();
+                            if(passed2 == 0){
+                                p.setProgress(0);
+                            }else{
+                                double d_number = (double) passed2/all;
+                                int i_number = (int) (d_number*100);
+                                p.setProgress(i_number);
+                            }
+
+                            // Clickable_false
+                            t1.setClickable(false);
+                            t2.setClickable(false);
+                            txt3.setClickable(false);
+                            txt1.setClickable(false);
+                            txt2.setClickable(false);
+                            voice.setClickable(false);
+                            img.setClickable(false);
+                            p.setClickable(false);
+
+                            // Fragment_true
+                            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
+                            Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                            linearLayout.setAnimation(slide_down);
+                            linearLayout.setVisibility(View.VISIBLE);
+
+                            Fragment_True f1 = new Fragment_True();
+                            f1.txt_true.setText(for_frag);
+                            FragmentManager fragMan = getSupportFragmentManager();
+                            FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                            fragTransaction.add(R.id.fragment1, f1);
+                            fragTransaction.commit();
+
+                            // play sound
+                            mpt.start();
+                        }
+                        next.setTextColor(Color.WHITE);
+                        next.setBackgroundResource(R.drawable.btn_green);
+                        next.setText("countinue");
                     }
+                    //////////////////////
                 }
                 break;
             }

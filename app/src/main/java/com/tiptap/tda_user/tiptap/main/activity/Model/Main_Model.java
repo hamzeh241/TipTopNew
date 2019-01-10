@@ -48,7 +48,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
     @Override
     public TbActivity getActivity(int id_lesson, int activityNumber) {
         try{
-            String q ="SELECT [_id],[Id_Lesson],[ActivityNumber],[Id_ActivityType],[Title1],[Title2],[Path1],[Path2],[IsNote],[RowVersion] FROM [TbActivity] where Id_Lesson = "+ id_lesson +" and ActivityNumber = "+ activityNumber;
+            String q ="SELECT [_id],[Id_Lesson],[ActivityNumber],[Id_ActivityType],[Title1],[Title2],[Path1],[Path2],[IsNote],[HelpTitle1],[RowVersion] FROM [TbActivity] where Id_Lesson = "+ id_lesson +" and ActivityNumber = "+ activityNumber;
             Cursor cursor = dbAdapter.ExecuteQ(q);
             int count=cursor.getCount();
             cursor.moveToFirst();
@@ -63,6 +63,7 @@ public class Main_Model implements MVP_Main.ProvidedModelOps  {
                 app.setPath1(cursor.getString(6));
                 app.setPath2(cursor.getString(7));
                 app.setIsNote(Boolean.parseBoolean(cursor.getString(8)));
+                app.setHelpTitle1(cursor.getString(9));
                // app.setRowVersion(cursor.getString(9));
                 act = app;
                 cursor.moveToNext();

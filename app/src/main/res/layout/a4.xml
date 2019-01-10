@@ -35,7 +35,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_margin="7dp"/>
+                    android:layout_margin="7dp"
+                    android:layoutDirection="ltr"/>
 
             </TableRow>
 
@@ -88,7 +89,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.75"
                 android:gravity="center"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:layoutDirection="ltr">
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -96,7 +98,8 @@
                     android:layout_weight="1"
                     android:fadeScrollbars="false"
                     android:fillViewport="true"
-                    android:scrollbars="vertical">
+                    android:scrollbars="vertical"
+                    android:layoutDirection="ltr">
 
                     <LinearLayout
                         android:id="@+id/l"
@@ -108,7 +111,8 @@
                         android:orientation="vertical"
                         android:weightSum="4"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp">
+                        android:layout_marginBottom="20dp"
+                        android:layoutDirection="ltr">
 
                         <LinearLayout
                             android:id="@+id/l1"
@@ -117,7 +121,8 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -128,7 +133,8 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -139,7 +145,8 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -150,7 +157,8 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 

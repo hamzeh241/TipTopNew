@@ -3,6 +3,7 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -50,6 +51,8 @@ public class A45 extends BaseActivity
     CheckBox a,b;
     TextView text;
     int back_pressed = 0;
+    boolean in_secound_time;
+    boolean listen_to_voice = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +70,19 @@ public class A45 extends BaseActivity
         // first
         if(Act_Status.equals("first")){
             tbActivity = mPresenter.getActivity(idlesson, activitynumber);
+            in_secound_time = false;
         }
         // second
         if(Act_Status.equals("second")) {
             tbActivity = mPresenter.getActivity2(idactivity);
+            in_secound_time = true;
         }
 
         // get tbactivity
         idactivity = tbActivity.get_id();
         title1activity = tbActivity.getTitle1();
         path1 = tbActivity.getPath1();
+        path2 = tbActivity.getPath2();
 
         // get tbactvity detail
         tbActivityDetailList = mPresenter.getListActivityDetail(idactivity);
@@ -90,7 +96,6 @@ public class A45 extends BaseActivity
         else if (tbActivityDetailList.get(1).getIsAnswer().equals("true")) {
             answer=tbActivityDetailList.get(1).getTitle1().toString();
         }
-
         after_setup();
     }
 
@@ -108,6 +113,8 @@ public class A45 extends BaseActivity
         text=(TextView)findViewById(R.id.title);
         mpt = MediaPlayer.create (this, R.raw.true_sound);
         mpf =  MediaPlayer.create (this, R.raw.false_sound);
+        play = (Button) findViewById(R.id.play);
+        isplay = (Button) findViewById(R.id.isplay);
 
     }
 
@@ -177,6 +184,17 @@ public class A45 extends BaseActivity
         next.setOnClickListener(this);
         a.setOnClickListener(this);
         b.setOnClickListener(this);
+
+        play.setOnClickListener(this);
+        isplay.setOnClickListener(this);
+
+        if(in_secound_time){
+            play.setVisibility(View.VISIBLE);
+            //isplay.setVisibility(View.VISIBLE);
+        }else{
+            play.setVisibility(View.GONE);
+            //isplay.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -184,25 +202,122 @@ public class A45 extends BaseActivity
      // check answer for checkbox and change text color for true answer
     public void onClick(View v) {
 
+        if (v.getId() == R.id.play) {
+            if(haveNetworkConnection()){
+                // change
+                play.setClickable(false);
+
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                try {
+                    mediaPlayer.setDataSource(url_download+path2);
+                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    mediaPlayer.prepare();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
+                    play.setClickable(true);
+                }
+                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    public void onPrepared(MediaPlayer mp) {
+                        try{
+                            // change
+                            play.setVisibility(View.GONE);
+                            isplay.setVisibility(View.VISIBLE);
+                            isplay.setClickable(true);
+
+                            // play it
+                            if(!(mp.isPlaying())){
+                                mp.start();
+                            }
+                        }catch (Exception e){
+                            Toast.makeText(getApplicationContext(), "Error_Play", Toast.LENGTH_LONG).show();
+                            play.setVisibility(View.VISIBLE);
+                            play.setClickable(true);
+                            isplay.setVisibility(View.GONE);
+                            isplay.setClickable(false);
+                        }
+                    }
+                });
+                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        listen_to_voice = true;
+                        end = true;
+                        // change
+                        play.setVisibility(View.VISIBLE);
+                        play.setClickable(true);
+                        isplay.setVisibility(View.GONE);
+                        isplay.setClickable(false);
+                        // countinue
+                        next.setTextColor(Color.WHITE);
+                        next.setBackgroundResource(R.drawable.btn_green);
+                    }
+                });
+            }else{
+                Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        if (v.getId() == R.id.isplay) {
+            // Toast.makeText(getActivityContext(), "Listen", Toast.LENGTH_LONG).show();
+        }
+
         if (v.getId() == R.id.a) {
-            a.setChecked(true);
+            if(in_secound_time){
+                if(listen_to_voice){
+                    a.setChecked(true);
 
-            next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn_green);
+                    next.setTextColor(Color.WHITE);
+                    next.setBackgroundResource(R.drawable.btn_green);
 
-            if( b.isChecked() ){
-                b.setChecked(false);
+                    if( b.isChecked() ){
+                        b.setChecked(false);
+                    }
+                }
+                else{
+                    a.setChecked(false);
+                    b.setChecked(false);
+                    Toast.makeText(getApplicationContext(), "first listen to conversation", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
+                a.setChecked(true);
+
+                next.setTextColor(Color.WHITE);
+                next.setBackgroundResource(R.drawable.btn_green);
+
+                if( b.isChecked() ){
+                    b.setChecked(false);
+                }
             }
         }
 
         if (v.getId() == R.id.b) {
-            b.setChecked(true);
+            if(in_secound_time){
+                if(listen_to_voice){
+                    b.setChecked(true);
 
-            next.setTextColor(Color.WHITE);
-            next.setBackgroundResource(R.drawable.btn_green);
+                    next.setTextColor(Color.WHITE);
+                    next.setBackgroundResource(R.drawable.btn_green);
 
-            if( a.isChecked() ){
-                a.setChecked(false);
+                    if( a.isChecked() ){
+                        a.setChecked(false);
+                    }
+                }
+                else{
+                    a.setChecked(false);
+                    b.setChecked(false);
+                    Toast.makeText(getApplicationContext(), "first listen to conversation", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
+                b.setChecked(true);
+
+                next.setTextColor(Color.WHITE);
+                next.setBackgroundResource(R.drawable.btn_green);
+
+                if( a.isChecked() ){
+                    a.setChecked(false);
+                }
             }
         }
 

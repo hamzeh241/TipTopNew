@@ -32,7 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_margin="7dp" />
+                    android:layout_margin="7dp"
+                    android:layoutDirection="ltr"/>
 
             </TableRow>
 
@@ -100,13 +101,15 @@
         android:layout_weight="0.65"
         android:weightSum="1"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_marginRight="10dp"
+        android:layoutDirection="ltr">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.75"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layoutDirection="ltr">
 
             <TextView
                 android:id="@+id/title"
@@ -123,7 +126,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layoutDirection="ltr">
 
                 <CheckBox
                     android:id="@+id/a"
@@ -147,7 +151,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="25dp"
+                android:layoutDirection="ltr">
 
                 <CheckBox
                     android:id="@+id/b"
@@ -171,7 +176,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="25dp"
+                android:layoutDirection="ltr">
 
                 <CheckBox
                     android:id="@+id/c"

@@ -15,7 +15,6 @@ import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
 import com.tiptap.tda_user.tiptap.di.module.Splash_Module;
 import com.tiptap.tda_user.tiptap.main.activity.Presenter.Splash_Presenter;
-import com.tiptap.tda_user.tiptap.main.activity.view.LR.LR;
 import com.tiptap.tda_user.tiptap.main.activity.view.function.Function;
 import com.tiptap.tda_user.tiptap.main.activity.view.language.Language;
 
@@ -47,7 +46,6 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-
                 if (count == 0){
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this, Language.class));
@@ -65,7 +63,7 @@ public class Splash extends AppCompatActivity implements MVP_Splash.RequiredView
                     Splash.this.finish();
                     startActivity(new Intent(Splash.this,  A20.class));*/
                     startActivity(new Intent(Splash.this, Function.class));
-                }
+                 }
             }
         }, 3000);
     }

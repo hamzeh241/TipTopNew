@@ -29,9 +29,7 @@ import com.tiptap.tda_user.tiptap.main.activity.Presenter.Main_Presenter;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
-
 import org.json.JSONException;
-
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;

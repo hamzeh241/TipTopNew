@@ -182,6 +182,8 @@ public class A2 extends BaseActivity
     public void onClick(View v) {
         boolean ans = false;
         if (v.getId() == R.id.a) {
+            MediaPlayer mp = MediaPlayer.create (A2.this, R.raw.tick);
+            mp.start();
             a.setChecked(true);
 
             next.setTextColor(Color.WHITE);
@@ -193,6 +195,8 @@ public class A2 extends BaseActivity
         }
 
         if (v.getId() == R.id.b) {
+            MediaPlayer mp = MediaPlayer.create (A2.this, R.raw.tick);
+            mp.start();
             b.setChecked(true);
 
             next.setTextColor(Color.WHITE);

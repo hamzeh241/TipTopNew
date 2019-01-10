@@ -44,8 +44,8 @@ public class A8 extends BaseActivity
     public MVP_Main.ProvidedPresenterOps mPresenter;
     int back_pressed = 0;
 
-    TextView t1[],t2[],ti1,ti2;
-    String w1[] , w2[];
+    TextView t1[],t2[],ti1,ti2 ,b_answer;
+    String w1[] , w2[] , b_ans;
 
     String tohi = "-------";
     static int position = 0;
@@ -83,12 +83,15 @@ public class A8 extends BaseActivity
         title2 = tbActivity.getTitle2();
         title2 = title2.trim();
 
+        b_ans = tbActivity.getHelpTitle1();
+
         after_setup();
     }
 
     private void setupViews() {
 
         position = 0;
+        b_answer = (TextView)findViewById(R.id.b_answer);
         ti1 = (TextView)findViewById(R.id.title1);
         ti2 = (TextView)findViewById(R.id.title2);
         tt1 = (LinearLayout) findViewById(R.id.tt1);
@@ -103,6 +106,12 @@ public class A8 extends BaseActivity
     }
 
     private void after_setup(){
+
+        // show b_answer
+        if (b_ans.equals("") || b_ans.equals("null")) {
+        } else {
+            b_answer.setText(b_ans);
+        }
 
         all = mPresenter.countActivity(idlesson);
 

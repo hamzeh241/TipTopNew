@@ -59,7 +59,7 @@ public class A48 extends BaseActivity
     String answer, title1detailactivity, title2detailactivity,a, path3,answer1,answer2,userAnswer1,userAnswer2;
     int count;
     int back_pressed = 0;
-    boolean mic_status = true;
+    boolean mic_status1 = false, mic_status2 = false;
     boolean can_play = true;
 
     @Override
@@ -199,7 +199,7 @@ public class A48 extends BaseActivity
                     // change
                     play.setClickable(false);
                     // mic
-                    mic_status = false;
+                    // mic_status = false;
                     // play1
                     can_play = false;
 
@@ -212,7 +212,7 @@ public class A48 extends BaseActivity
                         Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
                         play.setClickable(true);
                         can_play = true;
-                        mic_status = true;
+                        //mic_status = true;
                     }
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         public void onPrepared(MediaPlayer mp) {
@@ -233,7 +233,7 @@ public class A48 extends BaseActivity
                                 isplay.setVisibility(View.GONE);
                                 isplay.setClickable(false);
                                 // mic
-                                mic_status = true;
+                                //mic_status = true;
                                 // play1
                                 can_play = true;
                             }
@@ -249,7 +249,7 @@ public class A48 extends BaseActivity
                             isplay.setVisibility(View.GONE);
                             isplay.setClickable(false);
                             // mic
-                            mic_status = true;
+                            mic_status1 = true;
                             // play1
                             can_play = true;
                             // countinue
@@ -274,7 +274,7 @@ public class A48 extends BaseActivity
                     // change
                     play1.setClickable(false);
                     // mic
-                    mic_status = false;
+                    //mic_status = false;
                     // play1
                     can_play = false;
 
@@ -287,7 +287,7 @@ public class A48 extends BaseActivity
                         Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
                         play1.setClickable(true);
                         can_play = true;
-                        mic_status = true;
+                        //mic_status = true;
                     }
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         public void onPrepared(MediaPlayer mp) {
@@ -308,7 +308,7 @@ public class A48 extends BaseActivity
                                 isplay1.setVisibility(View.GONE);
                                 isplay1.setClickable(false);
                                 // mic
-                                mic_status = true;
+                               // mic_status = true;
                                 // play1
                                 can_play = true;
                             }
@@ -324,7 +324,7 @@ public class A48 extends BaseActivity
                             isplay1.setVisibility(View.GONE);
                             isplay1.setClickable(false);
                             // mic
-                            mic_status = true;
+                            mic_status2 = true;
                             // play1
                             can_play = true;
                             // countinue
@@ -343,7 +343,7 @@ public class A48 extends BaseActivity
         }
 
         if (view.getId() == R.id.voice) {
-            if(mic_status){
+            if(mic_status1){
                 if (haveNetworkConnection()) {
                     promptSpeechInput(101);
 
@@ -352,7 +352,7 @@ public class A48 extends BaseActivity
                 }
             }
         } if (view.getId() == R.id.voice1) {
-            if(mic_status){
+            if(mic_status2){
                 if (haveNetworkConnection()) {
                     promptSpeechInput(102);
 
@@ -448,7 +448,15 @@ public class A48 extends BaseActivity
                             linearLayout.setVisibility(View.VISIBLE);
 
                             Fragment_False f2 = new Fragment_False();
-                            f2.txt_false.setText(tbActivityDetailList.get(0).getTitle1().toString()+"\n"+tbActivityDetailList.get(1).getTitle1().toString());
+
+                            String show = "";
+                            if(!result1){
+                                show = show + tbActivityDetailList.get(0).getTitle1().toString();
+                            }
+                            if(!result2){
+                                show = show + "\n" + tbActivityDetailList.get(1).getTitle1().toString();
+                            }
+                            f2.txt_false.setText(show);
                             FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             fragTransaction.add(R.id.fragment2, f2);
@@ -690,7 +698,8 @@ public class A48 extends BaseActivity
     private void promptSpeechInput(int code) {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+       // intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt));
         try {
             startActivityForResult(intent, code);

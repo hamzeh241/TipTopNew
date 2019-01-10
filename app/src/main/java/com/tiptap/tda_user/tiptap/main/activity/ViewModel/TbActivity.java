@@ -13,6 +13,7 @@ public class TbActivity {
     private boolean IsNote;
     private String RowVersion;
     private int Status;
+    private String HelpTitle1;
 
     public TbActivity() {}
 
@@ -102,5 +103,13 @@ public class TbActivity {
 
     public void setStatus(int status) {
         Status = status;
+    }
+
+    public String getHelpTitle1() {
+        return HelpTitle1;
+    }
+
+    public void setHelpTitle1(String helpTitle1) {
+        HelpTitle1 = helpTitle1;
     }
 }

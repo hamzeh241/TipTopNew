@@ -30,7 +30,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layoutDirection="ltr">
 
                     <ImageView
                         android:id="@+id/person"
@@ -49,7 +50,8 @@
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="7dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginBottom="7dp" />
+                        android:layout_marginBottom="7dp"
+                        android:layoutDirection="ltr"/>
 
                 </LinearLayout>
 
@@ -111,7 +113,8 @@
                     android:fadeScrollbars="false"
                     android:fillViewport="true"
                     android:scrollbars="vertical"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    android:layoutDirection="ltr">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -122,7 +125,8 @@
                         android:orientation="vertical"
                         android:weightSum="8"
                         android:textDirection="ltr"
-                        android:textAlignment="center">
+                        android:textAlignment="center"
+                        android:layoutDirection="ltr">
 
                         <LinearLayout
                             android:id="@+id/l1"
@@ -133,7 +137,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textAlignment="center"
-                            android:textDirection="ltr">
+                            android:textDirection="ltr"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -146,7 +151,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textDirection="ltr"
-                            android:textAlignment="center">
+                            android:textAlignment="center"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -159,7 +165,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textDirection="ltr"
-                            android:textAlignment="center">
+                            android:textAlignment="center"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -172,7 +179,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textDirection="ltr"
-                            android:textAlignment="center">
+                            android:textAlignment="center"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -185,7 +193,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textDirection="ltr"
-                            android:textAlignment="center">
+                            android:textAlignment="center"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -198,7 +207,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textDirection="ltr"
-                            android:textAlignment="center">
+                            android:textAlignment="center"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -211,7 +221,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textDirection="ltr"
-                            android:textAlignment="center">
+                            android:textAlignment="center"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 
@@ -224,7 +235,8 @@
                             android:layout_weight="1"
                             android:orientation="horizontal"
                             android:textDirection="ltr"
-                            android:textAlignment="center">
+                            android:textAlignment="center"
+                            android:layoutDirection="ltr">
 
                         </LinearLayout>
 

@@ -53,6 +53,7 @@ public class A33 extends BaseActivity
     ImageView voice;
     int back_pressed = 0;
     boolean mic_status = true;
+    boolean i_listen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,10 +162,15 @@ public class A33 extends BaseActivity
 
         if(v.getId() == R.id.voice){
             if(mic_status){
-                if(haveNetworkConnection()){
-                    promptSpeechInput();
-                }else{
-                    Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                if(i_listen){
+                    if(haveNetworkConnection()){
+                        promptSpeechInput();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "first listen", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -211,6 +217,7 @@ public class A33 extends BaseActivity
                 mediaPlayer.setOnCompletionListener(new OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
+                        i_listen = true;
                         end = true;
                         // change
                         play.setVisibility(View.VISIBLE);
@@ -532,7 +539,8 @@ public class A33 extends BaseActivity
     private void promptSpeechInput() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        //intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt));
         try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
@@ -548,13 +556,63 @@ public class A33 extends BaseActivity
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
                     you_say = result;
-
                     if(you_say.size()>=1){
                         if(end){
-                            next.setTextColor(Color.WHITE);
-                            next.setBackgroundResource(R.drawable.btn_green);
+                            boolean r = false;
+                            for(int z=0 ; z < you_say.size() ; z++){
+                                String a = nice_string_A33( you_say.get(z) );
+                                String b = nice_string_A33( title1 );
+                                if (a.equals(b)) { r = true;}
+                            }
+                            if (r) {
+                                // update - true
+                                mPresenter.update_activity(idactivity);
+
+                                // show passed activity
+                                List<Integer> passed1 = mPresenter.activity_true(idlesson);
+                                int passed2 = passed1.size();
+                                if(passed2 == 0){
+                                    p.setProgress(0);
+                                }else{
+                                    double d_number = (double) passed2/all;
+                                    int i_number = (int) (d_number*100);
+                                    p.setProgress(i_number);
+                                }
+
+                                // Clickable_false
+                                t1.setClickable(false);
+                                t2.setClickable(false);
+                                txt.setClickable(false);
+                                voice.setClickable(false);
+                                play.setClickable(false);
+                                p.setClickable(false);
+
+                                // Fragment_true
+                                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.holder1);
+                                Animation slide_down = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slideup);
+                                linearLayout.setAnimation(slide_down);
+                                linearLayout.setVisibility(View.VISIBLE);
+
+                                Fragment_True f1 = new Fragment_True();
+                                f1.txt_true.setText(title1);
+                                FragmentManager fragMan = getSupportFragmentManager();
+                                FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                                fragTransaction.add(R.id.fragment1, f1);
+                                fragTransaction.commit();
+
+                                // play sound
+                                mpt.start();
+
+                                // countinue
+                                next.setTextColor(Color.WHITE);
+                                next.setBackgroundResource(R.drawable.btn_green);
+                                next.setText("countinue");
+                            }
+                            else{
+                                next.setTextColor(Color.WHITE);
+                                next.setBackgroundResource(R.drawable.btn_green);
+                            }
                         }
                     }
                 }

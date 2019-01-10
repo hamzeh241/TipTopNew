@@ -32,7 +32,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:layout_margin="7dp" />
+                    android:layout_margin="7dp"
+                    android:layoutDirection="ltr"/>
 
             </TableRow>
 
@@ -135,14 +136,16 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layoutDirection="ltr">
 
                         <CheckBox
                             android:id="@+id/a"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="5dp" />
+                            android:layout_marginRight="5dp"
+                            android:layoutDirection="ltr"/>
 
                         <TextView
                             android:id="@+id/txt1"
@@ -151,7 +154,8 @@
                             android:layout_marginRight="15dp"
                             android:text="hello , I am mark and go to the school with my bycycle"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:layoutDirection="ltr"/>
 
                     </LinearLayout>
 
@@ -159,14 +163,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layoutDirection="ltr">
 
                         <CheckBox
                             android:id="@+id/b"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="5dp" />
+                            android:layout_marginRight="5dp"
+                            android:layoutDirection="ltr"/>
 
                         <TextView
                             android:id="@+id/txt2"
@@ -175,7 +181,8 @@
                             android:layout_marginRight="15dp"
                             android:text="hello , I am mark and go to the school with my bycycle"
                             android:textColor="@color/colorPrimaryDark"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:layoutDirection="ltr"/>
 
                     </LinearLayout>
 

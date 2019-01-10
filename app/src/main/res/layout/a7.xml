@@ -38,7 +38,8 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:layoutDirection="ltr"/>
 
             </LinearLayout>
 
@@ -102,25 +103,25 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/play"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="6dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@drawable/play"
-                    android:visibility="visible" />
+                    <Button
+                        android:id="@+id/play"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/play"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="visible"/>
 
-                <Button
-                    android:id="@+id/isplay"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="6dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@drawable/play_ispaly"
-                    android:visibility="gone" />
+                    <Button
+                        android:id="@+id/isplay"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/play_ispaly"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:visibility="gone"/>
 
             </LinearLayout>
 

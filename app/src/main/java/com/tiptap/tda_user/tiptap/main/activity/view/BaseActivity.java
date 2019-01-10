@@ -5,16 +5,37 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.maxwell.speechrecognition.OnSpeechRecognitionListener;
+import com.maxwell.speechrecognition.OnSpeechRecognitionPermissionListener;
+import com.maxwell.speechrecognition.SpeechRecognition;
+import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
 import com.tiptap.tda_user.tiptap.main.activity.view.activity.*;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BaseActivity extends AppCompatActivity implements MVP_Main.RequiredViewOps {
 
@@ -39,6 +60,132 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
     public ImageView img;
     public ImageView voice;
 
+    // - - - - - - - - - - play - - - - - - - - - -
+    private  Button btn;
+    private  String fName;
+    public  boolean playedVoice = false;
+
+    public void playVoice(Context context, Button button, String fileName){
+        btn = button;
+        btn.setClickable(false);
+        fName = fileName.replaceAll("/", "");
+        String urlDownloadLink = "http://tiptop.tdaapp.ir/image/" + fileName;
+
+        String downloadAudioPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        File audioVoice = new File(downloadAudioPath + File.separator + "voices");
+        if(!audioVoice.exists()){
+            audioVoice.mkdir();
+        }
+        downloadAudioPath = downloadAudioPath + File.separator + "voices" + File.separator + fName;
+        DownloadFile downloadAudioFile = new DownloadFile();
+        downloadAudioFile.execute(urlDownloadLink, downloadAudioPath);
+    }
+    private class DownloadFile extends AsyncTask<String, Integer, String> {
+        @Override
+        protected String doInBackground(String... url) {
+            int count;
+            try {
+                URL urls = new URL(url[0]);
+                URLConnection connection = urls.openConnection();
+                connection.connect();
+                // this will be useful so that you can show a tipical 0-100% progress bar
+                int lenghtOfFile = connection.getContentLength();
+                InputStream input = new BufferedInputStream(urls.openStream());
+                OutputStream output = new FileOutputStream(url[1]);
+                byte data[] = new byte[1024];
+                long total = 0;
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    // publishing the progress....
+                    publishProgress((int) (total * 100 / lenghtOfFile));
+                    output.write(data, 0, count);
+                }
+                output.flush();
+                output.close();
+                input.close();
+            } catch (Exception e) {}
+            return null;
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/voices/"+ fName;
+            final MediaPlayer player = new MediaPlayer();
+            try {
+                player.setDataSource(path);
+                player.prepare();
+            } catch (Exception e) {
+                String error = "Exception of type : " + e.toString();
+            }
+            player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                public void onPrepared(MediaPlayer mp){
+                    btn.setBackground(getResources().getDrawable(R.drawable.play_ispaly));
+                    player.start();
+                }
+            });
+            player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    btn.setBackground(getResources().getDrawable(R.drawable.play));
+                    btn.setClickable(true);
+                    playedVoice = true;
+                }
+            });
+        }
+    }
+
+    // - - - - - - - - - - speech to text - - - - - - - - - -
+    private static ArrayList<String> result;
+    private static final int REQUEST_RECORD_PERMISSION = 100;
+    SpeechRecognition speechRecognition;
+
+    public ArrayList<String> SpeechToText(View btn){
+        result = new ArrayList<>();
+        speechRecognition = new SpeechRecognition(getActivityContext());
+        speechRecognition.setSpeechRecognitionPermissionListener(new OnSpeechRecognitionPermissionListener() {
+            @Override
+            public void onPermissionGranted() {}
+            @Override
+            public void onPermissionDenied() {}
+        });
+        speechRecognition.setSpeechRecognitionListener(new OnSpeechRecognitionListener() {
+            @Override
+            public void OnSpeechRecognitionStarted() {}
+            @Override
+            public void OnSpeechRecognitionStopped() {}
+            @Override
+            public void OnSpeechRecognitionFinalResult(String s) {
+               // returnedText.setText(s);
+                Toast.makeText(getActivityContext(), s+"", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void OnSpeechRecognitionCurrentResult(String s) {
+                //returnedText.setText(s);
+                Toast.makeText(getActivityContext(), s+"", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void OnSpeechRecognitionError(int i, String s) {}
+        });
+       // Locale local = new Locale("en-us");
+        // java.lang.UnsupportedOperationException
+        //speechRecognition.setPreferredLanguage();
+        speechRecognition.useGoogleImeRecognition(true, null);
+        speechRecognition.useOnlyOfflineRecognition(true);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                speechRecognition.startSpeechRecognition();
+            }
+        });
+        return result;
+    }
+    // - - - - - - - - - - internet - - - - - - - - - -
     public boolean haveNetworkConnection() {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -119,12 +266,12 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                     if(b.charAt(i+1) == 's'){
                         b = b.replace("’s", "is");
                     }
-                    if(b.charAt(i+1) == 'm'){
+                    /*if(b.charAt(i+1) == 'm'){
                         b = b.replace("’m", "am");
                     }
                     if(b.charAt(i+1) == 'r'){
                         b = b.replace("’r", "are");
-                    }
+                    }*/
                 }
             }
         }

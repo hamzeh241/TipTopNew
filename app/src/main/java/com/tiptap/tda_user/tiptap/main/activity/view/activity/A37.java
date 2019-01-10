@@ -154,7 +154,7 @@ public class A37 extends BaseActivity
             mPresenter.update_activity(idactivity);
 
             // show passed activity
-            List<Integer> passed1 = mPresenter.activity_true(idlesson);
+            /*List<Integer> passed1 = mPresenter.activity_true(idlesson);
             int passed2 = passed1.size();
             if(passed2 == 0){
                 p.setProgress(0);
@@ -162,7 +162,7 @@ public class A37 extends BaseActivity
                 double d_number = (double) passed2/all;
                 int i_number = (int) (d_number*100);
                 p.setProgress(i_number);
-            }
+            }*/
 
             // first
             if(Act_Status.equals("first")){
