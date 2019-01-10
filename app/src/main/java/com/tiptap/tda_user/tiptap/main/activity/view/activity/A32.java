@@ -4,8 +4,10 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
@@ -845,7 +847,15 @@ public class A32 extends BaseActivity
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
                     mediaPlayer.setDataSource(url_download+path1[i]);
-                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    // fix 1 player
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build());
+                    } else {
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    }
                     mediaPlayer.prepareAsync();
                 } catch (Exception e) {
                     Log.e("MediaPlayerException", " message : "+e.getMessage());
@@ -868,6 +878,8 @@ public class A32 extends BaseActivity
                         // countinue
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
+                        // fix 2 player
+                        mediaPlayer.release();
                     }
                 });
             }

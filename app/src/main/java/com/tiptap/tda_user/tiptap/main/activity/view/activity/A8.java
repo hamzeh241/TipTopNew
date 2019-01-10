@@ -108,7 +108,7 @@ public class A8 extends BaseActivity
     private void after_setup(){
 
         // show b_answer
-        if (b_ans.equals("") || b_ans.equals("null")) {
+        if (b_ans == null || b_ans.isEmpty()) {
         } else {
             b_answer.setText(b_ans);
         }

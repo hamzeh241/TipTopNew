@@ -252,6 +252,7 @@ public class BaseSetingApi {
                 A25.activitynumber = 1;
                 A25.Act_Status = "first";
                 view.getContext().startActivity(new Intent(view.getContext(), A25.class));
+                mactivity.finish();
                 break;
 
             case 26:

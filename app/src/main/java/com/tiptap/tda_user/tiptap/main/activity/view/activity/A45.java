@@ -3,8 +3,10 @@ package com.tiptap.tda_user.tiptap.main.activity.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -210,7 +212,15 @@ public class A45 extends BaseActivity
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
                     mediaPlayer.setDataSource(url_download+path2);
-                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    // fix 1 player
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        mediaPlayer.setAudioAttributes(new AudioAttributes.Builder()
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .build());
+                    } else {
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    }
                     mediaPlayer.prepare();
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Error_Media", Toast.LENGTH_LONG).show();
@@ -250,6 +260,8 @@ public class A45 extends BaseActivity
                         // countinue
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
+                        // fix 2 player
+                        mediaPlayer.release();
                     }
                 });
             }else{
