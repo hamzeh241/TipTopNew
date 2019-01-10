@@ -10,4 +10,5 @@ import dagger.Subcomponent;
 @Subcomponent(modules = Main_Module.class )
 public interface A1_Component {
     A1 inject(A1 activity);
+    
 }
