@@ -1,11 +1,9 @@
 package com.tiptap.tda_user.tiptap.main.activity.Presenter;
 
 import android.content.Context;
-
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Main;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivityDetail;
-
 import java.lang.ref.WeakReference;
 import java.util.List;
 

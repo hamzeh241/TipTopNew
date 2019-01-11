@@ -6,11 +6,6 @@ import com.tiptap.tda_user.tiptap.main.activity.view.activity.A49;
 
 import dagger.Subcomponent;
 
-/**
- * Created by tafsiri on 7/14/2018.
- */
-
-
 @ActivityScope
 @Subcomponent(modules = Main_Module.class )
 public interface A49_Component {

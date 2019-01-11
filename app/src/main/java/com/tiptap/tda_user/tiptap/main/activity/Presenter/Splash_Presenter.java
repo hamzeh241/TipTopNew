@@ -3,7 +3,6 @@ package com.tiptap.tda_user.tiptap.main.activity.Presenter;
 import android.content.Context;
 import com.tiptap.tda_user.tiptap.main.activity.Interface.MVP_Splash;
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 public class Splash_Presenter
         implements MVP_Splash.ProvidedPresenterOps, MVP_Splash.RequiredPresenterOps{
