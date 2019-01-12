@@ -150,6 +150,8 @@ public class A37 extends BaseActivity
 
         if (v.getId() == R.id.next) {
 
+            pd.dismiss();
+
             // update - true
             mPresenter.update_activity(idactivity);
 
@@ -364,6 +366,7 @@ public class A37 extends BaseActivity
     }
 
     public void back(){
+        pd.dismiss();
         if(back_pressed == 1){
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
