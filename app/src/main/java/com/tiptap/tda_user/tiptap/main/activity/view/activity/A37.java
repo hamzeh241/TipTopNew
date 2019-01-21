@@ -62,10 +62,14 @@ public class A37 extends BaseActivity
 
         setupViews();
         setupMVP();
+
+        // Todo: comment this for test
+        /*
         videoView =(VideoView)findViewById(R.id.videoView);
         //Set MediaController  to enable play, pause, forward, etc options.
         MediaController mediaController= new MediaController(this);
         mediaController.setAnchorView(videoView);
+        */
 
         max = mPresenter.max_Activitynumber(idlesson);
 
@@ -90,9 +94,13 @@ public class A37 extends BaseActivity
         //p = (ProgressBar)findViewById(R.id.p);
        // p.setMax(100);
         next = (Button)findViewById(R.id.next);
+
+        // Todo: comment this for test
+        /*
         pd = new ProgressDialog(A37.this);
         pd.setMessage("در حال دریافت اطلاعات ...");
         pd.show();
+        */
     }
 
     private void after_setup(){
@@ -115,6 +123,9 @@ public class A37 extends BaseActivity
             p.setProgress(i_number);
         }*/
 
+
+        // Todo: comment this for test
+        /*
         if(haveNetworkConnection()) {
             Uri uri = Uri.parse(url_download+path1);
             MediaController mediaController= new MediaController(this);
@@ -134,15 +145,18 @@ public class A37 extends BaseActivity
         }else {
             pd.dismiss();
             Toast.makeText(getApplicationContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
-        }
+        }*/
 
         next.setOnClickListener(this);
     }
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
+        // Todo: comment this for test
+        /*
         pd.dismiss();
         video_view.start();
+        */
     }
 
     @Override
@@ -150,7 +164,10 @@ public class A37 extends BaseActivity
 
         if (v.getId() == R.id.next) {
 
+            // Todo: comment this for test
+            /*
             pd.dismiss();
+            */
 
             // update - true
             mPresenter.update_activity(idactivity);

@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,10 +29,6 @@ import com.tiptap.tda_user.tiptap.main.activity.ViewModel.TbActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.BaseActivity;
 import com.tiptap.tda_user.tiptap.main.activity.view.lesson.Lesson;
 import org.json.JSONException;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -159,7 +154,7 @@ public class A7 extends BaseActivity
                 // change
                 play.setClickable(false);
 
-                MediaPlayer mediaPlayer = new MediaPlayer();
+                final MediaPlayer mediaPlayer = new MediaPlayer();
                 try {
                     mediaPlayer.setDataSource(url_download+path2);
 
@@ -184,7 +179,7 @@ public class A7 extends BaseActivity
                             // change
                             play.setVisibility(View.GONE);
                             isplay.setVisibility(View.VISIBLE);
-                            isplay.setClickable(true);
+                            //isplay.setClickable(true);
 
                             // play it
                             if(!(mp.isPlaying())){
@@ -193,9 +188,10 @@ public class A7 extends BaseActivity
                         }catch (Exception e){
                             Toast.makeText(getApplicationContext(), "Error_Play", Toast.LENGTH_LONG).show();
                             play.setVisibility(View.VISIBLE);
+                            mediaPlayer.release();
                             play.setClickable(true);
                             isplay.setVisibility(View.GONE);
-                            isplay.setClickable(false);
+                            //isplay.setClickable(false);
                         }
                     }
                 });
