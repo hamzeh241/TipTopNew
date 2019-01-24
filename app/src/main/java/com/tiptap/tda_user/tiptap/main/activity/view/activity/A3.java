@@ -198,7 +198,7 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         // fix 2 player
-                        mediaPlayer.release();
+                        closeMediaPlayer(mediaPlayer);
                     }
                 });
             }else{
@@ -281,6 +281,7 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
                             }
 
                             A3.this.finish();
+                            closeOtherMediaPlayer();
                             startActivity(new Intent(A3.this, End.class));
                         }
 
@@ -359,6 +360,7 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
                             }
                         }
                         A3.this.finish();
+                        closeOtherMediaPlayer();
                         startActivity(new Intent(A3.this, End.class));
 
                     }
@@ -424,6 +426,7 @@ public class A3 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClick
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A3.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A3.this, Lesson.class));
         }
     }

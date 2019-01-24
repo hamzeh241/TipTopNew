@@ -377,6 +377,7 @@ public class A24 extends BaseActivity
                                     }
                                 }
                                 A24.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A24.this, End.class));
                             }
 
@@ -453,6 +454,7 @@ public class A24 extends BaseActivity
                                 }
                             }
                             A24.this.finish();
+                            closeOtherMediaPlayer();
                             startActivity(new Intent(A24.this, End.class));
                         }
 
@@ -645,6 +647,7 @@ public class A24 extends BaseActivity
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A24.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A24.this, Lesson.class));
         }
     }

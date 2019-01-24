@@ -245,7 +245,7 @@ public class A33 extends BaseActivity
                         }
 
                         // fix 2 player
-                        mediaPlayer.release();
+                        closeMediaPlayer(mediaPlayer);
                     }
                 });
             }else{
@@ -406,6 +406,7 @@ public class A33 extends BaseActivity
                                         }
                                     }
                                     A33.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A33.this, End.class));
                                 }
 
@@ -484,6 +485,7 @@ public class A33 extends BaseActivity
                                     }
                                 }
                                 A33.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A33.this, End.class));
                             }
 
@@ -646,6 +648,7 @@ public class A33 extends BaseActivity
         }else{
             mp.stop();
             A33.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A33.this, Lesson.class));
         }
     }

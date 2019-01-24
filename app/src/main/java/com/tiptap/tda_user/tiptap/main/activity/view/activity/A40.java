@@ -323,6 +323,7 @@ public class A40 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                         }
                                     }
                                     A40.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A40.this, End.class));
                                 }
 
@@ -398,6 +399,7 @@ public class A40 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                     }
                                 }
                                 A40.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A40.this, End.class));
 
                             }
@@ -556,6 +558,7 @@ public class A40 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A40.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A40.this, Lesson.class));
         }
     }

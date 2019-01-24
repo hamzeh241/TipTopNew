@@ -535,6 +535,7 @@ public class A29 extends BaseActivity
                                     }
 
                                     A29.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A29.this, End.class));
                                 }
 
@@ -613,6 +614,7 @@ public class A29 extends BaseActivity
                                     }
                                 }
                                 A29.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A29.this, End.class));
                             }
 
@@ -795,6 +797,7 @@ public class A29 extends BaseActivity
 
     public void back(){
         A29.this.finish();
+        closeOtherMediaPlayer();
         startActivity(new Intent(A29.this, Lesson.class));
     }
 

@@ -596,6 +596,7 @@ public class A21 extends BaseActivity
                                     }
 
                                     A21.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A21.this, End.class));
                                 }
 
@@ -674,6 +675,7 @@ public class A21 extends BaseActivity
                                     }
                                 }
                                 A21.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A21.this, End.class));
 
                             }
@@ -896,6 +898,7 @@ public class A21 extends BaseActivity
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A21.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A21.this, Lesson.class));
         }
     }

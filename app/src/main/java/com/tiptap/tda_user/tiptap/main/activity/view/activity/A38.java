@@ -546,6 +546,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                                     }
 
                                     A38.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A38.this, End.class));
                                 }
 
@@ -624,6 +625,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
                                     }
                                 }
                                 A38.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A38.this, End.class));
 
                             }
@@ -809,6 +811,7 @@ public class A38 extends BaseActivity implements MVP_Main.RequiredViewOps,View.O
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A38.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A38.this, Lesson.class));
         }
     }

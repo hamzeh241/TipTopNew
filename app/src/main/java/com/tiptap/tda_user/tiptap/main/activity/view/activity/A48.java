@@ -266,7 +266,7 @@ public class A48 extends BaseActivity
                             next.setTextColor(Color.WHITE);
                             next.setBackgroundResource(R.drawable.btn_green);
                             // fix 2 player
-                            mediaPlayer.release();
+                            closeMediaPlayer(mediaPlayer);
                         }
                     });
                 }
@@ -351,7 +351,7 @@ public class A48 extends BaseActivity
                             next.setTextColor(Color.WHITE);
                             next.setBackgroundResource(R.drawable.btn_green);
                             // fix 2 player
-                            mediaPlayer.release();
+                            closeMediaPlayer(mediaPlayer);
                         }
                     });
                 }
@@ -552,6 +552,7 @@ public class A48 extends BaseActivity
                                     }
                                 }
                                 A48.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A48.this, End.class));
                             }
 
@@ -628,6 +629,7 @@ public class A48 extends BaseActivity
                                 }
                             }
                             A48.this.finish();
+                            closeOtherMediaPlayer();
                             startActivity(new Intent(A48.this, End.class));
 
                         }
@@ -767,6 +769,7 @@ public class A48 extends BaseActivity
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A48.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A48.this, Lesson.class));
         }
     }

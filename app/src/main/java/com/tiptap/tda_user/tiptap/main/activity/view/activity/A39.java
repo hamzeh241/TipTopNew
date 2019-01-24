@@ -257,7 +257,7 @@ public class A39 extends BaseActivity
                         next.setBackgroundResource(R.drawable.btn_green);
 
                         // fix 2 player
-                        mediaPlayer.release();
+                        closeMediaPlayer(mediaPlayer);
                     }
                 });
             }else{
@@ -437,6 +437,7 @@ public class A39 extends BaseActivity
                                         }
                                     }
                                     A39.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A39.this, End.class));
                                 }
 
@@ -512,6 +513,7 @@ public class A39 extends BaseActivity
                                     }
                                 }
                                 A39.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A39.this, End.class));
                             }
 
@@ -588,6 +590,7 @@ public class A39 extends BaseActivity
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A39.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A39.this, Lesson.class));
         }
     }

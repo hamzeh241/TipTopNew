@@ -1180,4 +1180,34 @@ public class BaseActivity extends AppCompatActivity implements MVP_Main.Required
                 break;
         }
     }
+
+    public void closeMediaPlayer(MediaPlayer mediaPlayer){
+        mediaPlayer.stop();
+        mediaPlayer.reset();
+        mediaPlayer.release();
+        mediaPlayer = null;
+        System.gc();
+    }
+
+    public void closeOtherMediaPlayer(){
+        if (mp != null){
+            mp.stop();
+            mp.reset();
+            mp.release();
+            mp = null;
+        }
+        if(mpf != null){
+            mpf.stop();
+            mpf.reset();
+            mpf.release();
+            mpf = null;
+        }
+        if(mpt != null){
+            mpt.stop();
+            mpt.reset();
+            mpt.release();
+            mpt = null;
+        }
+        System.gc();
+    }
 }

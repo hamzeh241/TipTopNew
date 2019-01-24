@@ -629,6 +629,7 @@ public class A32 extends BaseActivity
                                         }
                                     }
                                     A32.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A32.this, End.class));
                                 }
 
@@ -708,6 +709,7 @@ public class A32 extends BaseActivity
                                 }
 
                                 A32.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A32.this, End.class));
                             }
 
@@ -879,7 +881,7 @@ public class A32 extends BaseActivity
                         next.setTextColor(Color.WHITE);
                         next.setBackgroundResource(R.drawable.btn_green);
                         // fix 2 player
-                        mediaPlayer.release();
+                        closeMediaPlayer(mediaPlayer);
                     }
                 });
             }
@@ -1008,6 +1010,7 @@ public class A32 extends BaseActivity
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         } else {
             A32.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A32.this, Lesson.class));
         }
     }

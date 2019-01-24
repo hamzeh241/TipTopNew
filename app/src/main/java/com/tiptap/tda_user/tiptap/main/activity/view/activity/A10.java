@@ -454,6 +454,7 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                         }
                                     }
                                     A10.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A10.this, End.class));
                                 }
 
@@ -529,6 +530,7 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
                                     }
                                 }
                                 A10.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A10.this, End.class));
                             }
 
@@ -596,6 +598,7 @@ public class A10 extends BaseActivity implements MVP_Main.RequiredViewOps, OnCli
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A10.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A10.this, Lesson.class));
         }
     }

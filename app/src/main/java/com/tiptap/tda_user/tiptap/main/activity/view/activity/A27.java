@@ -252,7 +252,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                             }
                         }
                         // fix 2 player
-                        mediaPlayer.release();
+                        closeMediaPlayer(mediaPlayer);
                     }
                 });
             }else{
@@ -412,6 +412,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                                         }
                                     }
                                     A27.this.finish();
+                                    closeOtherMediaPlayer();
                                     startActivity(new Intent(A27.this, End.class));
                                 }
 
@@ -488,6 +489,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
                                     }
                                 }
                                 A27.this.finish();
+                                closeOtherMediaPlayer();
                                 startActivity(new Intent(A27.this, End.class));
 
                             }
@@ -651,6 +653,7 @@ public class A27 extends BaseActivity implements MVP_Main.RequiredViewOps,OnClic
             Toast.makeText(getApplicationContext(), "برای خروج دوباره برگشت را بفشارید", Toast.LENGTH_LONG).show();
         }else{
             A27.this.finish();
+            closeOtherMediaPlayer();
             startActivity(new Intent(A27.this, Lesson.class));
         }
     }
