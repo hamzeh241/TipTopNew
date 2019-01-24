@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tiptap.tda_user.tiptap.R;
 import com.tiptap.tda_user.tiptap.common.SampleApp;
 import com.tiptap.tda_user.tiptap.common.StateMaintainer;
@@ -139,7 +140,10 @@ public class A7 extends BaseActivity
         txt.setTextColor(getResources().getColor(R.color.my_black));
 
         String img_url = url_download+path1;
-        Glide.with(this).load(img_url).placeholder(R.drawable.ph).error(R.drawable.e).into(img);
+        Glide.with(this).load(img_url)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .placeholder(R.drawable.ph).error(R.drawable.e).into(img);
 
         next.setOnClickListener(this);
         play.setOnClickListener(this);
